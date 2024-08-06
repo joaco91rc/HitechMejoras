@@ -1,0 +1,63 @@
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\Acuario Tienda Energetica.exe.config
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\Acuario Tienda Energetica.exe
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\Acuario Tienda Energetica.pdb
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\BouncyCastle.Crypto.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaEntidad.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaNegocio.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\ClosedXML.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\DocumentFormat.OpenXml.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\ExcelNumberFormat.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\FontAwesome.Sharp.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\Irony.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\itextsharp.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\itextsharp.xmlworker.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\SixLabors.Fonts.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Buffers.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.IO.Packaging.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Memory.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Numerics.Vectors.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.ValueTuple.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\XLParser.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaDatos.dll
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaEntidad.pdb
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaNegocio.pdb
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\ClosedXML.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\DocumentFormat.OpenXml.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\ExcelNumberFormat.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\itextsharp.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\SixLabors.Fonts.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Buffers.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.IO.Packaging.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Memory.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Numerics.Vectors.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\System.ValueTuple.xml
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\bin\Release\CapaDatos.pdb
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.csproj.AssemblyReference.cache
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmCajaRegistradora.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmCategoria.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmClientes.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmCompras.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmDetalleCaja.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmDetalleCompra.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmDetalleVenta.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmNegocio.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmProducto.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmProveedores.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmReporteCompras.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmReporteVentas.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmUsuarios.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.frmVentas.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Inicio.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Login.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Modales.mdAperturacaja.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Modales.mdCliente.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Modales.mdProducto.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Modales.mdProveedor.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.Properties.Resources.resources
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.csproj.GenerateResource.cache
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.csproj.CoreCompileInputs.cache
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\CapaPresentacion.csproj.CopyComplete
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\Acuario Tienda Energetica.exe
+C:\Users\jaalvarez\Desktop\hitech\CapaPresentacion\obj\Release\Acuario Tienda Energetica.pdb
