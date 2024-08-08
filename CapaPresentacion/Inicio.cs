@@ -33,17 +33,6 @@ namespace CapaPresentacion
 
        
 
-        private void iconPictureBox1_Click(object sender, EventArgs e)
-        {
-
-            if (MessageBox.Show("¿Esta seguro que desea cerrar la Aplicacion?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Application.Exit();
-            }
-
-            
-        }
-
         private void iconPictureBox2_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -279,6 +268,16 @@ namespace CapaPresentacion
         private void subMenuTraspasoMercaderia_Click(object sender, EventArgs e)
         {
             AbrirFormulario(menuMantenedor, new frmOrdenesDeTraspaso());
+        }
+
+        private void iconPictureBox1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void iconPictureBox2_Click_1(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

@@ -108,7 +108,7 @@ namespace CapaDatos
                     query.AppendLine("PR.documento, PR.razonSocial,");
                     query.AppendLine("C.tipoDocumento, C.idNegocio, C.nroDocumento, C.montoTotal, CONVERT(CHAR(10), C.fechaRegistro, 103) [fechaRegistro],");
                     query.AppendLine("C.formaPago, C.formaPago2, C.formaPago3, C.formaPago4,");
-                    query.AppendLine("C.montoFP1, C.montoFP2, C.montoFP3, C.montoFP4");
+                    query.AppendLine("C.montoFP1, C.montoFP2, C.montoFP3, C.montoFP4,");
                     query.AppendLine("C.montoPago, C.montoPagoFP2, C.montoPagoFP3, C.montoPagoFP4");
                     query.AppendLine("FROM COMPRA C");
                     query.AppendLine("INNER JOIN USUARIO U ON U.idUsuario = C.idUsuario");
@@ -178,7 +178,7 @@ namespace CapaDatos
                     query.AppendLine("SELECT C.idCompra,");
                     query.AppendLine("U.nombreCompleto,");
                     query.AppendLine("PR.documento, PR.razonSocial,");
-                    query.AppendLine("C.tipoDocumento, C.idNegocio,C.nroDocumento,C.montoTotal,CONVERT(CHAR(10), C.fechaRegistro, 103)[fechaRegistro]");
+                    query.AppendLine("C.tipoDocumento, C.idNegocio,C.nroDocumento,C.montoTotal,convert(char(10), C.fechaRegistro, 103)[FechaRegistro],C.formaPago,C.formaPago2,C.formaPago3,C.formaPago4, C.montoFP1,C.montoFP2,C.montoFP3,C.montoFP4,C.montoPago,C.montoPagoFP2,C.montoPagoFP3,C.montoPagoFP4 ");
                     query.AppendLine("FROM COMPRA C");
                     query.AppendLine("INNER JOIN USUARIO U ON U.idUsuario = C.idUsuario");
                     query.AppendLine("INNER JOIN PROVEEDOR PR ON PR.idProveedor = C.idProveedor");
@@ -203,7 +203,19 @@ namespace CapaDatos
                                 tipoDocumento = dr["tipoDocumento"].ToString(),
                                 nroDocumento = dr["nroDocumento"].ToString(),
                                 montoTotal = Convert.ToDecimal(dr["montoTotal"].ToString()),
-                                fechaRegistro = dr["fechaRegistro"].ToString()
+                                fechaRegistro = dr["fechaRegistro"].ToString(),
+                                formaPago = dr["formaPago"].ToString(),
+                                formaPago2 = dr["formaPago2"].ToString(),
+                                formaPago3 = dr["formaPago3"].ToString(),
+                                formaPago4 = dr["formaPago4"].ToString(),
+                                montoFP1 = Convert.ToDecimal(dr["montoFP1"].ToString()),
+                                montoFP2 = Convert.ToDecimal(dr["montoFP2"].ToString()),
+                                montoFP3 = Convert.ToDecimal(dr["montoFP3"].ToString()),
+                                montoFP4 = Convert.ToDecimal(dr["montoFP4"].ToString()),
+                                montoPago = Convert.ToDecimal(dr["montoPago"].ToString()),
+                                montoPagoFP2 = Convert.ToDecimal(dr["montoPagoFP2"].ToString()),
+                                montoPagoFP3 = Convert.ToDecimal(dr["montoPagoFP3"].ToString()),
+                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString()),
                             };
 
                           

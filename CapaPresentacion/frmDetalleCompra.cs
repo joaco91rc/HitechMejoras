@@ -25,30 +25,30 @@ namespace CapaPresentacion
             oCompra = compra;
         }
 
-        private void btnBuscarProducto_Click(object sender, EventArgs e)
-        {
-            Compra oCompra = new CN_Compra().ObtenerCompra(txtBuscarCompra.Text,GlobalSettings.SucursalId);
+        //private void btnBuscarProducto_Click(object sender, EventArgs e)
+        //{
+        //    Compra oCompra = new CN_Compra().ObtenerCompra(txtBuscarCompra.Text,GlobalSettings.SucursalId);
 
-            if(oCompra.idCompra != 0)
-            {
-                lblIdCompra.Text = oCompra.idCompra.ToString();
-                txtnroDocumento.Text = oCompra.nroDocumento;
-                dtpFecha.Text = oCompra.fechaRegistro;
-                cboTipoDocumento.Text = oCompra.tipoDocumento;
-                txtUsuario.Text = oCompra.oUsuario.nombreCompleto;
-                txtCUIT.Text = oCompra.oProveedor.documento;
-                txtRazonSocial.Text = oCompra.oProveedor.razonSocial;
+        //    if(oCompra.idCompra != 0)
+        //    {
+        //        lblIdCompra.Text = oCompra.idCompra.ToString();
+        //        txtnroDocumento.Text = oCompra.nroDocumento;
+        //        dtpFecha.Text = oCompra.fechaRegistro;
+        //        cboTipoDocumento.Text = oCompra.tipoDocumento;
+        //        txtUsuario.Text = oCompra.oUsuario.nombreCompleto;
+        //        txtCUIT.Text = oCompra.oProveedor.documento;
+        //        txtRazonSocial.Text = oCompra.oProveedor.razonSocial;
 
-                dgvData.Rows.Clear();
+        //        dgvData.Rows.Clear();
 
-                foreach ( DetalleCompra dc in oCompra.oDetalleCompra)
-                {
+        //        foreach ( DetalleCompra dc in oCompra.oDetalleCompra)
+        //        {
 
-                    dgvData.Rows.Add(new object[] { dc.oProducto.nombre, dc.precioCompra, dc.cantidad, dc.montoTotal });
-                }
-                txtTotalAPagar.Text = oCompra.montoTotal.ToString("0.00");
-            }
-        }
+        //            dgvData.Rows.Add(new object[] { dc.oProducto.nombre, dc.precioCompra, dc.cantidad, dc.montoTotal });
+        //        }
+        //        txtTotalAPagar.Text = oCompra.montoTotal.ToString("0.00");
+        //    }
+        //}
         private void Limpiar()
         {
             dtpFecha.Value = DateTime.Now;
@@ -60,6 +60,14 @@ namespace CapaPresentacion
             txtTotalAPagar.Text = "0.00";
             txtnroDocumento.Text = "";
             lblIdCompra.Text = "0";
+            txtFormaPago1.Text = string.Empty;
+            txtFormaPago2.Text = string.Empty;
+            txtFormaPago3.Text = string.Empty;
+            txtFormaPago4.Text = string.Empty;
+            txtMontoFP1.Text = string.Empty;
+            txtMontoFP2.Text = string.Empty;
+            txtMontoFP3.Text = string.Empty;
+            txtMontoFP4.Text = string.Empty;
         }
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
@@ -156,15 +164,20 @@ namespace CapaPresentacion
 
             if (GlobalSettings.RolUsuario == 1)
             {
-                bool resultado = new CN_Compra().EliminarCompraConDetalle(Convert.ToInt32(lblIdCompra.Text), out mensaje);
-                if (resultado)
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta Compra?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Compra Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                }
-                else
-                {
-                    MessageBox.Show("No se ha podido Eliminar la Compra", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bool resultado = new CN_Compra().EliminarCompraConDetalle(Convert.ToInt32(lblIdCompra.Text), out mensaje);
+                    if (resultado)
+                    {
+                        MessageBox.Show("Compra Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se ha podido Eliminar la Compra", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
@@ -176,6 +189,37 @@ namespace CapaPresentacion
         private void frmDetalleCompra_Load(object sender, EventArgs e)
         {
             lblIdCompra.Text = "0";
+            lblIdCompra.Text = "0";
+            if (oCompra != null)
+            {
+                lblIdCompra.Text = oCompra.idCompra.ToString();
+                lblNumeroCompra.Text = oCompra.nroDocumento;
+                txtnroDocumento.Text = oCompra.nroDocumento;
+                dtpFecha.Text = oCompra.fechaRegistro.ToString();
+                cboTipoDocumento.Text = oCompra.tipoDocumento;
+                txtUsuario.Text = oCompra.oUsuario.nombreCompleto;
+                txtCUIT.Text = oCompra.oProveedor.documento;
+                txtRazonSocial.Text = oCompra.oProveedor.razonSocial;
+                
+                txtFormaPago1.Text = oCompra.formaPago.ToString();
+                txtFormaPago2.Text = oCompra.formaPago2.ToString();
+                txtFormaPago3.Text = oCompra.formaPago3.ToString();
+                txtFormaPago4.Text = oCompra.formaPago4.ToString();
+                txtMontoFP1.Text = oCompra.montoFP1.ToString();
+                txtMontoFP2.Text = oCompra.montoFP2.ToString();
+                txtMontoFP3.Text = oCompra.montoFP3.ToString();
+                txtMontoFP4.Text = oCompra.montoFP4.ToString();
+
+                dgvData.Rows.Clear();
+                foreach (DetalleCompra dc in oCompra.oDetalleCompra)
+                {
+                    dgvData.Rows.Add(new object[] { dc.oProducto.nombre, dc.precioCompra, dc.cantidad, dc.montoTotal });
+                }
+
+                txtTotalAPagar.Text = oCompra.montoTotal.ToString("0.00");
+                txtPagaCon.Text = oCompra.montoPago.ToString("0.00");
+                //txtCambio.Text = oCompra.montoCambio.ToString("0.00");
+            }
         }
     }
 }

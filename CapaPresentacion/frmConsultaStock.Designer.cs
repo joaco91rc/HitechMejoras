@@ -50,7 +50,6 @@ namespace CapaPresentacion
             this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtProductoSeleccionado = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -79,6 +78,7 @@ namespace CapaPresentacion
             // 
             // btnExportarExcel
             // 
+            this.btnExportarExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportarExcel.BackColor = System.Drawing.Color.ForestGreen;
             this.btnExportarExcel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarExcel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
@@ -103,6 +103,9 @@ namespace CapaPresentacion
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -150,7 +153,7 @@ namespace CapaPresentacion
             this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
-            this.dgvData.Size = new System.Drawing.Size(1320, 497);
+            this.dgvData.Size = new System.Drawing.Size(1320, 546);
             this.dgvData.TabIndex = 92;
             // 
             // idProducto
@@ -273,19 +276,6 @@ namespace CapaPresentacion
             this.estado.Name = "estado";
             this.estado.ReadOnly = true;
             this.estado.Visible = false;
-            // 
-            // txtProductoSeleccionado
-            // 
-            this.txtProductoSeleccionado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtProductoSeleccionado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.txtProductoSeleccionado.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductoSeleccionado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductoSeleccionado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtProductoSeleccionado.Location = new System.Drawing.Point(170, 700);
-            this.txtProductoSeleccionado.Name = "txtProductoSeleccionado";
-            this.txtProductoSeleccionado.Size = new System.Drawing.Size(206, 18);
-            this.txtProductoSeleccionado.TabIndex = 102;
-            this.txtProductoSeleccionado.Text = "Ninguno";
             // 
             // btnLimpiar
             // 
@@ -564,7 +554,6 @@ namespace CapaPresentacion
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.btnExportarExcel);
             this.Controls.Add(this.dgvData);
-            this.Controls.Add(this.txtProductoSeleccionado);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtBusqueda);
@@ -600,7 +589,6 @@ namespace CapaPresentacion
         #endregion
         private FontAwesome.Sharp.IconButton btnExportarExcel;
         private System.Windows.Forms.DataGridView dgvData;
-        private System.Windows.Forms.TextBox txtProductoSeleccionado;
         private FontAwesome.Sharp.IconButton btnLimpiar;
         private FontAwesome.Sharp.IconButton btnBuscar;
         private System.Windows.Forms.TextBox txtBusqueda;

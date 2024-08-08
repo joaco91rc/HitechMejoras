@@ -61,13 +61,6 @@ namespace CapaPresentacion
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.txtTotalAPagar = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -90,16 +83,33 @@ namespace CapaPresentacion
             this.label15 = new System.Windows.Forms.Label();
             this.txtPagaCon = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.txtCotizacion = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtRestaPagar = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtCambioCliente = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbRegistrarCompra.SuspendLayout();
             this.gbInfoProveedor.SuspendLayout();
             this.gbInfoProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).BeginInit();
             this.SuspendLayout();
             // 
             // label11
             // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label11.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -178,6 +188,8 @@ namespace CapaPresentacion
             // 
             // gbInfoProveedor
             // 
+            this.gbInfoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbInfoProveedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.gbInfoProveedor.Controls.Add(this.txtIdProveedor);
             this.gbInfoProveedor.Controls.Add(this.btnBuscarProveedor);
@@ -226,6 +238,7 @@ namespace CapaPresentacion
             // 
             // txtRazonSocial
             // 
+            this.txtRazonSocial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRazonSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtRazonSocial.Location = new System.Drawing.Point(206, 78);
             this.txtRazonSocial.Name = "txtRazonSocial";
@@ -242,6 +255,7 @@ namespace CapaPresentacion
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -266,6 +280,8 @@ namespace CapaPresentacion
             // 
             // gbInfoProducto
             // 
+            this.gbInfoProducto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbInfoProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.gbInfoProducto.Controls.Add(this.txtIdProducto);
             this.gbInfoProducto.Controls.Add(this.label10);
@@ -298,6 +314,7 @@ namespace CapaPresentacion
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -310,6 +327,7 @@ namespace CapaPresentacion
             // 
             // lblPrecioVenta
             // 
+            this.lblPrecioVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPrecioVenta.AutoSize = true;
             this.lblPrecioVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblPrecioVenta.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -323,6 +341,7 @@ namespace CapaPresentacion
             // 
             // lblPrecioCompra
             // 
+            this.lblPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPrecioCompra.AutoSize = true;
             this.lblPrecioCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblPrecioCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -336,6 +355,7 @@ namespace CapaPresentacion
             // 
             // txtCantidad
             // 
+            this.txtCantidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCantidad.Location = new System.Drawing.Point(529, 71);
             this.txtCantidad.Maximum = new decimal(new int[] {
             100000,
@@ -353,6 +373,7 @@ namespace CapaPresentacion
             // 
             // txtPrecioventa
             // 
+            this.txtPrecioventa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPrecioventa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPrecioventa.Location = new System.Drawing.Point(780, 71);
             this.txtPrecioventa.Name = "txtPrecioventa";
@@ -363,6 +384,7 @@ namespace CapaPresentacion
             // 
             // txtPrecioCompra
             // 
+            this.txtPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPrecioCompra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPrecioCompra.Location = new System.Drawing.Point(637, 71);
             this.txtPrecioCompra.Name = "txtPrecioCompra";
@@ -373,6 +395,8 @@ namespace CapaPresentacion
             // 
             // txtProducto
             // 
+            this.txtProducto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProducto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtProducto.Location = new System.Drawing.Point(216, 71);
             this.txtProducto.Name = "txtProducto";
@@ -412,6 +436,8 @@ namespace CapaPresentacion
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -437,6 +463,9 @@ namespace CapaPresentacion
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -476,10 +505,347 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(634, 187);
+            this.dgvData.Size = new System.Drawing.Size(801, 187);
             this.dgvData.TabIndex = 55;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label13.Location = new System.Drawing.Point(554, 483);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(94, 17);
+            this.label13.TabIndex = 68;
+            this.label13.Text = "Total a Pagar:";
+            // 
+            // txtTotalAPagar
+            // 
+            this.txtTotalAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTotalAPagar.Location = new System.Drawing.Point(655, 483);
+            this.txtTotalAPagar.Name = "txtTotalAPagar";
+            this.txtTotalAPagar.Size = new System.Drawing.Size(158, 20);
+            this.txtTotalAPagar.TabIndex = 69;
+            this.txtTotalAPagar.Text = "0";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(965, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(385, 729);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 71;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnRegistrarCompra
+            // 
+            this.btnRegistrarCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegistrarCompra.BackColor = System.Drawing.Color.Green;
+            this.btnRegistrarCompra.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarCompra.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrarCompra.IconChar = FontAwesome.Sharp.IconChar.MoneyCheckAlt;
+            this.btnRegistrarCompra.IconColor = System.Drawing.Color.White;
+            this.btnRegistrarCompra.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnRegistrarCompra.IconSize = 32;
+            this.btnRegistrarCompra.Location = new System.Drawing.Point(826, 561);
+            this.btnRegistrarCompra.Name = "btnRegistrarCompra";
+            this.btnRegistrarCompra.Size = new System.Drawing.Size(134, 32);
+            this.btnRegistrarCompra.TabIndex = 70;
+            this.btnRegistrarCompra.Text = "Registrar";
+            this.btnRegistrarCompra.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRegistrarCompra.UseVisualStyleBackColor = false;
+            this.btnRegistrarCompra.Click += new System.EventHandler(this.btnRegistrarCompra_Click);
+            // 
+            // btnAgregarProducto
+            // 
+            this.btnAgregarProducto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAgregarProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnAgregarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAgregarProducto.ForeColor = System.Drawing.Color.ForestGreen;
+            this.btnAgregarProducto.IconChar = FontAwesome.Sharp.IconChar.Plus;
+            this.btnAgregarProducto.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnAgregarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnAgregarProducto.IconSize = 32;
+            this.btnAgregarProducto.Location = new System.Drawing.Point(825, 290);
+            this.btnAgregarProducto.Name = "btnAgregarProducto";
+            this.btnAgregarProducto.Size = new System.Drawing.Size(134, 63);
+            this.btnAgregarProducto.TabIndex = 56;
+            this.btnAgregarProducto.Text = "Agregar Producto";
+            this.btnAgregarProducto.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAgregarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAgregarProducto.UseVisualStyleBackColor = false;
+            this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
+            // 
+            // checkCaja
+            // 
+            this.checkCaja.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkCaja.AutoSize = true;
+            this.checkCaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkCaja.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkCaja.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkCaja.Location = new System.Drawing.Point(825, 384);
+            this.checkCaja.Name = "checkCaja";
+            this.checkCaja.Size = new System.Drawing.Size(135, 21);
+            this.checkCaja.TabIndex = 72;
+            this.checkCaja.Text = "Descontar de Caja";
+            this.checkCaja.UseVisualStyleBackColor = false;
+            // 
+            // cboFormaPago4
+            // 
+            this.cboFormaPago4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cboFormaPago4.FormattingEnabled = true;
+            this.cboFormaPago4.Location = new System.Drawing.Point(130, 569);
+            this.cboFormaPago4.Name = "cboFormaPago4";
+            this.cboFormaPago4.Size = new System.Drawing.Size(198, 21);
+            this.cboFormaPago4.TabIndex = 125;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label19.Location = new System.Drawing.Point(12, 569);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(112, 17);
+            this.label19.TabIndex = 124;
+            this.label19.Text = "Forma de Pago 4";
+            // 
+            // txtPagaCon4
+            // 
+            this.txtPagaCon4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon4.Location = new System.Drawing.Point(419, 569);
+            this.txtPagaCon4.Name = "txtPagaCon4";
+            this.txtPagaCon4.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon4.TabIndex = 123;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label20.Location = new System.Drawing.Point(334, 569);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(79, 17);
+            this.label20.TabIndex = 122;
+            this.label20.Text = "Monto FP4:";
+            // 
+            // cboFormaPago3
+            // 
+            this.cboFormaPago3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cboFormaPago3.FormattingEnabled = true;
+            this.cboFormaPago3.Location = new System.Drawing.Point(130, 539);
+            this.cboFormaPago3.Name = "cboFormaPago3";
+            this.cboFormaPago3.Size = new System.Drawing.Size(198, 21);
+            this.cboFormaPago3.TabIndex = 121;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label21.Location = new System.Drawing.Point(12, 539);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(112, 17);
+            this.label21.TabIndex = 120;
+            this.label21.Text = "Forma de Pago 3";
+            // 
+            // txtPagaCon3
+            // 
+            this.txtPagaCon3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon3.Location = new System.Drawing.Point(419, 539);
+            this.txtPagaCon3.Name = "txtPagaCon3";
+            this.txtPagaCon3.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon3.TabIndex = 119;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label22.Location = new System.Drawing.Point(334, 539);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(79, 17);
+            this.label22.TabIndex = 118;
+            this.label22.Text = "Monto FP3:";
+            // 
+            // cboFormaPago2
+            // 
+            this.cboFormaPago2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cboFormaPago2.FormattingEnabled = true;
+            this.cboFormaPago2.Location = new System.Drawing.Point(130, 513);
+            this.cboFormaPago2.Name = "cboFormaPago2";
+            this.cboFormaPago2.Size = new System.Drawing.Size(198, 21);
+            this.cboFormaPago2.TabIndex = 117;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label17.Location = new System.Drawing.Point(12, 513);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(112, 17);
+            this.label17.TabIndex = 116;
+            this.label17.Text = "Forma de Pago 2";
+            // 
+            // txtPagaCon2
+            // 
+            this.txtPagaCon2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon2.Location = new System.Drawing.Point(419, 513);
+            this.txtPagaCon2.Name = "txtPagaCon2";
+            this.txtPagaCon2.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon2.TabIndex = 115;
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label18.Location = new System.Drawing.Point(334, 513);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(79, 17);
+            this.label18.TabIndex = 114;
+            this.label18.Text = "Monto FP2:";
+            // 
+            // cboFormaPago
+            // 
+            this.cboFormaPago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cboFormaPago.FormattingEnabled = true;
+            this.cboFormaPago.Location = new System.Drawing.Point(130, 483);
+            this.cboFormaPago.Name = "cboFormaPago";
+            this.cboFormaPago.Size = new System.Drawing.Size(198, 21);
+            this.cboFormaPago.TabIndex = 113;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label15.Location = new System.Drawing.Point(12, 483);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(112, 17);
+            this.label15.TabIndex = 112;
+            this.label15.Text = "Forma de Pago 1";
+            // 
+            // txtPagaCon
+            // 
+            this.txtPagaCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon.Location = new System.Drawing.Point(419, 483);
+            this.txtPagaCon.Name = "txtPagaCon";
+            this.txtPagaCon.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon.TabIndex = 111;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label12.Location = new System.Drawing.Point(334, 483);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(79, 17);
+            this.label12.TabIndex = 110;
+            this.label12.Text = "Monto FP1:";
+            // 
+            // txtCotizacion
+            // 
+            this.txtCotizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtCotizacion.DecimalPlaces = 2;
+            this.txtCotizacion.Location = new System.Drawing.Point(656, 513);
+            this.txtCotizacion.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtCotizacion.Name = "txtCotizacion";
+            this.txtCotizacion.ReadOnly = true;
+            this.txtCotizacion.Size = new System.Drawing.Size(157, 20);
+            this.txtCotizacion.TabIndex = 126;
+            this.txtCotizacion.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label8.Location = new System.Drawing.Point(554, 512);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 17);
+            this.label8.TabIndex = 127;
+            this.label8.Text = "Cotizacion:";
+            // 
+            // txtRestaPagar
+            // 
+            this.txtRestaPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtRestaPagar.Location = new System.Drawing.Point(656, 539);
+            this.txtRestaPagar.Name = "txtRestaPagar";
+            this.txtRestaPagar.Size = new System.Drawing.Size(157, 20);
+            this.txtRestaPagar.TabIndex = 129;
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label23.AutoSize = true;
+            this.label23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label23.Location = new System.Drawing.Point(555, 539);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(85, 17);
+            this.label23.TabIndex = 128;
+            this.label23.Text = "Resta Pagar:";
+            // 
+            // txtCambioCliente
+            // 
+            this.txtCambioCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtCambioCliente.Location = new System.Drawing.Point(656, 569);
+            this.txtCambioCliente.Name = "txtCambioCliente";
+            this.txtCambioCliente.Size = new System.Drawing.Size(157, 20);
+            this.txtCambioCliente.TabIndex = 131;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label9.Location = new System.Drawing.Point(555, 569);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 17);
+            this.label9.TabIndex = 130;
+            this.label9.Text = "Cambio:";
             // 
             // idProducto
             // 
@@ -490,10 +856,10 @@ namespace CapaPresentacion
             // 
             // producto
             // 
+            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.producto.HeaderText = "PRODUCTO";
             this.producto.Name = "producto";
             this.producto.ReadOnly = true;
-            this.producto.Width = 160;
             // 
             // precioCompra
             // 
@@ -532,253 +898,18 @@ namespace CapaPresentacion
             this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnEliminar.Width = 25;
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label13.Location = new System.Drawing.Point(441, 483);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(94, 17);
-            this.label13.TabIndex = 68;
-            this.label13.Text = "Total a Pagar:";
-            // 
-            // txtTotalAPagar
-            // 
-            this.txtTotalAPagar.Location = new System.Drawing.Point(541, 483);
-            this.txtTotalAPagar.Name = "txtTotalAPagar";
-            this.txtTotalAPagar.Size = new System.Drawing.Size(111, 20);
-            this.txtTotalAPagar.TabIndex = 69;
-            this.txtTotalAPagar.Text = "0";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(965, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(385, 729);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 71;
-            this.pictureBox1.TabStop = false;
-            // 
-            // btnRegistrarCompra
-            // 
-            this.btnRegistrarCompra.BackColor = System.Drawing.Color.Green;
-            this.btnRegistrarCompra.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarCompra.ForeColor = System.Drawing.Color.White;
-            this.btnRegistrarCompra.IconChar = FontAwesome.Sharp.IconChar.MoneyCheckAlt;
-            this.btnRegistrarCompra.IconColor = System.Drawing.Color.White;
-            this.btnRegistrarCompra.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnRegistrarCompra.IconSize = 32;
-            this.btnRegistrarCompra.Location = new System.Drawing.Point(674, 445);
-            this.btnRegistrarCompra.Name = "btnRegistrarCompra";
-            this.btnRegistrarCompra.Size = new System.Drawing.Size(134, 32);
-            this.btnRegistrarCompra.TabIndex = 70;
-            this.btnRegistrarCompra.Text = "Registrar";
-            this.btnRegistrarCompra.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnRegistrarCompra.UseVisualStyleBackColor = false;
-            this.btnRegistrarCompra.Click += new System.EventHandler(this.btnRegistrarCompra_Click);
-            // 
-            // btnAgregarProducto
-            // 
-            this.btnAgregarProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.btnAgregarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgregarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregarProducto.ForeColor = System.Drawing.Color.ForestGreen;
-            this.btnAgregarProducto.IconChar = FontAwesome.Sharp.IconChar.Plus;
-            this.btnAgregarProducto.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnAgregarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAgregarProducto.IconSize = 32;
-            this.btnAgregarProducto.Location = new System.Drawing.Point(674, 290);
-            this.btnAgregarProducto.Name = "btnAgregarProducto";
-            this.btnAgregarProducto.Size = new System.Drawing.Size(134, 63);
-            this.btnAgregarProducto.TabIndex = 56;
-            this.btnAgregarProducto.Text = "Agregar Producto";
-            this.btnAgregarProducto.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAgregarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnAgregarProducto.UseVisualStyleBackColor = false;
-            this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
-            // 
-            // checkCaja
-            // 
-            this.checkCaja.AutoSize = true;
-            this.checkCaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.checkCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkCaja.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkCaja.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkCaja.Location = new System.Drawing.Point(674, 384);
-            this.checkCaja.Name = "checkCaja";
-            this.checkCaja.Size = new System.Drawing.Size(135, 21);
-            this.checkCaja.TabIndex = 72;
-            this.checkCaja.Text = "Descontar de Caja";
-            this.checkCaja.UseVisualStyleBackColor = false;
-            // 
-            // cboFormaPago4
-            // 
-            this.cboFormaPago4.FormattingEnabled = true;
-            this.cboFormaPago4.Location = new System.Drawing.Point(130, 569);
-            this.cboFormaPago4.Name = "cboFormaPago4";
-            this.cboFormaPago4.Size = new System.Drawing.Size(134, 21);
-            this.cboFormaPago4.TabIndex = 125;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label19.Location = new System.Drawing.Point(12, 569);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(112, 17);
-            this.label19.TabIndex = 124;
-            this.label19.Text = "Forma de Pago 4";
-            // 
-            // txtPagaCon4
-            // 
-            this.txtPagaCon4.Location = new System.Drawing.Point(355, 569);
-            this.txtPagaCon4.Name = "txtPagaCon4";
-            this.txtPagaCon4.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon4.TabIndex = 123;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label20.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label20.Location = new System.Drawing.Point(270, 569);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(79, 17);
-            this.label20.TabIndex = 122;
-            this.label20.Text = "Monto FP4:";
-            // 
-            // cboFormaPago3
-            // 
-            this.cboFormaPago3.FormattingEnabled = true;
-            this.cboFormaPago3.Location = new System.Drawing.Point(130, 539);
-            this.cboFormaPago3.Name = "cboFormaPago3";
-            this.cboFormaPago3.Size = new System.Drawing.Size(134, 21);
-            this.cboFormaPago3.TabIndex = 121;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label21.Location = new System.Drawing.Point(12, 539);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(112, 17);
-            this.label21.TabIndex = 120;
-            this.label21.Text = "Forma de Pago 3";
-            // 
-            // txtPagaCon3
-            // 
-            this.txtPagaCon3.Location = new System.Drawing.Point(355, 539);
-            this.txtPagaCon3.Name = "txtPagaCon3";
-            this.txtPagaCon3.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon3.TabIndex = 119;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label22.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label22.Location = new System.Drawing.Point(270, 539);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(79, 17);
-            this.label22.TabIndex = 118;
-            this.label22.Text = "Monto FP3:";
-            // 
-            // cboFormaPago2
-            // 
-            this.cboFormaPago2.FormattingEnabled = true;
-            this.cboFormaPago2.Location = new System.Drawing.Point(130, 513);
-            this.cboFormaPago2.Name = "cboFormaPago2";
-            this.cboFormaPago2.Size = new System.Drawing.Size(134, 21);
-            this.cboFormaPago2.TabIndex = 117;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label17.Location = new System.Drawing.Point(12, 513);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(112, 17);
-            this.label17.TabIndex = 116;
-            this.label17.Text = "Forma de Pago 2";
-            // 
-            // txtPagaCon2
-            // 
-            this.txtPagaCon2.Location = new System.Drawing.Point(355, 513);
-            this.txtPagaCon2.Name = "txtPagaCon2";
-            this.txtPagaCon2.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon2.TabIndex = 115;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label18.Location = new System.Drawing.Point(270, 513);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(79, 17);
-            this.label18.TabIndex = 114;
-            this.label18.Text = "Monto FP2:";
-            // 
-            // cboFormaPago
-            // 
-            this.cboFormaPago.FormattingEnabled = true;
-            this.cboFormaPago.Location = new System.Drawing.Point(130, 483);
-            this.cboFormaPago.Name = "cboFormaPago";
-            this.cboFormaPago.Size = new System.Drawing.Size(134, 21);
-            this.cboFormaPago.TabIndex = 113;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label15.Location = new System.Drawing.Point(12, 483);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(112, 17);
-            this.label15.TabIndex = 112;
-            this.label15.Text = "Forma de Pago 1";
-            // 
-            // txtPagaCon
-            // 
-            this.txtPagaCon.Location = new System.Drawing.Point(355, 483);
-            this.txtPagaCon.Name = "txtPagaCon";
-            this.txtPagaCon.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon.TabIndex = 111;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label12.Location = new System.Drawing.Point(270, 483);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(79, 17);
-            this.label12.TabIndex = 110;
-            this.label12.Text = "Monto FP1:";
-            // 
             // frmCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtCambioCliente);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtRestaPagar);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtCotizacion);
             this.Controls.Add(this.cboFormaPago4);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtPagaCon4);
@@ -819,6 +950,7 @@ namespace CapaPresentacion
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -859,13 +991,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.TextBox txtTotalAPagar;
         private FontAwesome.Sharp.IconButton btnRegistrarCompra;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
-        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
         private System.Windows.Forms.CheckBox checkCaja;
         private System.Windows.Forms.ComboBox cboFormaPago4;
         private System.Windows.Forms.Label label19;
@@ -883,5 +1008,18 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtPagaCon;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown txtCotizacion;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtRestaPagar;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txtCambioCliente;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
     }
 }

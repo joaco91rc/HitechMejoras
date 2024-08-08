@@ -591,7 +591,17 @@ namespace CapaPresentacion
     bool respuesta = new CN_Venta().Registrar(oVenta, detalle_venta, out mensaje);
     if (respuesta)
     {
-                    new CN_ProductoNegocio().SobrescribirStock(Convert.ToInt32(txtIdProducto.Text), GlobalSettings.SucursalId, -Convert.ToInt32(txtCantidad.Text));
+                    foreach (DataGridViewRow row in dgvData.Rows)
+                    {
+                        if (row.Cells["idProducto"].Value != null && row.Cells["cantidad"].Value != null)
+                        {
+                            int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
+                            int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
+
+                            // Actualizar el stock del producto
+                            new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
+                        }
+                    }
                     txtIdProducto.Text = string.Empty;
                     List<string> formasPago = new List<string>();
                     formasPago.Add(cboFormaPago.Text);

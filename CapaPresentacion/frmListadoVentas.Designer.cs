@@ -48,7 +48,6 @@ namespace CapaPresentacion
             this.cboBusqueda = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +55,7 @@ namespace CapaPresentacion
             this.montoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDetalle = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtIndice = new System.Windows.Forms.Label();
             this.gbRegistrarCompra.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -180,6 +180,7 @@ namespace CapaPresentacion
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.groupBox1.Controls.Add(this.btnBuscar);
             this.groupBox1.Controls.Add(this.txtBusqueda);
@@ -198,6 +199,7 @@ namespace CapaPresentacion
             // 
             // btnBuscar
             // 
+            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBuscar.BackColor = System.Drawing.Color.White;
             this.btnBuscar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -211,7 +213,7 @@ namespace CapaPresentacion
             this.btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnBuscar.IconSize = 28;
             this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscar.Location = new System.Drawing.Point(492, 51);
+            this.btnBuscar.Location = new System.Drawing.Point(611, 52);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(35, 28);
             this.btnBuscar.TabIndex = 81;
@@ -219,14 +221,17 @@ namespace CapaPresentacion
             // 
             // txtBusqueda
             // 
+            this.txtBusqueda.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBusqueda.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBusqueda.Location = new System.Drawing.Point(253, 51);
             this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(223, 29);
+            this.txtBusqueda.Size = new System.Drawing.Size(352, 29);
             this.txtBusqueda.TabIndex = 87;
             // 
             // btnLimpiarFiltros
             // 
+            this.btnLimpiarFiltros.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLimpiarFiltros.BackColor = System.Drawing.Color.White;
             this.btnLimpiarFiltros.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiarFiltros.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -240,7 +245,7 @@ namespace CapaPresentacion
             this.btnLimpiarFiltros.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarFiltros.IconSize = 28;
             this.btnLimpiarFiltros.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarFiltros.Location = new System.Drawing.Point(533, 51);
+            this.btnLimpiarFiltros.Location = new System.Drawing.Point(652, 52);
             this.btnLimpiarFiltros.Name = "btnLimpiarFiltros";
             this.btnLimpiarFiltros.Size = new System.Drawing.Size(35, 28);
             this.btnLimpiarFiltros.TabIndex = 82;
@@ -248,6 +253,7 @@ namespace CapaPresentacion
             // 
             // btnExportarExcel
             // 
+            this.btnExportarExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportarExcel.BackColor = System.Drawing.Color.ForestGreen;
             this.btnExportarExcel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarExcel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
@@ -293,6 +299,9 @@ namespace CapaPresentacion
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -332,18 +341,10 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(837, 331);
+            this.dgvData.Size = new System.Drawing.Size(1306, 569);
             this.dgvData.TabIndex = 99;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label1.Location = new System.Drawing.Point(1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1349, 729);
-            this.label1.TabIndex = 96;
             // 
             // idVenta
             // 
@@ -395,6 +396,14 @@ namespace CapaPresentacion
             this.btnDetalle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnDetalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnDetalle.Width = 30;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label1.Location = new System.Drawing.Point(1, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(1349, 729);
+            this.label1.TabIndex = 96;
             // 
             // txtIndice
             // 

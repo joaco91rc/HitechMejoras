@@ -44,6 +44,16 @@ namespace CapaPresentacion
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
@@ -77,16 +87,6 @@ namespace CapaPresentacion
             this.cboCajaAsociada = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -198,6 +198,9 @@ namespace CapaPresentacion
             // 
             this.dgvData.AllowUserToAddRows = false;
             this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -247,10 +250,86 @@ namespace CapaPresentacion
             this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
-            this.dgvData.Size = new System.Drawing.Size(824, 236);
+            this.dgvData.Size = new System.Drawing.Size(824, 373);
             this.dgvData.TabIndex = 82;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.MinimumWidth = 30;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idCajaRegistradora
+            // 
+            this.idCajaRegistradora.HeaderText = "ID CAJA";
+            this.idCajaRegistradora.Name = "idCajaRegistradora";
+            this.idCajaRegistradora.ReadOnly = true;
+            this.idCajaRegistradora.Visible = false;
+            this.idCajaRegistradora.Width = 83;
+            // 
+            // idTransaccion
+            // 
+            this.idTransaccion.HeaderText = "ID TRANSACCION";
+            this.idTransaccion.Name = "idTransaccion";
+            this.idTransaccion.ReadOnly = true;
+            this.idTransaccion.Visible = false;
+            this.idTransaccion.Width = 140;
+            // 
+            // hora
+            // 
+            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.hora.HeaderText = "FECHA Y HORA";
+            this.hora.Name = "hora";
+            this.hora.ReadOnly = true;
+            this.hora.Width = 125;
+            // 
+            // tipoTransaccion
+            // 
+            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
+            this.tipoTransaccion.Name = "tipoTransaccion";
+            this.tipoTransaccion.ReadOnly = true;
+            // 
+            // monto
+            // 
+            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.monto.HeaderText = "MONTO";
+            this.monto.Name = "monto";
+            this.monto.ReadOnly = true;
+            this.monto.Width = 85;
+            // 
+            // formaPago
+            // 
+            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.formaPago.HeaderText = "FORMA DE PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
+            // 
+            // docAsociado
+            // 
+            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.docAsociado.HeaderText = "DETALLE";
+            this.docAsociado.Name = "docAsociado";
+            this.docAsociado.ReadOnly = true;
+            // 
+            // usuarioTransaccion
+            // 
+            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
+            this.usuarioTransaccion.Name = "usuarioTransaccion";
+            this.usuarioTransaccion.ReadOnly = true;
+            this.usuarioTransaccion.Width = 166;
             // 
             // txtIndice
             // 
@@ -367,6 +446,7 @@ namespace CapaPresentacion
             // 
             // btnCerrarCaja
             // 
+            this.btnCerrarCaja.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCerrarCaja.BackColor = System.Drawing.Color.Firebrick;
             this.btnCerrarCaja.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrarCaja.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
@@ -380,7 +460,7 @@ namespace CapaPresentacion
             this.btnCerrarCaja.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCerrarCaja.IconSize = 28;
             this.btnCerrarCaja.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCerrarCaja.Location = new System.Drawing.Point(1173, 485);
+            this.btnCerrarCaja.Location = new System.Drawing.Point(1149, 639);
             this.btnCerrarCaja.Name = "btnCerrarCaja";
             this.btnCerrarCaja.Size = new System.Drawing.Size(165, 31);
             this.btnCerrarCaja.TabIndex = 81;
@@ -437,11 +517,12 @@ namespace CapaPresentacion
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label6.Location = new System.Drawing.Point(864, 398);
+            this.label6.Location = new System.Drawing.Point(840, 552);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 17);
             this.label6.TabIndex = 94;
@@ -449,7 +530,8 @@ namespace CapaPresentacion
             // 
             // txtSaldo
             // 
-            this.txtSaldo.Location = new System.Drawing.Point(1001, 398);
+            this.txtSaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldo.Location = new System.Drawing.Point(977, 552);
             this.txtSaldo.Name = "txtSaldo";
             this.txtSaldo.ReadOnly = true;
             this.txtSaldo.Size = new System.Drawing.Size(161, 20);
@@ -458,7 +540,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoInicial
             // 
-            this.txtSaldoInicial.Location = new System.Drawing.Point(724, 398);
+            this.txtSaldoInicial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoInicial.Location = new System.Drawing.Point(700, 552);
             this.txtSaldoInicial.Name = "txtSaldoInicial";
             this.txtSaldoInicial.ReadOnly = true;
             this.txtSaldoInicial.Size = new System.Drawing.Size(134, 20);
@@ -467,11 +550,12 @@ namespace CapaPresentacion
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label7.Location = new System.Drawing.Point(535, 398);
+            this.label7.Location = new System.Drawing.Point(511, 552);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(157, 17);
             this.label7.TabIndex = 96;
@@ -501,7 +585,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoInicialMP
             // 
-            this.txtSaldoInicialMP.Location = new System.Drawing.Point(724, 431);
+            this.txtSaldoInicialMP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoInicialMP.Location = new System.Drawing.Point(700, 585);
             this.txtSaldoInicialMP.Name = "txtSaldoInicialMP";
             this.txtSaldoInicialMP.ReadOnly = true;
             this.txtSaldoInicialMP.Size = new System.Drawing.Size(134, 20);
@@ -510,11 +595,12 @@ namespace CapaPresentacion
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label8.Location = new System.Drawing.Point(535, 431);
+            this.label8.Location = new System.Drawing.Point(511, 585);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(162, 17);
             this.label8.TabIndex = 102;
@@ -522,7 +608,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoMP
             // 
-            this.txtSaldoMP.Location = new System.Drawing.Point(1001, 431);
+            this.txtSaldoMP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoMP.Location = new System.Drawing.Point(977, 585);
             this.txtSaldoMP.Name = "txtSaldoMP";
             this.txtSaldoMP.ReadOnly = true;
             this.txtSaldoMP.Size = new System.Drawing.Size(161, 20);
@@ -531,11 +618,12 @@ namespace CapaPresentacion
             // 
             // label13
             // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label13.Location = new System.Drawing.Point(864, 431);
+            this.label13.Location = new System.Drawing.Point(840, 585);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(138, 17);
             this.label13.TabIndex = 100;
@@ -543,7 +631,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoInicialUSS
             // 
-            this.txtSaldoInicialUSS.Location = new System.Drawing.Point(724, 461);
+            this.txtSaldoInicialUSS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoInicialUSS.Location = new System.Drawing.Point(700, 615);
             this.txtSaldoInicialUSS.Name = "txtSaldoInicialUSS";
             this.txtSaldoInicialUSS.ReadOnly = true;
             this.txtSaldoInicialUSS.Size = new System.Drawing.Size(134, 20);
@@ -552,11 +641,12 @@ namespace CapaPresentacion
             // 
             // label14
             // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label14.AutoSize = true;
             this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label14.Location = new System.Drawing.Point(535, 461);
+            this.label14.Location = new System.Drawing.Point(511, 615);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(165, 17);
             this.label14.TabIndex = 106;
@@ -564,7 +654,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoUSS
             // 
-            this.txtSaldoUSS.Location = new System.Drawing.Point(1001, 461);
+            this.txtSaldoUSS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoUSS.Location = new System.Drawing.Point(977, 615);
             this.txtSaldoUSS.Name = "txtSaldoUSS";
             this.txtSaldoUSS.ReadOnly = true;
             this.txtSaldoUSS.Size = new System.Drawing.Size(161, 20);
@@ -573,11 +664,12 @@ namespace CapaPresentacion
             // 
             // label15
             // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label15.AutoSize = true;
             this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label15.Location = new System.Drawing.Point(864, 461);
+            this.label15.Location = new System.Drawing.Point(840, 615);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(97, 17);
             this.label15.TabIndex = 104;
@@ -585,7 +677,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoInicialGalicia
             // 
-            this.txtSaldoInicialGalicia.Location = new System.Drawing.Point(724, 493);
+            this.txtSaldoInicialGalicia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoInicialGalicia.Location = new System.Drawing.Point(700, 647);
             this.txtSaldoInicialGalicia.Name = "txtSaldoInicialGalicia";
             this.txtSaldoInicialGalicia.ReadOnly = true;
             this.txtSaldoInicialGalicia.Size = new System.Drawing.Size(134, 20);
@@ -594,11 +687,12 @@ namespace CapaPresentacion
             // 
             // label16
             // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label16.AutoSize = true;
             this.label16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label16.Location = new System.Drawing.Point(535, 493);
+            this.label16.Location = new System.Drawing.Point(511, 647);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(183, 17);
             this.label16.TabIndex = 110;
@@ -606,7 +700,8 @@ namespace CapaPresentacion
             // 
             // txtSaldoGalicia
             // 
-            this.txtSaldoGalicia.Location = new System.Drawing.Point(1001, 493);
+            this.txtSaldoGalicia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSaldoGalicia.Location = new System.Drawing.Point(977, 647);
             this.txtSaldoGalicia.Name = "txtSaldoGalicia";
             this.txtSaldoGalicia.ReadOnly = true;
             this.txtSaldoGalicia.Size = new System.Drawing.Size(161, 20);
@@ -615,11 +710,12 @@ namespace CapaPresentacion
             // 
             // label17
             // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label17.AutoSize = true;
             this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label17.Location = new System.Drawing.Point(864, 493);
+            this.label17.Location = new System.Drawing.Point(840, 647);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(91, 17);
             this.label17.TabIndex = 108;
@@ -674,82 +770,6 @@ namespace CapaPresentacion
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.MinimumWidth = 30;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idCajaRegistradora
-            // 
-            this.idCajaRegistradora.HeaderText = "ID CAJA";
-            this.idCajaRegistradora.Name = "idCajaRegistradora";
-            this.idCajaRegistradora.ReadOnly = true;
-            this.idCajaRegistradora.Visible = false;
-            this.idCajaRegistradora.Width = 83;
-            // 
-            // idTransaccion
-            // 
-            this.idTransaccion.HeaderText = "ID TRANSACCION";
-            this.idTransaccion.Name = "idTransaccion";
-            this.idTransaccion.ReadOnly = true;
-            this.idTransaccion.Visible = false;
-            this.idTransaccion.Width = 140;
-            // 
-            // hora
-            // 
-            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.hora.HeaderText = "FECHA Y HORA";
-            this.hora.Name = "hora";
-            this.hora.ReadOnly = true;
-            this.hora.Width = 125;
-            // 
-            // tipoTransaccion
-            // 
-            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
-            this.tipoTransaccion.Name = "tipoTransaccion";
-            this.tipoTransaccion.ReadOnly = true;
-            // 
-            // monto
-            // 
-            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.monto.HeaderText = "MONTO";
-            this.monto.Name = "monto";
-            this.monto.ReadOnly = true;
-            this.monto.Width = 85;
-            // 
-            // formaPago
-            // 
-            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.formaPago.HeaderText = "FORMA DE PAGO";
-            this.formaPago.Name = "formaPago";
-            this.formaPago.ReadOnly = true;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
-            // 
-            // docAsociado
-            // 
-            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.docAsociado.HeaderText = "DETALLE";
-            this.docAsociado.Name = "docAsociado";
-            this.docAsociado.ReadOnly = true;
-            // 
-            // usuarioTransaccion
-            // 
-            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
-            this.usuarioTransaccion.Name = "usuarioTransaccion";
-            this.usuarioTransaccion.ReadOnly = true;
-            this.usuarioTransaccion.Width = 166;
             // 
             // frmCajaRegistradora
             // 

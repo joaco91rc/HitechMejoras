@@ -77,9 +77,13 @@ namespace CapaPresentacion
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
+            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
+            this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -516,7 +520,7 @@ namespace CapaPresentacion
             this.lblUsuario.BackColor = System.Drawing.Color.ForestGreen;
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.White;
-            this.lblUsuario.Location = new System.Drawing.Point(95, 10);
+            this.lblUsuario.Location = new System.Drawing.Point(95, 9);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(143, 17);
             this.lblUsuario.TabIndex = 13;
@@ -527,6 +531,8 @@ namespace CapaPresentacion
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.ForestGreen;
+            this.panel1.Controls.Add(this.iconPictureBox2);
+            this.panel1.Controls.Add(this.iconPictureBox1);
             this.panel1.Controls.Add(this.lblSucursal);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label7);
@@ -545,11 +551,12 @@ namespace CapaPresentacion
             // 
             // lblSucursal
             // 
+            this.lblSucursal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSucursal.AutoSize = true;
             this.lblSucursal.BackColor = System.Drawing.Color.ForestGreen;
             this.lblSucursal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSucursal.ForeColor = System.Drawing.Color.White;
-            this.lblSucursal.Location = new System.Drawing.Point(711, 11);
+            this.lblSucursal.Location = new System.Drawing.Point(1224, 9);
             this.lblSucursal.Name = "lblSucursal";
             this.lblSucursal.Size = new System.Drawing.Size(45, 17);
             this.lblSucursal.TabIndex = 26;
@@ -557,11 +564,12 @@ namespace CapaPresentacion
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.ForestGreen;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(642, 11);
+            this.label9.Location = new System.Drawing.Point(1155, 9);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 17);
             this.label9.TabIndex = 25;
@@ -569,11 +577,12 @@ namespace CapaPresentacion
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.ForestGreen;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(603, 11);
+            this.label7.Location = new System.Drawing.Point(1137, 9);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(12, 17);
             this.label7.TabIndex = 24;
@@ -585,7 +594,7 @@ namespace CapaPresentacion
             this.label6.BackColor = System.Drawing.Color.ForestGreen;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(420, 11);
+            this.label6.Location = new System.Drawing.Point(492, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(12, 17);
             this.label6.TabIndex = 23;
@@ -597,7 +606,7 @@ namespace CapaPresentacion
             this.label5.BackColor = System.Drawing.Color.ForestGreen;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(264, 11);
+            this.label5.Location = new System.Drawing.Point(319, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(12, 17);
             this.label5.TabIndex = 21;
@@ -609,7 +618,7 @@ namespace CapaPresentacion
             this.lblRol.BackColor = System.Drawing.Color.ForestGreen;
             this.lblRol.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRol.ForeColor = System.Drawing.Color.White;
-            this.lblRol.Location = new System.Drawing.Point(476, 10);
+            this.lblRol.Location = new System.Drawing.Point(548, 9);
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(44, 17);
             this.lblRol.TabIndex = 22;
@@ -621,7 +630,7 @@ namespace CapaPresentacion
             this.label4.BackColor = System.Drawing.Color.ForestGreen;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(438, 10);
+            this.label4.Location = new System.Drawing.Point(510, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 17);
             this.label4.TabIndex = 20;
@@ -633,7 +642,7 @@ namespace CapaPresentacion
             this.lblDocumento.BackColor = System.Drawing.Color.ForestGreen;
             this.lblDocumento.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDocumento.ForeColor = System.Drawing.Color.White;
-            this.lblDocumento.Location = new System.Drawing.Point(318, 10);
+            this.lblDocumento.Location = new System.Drawing.Point(373, 9);
             this.lblDocumento.Name = "lblDocumento";
             this.lblDocumento.Size = new System.Drawing.Size(96, 17);
             this.lblDocumento.TabIndex = 21;
@@ -645,7 +654,7 @@ namespace CapaPresentacion
             this.label3.BackColor = System.Drawing.Color.ForestGreen;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(282, 10);
+            this.label3.Location = new System.Drawing.Point(331, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 17);
             this.label3.TabIndex = 19;
@@ -702,6 +711,37 @@ namespace CapaPresentacion
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
             this.btnCerrarSesion.Click += new System.EventHandler(this.iconButton1_Click);
             // 
+            // iconPictureBox1
+            // 
+            this.iconPictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iconPictureBox1.BackColor = System.Drawing.Color.ForestGreen;
+            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.iconPictureBox1.IconColor = System.Drawing.Color.White;
+            this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconPictureBox1.IconSize = 19;
+            this.iconPictureBox1.Location = new System.Drawing.Point(1344, 4);
+            this.iconPictureBox1.Name = "iconPictureBox1";
+            this.iconPictureBox1.Size = new System.Drawing.Size(19, 22);
+            this.iconPictureBox1.TabIndex = 27;
+            this.iconPictureBox1.TabStop = false;
+            this.iconPictureBox1.Click += new System.EventHandler(this.iconPictureBox1_Click_1);
+            // 
+            // iconPictureBox2
+            // 
+            this.iconPictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iconPictureBox2.BackColor = System.Drawing.Color.ForestGreen;
+            this.iconPictureBox2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.iconPictureBox2.IconChar = FontAwesome.Sharp.IconChar.AnglesDown;
+            this.iconPictureBox2.IconColor = System.Drawing.Color.WhiteSmoke;
+            this.iconPictureBox2.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconPictureBox2.IconSize = 19;
+            this.iconPictureBox2.Location = new System.Drawing.Point(1319, 4);
+            this.iconPictureBox2.Name = "iconPictureBox2";
+            this.iconPictureBox2.Size = new System.Drawing.Size(19, 22);
+            this.iconPictureBox2.TabIndex = 19;
+            this.iconPictureBox2.TabStop = false;
+            this.iconPictureBox2.Click += new System.EventHandler(this.iconPictureBox2_Click_1);
+            // 
             // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -716,18 +756,21 @@ namespace CapaPresentacion
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menu);
             this.Controls.Add(this.menuTitulo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Name = "Inicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Inicio_Load);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -782,6 +825,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ToolStripMenuItem subMenuStock;
         private System.Windows.Forms.ToolStripMenuItem subMenuTraspasoMercaderia;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
     }
 }
 
