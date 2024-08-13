@@ -10,7 +10,7 @@ namespace CapaEntidad
     {
         public static int SucursalId { get; set; }
         public static string NombreSucursal { get; set; }
-
+        public static string fechaBusquedaDetalleCaja { get; set; }
         public static int RolUsuario { get; set; }
     }
 }

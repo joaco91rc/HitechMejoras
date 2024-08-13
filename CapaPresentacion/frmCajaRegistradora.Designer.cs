@@ -44,16 +44,6 @@ namespace CapaPresentacion
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
@@ -87,6 +77,21 @@ namespace CapaPresentacion
             this.cboCajaAsociada = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
+            this.btnLimpiarDatos = new FontAwesome.Sharp.IconButton();
+            this.txtIdCompra = new System.Windows.Forms.TextBox();
+            this.txtIdVenta = new System.Windows.Forms.TextBox();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -96,9 +101,9 @@ namespace CapaPresentacion
             this.label10.BackColor = System.Drawing.Color.White;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.label10.Location = new System.Drawing.Point(491, 0);
+            this.label10.Location = new System.Drawing.Point(502, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(859, 729);
+            this.label10.Size = new System.Drawing.Size(848, 729);
             this.label10.TabIndex = 78;
             // 
             // label9
@@ -191,7 +196,7 @@ namespace CapaPresentacion
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(491, 729);
+            this.label1.Size = new System.Drawing.Size(502, 729);
             this.label1.TabIndex = 65;
             // 
             // dgvData
@@ -223,7 +228,9 @@ namespace CapaPresentacion
             this.formaPago,
             this.cajaAsociada,
             this.docAsociado,
-            this.usuarioTransaccion});
+            this.usuarioTransaccion,
+            this.idCompra,
+            this.idVenta});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -254,82 +261,6 @@ namespace CapaPresentacion
             this.dgvData.TabIndex = 82;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.MinimumWidth = 30;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idCajaRegistradora
-            // 
-            this.idCajaRegistradora.HeaderText = "ID CAJA";
-            this.idCajaRegistradora.Name = "idCajaRegistradora";
-            this.idCajaRegistradora.ReadOnly = true;
-            this.idCajaRegistradora.Visible = false;
-            this.idCajaRegistradora.Width = 83;
-            // 
-            // idTransaccion
-            // 
-            this.idTransaccion.HeaderText = "ID TRANSACCION";
-            this.idTransaccion.Name = "idTransaccion";
-            this.idTransaccion.ReadOnly = true;
-            this.idTransaccion.Visible = false;
-            this.idTransaccion.Width = 140;
-            // 
-            // hora
-            // 
-            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.hora.HeaderText = "FECHA Y HORA";
-            this.hora.Name = "hora";
-            this.hora.ReadOnly = true;
-            this.hora.Width = 125;
-            // 
-            // tipoTransaccion
-            // 
-            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
-            this.tipoTransaccion.Name = "tipoTransaccion";
-            this.tipoTransaccion.ReadOnly = true;
-            // 
-            // monto
-            // 
-            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.monto.HeaderText = "MONTO";
-            this.monto.Name = "monto";
-            this.monto.ReadOnly = true;
-            this.monto.Width = 85;
-            // 
-            // formaPago
-            // 
-            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.formaPago.HeaderText = "FORMA DE PAGO";
-            this.formaPago.Name = "formaPago";
-            this.formaPago.ReadOnly = true;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
-            // 
-            // docAsociado
-            // 
-            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.docAsociado.HeaderText = "DETALLE";
-            this.docAsociado.Name = "docAsociado";
-            this.docAsociado.ReadOnly = true;
-            // 
-            // usuarioTransaccion
-            // 
-            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
-            this.usuarioTransaccion.Name = "usuarioTransaccion";
-            this.usuarioTransaccion.ReadOnly = true;
-            this.usuarioTransaccion.Width = 166;
             // 
             // txtIndice
             // 
@@ -472,9 +403,9 @@ namespace CapaPresentacion
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(491, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(502, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(859, 729);
+            this.pictureBox1.Size = new System.Drawing.Size(848, 729);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 79;
             this.pictureBox1.TabStop = false;
@@ -494,9 +425,9 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(15, 333);
+            this.btnGuardar.Location = new System.Drawing.Point(3, 333);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(253, 31);
+            this.btnGuardar.Size = new System.Drawing.Size(227, 31);
             this.btnGuardar.TabIndex = 77;
             this.btnGuardar.Text = "Registrar Movimiento";
             this.btnGuardar.UseVisualStyleBackColor = false;
@@ -763,19 +694,157 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(274, 333);
+            this.btnEliminar.Location = new System.Drawing.Point(236, 333);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(141, 31);
+            this.btnEliminar.Size = new System.Drawing.Size(140, 31);
             this.btnEliminar.TabIndex = 114;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // btnLimpiarDatos
+            // 
+            this.btnLimpiarDatos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.btnLimpiarDatos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiarDatos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
+            this.btnLimpiarDatos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnLimpiarDatos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
+            this.btnLimpiarDatos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiarDatos.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiarDatos.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiarDatos.IconChar = FontAwesome.Sharp.IconChar.Broom;
+            this.btnLimpiarDatos.IconColor = System.Drawing.Color.White;
+            this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnLimpiarDatos.IconSize = 28;
+            this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(382, 333);
+            this.btnLimpiarDatos.Name = "btnLimpiarDatos";
+            this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
+            this.btnLimpiarDatos.TabIndex = 115;
+            this.btnLimpiarDatos.Text = "Limpiar";
+            this.btnLimpiarDatos.UseVisualStyleBackColor = false;
+            this.btnLimpiarDatos.Click += new System.EventHandler(this.btnLimpiarDatos_Click);
+            // 
+            // txtIdCompra
+            // 
+            this.txtIdCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtIdCompra.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtIdCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIdCompra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.txtIdCompra.Location = new System.Drawing.Point(382, 36);
+            this.txtIdCompra.Name = "txtIdCompra";
+            this.txtIdCompra.Size = new System.Drawing.Size(36, 18);
+            this.txtIdCompra.TabIndex = 116;
+            this.txtIdCompra.Text = "0";
+            // 
+            // txtIdVenta
+            // 
+            this.txtIdVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtIdVenta.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtIdVenta.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIdVenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.txtIdVenta.Location = new System.Drawing.Point(440, 36);
+            this.txtIdVenta.Name = "txtIdVenta";
+            this.txtIdVenta.Size = new System.Drawing.Size(36, 18);
+            this.txtIdVenta.TabIndex = 117;
+            this.txtIdVenta.Text = "0";
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.MinimumWidth = 30;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idCajaRegistradora
+            // 
+            this.idCajaRegistradora.HeaderText = "ID CAJA";
+            this.idCajaRegistradora.Name = "idCajaRegistradora";
+            this.idCajaRegistradora.ReadOnly = true;
+            this.idCajaRegistradora.Visible = false;
+            this.idCajaRegistradora.Width = 83;
+            // 
+            // idTransaccion
+            // 
+            this.idTransaccion.HeaderText = "ID TRANSACCION";
+            this.idTransaccion.Name = "idTransaccion";
+            this.idTransaccion.ReadOnly = true;
+            this.idTransaccion.Visible = false;
+            this.idTransaccion.Width = 140;
+            // 
+            // hora
+            // 
+            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.hora.HeaderText = "FECHA Y HORA";
+            this.hora.Name = "hora";
+            this.hora.ReadOnly = true;
+            this.hora.Width = 125;
+            // 
+            // tipoTransaccion
+            // 
+            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
+            this.tipoTransaccion.Name = "tipoTransaccion";
+            this.tipoTransaccion.ReadOnly = true;
+            // 
+            // monto
+            // 
+            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.monto.HeaderText = "MONTO";
+            this.monto.Name = "monto";
+            this.monto.ReadOnly = true;
+            this.monto.Width = 85;
+            // 
+            // formaPago
+            // 
+            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.formaPago.HeaderText = "FORMA DE PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
+            // 
+            // docAsociado
+            // 
+            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.docAsociado.HeaderText = "DETALLE";
+            this.docAsociado.Name = "docAsociado";
+            this.docAsociado.ReadOnly = true;
+            // 
+            // usuarioTransaccion
+            // 
+            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
+            this.usuarioTransaccion.Name = "usuarioTransaccion";
+            this.usuarioTransaccion.ReadOnly = true;
+            this.usuarioTransaccion.Width = 166;
+            // 
+            // idCompra
+            // 
+            this.idCompra.HeaderText = "ID COMPRA";
+            this.idCompra.Name = "idCompra";
+            this.idCompra.ReadOnly = true;
+            // 
+            // idVenta
+            // 
+            this.idVenta.HeaderText = "ID VENTA";
+            this.idVenta.Name = "idVenta";
+            this.idVenta.ReadOnly = true;
             // 
             // frmCajaRegistradora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtIdVenta);
+            this.Controls.Add(this.txtIdCompra);
+            this.Controls.Add(this.btnLimpiarDatos);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.cboCajaAsociada);
             this.Controls.Add(this.label18);
@@ -875,6 +944,9 @@ namespace CapaPresentacion
         private System.Windows.Forms.ComboBox cboCajaAsociada;
         private System.Windows.Forms.Label label18;
         private FontAwesome.Sharp.IconButton btnEliminar;
+        private FontAwesome.Sharp.IconButton btnLimpiarDatos;
+        private System.Windows.Forms.TextBox txtIdCompra;
+        private System.Windows.Forms.TextBox txtIdVenta;
         private System.Windows.Forms.DataGridViewButtonColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCajaRegistradora;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTransaccion;
@@ -885,5 +957,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn cajaAsociada;
         private System.Windows.Forms.DataGridViewTextBoxColumn docAsociado;
         private System.Windows.Forms.DataGridViewTextBoxColumn usuarioTransaccion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idCompra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
     }
 }

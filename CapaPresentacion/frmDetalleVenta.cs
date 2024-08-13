@@ -53,7 +53,7 @@ namespace CapaPresentacion
                 dgvData.Rows.Clear();
                 foreach (DetalleVenta dv in oVenta.oDetalleVenta)
                 {
-                    dgvData.Rows.Add(new object[] { dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal });
+                    dgvData.Rows.Add(new object[] {dv.oProducto.idProducto, dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal });
                 }
 
                 txtTotalAPagar.Text = oVenta.montoTotal.ToString("0.00");
@@ -203,9 +203,26 @@ namespace CapaPresentacion
                 if (result == DialogResult.Yes)
                 {
                     bool resultado = new CN_Venta().EliminarVentaConDetalle(Convert.ToInt32(lblIdVenta.Text), out mensaje);
-                    if (resultado)
+                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYVenta(Convert.ToInt32(lblIdVenta.Text), out mensaje);
+                    if (resultado && eliminar)
                     {
-                        MessageBox.Show("Venta Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                         
+                            MessageBox.Show("Venta y Moviemientos en Caja Eliminados", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+
+                        foreach (DataGridViewRow row in dgvData.Rows)
+                        {
+                            // Asegúrate de que la fila no sea una fila nueva (la fila de edición en blanco al final)
+                            if (!row.IsNewRow)
+                            {
+                                // Obtener el valor de la columna "IdProducto"
+                                int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
+                                int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
+
+                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                            }
+                        }
+
                         Limpiar();
                     }
                     else

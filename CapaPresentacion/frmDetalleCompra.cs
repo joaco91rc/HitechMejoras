@@ -169,9 +169,22 @@ namespace CapaPresentacion
                 if (result == DialogResult.Yes)
                 {
                     bool resultado = new CN_Compra().EliminarCompraConDetalle(Convert.ToInt32(lblIdCompra.Text), out mensaje);
-                    if (resultado)
+                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYCompra(Convert.ToInt32(lblIdCompra.Text), out mensaje);
+                    if (resultado && eliminar)
                     {
-                        MessageBox.Show("Compra Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Compra y  Movimientos en Caja Eliminados", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        foreach (DataGridViewRow row in dgvData.Rows)
+                        {
+                            // Asegúrate de que la fila no sea una fila nueva (la fila de edición en blanco al final)
+                            if (!row.IsNewRow)
+                            {
+                                // Obtener el valor de la columna "IdProducto"
+                                int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
+                                int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
+
+                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                            }
+                        }
                         Limpiar();
                     }
                     else
@@ -213,7 +226,7 @@ namespace CapaPresentacion
                 dgvData.Rows.Clear();
                 foreach (DetalleCompra dc in oCompra.oDetalleCompra)
                 {
-                    dgvData.Rows.Add(new object[] { dc.oProducto.nombre, dc.precioCompra, dc.cantidad, dc.montoTotal });
+                    dgvData.Rows.Add(new object[] {dc.oProducto.idProducto, dc.oProducto.nombre, dc.precioCompra, dc.cantidad, dc.montoTotal });
                 }
 
                 txtTotalAPagar.Text = oCompra.montoTotal.ToString("0.00");

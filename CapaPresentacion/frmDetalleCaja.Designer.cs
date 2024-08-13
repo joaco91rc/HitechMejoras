@@ -44,6 +44,13 @@ namespace CapaPresentacion
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtSaldoMP = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtSaldoUSS = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtSaldoGalicia = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaApertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,12 +58,9 @@ namespace CapaPresentacion
             this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtSaldoMP = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtSaldoUSS = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtSaldoGalicia = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.gbRegistrarCompra.SuspendLayout();
@@ -109,13 +113,17 @@ namespace CapaPresentacion
             this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idTransaccion,
             this.fechaApertura,
             this.hora,
             this.tipoTransaccion,
             this.monto,
             this.formaPago,
             this.docAsociado,
-            this.usuarioTransaccion});
+            this.usuarioTransaccion,
+            this.idCompra,
+            this.idVenta,
+            this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -135,8 +143,10 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(972, 325);
+            this.dgvData.Size = new System.Drawing.Size(963, 325);
             this.dgvData.TabIndex = 83;
+            this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
             // 
             // label6
             // 
@@ -241,59 +251,6 @@ namespace CapaPresentacion
             this.label1.Size = new System.Drawing.Size(983, 730);
             this.label1.TabIndex = 75;
             // 
-            // fechaApertura
-            // 
-            this.fechaApertura.HeaderText = "FECHA APERTURA CAJA";
-            this.fechaApertura.Name = "fechaApertura";
-            this.fechaApertura.ReadOnly = true;
-            this.fechaApertura.Visible = false;
-            this.fechaApertura.Width = 200;
-            // 
-            // hora
-            // 
-            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.hora.HeaderText = "MOVIMIENTO";
-            this.hora.Name = "hora";
-            this.hora.ReadOnly = true;
-            // 
-            // tipoTransaccion
-            // 
-            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.tipoTransaccion.HeaderText = "TIPO";
-            this.tipoTransaccion.Name = "tipoTransaccion";
-            this.tipoTransaccion.ReadOnly = true;
-            this.tipoTransaccion.Width = 120;
-            // 
-            // monto
-            // 
-            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.monto.HeaderText = "MONTO";
-            this.monto.Name = "monto";
-            this.monto.ReadOnly = true;
-            // 
-            // formaPago
-            // 
-            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.formaPago.HeaderText = "FORMA PAGO";
-            this.formaPago.Name = "formaPago";
-            this.formaPago.ReadOnly = true;
-            this.formaPago.Width = 120;
-            // 
-            // docAsociado
-            // 
-            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.docAsociado.HeaderText = "DOCUMENTO ASOCIADO";
-            this.docAsociado.Name = "docAsociado";
-            this.docAsociado.ReadOnly = true;
-            // 
-            // usuarioTransaccion
-            // 
-            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
-            this.usuarioTransaccion.Name = "usuarioTransaccion";
-            this.usuarioTransaccion.ReadOnly = true;
-            this.usuarioTransaccion.Width = 150;
-            // 
             // txtSaldoMP
             // 
             this.txtSaldoMP.Location = new System.Drawing.Point(346, 485);
@@ -354,6 +311,87 @@ namespace CapaPresentacion
             this.label4.TabIndex = 92;
             this.label4.Text = "Saldo Galicia:   $";
             // 
+            // idTransaccion
+            // 
+            this.idTransaccion.HeaderText = "ID TRANSACCION";
+            this.idTransaccion.Name = "idTransaccion";
+            this.idTransaccion.ReadOnly = true;
+            // 
+            // fechaApertura
+            // 
+            this.fechaApertura.HeaderText = "FECHA APERTURA CAJA";
+            this.fechaApertura.Name = "fechaApertura";
+            this.fechaApertura.ReadOnly = true;
+            this.fechaApertura.Visible = false;
+            this.fechaApertura.Width = 200;
+            // 
+            // hora
+            // 
+            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.hora.HeaderText = "MOVIMIENTO";
+            this.hora.Name = "hora";
+            this.hora.ReadOnly = true;
+            // 
+            // tipoTransaccion
+            // 
+            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.tipoTransaccion.HeaderText = "TIPO";
+            this.tipoTransaccion.Name = "tipoTransaccion";
+            this.tipoTransaccion.ReadOnly = true;
+            this.tipoTransaccion.Width = 120;
+            // 
+            // monto
+            // 
+            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.monto.HeaderText = "MONTO";
+            this.monto.Name = "monto";
+            this.monto.ReadOnly = true;
+            // 
+            // formaPago
+            // 
+            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.formaPago.HeaderText = "FORMA PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            this.formaPago.Width = 120;
+            // 
+            // docAsociado
+            // 
+            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.docAsociado.HeaderText = "DOCUMENTO ASOCIADO";
+            this.docAsociado.Name = "docAsociado";
+            this.docAsociado.ReadOnly = true;
+            // 
+            // usuarioTransaccion
+            // 
+            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
+            this.usuarioTransaccion.Name = "usuarioTransaccion";
+            this.usuarioTransaccion.ReadOnly = true;
+            this.usuarioTransaccion.Width = 150;
+            // 
+            // idCompra
+            // 
+            this.idCompra.HeaderText = "IDCOMPRA";
+            this.idCompra.Name = "idCompra";
+            this.idCompra.ReadOnly = true;
+            this.idCompra.Visible = false;
+            // 
+            // idVenta
+            // 
+            this.idVenta.HeaderText = "ID VENTA";
+            this.idVenta.Name = "idVenta";
+            this.idVenta.ReadOnly = true;
+            this.idVenta.Visible = false;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.HeaderText = "ELIMINAR";
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.ReadOnly = true;
+            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // frmDetalleCaja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -397,6 +435,13 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnBuscar;
         private System.Windows.Forms.DateTimePicker dtpFecha;
         private FontAwesome.Sharp.IconButton btnExportarExcel;
+        private System.Windows.Forms.TextBox txtSaldoMP;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtSaldoUSS;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtSaldoGalicia;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idTransaccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaApertura;
         private System.Windows.Forms.DataGridViewTextBoxColumn hora;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoTransaccion;
@@ -404,11 +449,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn formaPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn docAsociado;
         private System.Windows.Forms.DataGridViewTextBoxColumn usuarioTransaccion;
-        private System.Windows.Forms.TextBox txtSaldoMP;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtSaldoUSS;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtSaldoGalicia;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idCompra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
     }
 }

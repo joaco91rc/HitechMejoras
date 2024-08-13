@@ -629,13 +629,17 @@ namespace CapaPresentacion
                             docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
                             usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                             formaPago = cboFormaPago.Text,
-                            cajaAsociada = cajaAsociadaFP1
+                            cajaAsociada = cajaAsociadaFP1,
+                            idVenta = Convert.ToInt32(oVenta.nroDocumento),
+                            idCompra = null
+                            
                         };
 
 
 
 
                         int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out mensaje);
+
                         }
 
                         if (oVenta.montoPagoFP2 > 0)
@@ -651,7 +655,9 @@ namespace CapaPresentacion
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago2.Text,
-                                cajaAsociada = cajaAsociadaFP2
+                                cajaAsociada = cajaAsociadaFP2,
+                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
+                                idCompra = null
                             };
 
 
@@ -673,7 +679,9 @@ namespace CapaPresentacion
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago3.Text,
-                                cajaAsociada = cajaAsociadaFP3
+                                cajaAsociada = cajaAsociadaFP3,
+                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
+                                idCompra = null
                             };
 
 
@@ -695,7 +703,9 @@ namespace CapaPresentacion
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago4.Text,
-                                cajaAsociada= cajaAsociadaFP4
+                                cajaAsociada= cajaAsociadaFP4,
+                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
+                                idCompra = null
                             };
 
 

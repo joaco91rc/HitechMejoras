@@ -81,6 +81,7 @@ namespace CapaPresentacion
             this.label10 = new System.Windows.Forms.Label();
             this.txtPagaCon = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -310,6 +311,7 @@ namespace CapaPresentacion
             this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idProducto,
             this.producto,
             this.precioCompra,
             this.cantidad,
@@ -433,7 +435,6 @@ namespace CapaPresentacion
             this.btnBuscarProducto.Size = new System.Drawing.Size(35, 28);
             this.btnBuscarProducto.TabIndex = 65;
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
-            //this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
             // 
             // label14
             // 
@@ -720,6 +721,13 @@ namespace CapaPresentacion
             this.label9.TabIndex = 134;
             this.label9.Text = "Total Pagado:";
             // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
             // producto
             // 
             this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -851,6 +859,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtPagaCon;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;

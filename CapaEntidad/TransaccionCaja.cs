@@ -9,6 +9,9 @@ namespace CapaEntidad
     public class TransaccionCaja
     {
         public int idTransaccion { get; set; }
+        public int? idVenta { get; set; }
+        public int? idCompra { get; set; }
+        public int? idNegocio { get; set; }
         public int idCajaRegistradora { get; set; }
         public string hora { get; set; }
         public string tipoTransaccion { get; set; }

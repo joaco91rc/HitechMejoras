@@ -82,6 +82,7 @@ namespace CapaPresentacion
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
             this.lblIdVenta = new System.Windows.Forms.Label();
             this.lblNumeroVenta = new System.Windows.Forms.Label();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -221,6 +222,7 @@ namespace CapaPresentacion
             this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idProducto,
             this.producto,
             this.precioVenta,
             this.cantidad,
@@ -686,6 +688,13 @@ namespace CapaPresentacion
             this.lblNumeroVenta.TabIndex = 132;
             this.lblNumeroVenta.Text = "Numero Venta:";
             // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
             // producto
             // 
             this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -819,6 +828,7 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnEliminar;
         private System.Windows.Forms.Label lblIdVenta;
         private System.Windows.Forms.Label lblNumeroVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;

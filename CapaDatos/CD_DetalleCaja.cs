@@ -67,7 +67,7 @@ namespace CapaDatos
                 {
 
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select cr.fechaApertura,cr.fechaCierre,tc.hora,tc.tipoTransaccion,tc.monto,tc.formaPago, tc.docAsociado,tc.usuarioTransaccion from CAJA_REGISTRADORA cr");
+                    query.AppendLine("select cr.fechaApertura,cr.fechaCierre,tc.hora,tc.tipoTransaccion,tc.monto,tc.formaPago, tc.docAsociado,tc.usuarioTransaccion, tc.idCompra, tc.idVenta, tc.idTransaccion from CAJA_REGISTRADORA cr");
                     query.AppendLine("inner join TRANSACCION_CAJA tc  on tc.idCajaRegistradora = cr.idCajaRegistradora");
                     query.AppendLine("where CONVERT(DATE, cr.fechaApertura) = @fecha AND cr.fechaCierre IS NOT NULL"); // Modificación aquí
 
@@ -91,8 +91,11 @@ namespace CapaDatos
                                 monto = Convert.ToDecimal(dr["monto"].ToString()),
                                 formaPago = dr["formaPago"].ToString(),
                                 docAsociado = dr["docAsociado"].ToString(),
-                                usuarioTransaccion = dr["usuarioTransaccion"].ToString()
-                                
+                                usuarioTransaccion = dr["usuarioTransaccion"].ToString(),
+                                idCompra = dr["idCompra"] != DBNull.Value ? Convert.ToInt32(dr["idCompra"]) : 0,
+                                idVenta = dr["idVenta"] != DBNull.Value ? Convert.ToInt32(dr["idVenta"]) : 0,
+                                idTransaccion = Convert.ToInt32(dr["idTransaccion"])
+
 
 
 

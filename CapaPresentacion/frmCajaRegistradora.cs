@@ -145,7 +145,9 @@ namespace CapaPresentacion
                         item.formaPago,
                         item.cajaAsociada,
                         item.docAsociado,
-                        item.usuarioTransaccion
+                        item.usuarioTransaccion,
+                        item.idCompra,
+                        item.idVenta,
                              });
 
                 }
@@ -193,6 +195,8 @@ namespace CapaPresentacion
                     cajaAsociada = cboCajaAsociada.Text,
                     docAsociado = txtDocAsociado.Text,
                     usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                    idCompra= null,
+                    idVenta = null
                     
                 };
 
@@ -216,7 +220,9 @@ namespace CapaPresentacion
                         cboFormaPago.Text,
                         cboCajaAsociada.Text,
                         txtDocAsociado.Text,
-                        objTransaccion.usuarioTransaccion
+                        objTransaccion.usuarioTransaccion,
+                        null,
+                        null
 
 
             });
@@ -296,6 +302,8 @@ namespace CapaPresentacion
             txtMonto.Select();
             txtIdTransaccion.Text = "0";
             txtIndice.Text = "-1";
+            txtIdCompra.Text = "-1";
+            txtIdCompra.Text = "-1";
 
         }
 
@@ -385,9 +393,15 @@ namespace CapaPresentacion
                     cboCajaAsociada.Text = dgvData.Rows[indice].Cells["cajaAsociada"].Value.ToString();
                     txtDocAsociado.Text = dgvData.Rows[indice].Cells["docAsociado"].Value.ToString();
 
+                    // Verificar si idCompra es NULL
+                    txtIdCompra.Text = dgvData.Rows[indice].Cells["idCompra"].Value != DBNull.Value
+                                        ? dgvData.Rows[indice].Cells["idCompra"].Value.ToString()
+                                        : "0";
 
-                   
-
+                    // Verificar si idVenta es NULL
+                    txtIdVenta.Text = dgvData.Rows[indice].Cells["idVenta"].Value != DBNull.Value
+                                      ? dgvData.Rows[indice].Cells["idVenta"].Value.ToString()
+                                      : "0";
                 }
 
             }
@@ -406,6 +420,7 @@ namespace CapaPresentacion
 
                     if (GlobalSettings.RolUsuario == 1)
                     {
+                        
                         bool respuesta = new CN_Transaccion().EliminarMovimiento(Convert.ToInt32(txtIdTransaccion.Text), out mensaje);
                         if (respuesta)
                         {
@@ -453,6 +468,11 @@ namespace CapaPresentacion
                 e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
                 e.Handled = true;
             }
+        }
+
+        private void btnLimpiarDatos_Click(object sender, EventArgs e)
+        {
+            Limpiar();
         }
     }
 }

@@ -103,28 +103,14 @@ namespace CapaPresentacion
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
             dgvData.Rows.Clear();
-            string fecha = dtpFecha.Value.Year.ToString() + "-" + dtpFecha.Value.Month.ToString() + "-" + dtpFecha.Value.Day.ToString();
-            CajaRegistradora cajaPorFecha = new CN_CajaRegistradora().ObtenerCajaPorFecha(fecha,GlobalSettings.SucursalId);
+            GlobalSettings.fechaBusquedaDetalleCaja = dtpFecha.Value.Year.ToString() + "-" + dtpFecha.Value.Month.ToString() + "-" + dtpFecha.Value.Day.ToString();
+            CajaRegistradora cajaPorFecha = new CN_CajaRegistradora().ObtenerCajaPorFecha(GlobalSettings.fechaBusquedaDetalleCaja,GlobalSettings.SucursalId);
             
             if(cajaPorFecha.fechaCierre != "")
             {
-                List<DetalleCaja> listaCaja = new CN_DetalleCaja().Listar(fecha);
 
-                foreach (DetalleCaja item in listaCaja)
-                {
-                    dgvData.Rows.Add(new object[] {
-
-                        item.fechaApertura,
-
-                        item.hora,
-                        item.tipoTransaccion,
-                        item.monto,
-                        item.formaPago,
-                        item.docAsociado,
-                        item.usuarioTransaccion
-                             });
-
-                }
+                CargarDatosEnDataGridView(GlobalSettings.fechaBusquedaDetalleCaja);
+                
                 //calcularTotal();
 
                 //TotalesCaja totalesCaja = CalcularTotales();
@@ -213,10 +199,152 @@ namespace CapaPresentacion
 
         }
 
-        
+        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            int traspasarColumnIndex = dgvData.Columns["btnEliminar"].Index;
+
+            if (e.ColumnIndex == traspasarColumnIndex)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+
+                var w = Properties.Resources.trash.Width;
+                var h = Properties.Resources.trash.Height;
+                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+                e.Graphics.DrawImage(Properties.Resources.trash, new Rectangle(x, y, w, h));
+                e.Handled = true;
+            }
+        }
+
+        private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string mensaje = string.Empty;
+            if (dgvData.Columns[e.ColumnIndex].Name == "btnEliminar")
+            {
+                // Obtener la fila seleccionada
+                DataGridViewRow selectedRow = dgvData.Rows[e.RowIndex];
+
+                // Obtener los valores de las celdas de la fila seleccionada
+                int idCompra = Convert.ToInt32(selectedRow.Cells["idCompra"].Value);
+                int idVenta = Convert.ToInt32(selectedRow.Cells["idVenta"].Value);
+                int idTransaccion = Convert.ToInt32(selectedRow.Cells["idTransaccion"].Value);
+
+                string movimiento = selectedRow.Cells["tipoTransaccion"].Value.ToString();
+
+                if (GlobalSettings.RolUsuario == 1)
+                {
+                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta Compra?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        if (movimiento == "ENTRADA")
+                        {
+                            if (idVenta != 0)
+                            {
+                                bool respuesta = new CN_Transaccion().EliminarMovimientoCajaYVenta(idVenta, out mensaje);
+                                if (respuesta)
+                                {
+                                    bool resultado = new CN_Venta().EliminarVentaConDetalle(idVenta, out mensaje);
+                                    if (resultado)
+                                    {
+                                        MessageBox.Show("Movimiento y Venta Asociada Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        CargarDatosEnDataGridView(GlobalSettings.fechaBusquedaDetalleCaja);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error no se pudo eliminar el Movimiento y la Venta Asociada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+
+                                }
+
+                            }
+                            else
+                            {
+                                bool eliminarmov = new CN_Transaccion().EliminarMovimiento(idTransaccion, out mensaje);
+                                if (eliminarmov)
+                                {
+                                    MessageBox.Show("Movimiento  Eliminado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    CargarDatosEnDataGridView(GlobalSettings.fechaBusquedaDetalleCaja);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Error no se pudo eliminar el Movimiento", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+
+
+                        }
+                        if (movimiento == "SALIDA")
+                        {
+                            if (idCompra != 0)
+                            {
+                                bool respuesta = new CN_Transaccion().EliminarMovimientoCajaYCompra(idCompra, out mensaje);
+                                if (respuesta)
+                                {
+                                    bool resultado = new CN_Compra().EliminarCompraConDetalle(idCompra, out mensaje);
+                                    if (resultado)
+                                    {
+                                        MessageBox.Show("Movimiento y Compra Asociada Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        
+                                        CargarDatosEnDataGridView(GlobalSettings.fechaBusquedaDetalleCaja);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error no se pudo eliminar el Movimiento y la Compra Asociada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                bool eliminarmov2 = new CN_Transaccion().EliminarMovimiento(idTransaccion, out mensaje);
+                                if (eliminarmov2)
+                                {
+                                    MessageBox.Show("Movimiento  Eliminado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    CargarDatosEnDataGridView(GlobalSettings.fechaBusquedaDetalleCaja);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Error no se pudo eliminar el Movimiento", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
 
 
 
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No posee permisos para Eliminar un Movimiento  de Caja", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
 
+            }
+        }
+
+        private void CargarDatosEnDataGridView(string fecha)
+        {
+            dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar los datos
+
+            List<DetalleCaja> listaCaja = new CN_DetalleCaja().Listar(fecha); // Obteniendo la lista según la fecha
+
+            foreach (DetalleCaja item in listaCaja)
+            {
+                dgvData.Rows.Add(new object[] {
+            item.idTransaccion,
+            item.fechaApertura,
+            item.hora,
+            item.tipoTransaccion,
+            item.monto,
+            item.formaPago,
+            item.docAsociado,
+            item.usuarioTransaccion,
+            item.idCompra,
+            item.idVenta
+        });
+            }
+        }
     }
 }
