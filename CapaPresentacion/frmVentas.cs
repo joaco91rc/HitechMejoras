@@ -630,10 +630,11 @@ namespace CapaPresentacion
                             usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                             formaPago = cboFormaPago.Text,
                             cajaAsociada = cajaAsociadaFP1,
-                            idVenta = Convert.ToInt32(oVenta.nroDocumento),
-                            idCompra = null
-                            
-                        };
+                            idVenta = Convert.ToInt32(oVenta.idVenta),
+                            idCompra = null,
+                            idNegocio = GlobalSettings.SucursalId
+
+                            };
 
 
 
@@ -656,8 +657,9 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago2.Text,
                                 cajaAsociada = cajaAsociadaFP2,
-                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
-                                idCompra = null
+                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idCompra = null,
+                                idNegocio = GlobalSettings.SucursalId
                             };
 
 
@@ -680,8 +682,9 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago3.Text,
                                 cajaAsociada = cajaAsociadaFP3,
-                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
-                                idCompra = null
+                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idCompra = null,
+                                idNegocio = GlobalSettings.SucursalId
                             };
 
 
@@ -704,8 +707,9 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago4.Text,
                                 cajaAsociada= cajaAsociadaFP4,
-                                idVenta = Convert.ToInt32(oVenta.nroDocumento),
-                                idCompra = null
+                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idCompra = null,
+                                idNegocio = GlobalSettings.SucursalId
                             };
 
 

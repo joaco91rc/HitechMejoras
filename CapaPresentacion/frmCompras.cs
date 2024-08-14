@@ -521,7 +521,8 @@ namespace CapaPresentacion
                             formaPago = cboFormaPago.Text,
                             cajaAsociada = cajaAsociadaFP1,
                             idVenta = null,
-                            idCompra = oCompra.idCompra
+                            idCompra = oCompra.idCompra,
+                            idNegocio = GlobalSettings.SucursalId
                         };
 
 
@@ -545,7 +546,8 @@ namespace CapaPresentacion
                             formaPago = cboFormaPago2.Text,
                             cajaAsociada = cajaAsociadaFP2,
                             idVenta = null,
-                            idCompra = oCompra.idCompra
+                            idCompra = oCompra.idCompra,
+                            idNegocio = GlobalSettings.SucursalId
                         };
 
 
@@ -569,7 +571,8 @@ namespace CapaPresentacion
                             formaPago = cboFormaPago3.Text,
                             cajaAsociada = cajaAsociadaFP3,
                             idVenta = null,
-                            idCompra = oCompra.idCompra
+                            idCompra = oCompra.idCompra,
+                            idNegocio = GlobalSettings.SucursalId
                         };
 
 
@@ -593,7 +596,8 @@ namespace CapaPresentacion
                             formaPago = cboFormaPago4.Text,
                             cajaAsociada = cajaAsociadaFP4,
                             idVenta = null,
-                            idCompra = oCompra.idCompra
+                            idCompra = oCompra.idCompra,
+                            idNegocio = GlobalSettings.SucursalId
                         };
 
 
