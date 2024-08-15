@@ -12,7 +12,7 @@ namespace CapaDatos
     public class CD_Transaccion
     {
 
-        public List<TransaccionCaja> Listar(int idCajaRegistradora)
+        public List<TransaccionCaja> Listar(int idCajaRegistradora, int idNegocio)
         {
             List<TransaccionCaja> lista = new List<TransaccionCaja>();
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
@@ -20,10 +20,11 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT * FROM TRANSACCION_CAJA WHERE idCajaRegistradora = @idCajaRegistradora");
+                    query.AppendLine("SELECT * FROM TRANSACCION_CAJA WHERE idCajaRegistradora = @idCajaRegistradora & idNegocio =@idNegocio");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("idCajaRegistradora", idCajaRegistradora);
+                    cmd.Parameters.AddWithValue("idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
 

@@ -44,6 +44,17 @@ namespace CapaPresentacion
                     {
                         dgvData.Rows.Add(new object[] { idCotizacionGenerado ,dtpFecha.Value.ToString(), (txtImporte.Value).ToString()
             });
+                        List<Producto> listaProducto = new CN_Producto().Listar();
+                        foreach(var producto in listaProducto)
+                        {
+                            bool editarPrecios = false;
+                            if (producto.costoPesos > 0)
+                            {
+                                producto.precioCompra = Math.Round(producto.costoPesos / objCotizacion.importe, 2);
+                                editarPrecios = new CN_Producto().Editar(producto, out mensaje);
+                            }
+
+                        }
                         Limpiar();
                     }
                     else

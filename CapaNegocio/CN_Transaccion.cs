@@ -11,9 +11,9 @@ namespace CapaNegocio
     public class CN_Transaccion
     {
         private CD_Transaccion objcd_TransaccionCaja = new CD_Transaccion();
-        public List<TransaccionCaja> Listar(int idCajaRegistradora)
+        public List<TransaccionCaja> Listar(int idCajaRegistradora, int idNegocio)
         {
-            return objcd_TransaccionCaja.Listar(idCajaRegistradora);
+            return objcd_TransaccionCaja.Listar(idCajaRegistradora, idNegocio);
         }
 
         public int RegistrarMovimiento(TransaccionCaja objTransaccion, out string mensaje)

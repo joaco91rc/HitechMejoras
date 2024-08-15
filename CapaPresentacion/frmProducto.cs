@@ -112,6 +112,24 @@ namespace CapaPresentacion
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
+            // Validación de campos obligatorios
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            {
+                MessageBox.Show("El campo 'Código' es obligatorio.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("El campo 'Nombre' es obligatorio.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cboCategoria.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar una categoría.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             Producto objProducto = new Producto()
             {
                 idProducto = Convert.ToInt32(txtIdProducto.Text),
@@ -129,8 +147,9 @@ namespace CapaPresentacion
             if (checkCostoPesos.Checked)
             {
                 objProducto.costoPesos = Convert.ToDecimal(txtCostoPesos.Text);
-                objProducto.precioCompra = Convert.ToDecimal(txtCostoPesos.Text)/ cotizacionActiva;
-                
+                objProducto.precioCompra = Math.Round(Convert.ToDecimal(txtCostoPesos.Text) / cotizacionActiva, 2);
+
+
 
             }
             else
@@ -308,34 +327,21 @@ namespace CapaPresentacion
         {
             if (Convert.ToInt32(txtIdProducto.Text) != 0)
             {
-
-                if (MessageBox.Show("Desea eliminar el Producto?", "Confirmar Eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Desea eliminar el Producto?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     string mensaje = string.Empty;
-                    Producto objProducto = new Producto()
-                    {
-                        idProducto = Convert.ToInt32(txtIdProducto.Text),
+                    int idProducto = Convert.ToInt32(txtIdProducto.Text);
 
-                    };
-
-                    bool respuesta = new CN_Producto().Eliminar(objProducto, out mensaje);
+                    bool respuesta = new CN_Producto().DarBajaLogica(idProducto, out mensaje);
                     if (respuesta)
                     {
-
-                        dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));
+                        dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));  // Eliminar la fila de la grilla
+                        MessageBox.Show("Producto Eliminado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-
                     else
                     {
-
                         MessageBox.Show(mensaje, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-
                     }
-
-
-
-
                 }
             }
         }

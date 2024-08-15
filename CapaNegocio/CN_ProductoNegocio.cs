@@ -33,5 +33,12 @@ namespace CapaNegocio
 
         }
 
+        public void EliminarProductoNegocio(int idProducto, int idNegocio)
+        {
+
+            objcd_ProductoNegocio.EliminarProductoNegocio(idProducto, idNegocio);
+
+        }
+
     }
 }

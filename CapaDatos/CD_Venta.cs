@@ -175,7 +175,7 @@ namespace CapaDatos
 
                     oconexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT v.idVenta,v.idNegocio, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.montoPago,v.montoCambio,v.montoTotal, convert(char(10), v.fechaRegistro, 103)[FechaRegistro],v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4,v.montoPagoFP2,v.montoPagoFP3,v.montoPagoFP4");
+                    query.AppendLine("SELECT v.idVenta,v.idNegocio, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.cotizacionDolar,v.montoPago,v.montoCambio,v.montoTotal, convert(char(10), v.fechaRegistro, 103)[FechaRegistro],v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4,v.montoPagoFP2,v.montoPagoFP3,v.montoPagoFP4");
                     query.AppendLine("FROM VENTA v");
                     query.AppendLine("inner join USUARIO U ON U.idUsuario = V.idUsuario");
                      query.AppendLine("WHERE v.nroDocumento = @numero AND v.idNegocio = @idNegocio");
@@ -217,7 +217,8 @@ namespace CapaDatos
                                 montoFP4 = Convert.ToDecimal(dr["montoFP4"].ToString()),
                                 montoPagoFP2 = Convert.ToDecimal(dr["montoPagoFP2"].ToString()),
                                 montoPagoFP3 = Convert.ToDecimal(dr["montoPagoFP3"].ToString()),
-                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString())
+                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString()),
+                                cotizacionDolar = Convert.ToDecimal(dr["cotizacionDolar"].ToString())
 
                             };
 

@@ -43,6 +43,11 @@ namespace CapaPresentacion
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.gbInfoProveedor = new System.Windows.Forms.GroupBox();
@@ -82,11 +87,8 @@ namespace CapaPresentacion
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
             this.lblIdVenta = new System.Windows.Forms.Label();
             this.lblNumeroVenta = new System.Windows.Forms.Label();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtCotizacionDolar = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.gbInfoProveedor.SuspendLayout();
@@ -114,7 +116,7 @@ namespace CapaPresentacion
             this.btnDescargarPDF.IconColor = System.Drawing.Color.White;
             this.btnDescargarPDF.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnDescargarPDF.IconSize = 32;
-            this.btnDescargarPDF.Location = new System.Drawing.Point(754, 441);
+            this.btnDescargarPDF.Location = new System.Drawing.Point(878, 439);
             this.btnDescargarPDF.Name = "btnDescargarPDF";
             this.btnDescargarPDF.Size = new System.Drawing.Size(112, 40);
             this.btnDescargarPDF.TabIndex = 86;
@@ -248,6 +250,39 @@ namespace CapaPresentacion
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(923, 108);
             this.dgvData.TabIndex = 83;
+            // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // producto
+            // 
+            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.producto.HeaderText = "PRODUCTO";
+            this.producto.Name = "producto";
+            this.producto.ReadOnly = true;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.HeaderText = "PRECIO";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.ReadOnly = true;
+            this.precioVenta.Width = 180;
+            // 
+            // cantidad
+            // 
+            this.cantidad.HeaderText = "CANTIDAD";
+            this.cantidad.Name = "cantidad";
+            this.cantidad.ReadOnly = true;
+            // 
+            // subTotal
+            // 
+            this.subTotal.HeaderText = "SUB TOTAL";
+            this.subTotal.Name = "subTotal";
+            this.subTotal.ReadOnly = true;
             // 
             // label4
             // 
@@ -655,7 +690,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(613, 441);
+            this.btnEliminar.Location = new System.Drawing.Point(737, 441);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(135, 40);
             this.btnEliminar.TabIndex = 130;
@@ -688,44 +723,33 @@ namespace CapaPresentacion
             this.lblNumeroVenta.TabIndex = 132;
             this.lblNumeroVenta.Text = "Numero Venta:";
             // 
-            // idProducto
+            // txtCotizacionDolar
             // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
+            this.txtCotizacionDolar.Enabled = false;
+            this.txtCotizacionDolar.Location = new System.Drawing.Point(623, 438);
+            this.txtCotizacionDolar.Name = "txtCotizacionDolar";
+            this.txtCotizacionDolar.Size = new System.Drawing.Size(92, 20);
+            this.txtCotizacionDolar.TabIndex = 134;
             // 
-            // producto
+            // label14
             // 
-            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.producto.HeaderText = "PRODUCTO";
-            this.producto.Name = "producto";
-            this.producto.ReadOnly = true;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.HeaderText = "PRECIO";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.ReadOnly = true;
-            this.precioVenta.Width = 180;
-            // 
-            // cantidad
-            // 
-            this.cantidad.HeaderText = "CANTIDAD";
-            this.cantidad.Name = "cantidad";
-            this.cantidad.ReadOnly = true;
-            // 
-            // subTotal
-            // 
-            this.subTotal.HeaderText = "SUB TOTAL";
-            this.subTotal.Name = "subTotal";
-            this.subTotal.ReadOnly = true;
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label14.Location = new System.Drawing.Point(502, 438);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(115, 17);
+            this.label14.TabIndex = 133;
+            this.label14.Text = "Cotizacion Dolar:";
             // 
             // frmDetalleVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtCotizacionDolar);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.lblNumeroVenta);
             this.Controls.Add(this.lblIdVenta);
             this.Controls.Add(this.btnEliminar);
@@ -833,5 +857,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
+        private System.Windows.Forms.TextBox txtCotizacionDolar;
+        private System.Windows.Forms.Label label14;
     }
 }

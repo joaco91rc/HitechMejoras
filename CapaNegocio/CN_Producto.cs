@@ -98,6 +98,10 @@ namespace CapaNegocio
             return objcd_Producto.Eliminar(objProducto, out mensaje);
         }
 
+        public bool DarBajaLogica(int idProducto, out string mensaje)
+        {
+            return objcd_Producto.DarBajaLogica(idProducto, out mensaje);
+        }
 
 
     }

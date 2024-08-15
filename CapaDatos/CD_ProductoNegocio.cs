@@ -125,5 +125,31 @@ namespace CapaDatos
             }
         }
 
+
+        public void EliminarProductoNegocio(int idProducto, int idNegocio)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                // Comando SQL para eliminar el producto
+                SqlCommand deleteCmd = new SqlCommand(@"
+        DELETE FROM PRODUCTONEGOCIO 
+        WHERE idProducto = @idProducto AND idNegocio = @idNegocio", oconexion);
+
+                deleteCmd.Parameters.AddWithValue("@idProducto", idProducto);
+                deleteCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+
+                oconexion.Open();
+                int rowsAffected = deleteCmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("Producto eliminado exitosamente.");
+                }
+                else
+                {
+                    Console.WriteLine("No se encontró el producto con el ID especificado.");
+                }
+            }
+        }
     }
 }

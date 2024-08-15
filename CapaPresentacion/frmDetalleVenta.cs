@@ -49,7 +49,7 @@ namespace CapaPresentacion
                 txtMontoFP2.Text = oVenta.montoFP2.ToString();
                 txtMontoFP3.Text = oVenta.montoFP3.ToString();
                 txtMontoFP4.Text = oVenta.montoFP4.ToString();
-
+                txtCotizacionDolar.Text = oVenta.cotizacionDolar.ToString();
                 dgvData.Rows.Clear();
                 foreach (DetalleVenta dv in oVenta.oDetalleVenta)
                 {
@@ -110,7 +110,7 @@ namespace CapaPresentacion
             textoHtml = textoHtml.Replace("@docnegocio", odatos.CUIT.ToUpper());
             textoHtml = textoHtml.Replace("@direcnegocio", odatos.direccion.ToUpper());
 
-            textoHtml = textoHtml.Replace("@tipodocumento", cboTipoDocumento.Text.ToString().ToUpper());
+            //textoHtml = textoHtml.Replace("@tipodocumento", cboTipoDocumento.Text.ToString().ToUpper());
             textoHtml = textoHtml.Replace("@numerodocumento", txtnroDocumento.Text.ToUpper());
 
             textoHtml = textoHtml.Replace("@doccliente", txtDNI.Text);
@@ -137,8 +137,9 @@ namespace CapaPresentacion
             textoHtml = textoHtml.Replace("@descuento", txtDescuento.Text);
             textoHtml = textoHtml.Replace("@montodescuento", txtMontoDescuento.Text);
             textoHtml = textoHtml.Replace("@montototal", txtTotalAPagar.Text);
-            textoHtml = textoHtml.Replace("@pagocon", txtPagaCon.Text);
+            //textoHtml = textoHtml.Replace("@pagocon", txtPagaCon.Text);
             textoHtml = textoHtml.Replace("@cambio", txtCambio.Text);
+            textoHtml = textoHtml.Replace("@cotizacionDolar", txtCotizacionDolar.Text);
             textoHtml = textoHtml.Replace("@formaPago", txtFormaPago1.Text);
             textoHtml = textoHtml.Replace("@montoFP1", txtMontoFP1.Text);
             textoHtml = textoHtml.Replace("@formaPago2", txtFormaPago2.Text);

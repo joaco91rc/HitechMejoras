@@ -25,6 +25,7 @@ namespace CapaDatos
                     query.AppendLine("from Producto p");
                     query.AppendLine("inner join CATEGORIA c on c.idCategoria = p.idCategoria");
                     query.AppendLine("left join PRODUCTONEGOCIO pn on pn.idProducto = p.idProducto and pn.idNegocio = @idNegocio");
+                    query.AppendLine("where p.estado = 1");
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
@@ -75,6 +76,7 @@ namespace CapaDatos
                     query.AppendLine("FROM Producto p");
                     query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
                     query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto");
+                    query.AppendLine("WHERE p.estado = 1");
                     query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion, p.precioCompra, p.precioVenta, p.estado, p.costoPesos");
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -379,6 +381,40 @@ namespace CapaDatos
 
             return respuesta;
 
+        }
+
+        public bool DarBajaLogica(int idProducto, out string mensaje)
+        {
+            mensaje = string.Empty;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("UPDATE Producto SET estado = 0 WHERE idProducto = @idProducto");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    cmd.CommandType = CommandType.Text;
+
+                    oconexion.Open();
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+                    if (filasAfectadas > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        mensaje = "No se pudo Eliminar  producto.";
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error: " + ex.Message;
+                return false;
+            }
         }
 
 

@@ -131,7 +131,7 @@ namespace CapaPresentacion
                 txtSaldoMP.Text = cajaAbierta.saldoMP.ToString("0.00");
                 txtSaldoUSS.Text = cajaAbierta.saldoUSS.ToString("0.00");
                 txtSaldoGalicia.Text = cajaAbierta.saldoGalicia.ToString("0.00");
-                List<TransaccionCaja> listaTransacciones = new CN_Transaccion().Listar(cajaAbierta.idCajaRegistradora);
+                List<TransaccionCaja> listaTransacciones = new CN_Transaccion().Listar(cajaAbierta.idCajaRegistradora, GlobalSettings.SucursalId);
 
                 foreach (TransaccionCaja item in listaTransacciones)
                 {
@@ -148,6 +148,7 @@ namespace CapaPresentacion
                         item.usuarioTransaccion,
                         item.idCompra,
                         item.idVenta,
+                        item.idNegocio
                              });
 
                 }
@@ -195,8 +196,9 @@ namespace CapaPresentacion
                     cajaAsociada = cboCajaAsociada.Text,
                     docAsociado = txtDocAsociado.Text,
                     usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
-                    idCompra= null,
-                    idVenta = null
+                    idCompra= 0,
+                    idVenta = 0,
+                    idNegocio = GlobalSettings.SucursalId
                     
                 };
 
@@ -221,8 +223,9 @@ namespace CapaPresentacion
                         cboCajaAsociada.Text,
                         txtDocAsociado.Text,
                         objTransaccion.usuarioTransaccion,
-                        null,
-                        null
+                        0,
+                        0,
+                        GlobalSettings.SucursalId
 
 
             });
