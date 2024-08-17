@@ -208,14 +208,16 @@ namespace CapaPresentacion
                 int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out mensaje);
 
                 
-
+                
 
                 if (idTransaccionGenerado != 0)
                 {
+                    txtIdTransaccion.Text = idTransaccionGenerado.ToString();
                     objTransaccion.idTransaccion = idTransaccionGenerado;
                     dgvData.Rows.Add(new object[] { "",
+
+                        objTransaccion.idCajaRegistradora,
                         idTransaccionGenerado,
-                        idCajaRegistradora,
                         txtHora.Text,
                         cboTipoMovimiento.Text,
                         montoCalculado,

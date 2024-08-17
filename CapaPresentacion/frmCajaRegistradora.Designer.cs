@@ -29,10 +29,10 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtDocAsociado = new System.Windows.Forms.TextBox();
@@ -44,6 +44,18 @@ namespace CapaPresentacion
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
@@ -80,18 +92,6 @@ namespace CapaPresentacion
             this.btnLimpiarDatos = new FontAwesome.Sharp.IconButton();
             this.txtIdCompra = new System.Windows.Forms.TextBox();
             this.txtIdVenta = new System.Windows.Forms.TextBox();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.docAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -121,7 +121,7 @@ namespace CapaPresentacion
             // txtDocAsociado
             // 
             this.txtDocAsociado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDocAsociado.Location = new System.Drawing.Point(172, 273);
+            this.txtDocAsociado.Location = new System.Drawing.Point(175, 295);
             this.txtDocAsociado.Name = "txtDocAsociado";
             this.txtDocAsociado.Size = new System.Drawing.Size(178, 20);
             this.txtDocAsociado.TabIndex = 75;
@@ -159,7 +159,7 @@ namespace CapaPresentacion
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label5.Location = new System.Drawing.Point(12, 273);
+            this.label5.Location = new System.Drawing.Point(15, 295);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 17);
             this.label5.TabIndex = 69;
@@ -208,15 +208,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.btnSeleccionar,
@@ -232,35 +232,125 @@ namespace CapaPresentacion
             this.idCompra,
             this.idVenta});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(514, 156);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(824, 373);
             this.dgvData.TabIndex = 82;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.MinimumWidth = 30;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idCajaRegistradora
+            // 
+            this.idCajaRegistradora.HeaderText = "ID CAJA";
+            this.idCajaRegistradora.Name = "idCajaRegistradora";
+            this.idCajaRegistradora.ReadOnly = true;
+            this.idCajaRegistradora.Visible = false;
+            this.idCajaRegistradora.Width = 83;
+            // 
+            // idTransaccion
+            // 
+            this.idTransaccion.HeaderText = "ID TRANSACCION";
+            this.idTransaccion.Name = "idTransaccion";
+            this.idTransaccion.ReadOnly = true;
+            this.idTransaccion.Visible = false;
+            this.idTransaccion.Width = 140;
+            // 
+            // hora
+            // 
+            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.hora.HeaderText = "FECHA Y HORA";
+            this.hora.Name = "hora";
+            this.hora.ReadOnly = true;
+            this.hora.Width = 125;
+            // 
+            // tipoTransaccion
+            // 
+            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
+            this.tipoTransaccion.Name = "tipoTransaccion";
+            this.tipoTransaccion.ReadOnly = true;
+            // 
+            // monto
+            // 
+            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.monto.HeaderText = "MONTO";
+            this.monto.Name = "monto";
+            this.monto.ReadOnly = true;
+            this.monto.Width = 85;
+            // 
+            // formaPago
+            // 
+            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.formaPago.HeaderText = "FORMA DE PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
+            // 
+            // docAsociado
+            // 
+            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.docAsociado.HeaderText = "DETALLE";
+            this.docAsociado.Name = "docAsociado";
+            this.docAsociado.ReadOnly = true;
+            // 
+            // usuarioTransaccion
+            // 
+            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
+            this.usuarioTransaccion.Name = "usuarioTransaccion";
+            this.usuarioTransaccion.ReadOnly = true;
+            this.usuarioTransaccion.Width = 166;
+            // 
+            // idCompra
+            // 
+            this.idCompra.HeaderText = "ID COMPRA";
+            this.idCompra.Name = "idCompra";
+            this.idCompra.ReadOnly = true;
+            this.idCompra.Visible = false;
+            // 
+            // idVenta
+            // 
+            this.idVenta.HeaderText = "ID VENTA";
+            this.idVenta.Name = "idVenta";
+            this.idVenta.ReadOnly = true;
+            this.idVenta.Visible = false;
             // 
             // txtIndice
             // 
@@ -356,9 +446,9 @@ namespace CapaPresentacion
             this.txtIdTransaccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIdTransaccion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIdTransaccion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtIdTransaccion.Location = new System.Drawing.Point(355, 36);
+            this.txtIdTransaccion.Location = new System.Drawing.Point(366, 60);
             this.txtIdTransaccion.Name = "txtIdTransaccion";
-            this.txtIdTransaccion.Size = new System.Drawing.Size(36, 18);
+            this.txtIdTransaccion.Size = new System.Drawing.Size(68, 18);
             this.txtIdTransaccion.TabIndex = 84;
             this.txtIdTransaccion.Text = "0";
             this.txtIdTransaccion.Visible = false;
@@ -425,7 +515,7 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(3, 333);
+            this.btnGuardar.Location = new System.Drawing.Point(3, 357);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(227, 31);
             this.btnGuardar.TabIndex = 77;
@@ -694,7 +784,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(236, 333);
+            this.btnEliminar.Location = new System.Drawing.Point(236, 357);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(140, 31);
             this.btnEliminar.TabIndex = 114;
@@ -717,7 +807,7 @@ namespace CapaPresentacion
             this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarDatos.IconSize = 28;
             this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarDatos.Location = new System.Drawing.Point(382, 333);
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(382, 357);
             this.btnLimpiarDatos.Name = "btnLimpiarDatos";
             this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
             this.btnLimpiarDatos.TabIndex = 115;
@@ -736,6 +826,7 @@ namespace CapaPresentacion
             this.txtIdCompra.Size = new System.Drawing.Size(36, 18);
             this.txtIdCompra.TabIndex = 116;
             this.txtIdCompra.Text = "0";
+            this.txtIdCompra.Visible = false;
             // 
             // txtIdVenta
             // 
@@ -748,94 +839,7 @@ namespace CapaPresentacion
             this.txtIdVenta.Size = new System.Drawing.Size(36, 18);
             this.txtIdVenta.TabIndex = 117;
             this.txtIdVenta.Text = "0";
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.MinimumWidth = 30;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idCajaRegistradora
-            // 
-            this.idCajaRegistradora.HeaderText = "ID CAJA";
-            this.idCajaRegistradora.Name = "idCajaRegistradora";
-            this.idCajaRegistradora.ReadOnly = true;
-            this.idCajaRegistradora.Visible = false;
-            this.idCajaRegistradora.Width = 83;
-            // 
-            // idTransaccion
-            // 
-            this.idTransaccion.HeaderText = "ID TRANSACCION";
-            this.idTransaccion.Name = "idTransaccion";
-            this.idTransaccion.ReadOnly = true;
-            this.idTransaccion.Visible = false;
-            this.idTransaccion.Width = 140;
-            // 
-            // hora
-            // 
-            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.hora.HeaderText = "FECHA Y HORA";
-            this.hora.Name = "hora";
-            this.hora.ReadOnly = true;
-            this.hora.Width = 125;
-            // 
-            // tipoTransaccion
-            // 
-            this.tipoTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.tipoTransaccion.HeaderText = "MOVIMIENTO";
-            this.tipoTransaccion.Name = "tipoTransaccion";
-            this.tipoTransaccion.ReadOnly = true;
-            // 
-            // monto
-            // 
-            this.monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.monto.HeaderText = "MONTO";
-            this.monto.Name = "monto";
-            this.monto.ReadOnly = true;
-            this.monto.Width = 85;
-            // 
-            // formaPago
-            // 
-            this.formaPago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.formaPago.HeaderText = "FORMA DE PAGO";
-            this.formaPago.Name = "formaPago";
-            this.formaPago.ReadOnly = true;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
-            // 
-            // docAsociado
-            // 
-            this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.docAsociado.HeaderText = "DETALLE";
-            this.docAsociado.Name = "docAsociado";
-            this.docAsociado.ReadOnly = true;
-            // 
-            // usuarioTransaccion
-            // 
-            this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
-            this.usuarioTransaccion.Name = "usuarioTransaccion";
-            this.usuarioTransaccion.ReadOnly = true;
-            this.usuarioTransaccion.Width = 166;
-            // 
-            // idCompra
-            // 
-            this.idCompra.HeaderText = "ID COMPRA";
-            this.idCompra.Name = "idCompra";
-            this.idCompra.ReadOnly = true;
-            // 
-            // idVenta
-            // 
-            this.idVenta.HeaderText = "ID VENTA";
-            this.idVenta.Name = "idVenta";
-            this.idVenta.ReadOnly = true;
+            this.txtIdVenta.Visible = false;
             // 
             // frmCajaRegistradora
             // 

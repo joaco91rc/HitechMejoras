@@ -387,7 +387,7 @@ namespace CapaPresentacion
                 FormaPago fp1 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago.SelectedItem).Texto);
                 if (txtPagaCon.Text != string.Empty)
                 {
-                    montoPagado = montoPagado + Convert.ToDecimal(txtPagaCon.Text) - (Convert.ToDecimal(txtPagaCon.Text) * fp1.porcentajeRetencion) / 100;
+                    montoPagado = montoPagado + Convert.ToDecimal(txtPagaCon.Text);
                 }
             }
 
@@ -396,7 +396,7 @@ namespace CapaPresentacion
                 FormaPago fp2 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago2.SelectedItem).Texto);
                 if (txtPagaCon2.Text != string.Empty)
                 {
-                    montoPagadoFP2 = montoPagadoFP2 + Convert.ToDecimal(txtPagaCon2.Text) - (Convert.ToDecimal(txtPagaCon2.Text) * fp2.porcentajeRetencion) / 100;
+                    montoPagadoFP2 = montoPagadoFP2 + Convert.ToDecimal(txtPagaCon2.Text) ;
                 }
             }
             if (cboFormaPago3.SelectedItem != null)
@@ -404,7 +404,7 @@ namespace CapaPresentacion
                 FormaPago fp3 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago3.SelectedItem).Texto);
                 if (txtPagaCon3.Text != string.Empty)
                 {
-                    montoPagadoFP3 = montoPagadoFP3 + Convert.ToDecimal(txtPagaCon3.Text) - (Convert.ToDecimal(txtPagaCon3.Text) * fp3.porcentajeRetencion) / 100;
+                    montoPagadoFP3 = montoPagadoFP3 + Convert.ToDecimal(txtPagaCon3.Text);
                 }
             }
             if (cboFormaPago4.SelectedItem != null)
@@ -412,7 +412,7 @@ namespace CapaPresentacion
                 FormaPago fp4 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago4.SelectedItem).Texto);
                 if (txtPagaCon4.Text != string.Empty)
                 {
-                    montoPagadoFP4 = montoPagadoFP4 + Convert.ToDecimal(txtPagaCon4.Text) - (Convert.ToDecimal(txtPagaCon4.Text) * fp4.porcentajeRetencion) / 100;
+                    montoPagadoFP4 = montoPagadoFP4 + Convert.ToDecimal(txtPagaCon4.Text) ;
                 }
             }
 
@@ -454,7 +454,7 @@ namespace CapaPresentacion
                         int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
                         // Actualizar el stock del producto
-                        new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
+                        new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
                     }
                 }
                 txtIdProducto.Text = string.Empty;
