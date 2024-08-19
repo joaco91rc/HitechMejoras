@@ -46,6 +46,7 @@ namespace CapaDatos
                                 idCompra = dr["idCompra"] != DBNull.Value ? Convert.ToInt32(dr["idCompra"]) : 0,
                                 idVenta = dr["idVenta"] != DBNull.Value ? Convert.ToInt32(dr["idVenta"]) : 0,
                                 idNegocio = dr["idNegocio"] != DBNull.Value ? Convert.ToInt32(dr["idNegocio"]) :0,
+                                concepto = dr["concepto"].ToString()
                             });
                         }
                     }
@@ -79,6 +80,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("usuarioTransaccion", objTransaccion.usuarioTransaccion);
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);
+                    cmd.Parameters.AddWithValue("concepto", objTransaccion.concepto);
                     // Verificar si idVenta es NULL, si lo es, enviar 0
                     cmd.Parameters.AddWithValue("idVenta", objTransaccion.idVenta.HasValue ? objTransaccion.idVenta.Value : 0);
 

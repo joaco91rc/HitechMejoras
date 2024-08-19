@@ -55,6 +55,7 @@ namespace CapaPresentacion
             this.subMenuAperturaCaja = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuCajaDiaria = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuConsultaCaja = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuConceptos = new System.Windows.Forms.ToolStripMenuItem();
             this.menuRMA = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultas = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultaStock = new FontAwesome.Sharp.IconMenuItem();
@@ -64,6 +65,8 @@ namespace CapaPresentacion
             this.label2 = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
+            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.lblSucursal = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -77,13 +80,11 @@ namespace CapaPresentacion
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
-            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
-            this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -380,7 +381,8 @@ namespace CapaPresentacion
             this.menuCajaRegistradora.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.subMenuAperturaCaja,
             this.subMenuCajaDiaria,
-            this.subMenuConsultaCaja});
+            this.subMenuConsultaCaja,
+            this.subMenuConceptos});
             this.menuCajaRegistradora.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuCajaRegistradora.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuCajaRegistradora.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
@@ -420,6 +422,15 @@ namespace CapaPresentacion
             this.subMenuConsultaCaja.Size = new System.Drawing.Size(207, 26);
             this.subMenuConsultaCaja.Text = "Consulta de Caja";
             this.subMenuConsultaCaja.Click += new System.EventHandler(this.subMenuConsultaCaja_Click);
+            // 
+            // subMenuConceptos
+            // 
+            this.subMenuConceptos.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuConceptos.ForeColor = System.Drawing.Color.White;
+            this.subMenuConceptos.Name = "subMenuConceptos";
+            this.subMenuConceptos.Size = new System.Drawing.Size(207, 26);
+            this.subMenuConceptos.Text = "Conceptos";
+            this.subMenuConceptos.Click += new System.EventHandler(this.subMenuConceptos_Click);
             // 
             // menuRMA
             // 
@@ -548,6 +559,37 @@ namespace CapaPresentacion
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1366, 38);
             this.panel1.TabIndex = 15;
+            // 
+            // iconPictureBox2
+            // 
+            this.iconPictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iconPictureBox2.BackColor = System.Drawing.Color.ForestGreen;
+            this.iconPictureBox2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.iconPictureBox2.IconChar = FontAwesome.Sharp.IconChar.AnglesDown;
+            this.iconPictureBox2.IconColor = System.Drawing.Color.WhiteSmoke;
+            this.iconPictureBox2.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconPictureBox2.IconSize = 19;
+            this.iconPictureBox2.Location = new System.Drawing.Point(1319, 4);
+            this.iconPictureBox2.Name = "iconPictureBox2";
+            this.iconPictureBox2.Size = new System.Drawing.Size(19, 22);
+            this.iconPictureBox2.TabIndex = 19;
+            this.iconPictureBox2.TabStop = false;
+            this.iconPictureBox2.Click += new System.EventHandler(this.iconPictureBox2_Click_1);
+            // 
+            // iconPictureBox1
+            // 
+            this.iconPictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iconPictureBox1.BackColor = System.Drawing.Color.ForestGreen;
+            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.iconPictureBox1.IconColor = System.Drawing.Color.White;
+            this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconPictureBox1.IconSize = 19;
+            this.iconPictureBox1.Location = new System.Drawing.Point(1344, 4);
+            this.iconPictureBox1.Name = "iconPictureBox1";
+            this.iconPictureBox1.Size = new System.Drawing.Size(19, 22);
+            this.iconPictureBox1.TabIndex = 27;
+            this.iconPictureBox1.TabStop = false;
+            this.iconPictureBox1.Click += new System.EventHandler(this.iconPictureBox1_Click_1);
             // 
             // lblSucursal
             // 
@@ -711,37 +753,6 @@ namespace CapaPresentacion
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
             this.btnCerrarSesion.Click += new System.EventHandler(this.iconButton1_Click);
             // 
-            // iconPictureBox1
-            // 
-            this.iconPictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.iconPictureBox1.BackColor = System.Drawing.Color.ForestGreen;
-            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.X;
-            this.iconPictureBox1.IconColor = System.Drawing.Color.White;
-            this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconPictureBox1.IconSize = 19;
-            this.iconPictureBox1.Location = new System.Drawing.Point(1344, 4);
-            this.iconPictureBox1.Name = "iconPictureBox1";
-            this.iconPictureBox1.Size = new System.Drawing.Size(19, 22);
-            this.iconPictureBox1.TabIndex = 27;
-            this.iconPictureBox1.TabStop = false;
-            this.iconPictureBox1.Click += new System.EventHandler(this.iconPictureBox1_Click_1);
-            // 
-            // iconPictureBox2
-            // 
-            this.iconPictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.iconPictureBox2.BackColor = System.Drawing.Color.ForestGreen;
-            this.iconPictureBox2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.iconPictureBox2.IconChar = FontAwesome.Sharp.IconChar.AnglesDown;
-            this.iconPictureBox2.IconColor = System.Drawing.Color.WhiteSmoke;
-            this.iconPictureBox2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconPictureBox2.IconSize = 19;
-            this.iconPictureBox2.Location = new System.Drawing.Point(1319, 4);
-            this.iconPictureBox2.Name = "iconPictureBox2";
-            this.iconPictureBox2.Size = new System.Drawing.Size(19, 22);
-            this.iconPictureBox2.TabIndex = 19;
-            this.iconPictureBox2.TabStop = false;
-            this.iconPictureBox2.Click += new System.EventHandler(this.iconPictureBox2_Click_1);
-            // 
             // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -768,9 +779,9 @@ namespace CapaPresentacion
             this.menu.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -827,6 +838,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.ToolStripMenuItem subMenuTraspasoMercaderia;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
+        private System.Windows.Forms.ToolStripMenuItem subMenuConceptos;
     }
 }
 

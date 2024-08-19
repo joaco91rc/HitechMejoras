@@ -632,7 +632,8 @@ namespace CapaPresentacion
                             cajaAsociada = cajaAsociadaFP1,
                             idVenta = Convert.ToInt32(oVenta.idVenta),
                             idCompra = null,
-                            idNegocio = GlobalSettings.SucursalId
+                            idNegocio = GlobalSettings.SucursalId,
+                            concepto = "VENTA"
 
                             };
 
@@ -659,7 +660,8 @@ namespace CapaPresentacion
                                 cajaAsociada = cajaAsociadaFP2,
                                 idVenta = Convert.ToInt32(oVenta.idVenta),
                                 idCompra = null,
-                                idNegocio = GlobalSettings.SucursalId
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "VENTA"
                             };
 
 
@@ -684,7 +686,8 @@ namespace CapaPresentacion
                                 cajaAsociada = cajaAsociadaFP3,
                                 idVenta = Convert.ToInt32(oVenta.idVenta),
                                 idCompra = null,
-                                idNegocio = GlobalSettings.SucursalId
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "VENTA"
                             };
 
 
@@ -709,7 +712,8 @@ namespace CapaPresentacion
                                 cajaAsociada= cajaAsociadaFP4,
                                 idVenta = Convert.ToInt32(oVenta.idVenta),
                                 idCompra = null,
-                                idNegocio = GlobalSettings.SucursalId
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "VENTA"
                             };
 
 

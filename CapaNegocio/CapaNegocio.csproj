@@ -48,6 +48,7 @@
     <Compile Include="CN-Permiso.cs" />
     <Compile Include="CN_Cliente.cs" />
     <Compile Include="CN_Compra.cs" />
+    <Compile Include="CN_Concepto.cs" />
     <Compile Include="CN_DetalleCaja.cs" />
     <Compile Include="CN_FormaPago.cs" />
     <Compile Include="CN_Negocio.cs" />

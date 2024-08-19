@@ -279,5 +279,10 @@ namespace CapaPresentacion
         {
             this.WindowState = FormWindowState.Minimized;
         }
+
+        private void subMenuConceptos_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuCajaRegistradora, new frmConceptos());
+        }
     }
 }

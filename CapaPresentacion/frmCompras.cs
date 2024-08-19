@@ -522,7 +522,8 @@ namespace CapaPresentacion
                             cajaAsociada = cajaAsociadaFP1,
                             idVenta = null,
                             idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId
+                            idNegocio = GlobalSettings.SucursalId,
+                            concepto = "COMPRA"
                         };
 
 
@@ -547,7 +548,8 @@ namespace CapaPresentacion
                             cajaAsociada = cajaAsociadaFP2,
                             idVenta = null,
                             idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId
+                            idNegocio = GlobalSettings.SucursalId,
+                            concepto = "COMPRA"
                         };
 
 
@@ -572,7 +574,8 @@ namespace CapaPresentacion
                             cajaAsociada = cajaAsociadaFP3,
                             idVenta = null,
                             idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId
+                            idNegocio = GlobalSettings.SucursalId,
+                            concepto = "COMPRA"
                         };
 
 
@@ -597,7 +600,8 @@ namespace CapaPresentacion
                             cajaAsociada = cajaAsociadaFP4,
                             idVenta = null,
                             idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId
+                            idNegocio = GlobalSettings.SucursalId,
+                            concepto = "COMPRA"
                         };
 
 

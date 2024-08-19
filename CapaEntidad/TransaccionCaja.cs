@@ -19,6 +19,7 @@ namespace CapaEntidad
         public string docAsociado { get; set; }
         public string usuarioTransaccion { get; set; }
         public string formaPago { get; set; }
+        
         public string cajaAsociada { get; set; }
         public string concepto { get; set; }
 

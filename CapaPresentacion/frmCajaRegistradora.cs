@@ -102,6 +102,11 @@ namespace CapaPresentacion
             cboTipoMovimiento.ValueMember = "Valor";
             cboTipoMovimiento.SelectedIndex = 0;
 
+            var listaConceptos = new CN_Concepto().Listar();
+            cboConcepto.DataSource = listaConceptos;
+            cboConcepto.DisplayMember = "descripcion"; // Propiedad que se mostrará en el ComboBox
+            cboConcepto.ValueMember = "idConcepto";
+
             CargarComboBoxFormaPago();
 
             foreach (DataGridViewColumn columna in dgvData.Columns)
@@ -140,6 +145,7 @@ namespace CapaPresentacion
                         item.idCajaRegistradora,
                         item.idTransaccion,
                         item.hora,
+                        item.concepto,
                         item.tipoTransaccion,
                         item.monto,
                         item.formaPago,
@@ -191,7 +197,7 @@ namespace CapaPresentacion
                     hora = txtHora.Text,
                     tipoTransaccion = cboTipoMovimiento.Text,
                     monto = montoCalculado,
-                    
+                    concepto= cboConcepto.Text,
                     formaPago = cboFormaPago.Text,
                     cajaAsociada = cboCajaAsociada.Text,
                     docAsociado = txtDocAsociado.Text,
@@ -219,6 +225,7 @@ namespace CapaPresentacion
                         objTransaccion.idCajaRegistradora,
                         idTransaccionGenerado,
                         txtHora.Text,
+                        cboConcepto.Text,
                         cboTipoMovimiento.Text,
                         montoCalculado,
                         cboFormaPago.Text,

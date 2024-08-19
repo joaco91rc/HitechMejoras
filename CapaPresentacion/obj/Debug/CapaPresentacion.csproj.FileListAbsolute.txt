@@ -547,3 +547,4 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacio
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\LP NEW STORE 49 SOFTWARE.exe
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\LP NEW STORE 49 SOFTWARE.pdb
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmListadoCompras.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmConceptos.resources
