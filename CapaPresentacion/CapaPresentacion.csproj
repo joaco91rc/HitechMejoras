@@ -242,6 +242,12 @@
     <Compile Include="frmRMA.Designer.cs">
       <DependentUpon>frmRMA.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmServicioTecnico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmServicioTecnico.Designer.cs">
+      <DependentUpon>frmServicioTecnico.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -370,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRMA.resx">
       <DependentUpon>frmRMA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmServicioTecnico.resx">
+      <DependentUpon>frmServicioTecnico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>

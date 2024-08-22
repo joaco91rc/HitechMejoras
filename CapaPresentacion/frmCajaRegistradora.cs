@@ -285,12 +285,16 @@ namespace CapaPresentacion
                         // Limpiar controles si es necesario
                         Limpiar();
                     }
+                    
                     else
                     {
                         MessageBox.Show(mensaje);
                     }
                 }
-
+                txtSaldo.Text = (totalesCaja.Total + Convert.ToDecimal(txtSaldoInicial.Text)).ToString();
+                txtSaldoMP.Text = (totalesCaja.TotalMP + Convert.ToDecimal(txtSaldoInicialMP.Text)).ToString();
+                txtSaldoUSS.Text = (totalesCaja.TotalUSS + Convert.ToDecimal(txtSaldoInicialUSS.Text)).ToString();
+                txtSaldoGalicia.Text = (totalesCaja.TotalGalicia + Convert.ToDecimal(txtSaldoInicialGalicia.Text)).ToString();
 
             }
             
