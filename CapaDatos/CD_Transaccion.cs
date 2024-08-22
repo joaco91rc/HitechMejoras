@@ -112,6 +112,54 @@ namespace CapaDatos
 
         }
 
+        public bool EditarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
+        {
+            bool resultado = false;
+            mensaje = string.Empty;
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_EDITARMOVIMIENTO", oconexion);
+                    cmd.Parameters.AddWithValue("idTransaccion", objTransaccion.idTransaccion);
+                    cmd.Parameters.AddWithValue("idCajaRegistradora", objTransaccion.idCajaRegistradora);
+                    cmd.Parameters.AddWithValue("tipoTransaccion", objTransaccion.tipoTransaccion);
+                    cmd.Parameters.AddWithValue("monto", objTransaccion.monto);
+                    cmd.Parameters.AddWithValue("docAsociado", objTransaccion.docAsociado);
+                    cmd.Parameters.AddWithValue("fecha", DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("usuarioTransaccion", objTransaccion.usuarioTransaccion);
+                    cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
+                    cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);
+                    cmd.Parameters.AddWithValue("concepto", objTransaccion.concepto);
+                    cmd.Parameters.AddWithValue("idVenta", objTransaccion.idVenta.HasValue ? objTransaccion.idVenta.Value : 0);
+                    cmd.Parameters.AddWithValue("idCompra", objTransaccion.idCompra.HasValue ? objTransaccion.idCompra.Value : 0);
+                    cmd.Parameters.AddWithValue("idNegocio", objTransaccion.idNegocio);
+                    cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
+                    cmd.ExecuteNonQuery();
+
+                    int rowsAffected = Convert.ToInt32(cmd.Parameters["resultado"].Value);
+                    mensaje = cmd.Parameters["mensaje"].Value.ToString();
+
+                    if (rowsAffected > 0)
+                    {
+                        resultado = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+
+            return resultado;
+        }
+
+
+
         public bool EliminarMovimiento(int idTransaccion, out string mensaje)
         {
             mensaje = string.Empty;

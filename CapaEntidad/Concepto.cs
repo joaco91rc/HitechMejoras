@@ -10,6 +10,7 @@ namespace CapaEntidad
     {
         public int idConcepto { get; set; }
         public string descripcion { get; set; }
+        public string tipo { get; set; }
         public bool estado { get; set; }
         public DateTime fechaRegistro { get; set; }
     }

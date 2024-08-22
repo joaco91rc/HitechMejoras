@@ -40,10 +40,11 @@ namespace CapaDatos
             return idCorrelativo;
         }
 
-        public bool Registrar(Compra objCompra, DataTable detalleCompra, out string mensaje)
+        public bool Registrar(Compra objCompra, DataTable detalleCompra, out string mensaje, out int idCompraSalida)
         {
             bool respuesta = false;
             mensaje = string.Empty;
+            idCompraSalida = 0;
 
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
             {
@@ -74,6 +75,7 @@ namespace CapaDatos
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("idCompraSalida", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     oconexion.Open();
@@ -81,6 +83,7 @@ namespace CapaDatos
 
                     respuesta = Convert.ToBoolean(cmd.Parameters["resultado"].Value);
                     mensaje = cmd.Parameters["mensaje"].Value.ToString();
+                    idCompraSalida = Convert.ToInt32(cmd.Parameters["idCompraSalida"].Value);
                 }
                 catch (Exception ex)
                 {

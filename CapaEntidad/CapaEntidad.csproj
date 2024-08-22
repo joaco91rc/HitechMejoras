@@ -64,6 +64,7 @@
     <Compile Include="ReporteCompra.cs" />
     <Compile Include="ReporteVenta.cs" />
     <Compile Include="Rol.cs" />
+    <Compile Include="ServicioTecnico.cs" />
     <Compile Include="SucursalSettings.cs" />
     <Compile Include="TransaccionCaja.cs" />
     <Compile Include="Usuario.cs" />

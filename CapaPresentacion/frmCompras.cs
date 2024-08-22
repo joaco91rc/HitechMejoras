@@ -443,7 +443,8 @@ namespace CapaPresentacion
             };
 
             string mensaje = string.Empty;
-            bool respuesta = new CN_Compra().Registrar(oCompra,detalle_compra,out mensaje);
+            int idCompragenerado = 0;
+            bool respuesta = new CN_Compra().Registrar(oCompra,detalle_compra,out mensaje, out idCompragenerado);
             if (respuesta)
             {
                 foreach (DataGridViewRow row in dgvData.Rows)
@@ -521,7 +522,7 @@ namespace CapaPresentacion
                             formaPago = cboFormaPago.Text,
                             cajaAsociada = cajaAsociadaFP1,
                             idVenta = null,
-                            idCompra = oCompra.idCompra,
+                            idCompra = idCompragenerado,
                             idNegocio = GlobalSettings.SucursalId,
                             concepto = "COMPRA"
                         };

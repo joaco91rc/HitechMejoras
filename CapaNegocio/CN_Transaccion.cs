@@ -43,6 +43,32 @@ namespace CapaNegocio
             }
         }
 
+        public bool EditarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
+        {
+            mensaje = string.Empty;
+
+            // Validaciones previas
+            if (string.IsNullOrWhiteSpace(objTransaccion.tipoTransaccion))
+            {
+                mensaje = "Es necesario especificar el tipo de Movimiento\n";
+            }
+
+            if (objTransaccion.monto == 0)
+            {
+                mensaje += "Es necesario especificar el Monto del Movimiento\n";
+            }
+
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                return false;
+            }
+            else
+            {
+                // Llamada al método de la capa de datos para editar el movimiento
+                return objcd_TransaccionCaja.EditarMovimiento(objTransaccion, out mensaje);
+            }
+        }
+
 
         public bool EliminarMovimiento(int idTransaccion, out string mensaje)
         {

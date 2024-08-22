@@ -98,7 +98,7 @@ namespace CapaPresentacion
                     item.precioCompra,
                     item.costoPesos,
                     item.precioVenta,
-                    (item.precioVenta*cotizacionActiva).ToString("0.00"),
+                    (Math.Ceiling((item.precioVenta*cotizacionActiva)/500)*500).ToString("0.00"),
                     item.estado==true?1:0,
                     item.estado==true? "Activo": "No Activo"
                     });

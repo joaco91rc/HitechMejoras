@@ -56,6 +56,7 @@ namespace CapaPresentacion
             {
                 dgvData.Rows.Add(new object[] { "",item.idConcepto,
                     item.descripcion,
+                    item.tipo,
                     item.estado==true?1:0,
                     item.estado==true? "Activo": "No Activo"
                     });
@@ -71,7 +72,8 @@ namespace CapaPresentacion
                 idConcepto = Convert.ToInt32(txtIdConcepto.Text),
                 descripcion = txtDescripcion.Text,
                 estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false,
-                fechaRegistro = DateTime.Now.Date
+                fechaRegistro = DateTime.Now.Date,
+                tipo = cboTipoMovimiento.Text
             };
 
             if (objConcepto.idConcepto == 0)
@@ -82,7 +84,7 @@ namespace CapaPresentacion
 
                 if (idConceptoGenerado != 0)
                 {
-                    dgvData.Rows.Add(new object[] { "",idConceptoGenerado,txtDescripcion.Text,
+                    dgvData.Rows.Add(new object[] { "",idConceptoGenerado,txtDescripcion.Text, cboTipoMovimiento.Text,
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
             });
@@ -105,6 +107,7 @@ namespace CapaPresentacion
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
                     row.Cells["idConcepto"].Value = txtIdConcepto.Text;
                     row.Cells["descripcion"].Value = txtDescripcion.Text;
+                    row.Cells["tipo"].Value = cboTipoMovimiento.Text;
                     row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
                     row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
                     Limpiar();
@@ -183,6 +186,7 @@ namespace CapaPresentacion
                     txtCategoriaSeleccionado.Text = dgvData.Rows[indice].Cells["descripcion"].Value.ToString();
                     txtIdConcepto.Text = dgvData.Rows[indice].Cells["idConcepto"].Value.ToString();
                     txtDescripcion.Text = dgvData.Rows[indice].Cells["descripcion"].Value.ToString();
+                    cboTipoMovimiento.Text = dgvData.Rows[indice].Cells["tipo"].Value.ToString();
 
 
 

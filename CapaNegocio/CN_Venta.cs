@@ -29,11 +29,11 @@ namespace CapaNegocio
             return objcd_venta.ObtenerCorrelativo();
         }
 
-        public bool Registrar(Venta objVenta, DataTable detalleVenta, out string mensaje)
+        public bool Registrar(Venta objVenta, DataTable detalleVenta, out string mensaje, out int idVentaGenerado)
         {
 
 
-            return objcd_venta.Registrar(objVenta, detalleVenta, out mensaje);
+            return objcd_venta.Registrar(objVenta, detalleVenta, out mensaje, out idVentaGenerado);
 
         }
 

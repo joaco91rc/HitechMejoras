@@ -99,18 +99,16 @@ namespace CapaDatos
         }
 
 
-        public bool Registrar(Venta objventa, DataTable detalleVenta, out string mensaje)
+        public bool Registrar(Venta objventa, DataTable detalleVenta, out string mensaje, out int idVentaGenerado)
         {
             bool respuesta = false;
             mensaje = string.Empty;
+            idVentaGenerado = 0;
 
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
             {
                 try
                 {
-
-
-
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARVENTA", oconexion);
                     cmd.Parameters.AddWithValue("idUsuario", objventa.oUsuario.idUsuario);
                     cmd.Parameters.AddWithValue("fecha", objventa.fechaRegistro);
@@ -138,19 +136,17 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("montoDescuento", objventa.montoDescuento);
                     cmd.Parameters.AddWithValue("idNegocio", objventa.idNegocio);
 
-                    cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("idVentaSalida", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     oconexion.Open();
                     cmd.ExecuteNonQuery();
 
-
                     respuesta = Convert.ToBoolean(cmd.Parameters["resultado"].Value);
                     mensaje = cmd.Parameters["mensaje"].Value.ToString();
-
-
-
+                    idVentaGenerado = Convert.ToInt32(cmd.Parameters["idVentaSalida"].Value);
                 }
                 catch (Exception ex)
                 {
@@ -161,6 +157,7 @@ namespace CapaDatos
 
             return respuesta;
         }
+
 
 
         public Venta ObtenerVenta(string numero, int idNegocio)

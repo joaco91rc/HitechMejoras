@@ -20,7 +20,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT idConcepto, descripcion, estado, fechaRegistro FROM CONCEPTO");
+                    query.AppendLine("SELECT idConcepto, descripcion, tipo, estado, fechaRegistro FROM CONCEPTO");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -35,7 +35,8 @@ namespace CapaDatos
                                 idConcepto = Convert.ToInt32(dr["idConcepto"]),
                                 descripcion = dr["descripcion"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"])
+                                fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
+                                tipo = dr["tipo"].ToString()
                             });
                         }
                     }
@@ -62,6 +63,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("descripcion", objConcepto.descripcion);
                     cmd.Parameters.AddWithValue("estado", objConcepto.estado);
                     cmd.Parameters.AddWithValue("fechaRegistro", objConcepto.fechaRegistro);
+                    cmd.Parameters.AddWithValue("tipo", objConcepto.tipo);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -95,6 +97,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("descripcion", objConcepto.descripcion);
                     cmd.Parameters.AddWithValue("estado", objConcepto.estado);
                     cmd.Parameters.AddWithValue("fechaRegistro", objConcepto.fechaRegistro);
+                    cmd.Parameters.AddWithValue("tipo", objConcepto.tipo);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

@@ -46,8 +46,8 @@ namespace CapaPresentacion
 
             foreach (Producto item in listaProducto)
             {
-                decimal precioVentaCotizado = item.precioVenta * cotizacionActiva;
-                decimal precioConIncremento = precioVentaCotizado + (precioVentaCotizado * 0.30m);
+                decimal precioVentaCotizado = Math.Ceiling((item.precioVenta * cotizacionActiva) / 500)* 500;
+                decimal precioConIncremento = Math.Ceiling((precioVentaCotizado + (precioVentaCotizado * 0.30m))/500) *500;
 
                 dgvData.Rows.Add(new object[] {
         item.idProducto,
