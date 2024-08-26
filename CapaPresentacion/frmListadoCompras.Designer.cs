@@ -56,7 +56,7 @@ namespace CapaPresentacion
             this.nroDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.montoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDetalle = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnDetalle = new System.Windows.Forms.DataGridViewImageColumn();
             this.groupBox1.SuspendLayout();
             this.gbRegistrarCompra.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -348,7 +348,7 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(837, 331);
             this.dgvData.TabIndex = 105;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            
             // 
             // label1
             // 
@@ -403,6 +403,8 @@ namespace CapaPresentacion
             // 
             this.btnDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.btnDetalle.HeaderText = "";
+            this.btnDetalle.Image = global::CapaPresentacion.Properties.Resources.detail;
+            this.btnDetalle.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.ReadOnly = true;
             this.btnDetalle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -459,6 +461,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn nroDocumento;
         private System.Windows.Forms.DataGridViewTextBoxColumn montoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
-        private System.Windows.Forms.DataGridViewButtonColumn btnDetalle;
+        private System.Windows.Forms.DataGridViewImageColumn btnDetalle;
     }
 }

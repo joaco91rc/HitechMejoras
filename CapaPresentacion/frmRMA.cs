@@ -16,6 +16,7 @@ namespace CapaPresentacion
 {
     public partial class frmRMA : Form
     {
+        private Image defaultImage = Properties.Resources.CHECK;
         public frmRMA()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace CapaPresentacion
 
             foreach (ProductoRMA item in listaProductosRMA)
             {
-                dgvData.Rows.Add(new object[] { "",item.idProductoRMA,item.descripcionProductoRMA,
+                dgvData.Rows.Add(new object[] { defaultImage,item.idProductoRMA,item.descripcionProductoRMA,
                     item.cantidad.ToString(),
                     item.estado,item.estado,item.fechaIngreso.ToString(), item.fechaEgreso.ToString(),item.idProducto
 
@@ -89,7 +90,7 @@ namespace CapaPresentacion
                     {
                         MessageBox.Show("Se ha descontado el producto que esta en RMA del Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    dgvData.Rows.Add(new object[] { "",idProductoRMAGenerado,txtProducto.Text,txtCantidad.Text, cboEstado.Text,cboEstado.Text,dtpFechaIngreso.Text,dtpFechaEgreso.Text,
+                    dgvData.Rows.Add(new object[] { defaultImage,idProductoRMAGenerado,txtProducto.Text,txtCantidad.Text, cboEstado.Text,cboEstado.Text,dtpFechaIngreso.Text,dtpFechaEgreso.Text,
                         txtIdProducto.Text });
                     Limpiar();
                 }
@@ -157,25 +158,7 @@ namespace CapaPresentacion
             }
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 0)
-            {
-
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.check20.Width;
-                var h = Properties.Resources.check20.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-
-        }
+       
 
         private void btnLimpiarDatos_Click(object sender, EventArgs e)
         {

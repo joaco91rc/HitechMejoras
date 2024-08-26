@@ -13,9 +13,13 @@ using System.Windows.Forms;
 namespace CapaPresentacion
 {
     public partial class frmListadoVentas : Form
-    {
-        public frmListadoVentas()
+    {   private Venta _Venta;
+        private Usuario _Usuario;
+        private Image defaultImageView = Properties.Resources.VIEWICON;
+        private Image defaultImageEditar = Properties.Resources.detail;
+        public frmListadoVentas(Usuario oUsuario = null)
         {
+            _Usuario = oUsuario;
             InitializeComponent();
         }
 
@@ -33,7 +37,8 @@ namespace CapaPresentacion
                     item.nroDocumento,
                     item.montoTotal,
                     item.nombreCliente,
-                    ""
+                    defaultImageView,
+                    defaultImageEditar
 
                     });
                 }
@@ -43,16 +48,19 @@ namespace CapaPresentacion
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int indice = e.RowIndex;
+            string nroVenta = dgvData.Rows[indice].Cells["nroDocumento"].Value.ToString();
+            Venta oVenta = new CN_Venta().ObtenerVenta(nroVenta, GlobalSettings.SucursalId);
             if (dgvData.Columns[e.ColumnIndex].Name == "btnDetalle")
             {
 
-                int indice = e.RowIndex;
+                
 
                 if (indice >= 0)
                 {
                     txtIndice.Text = indice.ToString();
-                    string nroVenta = dgvData.Rows[indice].Cells["nroDocumento"].Value.ToString();
-                    Venta oVenta = new CN_Venta().ObtenerVenta(nroVenta, GlobalSettings.SucursalId);
+                    
+                    
                     // Pasar el objeto Venta al formulario frmDetalleVenta
                     frmDetalleVenta detalleVentaForm = new frmDetalleVenta(oVenta);
                     detalleVentaForm.ShowDialog();
@@ -60,26 +68,14 @@ namespace CapaPresentacion
 
 
                 }
-            }
-
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-            int detalleColumnIndex = dgvData.Columns["btnDetalle"].Index;
-
-            if (e.ColumnIndex == detalleColumnIndex)
+            if (dgvData.Columns[e.ColumnIndex].Name == "btnEditarVenta")
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                frmVentas editarVentaForm = new frmVentas(_Usuario, oVenta);
+                editarVentaForm.ShowDialog();
 
-                var w = Properties.Resources.viewBtn.Width;
-                var h = Properties.Resources.viewBtn.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.viewBtn, new Rectangle(x, y, w, h));
-                e.Handled = true;
             }
-        }
+            }
+
+       
     }
 }

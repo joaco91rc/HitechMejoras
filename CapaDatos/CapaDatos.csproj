@@ -60,6 +60,7 @@
     <Compile Include="CD_ProductoRMA.cs" />
     <Compile Include="CD_Proveedor.cs" />
     <Compile Include="CD_Reporte.cs" />
+    <Compile Include="CD_ServicioTecnico.cs" />
     <Compile Include="CD_Transaccion.cs" />
     <Compile Include="CD_Venta.cs" />
     <Compile Include="Conexion.cs" />

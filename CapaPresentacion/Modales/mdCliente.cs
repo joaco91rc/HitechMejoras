@@ -45,7 +45,7 @@ namespace CapaPresentacion.Modales
 
             foreach (Cliente item in listaProducto)
             {
-                dgvData.Rows.Add(new object[] { item.documento,
+                dgvData.Rows.Add(new object[] {item.idCliente, item.documento,
                     item.nombreCompleto });
             }
         }
@@ -59,8 +59,9 @@ namespace CapaPresentacion.Modales
                 _Cliente = new Cliente()
                 {
                     documento = dgvData.Rows[iRow].Cells["documento"].Value.ToString(),
-                    nombreCompleto = dgvData.Rows[iRow].Cells["nombre"].Value.ToString()
-                   
+                    nombreCompleto = dgvData.Rows[iRow].Cells["nombre"].Value.ToString(),
+                    idCliente = Convert.ToInt32(dgvData.Rows[iRow].Cells["idCliente"].Value)
+
                 };
                 this.DialogResult = DialogResult.OK;
                 this.Close();

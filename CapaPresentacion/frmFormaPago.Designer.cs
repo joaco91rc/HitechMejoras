@@ -35,11 +35,6 @@ namespace CapaPresentacion
             this.txtPorcentajeRetencion = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtCategoriaSeleccionado = new System.Windows.Forms.TextBox();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.txtIdFormaPago = new System.Windows.Forms.TextBox();
@@ -55,6 +50,11 @@ namespace CapaPresentacion
             this.txtFormaPago = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cboCajaAsociada = new System.Windows.Forms.ComboBox();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRetencion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -128,41 +128,6 @@ namespace CapaPresentacion
             this.dgvData.TabIndex = 107;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idFormaPago
-            // 
-            this.idFormaPago.HeaderText = "ID FORMA PAGO";
-            this.idFormaPago.Name = "idFormaPago";
-            this.idFormaPago.ReadOnly = true;
-            this.idFormaPago.Visible = false;
-            // 
-            // descripcion
-            // 
-            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descripcion.HeaderText = "FORMA DE PAGO";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // porcentajeRetencion
-            // 
-            this.porcentajeRetencion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.porcentajeRetencion.HeaderText = "PORCENTAJE RETENCION";
-            this.porcentajeRetencion.Name = "porcentajeRetencion";
-            this.porcentajeRetencion.ReadOnly = true;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
             // 
             // txtCategoriaSeleccionado
             // 
@@ -361,6 +326,44 @@ namespace CapaPresentacion
             this.cboCajaAsociada.Size = new System.Drawing.Size(190, 21);
             this.cboCajaAsociada.TabIndex = 113;
             // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idFormaPago
+            // 
+            this.idFormaPago.HeaderText = "ID FORMA PAGO";
+            this.idFormaPago.Name = "idFormaPago";
+            this.idFormaPago.ReadOnly = true;
+            this.idFormaPago.Visible = false;
+            // 
+            // descripcion
+            // 
+            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.descripcion.HeaderText = "FORMA DE PAGO";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // porcentajeRetencion
+            // 
+            this.porcentajeRetencion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.porcentajeRetencion.HeaderText = "PORCENTAJE RETENCION";
+            this.porcentajeRetencion.Name = "porcentajeRetencion";
+            this.porcentajeRetencion.ReadOnly = true;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
+            // 
             // frmFormaPago
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -415,7 +418,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.TextBox txtFormaPago;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cboCajaAsociada;
-        private System.Windows.Forms.DataGridViewButtonColumn btnSeleccionar;
+        private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idFormaPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRetencion;

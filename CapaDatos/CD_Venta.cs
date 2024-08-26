@@ -158,6 +158,120 @@ namespace CapaDatos
             return respuesta;
         }
 
+        public bool EditarVenta(Venta objventa, DataTable detalleVenta, out string mensaje)
+        {
+            bool respuesta = false;
+            mensaje = string.Empty;
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                SqlTransaction transaction = null;
+
+                try
+                {
+                    oconexion.Open();
+                    transaction = oconexion.BeginTransaction();
+
+                    // Actualizar la venta
+                    StringBuilder queryVenta = new StringBuilder();
+                    queryVenta.AppendLine("UPDATE VENTA SET");
+                    queryVenta.AppendLine("idUsuario = @idUsuario,");
+                    queryVenta.AppendLine("fecha = @fecha,");
+                    queryVenta.AppendLine("tipoDocumento = @tipoDocumento,");
+                    queryVenta.AppendLine("nroDocumento = @nroDocumento,");
+                    queryVenta.AppendLine("documentoCliente = @documentoCliente,");
+                    queryVenta.AppendLine("nombreCliente = @nombreCliente,");
+                    queryVenta.AppendLine("montoPago = @montoPago,");
+                    queryVenta.AppendLine("montoPagoFP2 = @montoPagoFP2,");
+                    queryVenta.AppendLine("montoPagoFP3 = @montoPagoFP3,");
+                    queryVenta.AppendLine("montoPagoFP4 = @montoPagoFP4,");
+                    queryVenta.AppendLine("montoFP1 = @montoFP1,");
+                    queryVenta.AppendLine("montoFP2 = @montoFP2,");
+                    queryVenta.AppendLine("montoFP3 = @montoFP3,");
+                    queryVenta.AppendLine("montoFP4 = @montoFP4,");
+                    queryVenta.AppendLine("montoCambio = @montoCambio,");
+                    queryVenta.AppendLine("montoTotal = @montoTotal,");
+                    queryVenta.AppendLine("cotizacionDolar = @cotizacionDolar,");
+                    queryVenta.AppendLine("formaPago = @formaPago,");
+                    queryVenta.AppendLine("formaPago2 = @formaPago2,");
+                    queryVenta.AppendLine("formaPago3 = @formaPago3,");
+                    queryVenta.AppendLine("formaPago4 = @formaPago4,");
+                    queryVenta.AppendLine("descuento = @descuento,");
+                    queryVenta.AppendLine("montoDescuento = @montoDescuento");
+                    queryVenta.AppendLine("WHERE idVenta = @idVenta");
+
+                    SqlCommand cmdVenta = new SqlCommand(queryVenta.ToString(), oconexion, transaction);
+                    cmdVenta.CommandType = CommandType.Text;
+
+                    cmdVenta.Parameters.AddWithValue("@idUsuario", objventa.oUsuario.idUsuario);
+                    cmdVenta.Parameters.AddWithValue("@fecha", objventa.fechaRegistro);
+                    cmdVenta.Parameters.AddWithValue("@tipoDocumento", objventa.tipoDocumento);
+                    cmdVenta.Parameters.AddWithValue("@nroDocumento", objventa.nroDocumento);
+                    cmdVenta.Parameters.AddWithValue("@documentoCliente", objventa.documentoCliente);
+                    cmdVenta.Parameters.AddWithValue("@nombreCliente", objventa.nombreCliente);
+                    cmdVenta.Parameters.AddWithValue("@montoPago", objventa.montoPago);
+                    cmdVenta.Parameters.AddWithValue("@montoPagoFP2", objventa.montoPagoFP2);
+                    cmdVenta.Parameters.AddWithValue("@montoPagoFP3", objventa.montoPagoFP3);
+                    cmdVenta.Parameters.AddWithValue("@montoPagoFP4", objventa.montoPagoFP4);
+                    cmdVenta.Parameters.AddWithValue("@montoFP1", objventa.montoFP1);
+                    cmdVenta.Parameters.AddWithValue("@montoFP2", objventa.montoFP2);
+                    cmdVenta.Parameters.AddWithValue("@montoFP3", objventa.montoFP3);
+                    cmdVenta.Parameters.AddWithValue("@montoFP4", objventa.montoFP4);
+                    cmdVenta.Parameters.AddWithValue("@montoCambio", objventa.montoCambio);
+                    cmdVenta.Parameters.AddWithValue("@montoTotal", objventa.montoTotal);
+                    cmdVenta.Parameters.AddWithValue("@cotizacionDolar", objventa.cotizacionDolar);
+                    cmdVenta.Parameters.AddWithValue("@formaPago", objventa.formaPago);
+                    cmdVenta.Parameters.AddWithValue("@formaPago2", objventa.formaPago2);
+                    cmdVenta.Parameters.AddWithValue("@formaPago3", objventa.formaPago3);
+                    cmdVenta.Parameters.AddWithValue("@formaPago4", objventa.formaPago4);
+                    cmdVenta.Parameters.AddWithValue("@descuento", objventa.descuento);
+                    cmdVenta.Parameters.AddWithValue("@montoDescuento", objventa.montoDescuento);
+                    cmdVenta.Parameters.AddWithValue("@idVenta", objventa.idVenta);
+
+                    cmdVenta.ExecuteNonQuery();
+
+                    // Eliminar los detalles actuales de la venta
+                    SqlCommand cmdEliminarDetalle = new SqlCommand("DELETE FROM DetalleVenta WHERE idVenta = @idVenta", oconexion, transaction);
+                    cmdEliminarDetalle.CommandType = CommandType.Text;
+                    cmdEliminarDetalle.Parameters.AddWithValue("@idVenta", objventa.idVenta);
+                    cmdEliminarDetalle.ExecuteNonQuery();
+
+                    // Insertar los nuevos detalles de la venta
+                    foreach (DataRow row in detalleVenta.Rows)
+                    {
+                        StringBuilder queryDetalle = new StringBuilder();
+                        queryDetalle.AppendLine("INSERT INTO DetalleVenta (idVenta, idProducto, cantidad, precio, subtotal)");
+                        queryDetalle.AppendLine("VALUES (@idVenta, @idProducto, @cantidad, @precio, @subtotal)");
+
+                        SqlCommand cmdDetalle = new SqlCommand(queryDetalle.ToString(), oconexion, transaction);
+                        cmdDetalle.CommandType = CommandType.Text;
+                        cmdDetalle.Parameters.AddWithValue("@idVenta", objventa.idVenta);
+                        cmdDetalle.Parameters.AddWithValue("@idProducto", Convert.ToInt32(row["idProducto"]));
+                        cmdDetalle.Parameters.AddWithValue("@cantidad", Convert.ToInt32(row["cantidad"]));
+                        cmdDetalle.Parameters.AddWithValue("@precio", Convert.ToDecimal(row["precio"]));
+                        cmdDetalle.Parameters.AddWithValue("@subtotal", Convert.ToDecimal(row["subtotal"]));
+
+                        cmdDetalle.ExecuteNonQuery();
+                    }
+
+                    // Si todo salió bien, se confirma la transacción
+                    transaction.Commit();
+                    respuesta = true;
+                }
+                catch (Exception ex)
+                {
+                    // Si hubo un error, se revierte la transacción
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
+                    mensaje = ex.Message;
+                    respuesta = false;
+                }
+            }
+
+            return respuesta;
+        }
 
 
         public Venta ObtenerVenta(string numero, int idNegocio)

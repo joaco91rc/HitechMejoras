@@ -15,6 +15,7 @@ namespace CapaPresentacion
 {
     public partial class frmConceptos : Form
     {
+        private Image defaultImage = Properties.Resources.CHECK;
         public frmConceptos()
         {
             InitializeComponent();
@@ -54,7 +55,7 @@ namespace CapaPresentacion
 
             foreach (Concepto item in listaConceptos)
             {
-                dgvData.Rows.Add(new object[] { "",item.idConcepto,
+                dgvData.Rows.Add(new object[] { defaultImage,item.idConcepto,
                     item.descripcion,
                     item.tipo,
                     item.estado==true?1:0,
@@ -84,7 +85,7 @@ namespace CapaPresentacion
 
                 if (idConceptoGenerado != 0)
                 {
-                    dgvData.Rows.Add(new object[] { "",idConceptoGenerado,txtDescripcion.Text, cboTipoMovimiento.Text,
+                    dgvData.Rows.Add(new object[] { defaultImage,idConceptoGenerado,txtDescripcion.Text, cboTipoMovimiento.Text,
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
             });
@@ -209,23 +210,23 @@ namespace CapaPresentacion
             }
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
+        //private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        //{
 
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 0)
-            {
+        //    if (e.RowIndex < 0)
+        //        return;
+        //    if (e.ColumnIndex == 0)
+        //    {
 
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+        //        e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 
-                var w = Properties.Resources.check20.Width;
-                var h = Properties.Resources.check20.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        //        var w = Properties.Resources.check20.Width;
+        //        var h = Properties.Resources.check20.Height;
+        //        var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+        //        var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
+        //        e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
+        //        e.Handled = true;
+        //    }
+        //}
     }
 }

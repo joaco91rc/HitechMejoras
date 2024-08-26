@@ -59,6 +59,9 @@ namespace CapaPresentacion
             this.menuRMA = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultas = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultaStock = new FontAwesome.Sharp.IconMenuItem();
+            this.menuServicioTecnico = new FontAwesome.Sharp.IconMenuItem();
+            this.subMenuIngresoService = new FontAwesome.Sharp.IconMenuItem();
+            this.subMenuCobroService = new FontAwesome.Sharp.IconMenuItem();
             this.menuTitulo = new System.Windows.Forms.MenuStrip();
             this.label1 = new System.Windows.Forms.Label();
             this.contenedor = new System.Windows.Forms.Panel();
@@ -100,7 +103,8 @@ namespace CapaPresentacion
             this.menuReportes,
             this.menuCajaRegistradora,
             this.menuRMA,
-            this.menuConsultas});
+            this.menuConsultas,
+            this.menuServicioTecnico});
             this.menu.Location = new System.Drawing.Point(0, 163);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(1366, 79);
@@ -138,7 +142,7 @@ namespace CapaPresentacion
             this.subMenuTraspasoMercaderia});
             this.menuMantenedor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuMantenedor.ForeColor = System.Drawing.Color.White;
-            this.menuMantenedor.IconChar = FontAwesome.Sharp.IconChar.Tools;
+            this.menuMantenedor.IconChar = FontAwesome.Sharp.IconChar.Toolbox;
             this.menuMantenedor.IconColor = System.Drawing.Color.Black;
             this.menuMantenedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.menuMantenedor.IconSize = 50;
@@ -458,7 +462,7 @@ namespace CapaPresentacion
             this.menuConsultaStock});
             this.menuConsultas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuConsultas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.menuConsultas.IconChar = FontAwesome.Sharp.IconChar.UserCog;
+            this.menuConsultas.IconChar = FontAwesome.Sharp.IconChar.ListUl;
             this.menuConsultas.IconColor = System.Drawing.Color.Black;
             this.menuConsultas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.menuConsultas.IconSize = 50;
@@ -480,6 +484,50 @@ namespace CapaPresentacion
             this.menuConsultaStock.Size = new System.Drawing.Size(157, 26);
             this.menuConsultaStock.Text = "Productos";
             this.menuConsultaStock.Click += new System.EventHandler(this.menuConsultaStock_Click);
+            // 
+            // menuServicioTecnico
+            // 
+            this.menuServicioTecnico.AutoSize = false;
+            this.menuServicioTecnico.BackColor = System.Drawing.Color.ForestGreen;
+            this.menuServicioTecnico.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subMenuIngresoService,
+            this.subMenuCobroService});
+            this.menuServicioTecnico.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuServicioTecnico.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.menuServicioTecnico.IconChar = FontAwesome.Sharp.IconChar.Tools;
+            this.menuServicioTecnico.IconColor = System.Drawing.Color.Black;
+            this.menuServicioTecnico.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.menuServicioTecnico.IconSize = 50;
+            this.menuServicioTecnico.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.menuServicioTecnico.Name = "menuServicioTecnico";
+            this.menuServicioTecnico.Padding = new System.Windows.Forms.Padding(0);
+            this.menuServicioTecnico.Size = new System.Drawing.Size(130, 75);
+            this.menuServicioTecnico.Text = "Servicio Tecnico";
+            this.menuServicioTecnico.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // subMenuIngresoService
+            // 
+            this.subMenuIngresoService.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuIngresoService.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.subMenuIngresoService.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.subMenuIngresoService.IconColor = System.Drawing.Color.Black;
+            this.subMenuIngresoService.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.subMenuIngresoService.Name = "subMenuIngresoService";
+            this.subMenuIngresoService.Size = new System.Drawing.Size(197, 26);
+            this.subMenuIngresoService.Text = "Servicio";
+            this.subMenuIngresoService.Click += new System.EventHandler(this.subMenuIngresoService_Click);
+            // 
+            // subMenuCobroService
+            // 
+            this.subMenuCobroService.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuCobroService.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.subMenuCobroService.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.subMenuCobroService.IconColor = System.Drawing.Color.Black;
+            this.subMenuCobroService.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.subMenuCobroService.Name = "subMenuCobroService";
+            this.subMenuCobroService.Size = new System.Drawing.Size(197, 26);
+            this.subMenuCobroService.Text = "Cobrar Servicio";
+            this.subMenuCobroService.Click += new System.EventHandler(this.subMenuCobroService_Click);
             // 
             // menuTitulo
             // 
@@ -839,6 +887,9 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
         private System.Windows.Forms.ToolStripMenuItem subMenuConceptos;
+        private FontAwesome.Sharp.IconMenuItem menuServicioTecnico;
+        private FontAwesome.Sharp.IconMenuItem subMenuIngresoService;
+        private FontAwesome.Sharp.IconMenuItem subMenuCobroService;
     }
 }
 

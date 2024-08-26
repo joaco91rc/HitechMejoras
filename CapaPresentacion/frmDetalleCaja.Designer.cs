@@ -60,7 +60,7 @@ namespace CapaPresentacion
             this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.gbRegistrarCompra.SuspendLayout();
@@ -146,7 +146,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(963, 325);
             this.dgvData.TabIndex = 83;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
             // 
             // label6
             // 
@@ -386,11 +385,13 @@ namespace CapaPresentacion
             // 
             // btnEliminar
             // 
-            this.btnEliminar.HeaderText = "ELIMINAR";
+            this.btnEliminar.HeaderText = "";
+            this.btnEliminar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.ReadOnly = true;
             this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnEliminar.Width = 30;
             // 
             // frmDetalleCaja
             // 
@@ -451,6 +452,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn usuarioTransaccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
-        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
+        private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
     }
 }

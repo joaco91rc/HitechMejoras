@@ -127,7 +127,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("tipoTransaccion", objTransaccion.tipoTransaccion);
                     cmd.Parameters.AddWithValue("monto", objTransaccion.monto);
                     cmd.Parameters.AddWithValue("docAsociado", objTransaccion.docAsociado);
-                    cmd.Parameters.AddWithValue("fecha", DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("hora", DateTime.Now.Date);
                     cmd.Parameters.AddWithValue("usuarioTransaccion", objTransaccion.usuarioTransaccion);
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);

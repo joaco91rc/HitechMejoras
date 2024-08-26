@@ -33,8 +33,6 @@ namespace CapaPresentacion.Modales
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
@@ -43,6 +41,9 @@ namespace CapaPresentacion.Modales
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -63,6 +64,7 @@ namespace CapaPresentacion.Modales
             this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idCliente,
             this.documento,
             this.nombre});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -89,20 +91,6 @@ namespace CapaPresentacion.Modales
             this.dgvData.Size = new System.Drawing.Size(652, 497);
             this.dgvData.TabIndex = 71;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
-            // 
-            // documento
-            // 
-            this.documento.HeaderText = "DNI";
-            this.documento.Name = "documento";
-            this.documento.ReadOnly = true;
-            this.documento.Width = 160;
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "NOMBRE COMPLETO";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            this.nombre.Width = 180;
             // 
             // iconPictureBox1
             // 
@@ -218,6 +206,27 @@ namespace CapaPresentacion.Modales
             this.label1.Size = new System.Drawing.Size(680, 36);
             this.label1.TabIndex = 79;
             // 
+            // idCliente
+            // 
+            this.idCliente.HeaderText = "ID CLIENTE";
+            this.idCliente.Name = "idCliente";
+            this.idCliente.ReadOnly = true;
+            this.idCliente.Visible = false;
+            // 
+            // documento
+            // 
+            this.documento.HeaderText = "DNI";
+            this.documento.Name = "documento";
+            this.documento.ReadOnly = true;
+            this.documento.Width = 160;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "NOMBRE COMPLETO";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            this.nombre.Width = 180;
+            // 
             // mdCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,6 +265,7 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn documento;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
     }

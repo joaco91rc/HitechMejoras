@@ -60,6 +60,7 @@
     <Compile Include="CN_ProductoRMA.cs" />
     <Compile Include="CN_Proveedor.cs" />
     <Compile Include="CN_Reporte.cs" />
+    <Compile Include="CN_ServicioTecnico.cs" />
     <Compile Include="CN_Transaccion.cs" />
     <Compile Include="CN_Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

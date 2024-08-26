@@ -34,6 +34,10 @@ namespace CapaPresentacion
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label10 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.txtProductoSeleccionado = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.FechaCreacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,11 +47,7 @@ namespace CapaPresentacion
             this.idSucursalOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaConfirmacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnConfirmarRecepcion = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.txtProductoSeleccionado = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.btnConfirmarRecepcion = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -112,7 +112,56 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(1308, 496);
             this.dgvData.TabIndex = 91;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            
+            // 
+            // txtProductoSeleccionado
+            // 
+            this.txtProductoSeleccionado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtProductoSeleccionado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtProductoSeleccionado.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtProductoSeleccionado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProductoSeleccionado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.txtProductoSeleccionado.Location = new System.Drawing.Point(170, 700);
+            this.txtProductoSeleccionado.Name = "txtProductoSeleccionado";
+            this.txtProductoSeleccionado.Size = new System.Drawing.Size(206, 18);
+            this.txtProductoSeleccionado.TabIndex = 101;
+            this.txtProductoSeleccionado.Text = "Ninguno";
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.label13.Location = new System.Drawing.Point(12, 700);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(152, 17);
+            this.label13.TabIndex = 100;
+            this.label13.Text = "Producto Seleccionado:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1350, 729);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 88;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label11.Location = new System.Drawing.Point(12, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(872, 32);
+            this.label11.TabIndex = 102;
+            this.label11.Text = "LISTA DE ORDENES DE TRASPASO PENDIENTES  A CONFIRMAR RECEPCION";
             // 
             // FechaCreacion
             // 
@@ -188,61 +237,14 @@ namespace CapaPresentacion
             // btnConfirmarRecepcion
             // 
             this.btnConfirmarRecepcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnConfirmarRecepcion.HeaderText = "CONFIRMAR RECEPCION";
+            this.btnConfirmarRecepcion.HeaderText = "";
+            this.btnConfirmarRecepcion.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnConfirmarRecepcion.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.btnConfirmarRecepcion.Name = "btnConfirmarRecepcion";
             this.btnConfirmarRecepcion.ReadOnly = true;
             this.btnConfirmarRecepcion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnConfirmarRecepcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.btnConfirmarRecepcion.Width = 120;
-            // 
-            // txtProductoSeleccionado
-            // 
-            this.txtProductoSeleccionado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtProductoSeleccionado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.txtProductoSeleccionado.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductoSeleccionado.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductoSeleccionado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtProductoSeleccionado.Location = new System.Drawing.Point(170, 700);
-            this.txtProductoSeleccionado.Name = "txtProductoSeleccionado";
-            this.txtProductoSeleccionado.Size = new System.Drawing.Size(206, 18);
-            this.txtProductoSeleccionado.TabIndex = 101;
-            this.txtProductoSeleccionado.Text = "Ninguno";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.label13.Location = new System.Drawing.Point(12, 700);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(152, 17);
-            this.label13.TabIndex = 100;
-            this.label13.Text = "Producto Seleccionado:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1350, 729);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 88;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label11.Location = new System.Drawing.Point(12, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(872, 32);
-            this.label11.TabIndex = 102;
-            this.label11.Text = "LISTA DE ORDENES DE TRASPASO PENDIENTES  A CONFIRMAR RECEPCION";
+            this.btnConfirmarRecepcion.Width = 30;
             // 
             // frmOrdenesDeTraspaso
             // 
@@ -281,6 +283,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalOrigen;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalDestino;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaConfirmacion;
-        private System.Windows.Forms.DataGridViewButtonColumn btnConfirmarRecepcion;
+        private System.Windows.Forms.DataGridViewImageColumn btnConfirmarRecepcion;
     }
 }

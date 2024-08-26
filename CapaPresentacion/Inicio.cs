@@ -284,5 +284,15 @@ namespace CapaPresentacion
         {
             AbrirFormulario(menuCajaRegistradora, new frmConceptos());
         }
+
+        private void subMenuIngresoService_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuServicioTecnico, new frmServicioTecnico());
+        }
+
+        private void subMenuCobroService_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuServicioTecnico, new frmCobrarServicio());
+        }
     }
 }

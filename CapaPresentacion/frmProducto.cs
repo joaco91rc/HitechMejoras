@@ -17,8 +17,8 @@ namespace CapaPresentacion
     public partial class frmProducto : Form
     {
         private Usuario usuarioActual;
+        private Image defaultImage = Properties.Resources.CHECK;
 
-        
         public decimal cotizacionActiva { get; set; } = new CN_Cotizacion().CotizacionActiva().importe;
         public frmProducto(Usuario usuario)
         {
@@ -83,25 +83,26 @@ namespace CapaPresentacion
 
             //Mostrar todos los Productos
             List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
-            
+             // Cargar la imagen desde los recursos
+
             foreach (Producto item in listaProducto)
             {
-                //int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(item.idProducto, GlobalSettings.SucursalId);
-                
-                dgvData.Rows.Add(new object[] { "",item.idProducto,
-                    item.codigo,
-                    item.nombre,
-                    item.descripcion,
-                    item.oCategoria.idCategoria,
-                    item.oCategoria.descripcion,
-                    item.stock,
-                    item.precioCompra,
-                    item.costoPesos,
-                    item.precioVenta,
-                    (Math.Ceiling((item.precioVenta*cotizacionActiva)/500)*500).ToString("0.00"),
-                    item.estado==true?1:0,
-                    item.estado==true? "Activo": "No Activo"
-                    });
+                dgvData.Rows.Add(new object[] {
+                defaultImage, // Asignar la imagen predeterminada
+                item.idProducto,
+                item.codigo,
+                item.nombre,
+                item.descripcion,
+                item.oCategoria.idCategoria,
+                item.oCategoria.descripcion,
+                item.stock,
+                item.precioCompra,
+                item.costoPesos,
+                item.precioVenta,
+                (Math.Ceiling((item.precioVenta * cotizacionActiva) / 500) * 500).ToString("0.00"),
+                item.estado == true ? 1 : 0,
+                item.estado == true ? "Activo" : "No Activo"
+                });
             }
 
 
@@ -167,7 +168,7 @@ namespace CapaPresentacion
                 {
                     int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(idProductoGenerado, GlobalSettings.SucursalId);
 
-                    dgvData.Rows.Add(new object[] { "",
+                    dgvData.Rows.Add(new object[] { defaultImage,
                         idProductoGenerado,
                         txtCodigo.Text,
                         txtNombre.Text,
@@ -250,23 +251,7 @@ namespace CapaPresentacion
             txtCostoPesos.Text = string.Empty;
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 0)
-            {
-
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.check20.Width;
-                var h = Properties.Resources.check20.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -493,5 +478,7 @@ namespace CapaPresentacion
                 
             }
         }
+
+        
     }
 }

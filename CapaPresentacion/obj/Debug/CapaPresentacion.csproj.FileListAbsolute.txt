@@ -549,3 +549,4 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\LP NEW STORE 49
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmListadoCompras.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmConceptos.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmServicioTecnico.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmCobrarServicio.resources

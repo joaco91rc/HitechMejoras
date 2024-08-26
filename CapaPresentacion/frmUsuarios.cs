@@ -15,6 +15,7 @@ namespace CapaPresentacion
 {
     public partial class frmUsuarios : Form
     {
+        private Image defaultImage = Properties.Resources.CHECK;
         public frmUsuarios()
         {
             InitializeComponent();
@@ -60,7 +61,7 @@ namespace CapaPresentacion
 
             foreach (Usuario item in listaUsuario)
             {
-                dgvData.Rows.Add(new object[] { "",item.idUsuario,item.documento,item.nombreCompleto,item.correo,item.clave,item.oRol.idRol,item.oRol.descripcion,
+                dgvData.Rows.Add(new object[] { defaultImage,item.idUsuario,item.documento,item.nombreCompleto,item.correo,item.clave,item.oRol.idRol,item.oRol.descripcion,
 
                     item.estado==true?1:0,
                     item.estado==true? "Activo": "No Activo"
@@ -94,7 +95,7 @@ namespace CapaPresentacion
 
                 if (idUsuarioGenerado != 0)
                 {
-                    dgvData.Rows.Add(new object[] { "",idUsuarioGenerado,txtDocumento.Text,txtNombreCompleto.Text,txtEmail.Text,txtClave.Text,
+                    dgvData.Rows.Add(new object[] { defaultImage,idUsuarioGenerado,txtDocumento.Text,txtNombreCompleto.Text,txtEmail.Text,txtClave.Text,
 
                 ((OpcionCombo)cboRol.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboRol.SelectedItem).Texto.ToString(),
@@ -159,26 +160,7 @@ namespace CapaPresentacion
             txtDocumento.Select();
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-
-
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 0) {
-
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.check20.Width;
-                var h = Properties.Resources.check20.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-
-
-        }
+       
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

@@ -17,10 +17,39 @@ namespace CapaPresentacion
     public partial class frmVentas : Form
     {
         private Usuario _Usuario;
-        public frmVentas(Usuario oUsuario = null)
+        private Venta _Venta;
+        public frmVentas(Usuario oUsuario = null, Venta oVenta = null)
         {
             _Usuario = oUsuario;
+            _Venta = oVenta;
             InitializeComponent();
+
+            if (_Venta != null)
+            {
+                CargarDatosVenta();
+            }
+        }
+
+        private void CargarDatosVenta()
+        { lblTitulo.Text = String.Format("EDITAR VENTA NUMERO {0}", _Venta.nroDocumento);
+            // Aquí puedes cargar los datos de la venta en los controles del formulario
+            cboTipoDocumento.Text = _Venta.tipoDocumento;
+            txtNombreCliente.Text = _Venta.nombreCliente;
+            txtDocumentoCliente.Text = _Venta.documentoCliente;
+            
+            foreach(var item in _Venta.oDetalleVenta)
+            {
+                dgvData.Rows.Add(item.oProducto.idProducto,item.oProducto.nombre, item.precioVenta, item.cantidad, item.subTotal,"");
+            }
+            cboFormaPago.Text = _Venta.formaPago;
+            cboFormaPago2.Text = _Venta.formaPago2;
+            cboFormaPago3.Text = _Venta.formaPago3;
+            cboFormaPago4.Text = _Venta.formaPago4;
+            txtPagaCon.Text = _Venta.montoFP1.ToString("0.00");
+            txtPagaCon2.Text = _Venta.montoFP2.ToString();
+            txtPagaCon3.Text = _Venta.montoFP3.ToString();
+            txtPagaCon4.Text = _Venta.montoFP4.ToString();
+            txtTotalAPagar.Text = _Venta.montoTotal.ToString();
         }
 
         private void CargarComboBoxFormaPago()
@@ -100,8 +129,8 @@ namespace CapaPresentacion
             dtpFecha.Text = DateTime.Now.ToString();
             txtIdProducto.Text = "0";
             txtIdProducto.Text = "0";
-            txtPagaCon.Text = "";
-            txtTotalAPagar.Text = "0";
+            
+            
 
             var cotizacionDolar = new CN_Cotizacion().CotizacionActiva();
             txtCotizacion.Value = cotizacionDolar.importe;

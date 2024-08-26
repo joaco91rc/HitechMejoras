@@ -145,7 +145,8 @@ namespace CapaDatos
                                 montoPago = Convert.ToDecimal(dr["montoPago"].ToString()),
                                 montoPagoFP2 = Convert.ToDecimal(dr["montoPagoFP2"].ToString()),
                                 montoPagoFP3 = Convert.ToDecimal(dr["montoPagoFP3"].ToString()),
-                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString())
+                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString()),
+                                
                             };
 
                             // Obtener los detalles de compra

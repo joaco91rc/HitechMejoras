@@ -247,7 +247,10 @@ namespace CapaPresentacion
                     total += Convert.ToDecimal(row.Cells["SubTotal"].Value.ToString());
 
                 }
-                txtTotalAPagar.Text = (total * txtCotizacion.Value).ToString("0.00");
+                decimal totalCotizado = total * txtCotizacion.Value;
+                
+                txtTotalAPagar.Text = totalCotizado.ToString("0.00");
+                txtTotalVentaDolares.Text = total.ToString("0.00");
             }
         }
 
@@ -649,7 +652,16 @@ namespace CapaPresentacion
             }
 
             decimal pagacon;
-            pagacon = Convert.ToInt32(txtPagaCon.Text);
+            if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+            {
+
+                pagacon = 0;
+            }
+            else
+            {
+                pagacon = Convert.ToInt32(txtPagaCon.Text);
+            }
+
             if (txtPagaCon2.Text != string.Empty)
             {
                 pagacon += Convert.ToDecimal(txtPagaCon2.Text);
@@ -699,6 +711,20 @@ namespace CapaPresentacion
             }
 
         }
+
+        private void calcularTotalConDolares()
+        {
+            decimal total = Convert.ToDecimal(txtTotalVentaDolares.Text);
+
+
+
+
+            decimal totalCotizado = total * txtCotizacion.Value;
+            decimal totalRedondeado = Math.Ceiling(totalCotizado / 500) * 500;
+            txtTotalAPagar.Text = totalRedondeado.ToString("0.00");
+            txtRestaPagar.Text = txtTotalAPagar.Text;
+
+        }
         private void txtPagaCon_KeyDown(object sender, KeyEventArgs e)
         {
             //if (e.KeyData == Keys.Enter)
@@ -710,12 +736,19 @@ namespace CapaPresentacion
             {
                 if (txtPagaCon.Text != string.Empty)
                 {
+                    if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                    {
 
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
+                        txtTotalVentaDolares.Text = (Convert.ToDecimal(txtTotalVentaDolares.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString("0.00");
+                        calcularTotalConDolares();
+                    }
+                    else
+                    {
+                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
 
 
-                    CalcularCambio();
-
+                        CalcularCambio();
+                    }
                 }
 
 
@@ -778,6 +811,135 @@ namespace CapaPresentacion
             }
 
 
+        }
+
+        private void checkDescuento_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkDescuento.Checked)
+            {
+                txtDescuento.Visible = true;
+                txtDescuento.Enabled = true;
+                txtMontoDescuento.Visible = true;
+                txtMontoDescuento.Enabled = true;
+                txtMontoDescuento.Text = "0";
+                txtDescuento.Text = "0";
+                lblPorcentaje.Visible = true;
+                txtMontoDescuento.Text = "0";
+                checkRecargo.Visible = false;
+
+
+            }
+
+
+            else
+            {
+                txtDescuento.Visible = false;
+                txtMontoDescuento.Text = "0";
+                txtMontoDescuento.Visible = false;
+                txtDescuento.Text = "0";
+                lblPorcentaje.Visible = false;
+                lblDescuento.Visible = false;
+                checkRecargo.Visible = true;
+                calcularTotal();
+            }
+        }
+
+        private void checkRecargo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkRecargo.Checked)
+            {
+                txtMontoDescuento.Visible = true;
+                txtMontoDescuento.Enabled = true;
+                txtDescuento.Visible = true;
+                txtDescuento.Enabled = true;
+                txtDescuento.Text = "0";
+                lblPorcentaje.Visible = true;
+                txtMontoDescuento.Text = "0";
+                checkDescuento.Visible = false;
+
+
+
+            }
+
+
+            else
+            {
+                txtDescuento.Visible = false;
+                txtMontoDescuento.Text = "0";
+                txtMontoDescuento.Visible = false;
+                txtDescuento.Text = "0";
+                lblPorcentaje.Visible = false;
+                lblDescuento.Visible = false;
+                checkDescuento.Visible = true;
+                calcularTotal();
+            }
+        }
+
+        private void txtDescuento_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+
+                if (Convert.ToDecimal(txtDescuento.Text) > 0 && Convert.ToDecimal(txtDescuento.Text) <= 100 && (txtDescuento.Text != ""))
+                {
+                    txtMontoDescuento.Visible = true;
+                    txtMontoDescuento.Enabled = false;
+                    decimal montoDescuentoRecargo = (Convert.ToDecimal(txtTotalAPagar.Text) * Convert.ToDecimal(txtDescuento.Text)) / 100;
+                    txtMontoDescuento.Text = montoDescuentoRecargo.ToString("0.00");
+                    if (checkDescuento.Checked == true)
+                    {
+                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - montoDescuentoRecargo).ToString("0.00");
+                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                        {
+                            txtRestaPagar.Text = txtTotalAPagar.Text;
+                        }
+                    }
+                    if (checkRecargo.Checked == true)
+                    {
+                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + montoDescuentoRecargo).ToString("0.00");
+                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                        {
+                            txtRestaPagar.Text = txtTotalAPagar.Text;
+                        }
+                    }
+                    txtDescuento.Enabled = false;
+                    lblDescuento.Visible = true;
+
+                }
+                else
+                {
+                    txtMontoDescuento.Visible = false;
+                    MessageBox.Show("Ingrese un valor entre 1 y 100 para el porcentaje de descuento o recargo", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                }
+            }
+        }
+
+        private void txtPagaCon_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar))
+            {
+
+                e.Handled = false;
+            }
+            else
+            {
+                if (txtPagaCon.Text.Trim().Length == 0 && e.KeyChar.ToString() == ".")
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    if (Char.IsControl(e.KeyChar) || e.KeyChar.ToString() == ".")
+                    {
+                        e.Handled = false;
+                    }
+                    else
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
         }
     }
 }

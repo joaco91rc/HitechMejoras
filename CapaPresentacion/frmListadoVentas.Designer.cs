@@ -48,15 +48,16 @@ namespace CapaPresentacion
             this.cboBusqueda = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtIndice = new System.Windows.Forms.Label();
             this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nroDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.montoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDetalle = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtIndice = new System.Windows.Forms.Label();
+            this.btnDetalle = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnEditarVenta = new System.Windows.Forms.DataGridViewImageColumn();
             this.gbRegistrarCompra.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -321,7 +322,8 @@ namespace CapaPresentacion
             this.nroDocumento,
             this.montoTotal,
             this.nombreCliente,
-            this.btnDetalle});
+            this.btnDetalle,
+            this.btnEditarVenta});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -344,7 +346,27 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(1306, 569);
             this.dgvData.TabIndex = 99;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label1.Location = new System.Drawing.Point(1, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(1349, 729);
+            this.label1.TabIndex = 96;
+            // 
+            // txtIndice
+            // 
+            this.txtIndice.AutoSize = true;
+            this.txtIndice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtIndice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIndice.ForeColor = System.Drawing.Color.ForestGreen;
+            this.txtIndice.Location = new System.Drawing.Point(500, 9);
+            this.txtIndice.Name = "txtIndice";
+            this.txtIndice.Size = new System.Drawing.Size(20, 17);
+            this.txtIndice.TabIndex = 101;
+            this.txtIndice.Text = "-1";
+            this.txtIndice.Visible = false;
             // 
             // idVenta
             // 
@@ -391,32 +413,24 @@ namespace CapaPresentacion
             // 
             this.btnDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.btnDetalle.HeaderText = "";
+            this.btnDetalle.Image = global::CapaPresentacion.Properties.Resources.VIEWICON;
+            this.btnDetalle.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.ReadOnly = true;
             this.btnDetalle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnDetalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnDetalle.Width = 30;
             // 
-            // label1
+            // btnEditarVenta
             // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label1.Location = new System.Drawing.Point(1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1349, 729);
-            this.label1.TabIndex = 96;
-            // 
-            // txtIndice
-            // 
-            this.txtIndice.AutoSize = true;
-            this.txtIndice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.txtIndice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIndice.ForeColor = System.Drawing.Color.ForestGreen;
-            this.txtIndice.Location = new System.Drawing.Point(500, 9);
-            this.txtIndice.Name = "txtIndice";
-            this.txtIndice.Size = new System.Drawing.Size(20, 17);
-            this.txtIndice.TabIndex = 101;
-            this.txtIndice.Text = "-1";
-            this.txtIndice.Visible = false;
+            this.btnEditarVenta.HeaderText = "";
+            this.btnEditarVenta.Image = global::CapaPresentacion.Properties.Resources.detail;
+            this.btnEditarVenta.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnEditarVenta.Name = "btnEditarVenta";
+            this.btnEditarVenta.ReadOnly = true;
+            this.btnEditarVenta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEditarVenta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnEditarVenta.Width = 30;
             // 
             // frmListadoVentas
             // 
@@ -461,13 +475,14 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtIndice;
         private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaRegistro;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoDocumento;
         private System.Windows.Forms.DataGridViewTextBoxColumn nroDocumento;
         private System.Windows.Forms.DataGridViewTextBoxColumn montoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
-        private System.Windows.Forms.DataGridViewButtonColumn btnDetalle;
-        private System.Windows.Forms.Label txtIndice;
+        private System.Windows.Forms.DataGridViewImageColumn btnDetalle;
+        private System.Windows.Forms.DataGridViewImageColumn btnEditarVenta;
     }
 }

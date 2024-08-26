@@ -15,6 +15,7 @@ namespace CapaPresentacion
 {
     public partial class frmCajaRegistradora : Form
     {
+        private Image defaultImage = Properties.Resources.CHECK;
         public class TotalesCaja
         {
             public decimal Total { get; set; }
@@ -141,7 +142,7 @@ namespace CapaPresentacion
                 foreach (TransaccionCaja item in listaTransacciones)
                 {
                     dgvData.Rows.Add(new object[] {
-                        "",
+                        defaultImage,
                         item.idCajaRegistradora,
                         item.idTransaccion,
                         item.hora,
@@ -225,7 +226,7 @@ namespace CapaPresentacion
                     {
                         txtIdTransaccion.Text = idTransaccionGenerado.ToString();
                         objTransaccion.idTransaccion = idTransaccionGenerado;
-                        dgvData.Rows.Add(new object[] { "",
+                        dgvData.Rows.Add(new object[] { defaultImage,
 
                         objTransaccion.idCajaRegistradora,
                         idTransaccionGenerado,
@@ -527,23 +528,7 @@ namespace CapaPresentacion
             }
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 0)
-            {
-
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.check20.Width;
-                var h = Properties.Resources.check20.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        
 
         private void btnLimpiarDatos_Click(object sender, EventArgs e)
         {

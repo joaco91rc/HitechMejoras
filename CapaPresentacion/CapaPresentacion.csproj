@@ -140,6 +140,12 @@
     <Compile Include="frmClientes.Designer.cs">
       <DependentUpon>frmClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCobrarServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCobrarServicio.Designer.cs">
+      <DependentUpon>frmCobrarServicio.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCompras.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,12 @@
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modales\ConfirmarReparacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modales\ConfirmarReparacion.Designer.cs">
+      <DependentUpon>ConfirmarReparacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modales\mdAperturacaja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmClientes.resx">
       <DependentUpon>frmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCobrarServicio.resx">
+      <DependentUpon>frmCobrarServicio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCompras.resx">
       <DependentUpon>frmCompras.cs</DependentUpon>
@@ -391,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modales\ConfirmarReparacion.resx">
+      <DependentUpon>ConfirmarReparacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modales\mdAperturacaja.resx">
       <DependentUpon>mdAperturacaja.cs</DependentUpon>
@@ -468,6 +486,10 @@
   <ItemGroup>
     <Content Include="ICONOPROGRAMA.ico" />
     <Content Include="LogoAcuarioIcono2.ico" />
+    <None Include="Resources\cashIcon.png" />
+    <None Include="Resources\VIEWICON.png" />
+    <None Include="Resources\detail.png" />
+    <None Include="Resources\CHECK.jpeg" />
     <None Include="Resources\viewBtn.png" />
     <None Include="Resources\traspasar.png" />
     <None Include="Resources\PlantillaVenta.html" />

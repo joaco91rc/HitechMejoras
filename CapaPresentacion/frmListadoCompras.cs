@@ -14,6 +14,7 @@ namespace CapaPresentacion
 {
     public partial class frmListadoCompras : Form
     {
+        private Image defaultImage = Properties.Resources.detail;
         public frmListadoCompras()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace CapaPresentacion
                     item.nroDocumento,
                     item.montoTotal,
                     item.oProveedor.razonSocial,
-                    ""
+                    defaultImage
 
                     });
                 }
@@ -61,24 +62,6 @@ namespace CapaPresentacion
             }
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-            int detalleColumnIndex = dgvData.Columns["btnDetalle"].Index;
-
-            if (e.ColumnIndex == detalleColumnIndex)
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.viewBtn.Width;
-                var h = Properties.Resources.viewBtn.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.viewBtn, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        
     }
 }

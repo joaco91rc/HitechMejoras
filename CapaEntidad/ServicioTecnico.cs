@@ -10,6 +10,7 @@ namespace CapaEntidad
     {
         public int IdServicio { get; set; }  // Llave primaria
         public int IdCliente { get; set; }  // Foreign Key a la tabla Clientes
+         public string NombreCliente { get; set; }
         public string Producto { get; set; }  // Campo de texto para el producto que traen a reparar
         public DateTime FechaRecepcion { get; set; }  // Fecha en que el equipo fue recibido
         public DateTime? FechaEntregaEstimada { get; set; }  // Fecha estimada de entrega (puede ser nula)
@@ -21,7 +22,8 @@ namespace CapaEntidad
         public decimal? CostoReal { get; set; }  // Costo real de la reparación (puede ser nulo)
         public string Observaciones { get; set; }  // Observaciones adicionales
         public DateTime FechaRegistro { get; set; }  // Fecha de registro en el sistema
+        public int idNegocio { get; set; }
 
-
+        
     }
 }

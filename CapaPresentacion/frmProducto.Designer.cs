@@ -73,7 +73,7 @@ namespace CapaPresentacion
             this.checkCostoPesos = new System.Windows.Forms.CheckBox();
             this.txtCostoPesos = new System.Windows.Forms.TextBox();
             this.lblCostoPesos = new System.Windows.Forms.Label();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -375,7 +375,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(885, 573);
             this.dgvData.TabIndex = 54;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
             // 
             // label10
             // 
@@ -621,8 +620,11 @@ namespace CapaPresentacion
             // btnSeleccionar
             // 
             this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.btnSeleccionar.Name = "btnSeleccionar";
             this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnSeleccionar.Width = 30;
             // 
             // idProducto
@@ -817,7 +819,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.CheckBox checkCostoPesos;
         private System.Windows.Forms.TextBox txtCostoPesos;
         private System.Windows.Forms.Label lblCostoPesos;
-        private System.Windows.Forms.DataGridViewButtonColumn btnSeleccionar;
+        private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;

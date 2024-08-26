@@ -13,8 +13,10 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
+    
     public partial class frmFormaPago : Form
     {
+        private Image defaultImage = Properties.Resources.CHECK;
         public frmFormaPago()
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace CapaPresentacion
 
             foreach (FormaPago item in listaFormaDePagos)
             {
-                dgvData.Rows.Add(new object[] { "",item.idFormaPago,
+                dgvData.Rows.Add(new object[] {defaultImage,item.idFormaPago,
                     item.descripcion,
                     item.porcentajeRetencion,
                     item.cajaAsociada
@@ -57,7 +59,7 @@ namespace CapaPresentacion
                 {
                     dgvData.Rows.Add(new object[]
                     {
-                "", // Placeholder for an auto-increment column if needed
+                defaultImage, // Placeholder for an auto-increment column if needed
                 idFormaPagoGenerado,
                 objFormaPago.descripcion,
                 objFormaPago.porcentajeRetencion.ToString(),

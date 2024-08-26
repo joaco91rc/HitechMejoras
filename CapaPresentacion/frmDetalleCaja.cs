@@ -15,6 +15,7 @@ namespace CapaPresentacion
 {
     public partial class frmDetalleCaja : Form
     {
+        private Image defaultImage = Properties.Resources.trash;
         public class TotalesCaja
         {
             public decimal Total { get; set; }
@@ -199,25 +200,7 @@ namespace CapaPresentacion
 
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-            int traspasarColumnIndex = dgvData.Columns["btnEliminar"].Index;
-
-            if (e.ColumnIndex == traspasarColumnIndex)
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                var w = Properties.Resources.trash.Width;
-                var h = Properties.Resources.trash.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.trash, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -340,9 +323,10 @@ namespace CapaPresentacion
             item.monto,
             item.formaPago,
             item.docAsociado,
-            item.usuarioTransaccion,
+            item.usuarioTransaccion,            
             item.idCompra,
-            item.idVenta
+            item.idVenta,
+            defaultImage
         });
             }
         }
