@@ -17,7 +17,8 @@ namespace CapaPresentacion
     {
         private Image defaultImage = Properties.Resources.CHECK;
         private Image defaultImageCambiarEstado = Properties.Resources.traspasar;
-        private Image defaultImageCashIcon = Properties.Resources.cashIcon;
+        private Image defaultImageCambiarEstadoCompleto = Properties.Resources.complete;
+
         public frmServicioTecnico()
         {
             InitializeComponent();
@@ -46,7 +47,7 @@ namespace CapaPresentacion
                 {
                     MessageBox.Show("Servicio Tecnico Ingresado" , "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dgvData.Rows.Add(new object[] { defaultImage, txtIdProveedor.Text, txtIdCliente.Text,txtCliente.Text, txtproductoAReparar.Text,txtDescripcionProblema.Text
-                    ,txtCostoEstimado.Text,txtObservaciones.Text,"INGRESADO",defaultImageCambiarEstado, defaultImageCashIcon});
+                    ,txtCostoEstimado.Text,txtObservaciones.Text,"INGRESADO",defaultImageCambiarEstado, defaultImageCambiarEstadoCompleto});
                 } else
                 {
                     MessageBox.Show("No se pudo ingresar el Servicio tecnico", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,8 +99,18 @@ namespace CapaPresentacion
             }
             else
             {
-                if (e.RowIndex >= 0 && e.ColumnIndex == dgvData.Columns["btnCobrar"].Index)
+                if (e.RowIndex >= 0 && e.ColumnIndex == dgvData.Columns["btnCompletarServicio"].Index)
                 {
+                    if(dgvData.Rows[indice].Cells["estado"].Value.ToString() == "PENDIENTE")
+                    {
+                        ConfirmarReparacion confirmarReparacion = new ConfirmarReparacion(idServicio);
+                        confirmarReparacion.ShowDialog();
+
+                                            }
+                    else
+                    {
+                        MessageBox.Show("El estado del Servicio debe ser Pendiente para poder Completarlo", "Servicio Tecnico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     
                 }
             }
@@ -123,7 +134,7 @@ namespace CapaPresentacion
                 item.Observaciones,
                 item.EstadoServicio,
                 defaultImageCambiarEstado,
-                defaultImageCashIcon
+                defaultImageCambiarEstadoCompleto
                 });
             }
         }

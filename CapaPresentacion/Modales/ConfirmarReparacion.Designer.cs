@@ -30,8 +30,8 @@ namespace CapaPresentacion.Modales
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.txtSaldoInicial = new System.Windows.Forms.TextBox();
+            this.txtDescripcionReparacion = new System.Windows.Forms.TextBox();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
@@ -48,22 +48,21 @@ namespace CapaPresentacion.Modales
             this.label1.Size = new System.Drawing.Size(520, 36);
             this.label1.TabIndex = 82;
             // 
-            // txtUsuario
+            // txtDescripcionReparacion
             // 
-            this.txtUsuario.Enabled = false;
-            this.txtUsuario.Location = new System.Drawing.Point(174, 47);
-            this.txtUsuario.Multiline = true;
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(334, 187);
-            this.txtUsuario.TabIndex = 85;
+            this.txtDescripcionReparacion.Location = new System.Drawing.Point(174, 47);
+            this.txtDescripcionReparacion.Multiline = true;
+            this.txtDescripcionReparacion.Name = "txtDescripcionReparacion";
+            this.txtDescripcionReparacion.Size = new System.Drawing.Size(334, 187);
+            this.txtDescripcionReparacion.TabIndex = 1;
             // 
-            // txtSaldoInicial
+            // txtObservaciones
             // 
-            this.txtSaldoInicial.Location = new System.Drawing.Point(174, 240);
-            this.txtSaldoInicial.Multiline = true;
-            this.txtSaldoInicial.Name = "txtSaldoInicial";
-            this.txtSaldoInicial.Size = new System.Drawing.Size(334, 164);
-            this.txtSaldoInicial.TabIndex = 86;
+            this.txtObservaciones.Location = new System.Drawing.Point(174, 240);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(334, 164);
+            this.txtObservaciones.TabIndex = 2;
             // 
             // label4
             // 
@@ -102,6 +101,7 @@ namespace CapaPresentacion.Modales
             this.iconPictureBox1.Size = new System.Drawing.Size(19, 22);
             this.iconPictureBox1.TabIndex = 87;
             this.iconPictureBox1.TabStop = false;
+            this.iconPictureBox1.Click += new System.EventHandler(this.iconPictureBox1_Click);
             // 
             // btnCompletarReparacion
             // 
@@ -134,8 +134,8 @@ namespace CapaPresentacion.Modales
             this.ClientSize = new System.Drawing.Size(520, 518);
             this.Controls.Add(this.btnCompletarReparacion);
             this.Controls.Add(this.iconPictureBox1);
-            this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.txtSaldoInicial);
+            this.Controls.Add(this.txtDescripcionReparacion);
+            this.Controls.Add(this.txtObservaciones);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -152,8 +152,8 @@ namespace CapaPresentacion.Modales
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.TextBox txtSaldoInicial;
+        private System.Windows.Forms.TextBox txtDescripcionReparacion;
+        private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;

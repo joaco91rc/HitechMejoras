@@ -47,7 +47,8 @@ namespace CapaPresentacion
                 idFormaPago = Convert.ToInt32(txtIdFormaPago.Text),
                 descripcion = txtFormaPago.Text.Trim(),
                 porcentajeRetencion = txtPorcentajeRetencion.Value,
-                cajaAsociada = cboCajaAsociada.Text
+                cajaAsociada = cboCajaAsociada.Text,
+                //porcentajeRecargo = txtPorcentajeRecargo.Value
             };
 
             if (objFormaPago.idFormaPago == 0)

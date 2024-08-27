@@ -161,7 +161,8 @@ namespace CapaPresentacion
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
-
+            string eliminacionCompra = string.Empty;
+            string eliminacionMovimientos = string.Empty;
             if (GlobalSettings.RolUsuario == 1)
             {
                 DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta Compra?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -169,8 +170,8 @@ namespace CapaPresentacion
                 if (result == DialogResult.Yes)
                 {
                     bool resultado = new CN_Compra().EliminarCompraConDetalle(Convert.ToInt32(lblIdCompra.Text), out mensaje);
-                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYCompra(Convert.ToInt32(lblIdCompra.Text), out mensaje);
-                    if (resultado && eliminar)
+                    
+                    if (resultado)
                     {
                         MessageBox.Show("Compra y  Movimientos en Caja Eliminados", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         foreach (DataGridViewRow row in dgvData.Rows)
@@ -182,15 +183,31 @@ namespace CapaPresentacion
                                 int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                                 int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
-                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
                             }
                         }
+                        eliminacionCompra = "Se ha Eliminado la Compra.";
                         Limpiar();
                     }
                     else
                     {
-                        MessageBox.Show("No se ha podido Eliminar la Compra", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        eliminacionCompra = "No se pudo eliminar la Compra";
                     }
+                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYCompra(Convert.ToInt32(lblIdCompra.Text), out mensaje);
+                    if (eliminar)
+                    {
+
+                        eliminacionMovimientos = " Moviemientos en Caja Eliminados";
+
+
+
+                    }
+                    else
+                    {
+                        eliminacionMovimientos = " No se pudo Eliminar los Moviemientos en la Caja";
+                    }
+
+                    MessageBox.Show(eliminacionCompra + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else

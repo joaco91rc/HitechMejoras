@@ -62,9 +62,9 @@ namespace CapaNegocio
                 mensaje += "Es necesario informar la Caja Asociada de la forma de pago\n";
             }
 
-            if (objFormaPago.porcentajeRetencion <= 0)
+            if (objFormaPago.porcentajeRetencion < 0)
             {
-                mensaje += "El porcentaje de retención debe ser mayor a 0\n";
+                mensaje += "El porcentaje de retención debe ser mayor o igual a 0\n";
             }
 
             if (mensaje != string.Empty)

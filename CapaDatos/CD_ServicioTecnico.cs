@@ -67,6 +67,60 @@ namespace CapaDatos
             return lista;
         }
 
+        public List<ServicioTecnico> ListarServiciosCompletados(int idNegocio)
+        {
+            List<ServicioTecnico> lista = new List<ServicioTecnico>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("SELECT st.*, c.nombreCompleto AS NombreCliente");
+                    query.AppendLine("FROM SERVICIOTECNICO st");
+                    query.AppendLine("INNER JOIN CLIENTE c ON st.idCliente = c.idCliente");
+                    query.AppendLine("WHERE st.estadoServicio = @estadoCompletado");
+                    query.AppendLine("AND st.idNegocio = @idNegocio");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@estadoCompletado", "COMPLETADO");
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new ServicioTecnico()
+                            {
+                                IdServicio = Convert.ToInt32(dr["idServicio"]),
+                                IdCliente = Convert.ToInt32(dr["idCliente"]),
+                                NombreCliente = dr["NombreCliente"].ToString(),
+                                Producto = dr["producto"].ToString(),
+                                FechaRecepcion = Convert.ToDateTime(dr["fechaRecepcion"]),
+                                FechaEntregaEstimada = dr["fechaEntregaEstimada"] != DBNull.Value ? Convert.ToDateTime(dr["fechaEntregaEstimada"]) : (DateTime?)null,
+                                FechaEntregaReal = dr["fechaEntregaReal"] != DBNull.Value ? Convert.ToDateTime(dr["fechaEntregaReal"]) : (DateTime?)null,
+                                DescripcionProblema = dr["descripcionProblema"].ToString(),
+                                DescripcionReparacion = dr["descripcionReparacion"].ToString(),
+                                EstadoServicio = dr["estadoServicio"].ToString(),
+                                CostoEstimado = dr["costoEstimado"] != DBNull.Value ? Convert.ToDecimal(dr["costoEstimado"]) : (decimal?)null,
+                                CostoReal = dr["costoReal"] != DBNull.Value ? Convert.ToDecimal(dr["costoReal"]) : (decimal?)null,
+                                Observaciones = dr["observaciones"].ToString(),
+                                FechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
+                                idNegocio = Convert.ToInt32(dr["idNegocio"])
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<ServicioTecnico>();
+                    // Opcional: manejar el error, por ejemplo, registrarlo en un log.
+                }
+            }
+            return lista;
+        }
 
 
         public bool InsertarServicioTecnico(ServicioTecnico servicioTecnico, out string mensaje)
@@ -110,54 +164,7 @@ namespace CapaDatos
             return resultado;
         }
 
-        public List<ServicioTecnico> ListarServiciosCompletados()
-        {
-            List<ServicioTecnico> lista = new List<ServicioTecnico>();
-            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
-            {
-                try
-                {
-                    StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT * FROM SERVICIOTECNICO");
-                    query.AppendLine("WHERE estadoServicio = @estadoCompletado");
-
-                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@estadoCompletado", "Completado");
-
-                    oconexion.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            lista.Add(new ServicioTecnico()
-                            {
-                                IdServicio = Convert.ToInt32(dr["idServicio"]),
-                                IdCliente = Convert.ToInt32(dr["idCliente"]),
-                                Producto = dr["producto"].ToString(),
-                                FechaRecepcion = Convert.ToDateTime(dr["fechaRecepcion"]),
-                                FechaEntregaEstimada = dr["fechaEntregaEstimada"] != DBNull.Value ? Convert.ToDateTime(dr["fechaEntregaEstimada"]) : (DateTime?)null,
-                                FechaEntregaReal = dr["fechaEntregaReal"] != DBNull.Value ? Convert.ToDateTime(dr["fechaEntregaReal"]) : (DateTime?)null,
-                                DescripcionProblema = dr["descripcionProblema"].ToString(),
-                                DescripcionReparacion = dr["descripcionReparacion"].ToString(),
-                                EstadoServicio = dr["estadoServicio"].ToString(),
-                                CostoEstimado = dr["costoEstimado"] != DBNull.Value ? Convert.ToDecimal(dr["costoEstimado"]) : (decimal?)null,
-                                CostoReal = dr["costoReal"] != DBNull.Value ? Convert.ToDecimal(dr["costoReal"]) : (decimal?)null,
-                                Observaciones = dr["observaciones"].ToString(),
-                                FechaRegistro = Convert.ToDateTime(dr["fechaRegistro"])
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    lista = new List<ServicioTecnico>();
-                    // Opcional: manejar el error, por ejemplo, registrarlo en un log.
-                }
-            }
-            return lista;
-        }
+       
 
         public bool CambiarEstadoIngresadoAPendiente(int idServicio, out string mensaje)
         {
@@ -171,6 +178,7 @@ namespace CapaDatos
 
         private bool CambiarEstado(int idServicio, string nuevoEstado, string descripcionReparacion, string observaciones, out string mensaje)
         {
+            mensaje = string.Empty;
             bool resultado = false;
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
             {
@@ -212,6 +220,39 @@ namespace CapaDatos
             return resultado;
         }
 
+        public bool CobrarServicioTecnico(int idServicio, decimal precioReal, DateTime fechaEntregaReal, out string mensaje)
+        {
+            mensaje = string.Empty;
+            bool resultado = false;
 
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("UPDATE SERVICIOTECNICO SET estadoServicio = 'COBRADO',");
+                    query.AppendLine("precioReal = @precioReal,");
+                    query.AppendLine("fechaEntregaReal = @fechaEntregaReal");
+                    query.AppendLine("WHERE idServicio = @idServicio");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@precioReal", precioReal);
+                    cmd.Parameters.AddWithValue("@fechaEntregaReal", fechaEntregaReal);
+                    cmd.Parameters.AddWithValue("@idServicio", idServicio);
+
+                    oconexion.Open();
+                    resultado = cmd.ExecuteNonQuery() > 0;
+                }
+                catch (Exception ex)
+                {
+                    resultado = false;
+                    mensaje = ex.ToString();
+                    // Opcional: registrar el error para depuración
+                }
+            }
+
+            return resultado;
+        }
     }
 }

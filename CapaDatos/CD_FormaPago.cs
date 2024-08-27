@@ -60,6 +60,7 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARFORMAPAGO", oconexion);
                     cmd.Parameters.AddWithValue("descripcion", objFormaPago.descripcion);
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
+                    //cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -96,6 +97,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("descripcion", objFormaPago.descripcion);
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
+                    //cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -125,7 +127,7 @@ namespace CapaDatos
             {
                 try
                 {
-                    string query = "SELECT idFormaPago, descripcion, porcentajeRetencion, cajaAsociada FROM FORMAPAGO WHERE descripcion = @descripcion";
+                    string query = "SELECT * FROM FORMAPAGO WHERE descripcion = @descripcion";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@descripcion", descripcion);
                     oconexion.Open();
@@ -139,6 +141,7 @@ namespace CapaDatos
                                 idFormaPago = Convert.ToInt32(dr["idformapago"]),
                                 descripcion = dr["descripcion"].ToString(),
                                 porcentajeRetencion = Convert.ToDecimal(dr["porcentajeRetencion"]),
+                                //porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
                                 cajaAsociada = dr["cajaAsociada"].ToString(),
                             };
                         }

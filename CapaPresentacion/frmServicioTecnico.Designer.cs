@@ -74,7 +74,7 @@ namespace CapaPresentacion
             this.observaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCambiarEstado = new System.Windows.Forms.DataGridViewImageColumn();
-            this.btnCobrar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnCompletarServicio = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -189,7 +189,7 @@ namespace CapaPresentacion
             this.observaciones,
             this.estado,
             this.btnCambiarEstado,
-            this.btnCobrar});
+            this.btnCompletarServicio});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -602,16 +602,16 @@ namespace CapaPresentacion
             this.btnCambiarEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnCambiarEstado.Width = 30;
             // 
-            // btnCobrar
+            // btnCompletarServicio
             // 
-            this.btnCobrar.HeaderText = "";
-            this.btnCobrar.Image = global::CapaPresentacion.Properties.Resources.cashIcon;
-            this.btnCobrar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnCobrar.Name = "btnCobrar";
-            this.btnCobrar.ReadOnly = true;
-            this.btnCobrar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnCobrar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.btnCobrar.Width = 30;
+            this.btnCompletarServicio.HeaderText = "";
+            this.btnCompletarServicio.Image = global::CapaPresentacion.Properties.Resources.complete;
+            this.btnCompletarServicio.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnCompletarServicio.Name = "btnCompletarServicio";
+            this.btnCompletarServicio.ReadOnly = true;
+            this.btnCompletarServicio.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnCompletarServicio.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnCompletarServicio.Width = 30;
             // 
             // frmServicioTecnico
             // 
@@ -703,6 +703,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn observaciones;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
         private System.Windows.Forms.DataGridViewImageColumn btnCambiarEstado;
-        private System.Windows.Forms.DataGridViewImageColumn btnCobrar;
+        private System.Windows.Forms.DataGridViewImageColumn btnCompletarServicio;
     }
 }

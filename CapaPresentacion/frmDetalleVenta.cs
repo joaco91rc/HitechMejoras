@@ -194,6 +194,8 @@ namespace CapaPresentacion
         private void btnEliminar_Click(object sender, EventArgs e)
 
         {
+            string elimnacionVenta = string.Empty;
+            string eliminacionMovimientos = string.Empty;
             string mensaje = string.Empty;
             if (GlobalSettings.RolUsuario == 1)
             {
@@ -204,13 +206,8 @@ namespace CapaPresentacion
                 if (result == DialogResult.Yes)
                 {
                     bool resultado = new CN_Venta().EliminarVentaConDetalle(Convert.ToInt32(lblIdVenta.Text), out mensaje);
-                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYVenta(Convert.ToInt32(lblIdVenta.Text), out mensaje);
-                    if (resultado && eliminar)
+                    if (resultado)
                     {
-                                         
-                            MessageBox.Show("Venta y Moviemientos en Caja Eliminados", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
-
                         foreach (DataGridViewRow row in dgvData.Rows)
                         {
                             // Asegúrate de que la fila no sea una fila nueva (la fila de edición en blanco al final)
@@ -223,13 +220,29 @@ namespace CapaPresentacion
                                 new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
                             }
                         }
-
+                        elimnacionVenta = "Se ha Eliminado la Venta.";
                         Limpiar();
+
+                    } else
+                    {
+                        elimnacionVenta = "No se pudo eliminar la Venta";
+                    }
+                    bool eliminar = new CN_Transaccion().EliminarMovimientoCajaYVenta(Convert.ToInt32(lblIdVenta.Text), out mensaje);
+                    if (eliminar)
+                    {
+                                         
+                            eliminacionMovimientos = " Moviemientos en Caja Eliminados";
+                        
+
+                        
                     }
                     else
                     {
-                        MessageBox.Show("No se ha podido Eliminar la Venta", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        eliminacionMovimientos = " No se pudo Eliminar los Moviemientos en la Caja";
                     }
+                    
+                   MessageBox.Show(elimnacionVenta + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
                 }
             }
             else

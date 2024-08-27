@@ -111,19 +111,7 @@ namespace CapaPresentacion
 
             
 
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "EFECTIVO", Texto = "EFECTIVO" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "DOLARES", Texto = "DOLARES" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "DEBITO", Texto = "DEBITO" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "CREDITO", Texto = "CREDITO" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "TRANSFERENCIA", Texto = "TRANSFERENCIA" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "MERCADOPAGO", Texto = "MERCADO PAGO" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "CUENTA DNI", Texto = "CUENTA DNI" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "MODO", Texto = "MODO" });
-            //cboFormaPago4.Items.Add(new OpcionCombo() { Valor = "CRYPTO", Texto = "CRYPTO" });
-
-            //cboFormaPago4.DisplayMember = "Texto";
-            //cboFormaPago4.ValueMember = "Valor";
-            //cboFormaPago4.SelectedIndex = 0;
+            
 
 
             dtpFecha.Text = DateTime.Now.ToString();

@@ -59,6 +59,55 @@ namespace CapaDatos
             return lista;
         }
 
+        public List<Producto> ListarPorNegocio(int idNegocio)
+        {
+            List<Producto> lista = new List<Producto>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("select p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion[DescripcionCategoria],");
+                    query.AppendLine("ISNULL(pn.stock, 0) as stock, p.precioCompra, p.precioVenta, p.estado, p.costoPesos");
+                    query.AppendLine("from Producto p");
+                    query.AppendLine("inner join CATEGORIA c on c.idCategoria = p.idCategoria");
+                    query.AppendLine("left join PRODUCTONEGOCIO pn on pn.idProducto = p.idProducto");
+                    query.AppendLine("where p.estado = 1 and pn.idNegocio = @idNegocio");
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new Producto()
+                            {
+                                idProducto = Convert.ToInt32(dr["idProducto"]),
+                                codigo = dr["codigo"].ToString(),
+                                nombre = dr["nombre"].ToString(),
+                                descripcion = dr["descripcion"].ToString(),
+                                oCategoria = new Categoria() { idCategoria = Convert.ToInt32(dr["idCategoria"]), descripcion = dr["DescripcionCategoria"].ToString() },
+                                costoPesos = Convert.ToDecimal(dr["costoPesos"]),
+                                precioCompra = Convert.ToDecimal(dr["precioCompra"]),
+                                precioVenta = Convert.ToDecimal(dr["precioVenta"]),
+                                estado = Convert.ToBoolean(dr["estado"]),
+                                stock = Convert.ToInt32(dr["stock"])
+                                
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<Producto>();
+                }
+            }
+            return lista;
+        }
+
+
         public List<Producto> Listar()
         {
             List<Producto> lista = new List<Producto>();

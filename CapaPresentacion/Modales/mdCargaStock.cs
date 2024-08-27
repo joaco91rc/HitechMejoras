@@ -78,6 +78,30 @@ namespace CapaPresentacion.Modales
             }
         }
 
+        private void CargarGrillaPorNegocio()
+        {
+            dgvData.Rows.Clear();
+            //Mostrar todos los Productos
+            List<Producto> listaProducto = new CN_Producto().ListarPorNegocio(GlobalSettings.SucursalId);
+
+            foreach (Producto item in listaProducto)
+            {
+                //int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(item.idProducto, GlobalSettings.SucursalId);
+
+                dgvData.Rows.Add(new object[] { item.idProducto,
+                    item.codigo,
+                    item.nombre,
+                    item.oCategoria.descripcion,
+                    item.stock,
+                    item.costoPesos,
+                    item.precioCompra,
+                    item.precioVenta,
+
+                    });
+
+            }
+        }
+
         private void mdCargaStock_Load(object sender, EventArgs e)
         {
             dgvData.CellValueChanged += new DataGridViewCellEventHandler(dgvData_CellValueChanged);
@@ -189,5 +213,16 @@ namespace CapaPresentacion.Modales
             }
         }
 
+        private void checkProductosLocal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkProductosLocal.Checked)
+            {
+                CargarGrillaPorNegocio();
+            } 
+            else
+            {
+                CargarGrilla();
+            }
+        }
     }
 }

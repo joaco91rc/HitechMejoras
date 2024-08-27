@@ -45,15 +45,15 @@ namespace CapaNegocio
             return objcd_ServicioTecnico.InsertarServicioTecnico(servicioTecnico, out mensaje);
         }
 
-        public List<ServicioTecnico> ListarServiciosCompletados()
+        public List<ServicioTecnico> ListarServiciosCompletados(int idSucursal)
         {
-            return objcd_ServicioTecnico.ListarServiciosCompletados();
+            return objcd_ServicioTecnico.ListarServiciosCompletados(idSucursal);
         }
 
         public bool CambiarEstadoIngresadoAPendiente(int idServicio, out string mensaje)
         {
             mensaje = string.Empty;
-            return objcd_ServicioTecnico.CambiarEstadoIngresadoAPendiente(idServicio);
+            return objcd_ServicioTecnico.CambiarEstadoIngresadoAPendiente(idServicio,out mensaje);
         }
 
         public bool CambiarEstadoPendienteACompletado(int idServicio, string descripcionReparacion, string Observaciones,  out string mensaje)
@@ -65,6 +65,13 @@ namespace CapaNegocio
             return objcd_ServicioTecnico.CambiarEstadoPendienteACompletado(idServicio, descripcionReparacion,Observaciones, out mensaje );
         }
 
+        public bool CobrarServicioTecnico(int idServicio, decimal precioReal, DateTime fechaEntregaReal, out string mensaje)
+        {
+            mensaje = string.Empty;
+
+            // Llamada al método de la capa de datos que realiza la actualización en la base de datos.
+            return objcd_ServicioTecnico.CobrarServicioTecnico(idServicio, precioReal, fechaEntregaReal, out mensaje);
+        }
 
     }
 }

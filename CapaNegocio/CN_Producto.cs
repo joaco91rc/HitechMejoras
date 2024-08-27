@@ -17,6 +17,10 @@ namespace CapaNegocio
         {
             return objcd_Producto.Listar(idNegocio);
         }
+        public List<Producto> ListarPorNegocio(int idNegocio)
+        {
+            return objcd_Producto.ListarPorNegocio(idNegocio);
+        }
 
 
         public List<Producto> Listar()

@@ -31,7 +31,7 @@ namespace CapaPresentacion
 
         private void frmProducto_Load(object sender, EventArgs e)
         {
-            if(usuarioActual.oRol.idRol == 1 || usuarioActual.oRol.idRol == 3)
+            if (usuarioActual.oRol.idRol == 1 || usuarioActual.oRol.idRol == 3)
             {
 
                 txtPrecioCompra.Visible = true;
@@ -83,8 +83,8 @@ namespace CapaPresentacion
 
             //Mostrar todos los Productos
             List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
-             // Cargar la imagen desde los recursos
-
+            // Cargar la imagen desde los recursos
+            
             foreach (Producto item in listaProducto)
             {
                 dgvData.Rows.Add(new object[] {

@@ -550,3 +550,4 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacio
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmConceptos.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmServicioTecnico.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmCobrarServicio.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.ConfirmarReparacion.resources

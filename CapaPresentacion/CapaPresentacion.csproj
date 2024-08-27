@@ -486,6 +486,7 @@
   <ItemGroup>
     <Content Include="ICONOPROGRAMA.ico" />
     <Content Include="LogoAcuarioIcono2.ico" />
+    <None Include="Resources\complete.png" />
     <None Include="Resources\cashIcon.png" />
     <None Include="Resources\VIEWICON.png" />
     <None Include="Resources\detail.png" />
