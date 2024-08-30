@@ -58,25 +58,25 @@ namespace CapaDatos
 
         }
 
-        public List<DetalleCaja> Listar(string fecha)
+        public List<DetalleCaja> Listar(string fecha, int idNegocio)
         {
             List<DetalleCaja> lista = new List<DetalleCaja>();
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
             {
                 try
                 {
-
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select cr.fechaApertura,cr.fechaCierre,tc.hora,tc.tipoTransaccion,tc.monto,tc.formaPago, tc.docAsociado,tc.usuarioTransaccion, tc.idCompra, tc.idVenta, tc.idTransaccion from CAJA_REGISTRADORA cr");
-                    query.AppendLine("inner join TRANSACCION_CAJA tc  on tc.idCajaRegistradora = cr.idCajaRegistradora");
-                    query.AppendLine("where CONVERT(DATE, cr.fechaApertura) = @fecha AND cr.fechaCierre IS NOT NULL"); // Modificación aquí
-
+                    query.AppendLine("select cr.fechaApertura, cr.fechaCierre, tc.hora, tc.tipoTransaccion, tc.monto, tc.formaPago, tc.docAsociado,");
+                    query.AppendLine("tc.usuarioTransaccion, tc.idCompra, tc.idVenta, tc.idTransaccion");
+                    query.AppendLine("from CAJA_REGISTRADORA cr");
+                    query.AppendLine("inner join TRANSACCION_CAJA tc on tc.idCajaRegistradora = cr.idCajaRegistradora");
+                    query.AppendLine("where CONVERT(DATE, cr.fechaApertura) = @fecha AND cr.fechaCierre IS NOT NULL AND tc.idNegocio = @idNegocio");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@fecha", fecha);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
 
-                    
                     oconexion.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -95,10 +95,6 @@ namespace CapaDatos
                                 idCompra = dr["idCompra"] != DBNull.Value ? Convert.ToInt32(dr["idCompra"]) : 0,
                                 idVenta = dr["idVenta"] != DBNull.Value ? Convert.ToInt32(dr["idVenta"]) : 0,
                                 idTransaccion = Convert.ToInt32(dr["idTransaccion"])
-
-
-
-
                             });
                         }
                     }
@@ -108,12 +104,12 @@ namespace CapaDatos
                 {
                     lista = new List<DetalleCaja>();
                 }
-
             }
             return lista;
         }
 
 
-    }  
-    
+
+    }
+
 }

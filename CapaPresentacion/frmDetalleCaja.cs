@@ -311,7 +311,7 @@ namespace CapaPresentacion
         {
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar los datos
 
-            List<DetalleCaja> listaCaja = new CN_DetalleCaja().Listar(fecha); // Obteniendo la lista según la fecha
+            List<DetalleCaja> listaCaja = new CN_DetalleCaja().Listar(fecha,GlobalSettings.SucursalId); // Obteniendo la lista según la fecha
 
             foreach (DetalleCaja item in listaCaja)
             {

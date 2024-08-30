@@ -34,22 +34,6 @@ namespace CapaPresentacion
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnExportarExcel = new FontAwesome.Sharp.IconButton();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockH1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockH2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockAC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -72,6 +56,24 @@ namespace CapaPresentacion
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockH1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockH2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockAC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tresCuotas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SEIScUOTAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -133,6 +135,8 @@ namespace CapaPresentacion
             this.precioVenta,
             this.precioPesos,
             this.precioLista,
+            this.tresCuotas,
+            this.SEIScUOTAS,
             this.estadoValor,
             this.estado});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -155,127 +159,6 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(1320, 546);
             this.dgvData.TabIndex = 92;
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
-            // codigo
-            // 
-            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.codigo.HeaderText = "CODIGO";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 80;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombre.HeaderText = "NOMBRE";
-            this.nombre.MinimumWidth = 250;
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // idCategoria
-            // 
-            this.idCategoria.HeaderText = "ID CATEGORIA";
-            this.idCategoria.Name = "idCategoria";
-            this.idCategoria.ReadOnly = true;
-            this.idCategoria.Visible = false;
-            // 
-            // categoria
-            // 
-            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.categoria.HeaderText = "CATEGORIA";
-            this.categoria.Name = "categoria";
-            this.categoria.ReadOnly = true;
-            this.categoria.Width = 150;
-            // 
-            // stockTotal
-            // 
-            this.stockTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockTotal.HeaderText = "STOCK TOTAL";
-            this.stockTotal.Name = "stockTotal";
-            this.stockTotal.ReadOnly = true;
-            this.stockTotal.Width = 120;
-            // 
-            // stockH1
-            // 
-            this.stockH1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockH1.HeaderText = "STOCK H1";
-            this.stockH1.Name = "stockH1";
-            this.stockH1.ReadOnly = true;
-            // 
-            // stockH2
-            // 
-            this.stockH2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockH2.HeaderText = "STOCK H2";
-            this.stockH2.Name = "stockH2";
-            this.stockH2.ReadOnly = true;
-            // 
-            // stockAS
-            // 
-            this.stockAS.HeaderText = "STOCK AS";
-            this.stockAS.Name = "stockAS";
-            this.stockAS.ReadOnly = true;
-            // 
-            // stockAC
-            // 
-            this.stockAC.HeaderText = "STOCK AC";
-            this.stockAC.Name = "stockAC";
-            this.stockAC.ReadOnly = true;
-            // 
-            // precioCompra
-            // 
-            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioCompra.HeaderText = "PRECIO COMPRA";
-            this.precioCompra.Name = "precioCompra";
-            this.precioCompra.ReadOnly = true;
-            this.precioCompra.Visible = false;
-            this.precioCompra.Width = 140;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioVenta.HeaderText = "PRECIO VENTA";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.ReadOnly = true;
-            this.precioVenta.Width = 130;
-            // 
-            // precioPesos
-            // 
-            this.precioPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioPesos.HeaderText = "PRECIO EN PESOS";
-            this.precioPesos.Name = "precioPesos";
-            this.precioPesos.ReadOnly = true;
-            this.precioPesos.Width = 200;
-            // 
-            // precioLista
-            // 
-            this.precioLista.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioLista.HeaderText = "PRECIO LISTA";
-            this.precioLista.Name = "precioLista";
-            this.precioLista.ReadOnly = true;
-            this.precioLista.Width = 200;
-            // 
-            // estadoValor
-            // 
-            this.estadoValor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.estadoValor.HeaderText = "ESTADO VALOR";
-            this.estadoValor.Name = "estadoValor";
-            this.estadoValor.ReadOnly = true;
-            this.estadoValor.Visible = false;
-            // 
-            // estado
-            // 
-            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.estado.HeaderText = "ESTADO";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            this.estado.Visible = false;
             // 
             // btnLimpiar
             // 
@@ -547,6 +430,139 @@ namespace CapaPresentacion
             this.label1.TabIndex = 71;
             this.label1.Text = "Formulario Productos";
             // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // codigo
+            // 
+            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.codigo.HeaderText = "CODIGO";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            this.codigo.Width = 80;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.HeaderText = "NOMBRE";
+            this.nombre.MinimumWidth = 250;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // idCategoria
+            // 
+            this.idCategoria.HeaderText = "ID CATEGORIA";
+            this.idCategoria.Name = "idCategoria";
+            this.idCategoria.ReadOnly = true;
+            this.idCategoria.Visible = false;
+            // 
+            // categoria
+            // 
+            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.categoria.HeaderText = "CATEGORIA";
+            this.categoria.Name = "categoria";
+            this.categoria.ReadOnly = true;
+            this.categoria.Width = 150;
+            // 
+            // stockTotal
+            // 
+            this.stockTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockTotal.HeaderText = "STOCK TOTAL";
+            this.stockTotal.Name = "stockTotal";
+            this.stockTotal.ReadOnly = true;
+            this.stockTotal.Width = 120;
+            // 
+            // stockH1
+            // 
+            this.stockH1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockH1.HeaderText = "STOCK H1";
+            this.stockH1.Name = "stockH1";
+            this.stockH1.ReadOnly = true;
+            // 
+            // stockH2
+            // 
+            this.stockH2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockH2.HeaderText = "STOCK H2";
+            this.stockH2.Name = "stockH2";
+            this.stockH2.ReadOnly = true;
+            // 
+            // stockAS
+            // 
+            this.stockAS.HeaderText = "STOCK AS";
+            this.stockAS.Name = "stockAS";
+            this.stockAS.ReadOnly = true;
+            // 
+            // stockAC
+            // 
+            this.stockAC.HeaderText = "STOCK AC";
+            this.stockAC.Name = "stockAC";
+            this.stockAC.ReadOnly = true;
+            // 
+            // precioCompra
+            // 
+            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioCompra.HeaderText = "PRECIO COMPRA";
+            this.precioCompra.Name = "precioCompra";
+            this.precioCompra.ReadOnly = true;
+            this.precioCompra.Visible = false;
+            this.precioCompra.Width = 140;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioVenta.HeaderText = "PRECIO VENTA";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.ReadOnly = true;
+            this.precioVenta.Width = 130;
+            // 
+            // precioPesos
+            // 
+            this.precioPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioPesos.HeaderText = "PRECIO EN PESOS";
+            this.precioPesos.Name = "precioPesos";
+            this.precioPesos.ReadOnly = true;
+            this.precioPesos.Width = 200;
+            // 
+            // precioLista
+            // 
+            this.precioLista.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioLista.HeaderText = "PRECIO LISTA";
+            this.precioLista.Name = "precioLista";
+            this.precioLista.ReadOnly = true;
+            this.precioLista.Width = 200;
+            // 
+            // tresCuotas
+            // 
+            this.tresCuotas.HeaderText = "3 SIN INTERES";
+            this.tresCuotas.Name = "tresCuotas";
+            this.tresCuotas.ReadOnly = true;
+            // 
+            // SEIScUOTAS
+            // 
+            this.SEIScUOTAS.HeaderText = "6 SIN INTERES";
+            this.SEIScUOTAS.Name = "SEIScUOTAS";
+            this.SEIScUOTAS.ReadOnly = true;
+            // 
+            // estadoValor
+            // 
+            this.estadoValor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.estadoValor.HeaderText = "ESTADO VALOR";
+            this.estadoValor.Name = "estadoValor";
+            this.estadoValor.ReadOnly = true;
+            this.estadoValor.Visible = false;
+            // 
+            // estado
+            // 
+            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.estado.HeaderText = "ESTADO";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            this.estado.Visible = false;
+            // 
             // frmConsultaStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -625,6 +641,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioPesos;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tresCuotas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SEIScUOTAS;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoValor;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
     }

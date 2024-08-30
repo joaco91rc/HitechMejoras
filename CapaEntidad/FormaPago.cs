@@ -11,7 +11,8 @@ namespace CapaEntidad
         public int idFormaPago { get; set; }
         public string descripcion { get; set; }
         public decimal porcentajeRetencion { get; set; }
-        //public decimal porcentajeRecargo { get; set; }
+        public decimal porcentajeRecargo { get; set; }
+        public decimal porcentajeDescuento { get; set; }
         public string cajaAsociada { get; set; }
 
     }

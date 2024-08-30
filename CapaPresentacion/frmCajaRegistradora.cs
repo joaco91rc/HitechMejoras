@@ -160,10 +160,10 @@ namespace CapaPresentacion
 
                 }
                 TotalesCaja totalesCaja = CalcularTotales(cajaAbierta);
-                txtSaldo.Text = (totalesCaja.Total + Convert.ToDecimal(txtSaldoInicial.Text)).ToString();
-                txtSaldoMP.Text = (totalesCaja.TotalMP + Convert.ToDecimal(txtSaldoInicialMP.Text)).ToString();
-                txtSaldoUSS.Text = (totalesCaja.TotalUSS + Convert.ToDecimal(txtSaldoInicialUSS.Text)).ToString();
-                txtSaldoGalicia.Text = (totalesCaja.TotalGalicia + Convert.ToDecimal(txtSaldoInicialGalicia.Text)).ToString();
+                txtSaldo.Text = totalesCaja.Total.ToString();
+                txtSaldoMP.Text = totalesCaja.TotalMP.ToString();
+                txtSaldoUSS.Text = totalesCaja.TotalUSS.ToString();
+                txtSaldoGalicia.Text = totalesCaja.TotalGalicia.ToString();
             }
 
             
@@ -282,7 +282,7 @@ namespace CapaPresentacion
                         {
                             row.Cells["idNegocio"].Value = objTransaccion.idNegocio;
                         }
-
+                        totalesCaja = CalcularTotales(cajaAbierta);
                         // Limpiar controles si es necesario
                         Limpiar();
                     }
@@ -292,10 +292,10 @@ namespace CapaPresentacion
                         MessageBox.Show(mensaje);
                     }
                 }
-                txtSaldo.Text = (totalesCaja.Total + Convert.ToDecimal(txtSaldoInicial.Text)).ToString();
-                txtSaldoMP.Text = (totalesCaja.TotalMP + Convert.ToDecimal(txtSaldoInicialMP.Text)).ToString();
-                txtSaldoUSS.Text = (totalesCaja.TotalUSS + Convert.ToDecimal(txtSaldoInicialUSS.Text)).ToString();
-                txtSaldoGalicia.Text = (totalesCaja.TotalGalicia + Convert.ToDecimal(txtSaldoInicialGalicia.Text)).ToString();
+                txtSaldo.Text = totalesCaja.Total.ToString();
+                txtSaldoMP.Text = totalesCaja.TotalMP.ToString();
+                txtSaldoUSS.Text = totalesCaja.TotalUSS.ToString();
+                txtSaldoGalicia.Text = totalesCaja.TotalGalicia.ToString();
 
             }
             
@@ -342,10 +342,10 @@ namespace CapaPresentacion
 
             TotalesCaja totales = new TotalesCaja
             {
-                Total = total, 
-                TotalMP = totalMP, 
-                TotalUSS = totalUSS, 
-                TotalGalicia = totalGalicia 
+                Total = total + Convert.ToDecimal(txtSaldoInicial.Text), 
+                TotalMP = totalMP + Convert.ToDecimal(txtSaldoInicialMP.Text), 
+                TotalUSS = totalUSS + Convert.ToDecimal(txtSaldoInicialUSS.Text), 
+                TotalGalicia = totalGalicia + Convert.ToDecimal(txtSaldoInicialGalicia.Text)
             };
 
             return totales;
@@ -452,11 +452,15 @@ namespace CapaPresentacion
                     if (dgvData.Rows[indice].Cells["tipoTransaccion"].Value.ToString() == "SALIDA")
                     {
                         txtMonto.Text = (Convert.ToDecimal(dgvData.Rows[indice].Cells["monto"].Value)*-1).ToString();
+                    }else
+                    {
+                        txtMonto.Text = dgvData.Rows[indice].Cells["monto"].Value.ToString();
                     }
+
                     
                     cboCajaAsociada.Text = dgvData.Rows[indice].Cells["cajaAsociada"].Value.ToString();
                     txtDocAsociado.Text = dgvData.Rows[indice].Cells["docAsociado"].Value.ToString();
-
+                    
                     // Verificar si idCompra es NULL
                     txtIdCompra.Text = dgvData.Rows[indice].Cells["idCompra"].Value != DBNull.Value
                                         ? dgvData.Rows[indice].Cells["idCompra"].Value.ToString()
@@ -503,10 +507,10 @@ namespace CapaPresentacion
 
                             dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));
                             totalesCaja = CalcularTotales(cajaAbierta);
-                            txtSaldo.Text = (totalesCaja.Total + Convert.ToDecimal(txtSaldoInicial.Text)).ToString();
-                            txtSaldoMP.Text = (totalesCaja.TotalMP + Convert.ToDecimal(txtSaldoInicialMP.Text)).ToString();
-                            txtSaldoUSS.Text = (totalesCaja.TotalUSS + Convert.ToDecimal(txtSaldoInicialUSS.Text)).ToString();
-                            txtSaldoGalicia.Text = (totalesCaja.TotalGalicia + Convert.ToDecimal(txtSaldoInicialGalicia.Text)).ToString();
+                            txtSaldo.Text = totalesCaja.Total.ToString();
+                            txtSaldoMP.Text = totalesCaja.TotalMP.ToString();
+                            txtSaldoUSS.Text = totalesCaja.TotalUSS.ToString();
+                            txtSaldoGalicia.Text = totalesCaja.TotalGalicia.ToString();
                             Limpiar();
                         }
 

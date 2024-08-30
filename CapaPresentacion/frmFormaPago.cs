@@ -33,6 +33,8 @@ namespace CapaPresentacion
                 dgvData.Rows.Add(new object[] {defaultImage,item.idFormaPago,
                     item.descripcion,
                     item.porcentajeRetencion,
+                    item.porcentajeRecargo,
+                    item.porcentajeDescuento,
                     item.cajaAsociada
 
                     });
@@ -48,7 +50,8 @@ namespace CapaPresentacion
                 descripcion = txtFormaPago.Text.Trim(),
                 porcentajeRetencion = txtPorcentajeRetencion.Value,
                 cajaAsociada = cboCajaAsociada.Text,
-                //porcentajeRecargo = txtPorcentajeRecargo.Value
+                porcentajeRecargo = txtPorcentajeRecargo.Value,
+                porcentajeDescuento = txtPorcentajeDescuento.Value
             };
 
             if (objFormaPago.idFormaPago == 0)
@@ -64,6 +67,8 @@ namespace CapaPresentacion
                 idFormaPagoGenerado,
                 objFormaPago.descripcion,
                 objFormaPago.porcentajeRetencion.ToString(),
+                objFormaPago.porcentajeRecargo.ToString(),
+                objFormaPago.porcentajeDescuento.ToString(),
                 objFormaPago.cajaAsociada.ToString()
                     });
                     Limpiar();
@@ -83,6 +88,8 @@ namespace CapaPresentacion
                     row.Cells["idFormaPago"].Value = objFormaPago.idFormaPago;
                     row.Cells["descripcion"].Value = objFormaPago.descripcion;
                     row.Cells["porcentajeRetencion"].Value = objFormaPago.porcentajeRetencion.ToString();
+                    row.Cells["porcentajeRecargo"].Value = objFormaPago.porcentajeRecargo.ToString();
+                    row.Cells["porcentajeDescuento"].Value = objFormaPago.porcentajeDescuento.ToString();
                     row.Cells["cajaAsociada"].Value = objFormaPago.cajaAsociada.ToString();
                     Limpiar();
                 }
@@ -99,6 +106,8 @@ namespace CapaPresentacion
             txtIdFormaPago.Text = "0";
             txtFormaPago.Text = string.Empty;
             txtPorcentajeRetencion.Value = 0;
+            txtPorcentajeRecargo.Value = 0;
+            txtPorcentajeRecargo.Value = 0;
             txtIndice.Text = "-1"; // Resetear el índice
         }
 
@@ -121,7 +130,8 @@ namespace CapaPresentacion
                         txtIdFormaPago.Text = dgvData.Rows[indice].Cells["idFormaPago"].Value.ToString();
                         cboCajaAsociada.Text = dgvData.Rows[indice].Cells["cajaAsociada"].Value.ToString();
                         txtPorcentajeRetencion.Text = dgvData.Rows[indice].Cells["porcentajeRetencion"].Value.ToString();
-
+                        txtPorcentajeRecargo.Text = dgvData.Rows[indice].Cells["porcentajeRecargo"].Value.ToString();
+                        txtPorcentajeDescuento.Text = dgvData.Rows[indice].Cells["porcentajeDescuento"].Value.ToString();
 
 
 
@@ -133,24 +143,6 @@ namespace CapaPresentacion
             
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-           
-                if (e.RowIndex < 0)
-                    return;
-                if (e.ColumnIndex == 0)
-                {
-
-                    e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                    var w = Properties.Resources.check20.Width;
-                    var h = Properties.Resources.check20.Height;
-                    var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                    var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                    e.Graphics.DrawImage(Properties.Resources.check20, new Rectangle(x, y, w, h));
-                    e.Handled = true;
-                }
-            
-        }
+        
     }
 }

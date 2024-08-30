@@ -64,6 +64,8 @@ namespace CapaPresentacion
         item.precioVenta,
         precioVentaCotizado.ToString("0.00"),
         precioConIncremento.ToString("0.00"),
+        (precioConIncremento/3).ToString("0.00"),
+        (precioConIncremento/6).ToString("0.00"),
         item.estado == true ? 1 : 0,
         item.estado == true ? "Activo" : "No Activo"
     });

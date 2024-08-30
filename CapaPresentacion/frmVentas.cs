@@ -16,6 +16,7 @@ namespace CapaPresentacion
 {
     public partial class frmVentas : Form
     {
+        private bool isUpdated = false;
         private Usuario _Usuario;
         private Venta _Venta;
         public frmVentas(Usuario oUsuario = null, Venta oVenta = null)
@@ -269,6 +270,8 @@ namespace CapaPresentacion
                 decimal totalRedondeado = Math.Ceiling(totalCotizado / 500) * 500;
                 txtTotalAPagar.Text = totalRedondeado.ToString("0.00");
                 txtTotalVentaDolares.Text = total.ToString("0.00");
+                txtRestaPagar.Text = txtTotalAPagar.Value.ToString();
+
             }
         }
 
@@ -414,7 +417,7 @@ namespace CapaPresentacion
             }
             else
             {
-                pagacon = Convert.ToInt32(txtPagaCon.Text);
+                pagacon = Convert.ToDecimal(txtPagaCon.Text);
             }
             
            if( txtPagaCon2.Text != string.Empty)
@@ -445,8 +448,10 @@ namespace CapaPresentacion
             {
                 pagacon = pagacon + 0;
             }
+            
 
             decimal total = Convert.ToDecimal(txtTotalAPagar.Text);
+            
 
             if (txtPagaCon.Text.Trim() == "")
             {
@@ -797,7 +802,7 @@ namespace CapaPresentacion
                     txtPagaCon3.Text = string.Empty;
                     txtPagaCon4.Text = string.Empty;
                     txtRestaPagar.Text = string.Empty;
-
+                    isUpdated = false;
 
                     checkDescuento.Checked = false;
                     
@@ -845,6 +850,10 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = false;
                 lblDescuento.Visible = false;
                 checkRecargo.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago2.SelectedIndex = -1;
+                cboFormaPago3.SelectedIndex = -1;
+                cboFormaPago4.SelectedIndex = -1;
                 calcularTotal();
             }
 
@@ -864,9 +873,15 @@ namespace CapaPresentacion
                     if(checkDescuento.Checked == true)
                     {
                         txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - montoDescuentoRecargo).ToString("0.00");
-                        if(cboFormaPago.Text =="DOLAR" || cboFormaPago.Text=="DOLAR EFECTIVO")
+                        
+                        
+                        if (cboFormaPago.Text =="DOLAR" || cboFormaPago.Text=="DOLAR EFECTIVO")
                         {
                             txtRestaPagar.Text = txtTotalAPagar.Text;
+                        }
+                        else
+                        {
+                            txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - montoDescuentoRecargo).ToString("0.00");
                         }
                     }
                     if (checkRecargo.Checked == true)
@@ -875,11 +890,14 @@ namespace CapaPresentacion
                         if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                         {
                             txtRestaPagar.Text = txtTotalAPagar.Text;
+                        } else
+                        {
+                            txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) + montoDescuentoRecargo).ToString("0.00");
                         }
                     }
                     txtDescuento.Enabled = false;
                     lblDescuento.Visible = true;
-                    
+                    CalcularCambio();
                 }
                 else
                 {
@@ -917,6 +935,10 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = false;
                 lblDescuento.Visible = false;
                 checkDescuento.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago2.SelectedIndex = -1;
+                cboFormaPago3.SelectedIndex = -1;
+                cboFormaPago4.SelectedIndex = -1;
                 calcularTotal();
             }
         }
@@ -936,10 +958,12 @@ namespace CapaPresentacion
                 if (checkDescuento.Checked == true)
                 {
                     txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+                   
                 }
                 if (checkRecargo.Checked == true)
                 {
                     txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+                    
                 }
                 
             }
@@ -1027,7 +1051,39 @@ namespace CapaPresentacion
                 txtStock.Text = string.Empty;
             }
         }
-
         
+        private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Recalcula el total original sin recargos ni descuentos
+            calcularTotal();
+
+            // Obtén el recargo y descuento según la forma de pago seleccionada
+            if(cboFormaPago.SelectedIndex != -1) { 
+            decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeRecargo;
+            decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeDescuento;
+            
+            // Convierte el total original a un valor decimal
+            decimal totalOriginal = Convert.ToDecimal(txtTotalAPagar.Text);
+
+            // Aplica el recargo y descuento al total original
+            decimal totalConRecargoYDescuento = (totalOriginal + (totalOriginal * porcentajeRecargo)) - (totalOriginal * porcentajeDescuento);
+
+            // Actualiza el TextBox con el nuevo total
+            txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");
+            }
+            checkDescuento.Checked = false;
+            checkRecargo.Checked = false;
+            txtMontoDescuento.Text = "0";
+            txtDescuento.Text = "0";
+            txtMontoDescuento.Visible = false;
+            lblDescuento.Visible = false;
+            lblMontoDescuento.Visible = false;
+            lblPorcentaje.Visible = false;
+            checkDescuento.Visible = true;
+            checkRecargo.Visible = true;
+            txtPagaCon.Text = "";
+            txtRestaPagar.Text = "";
+
+        }
     }
     }

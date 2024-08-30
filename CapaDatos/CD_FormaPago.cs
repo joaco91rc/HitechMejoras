@@ -18,7 +18,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT idFormaPago, descripcion, porcentajeRetencion , cajaAsociada FROM FORMAPAGO");
+                    query.AppendLine("SELECT * FROM FORMAPAGO");
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
@@ -32,6 +32,8 @@ namespace CapaDatos
                                 idFormaPago = Convert.ToInt32(dr["idFormaPago"]),
                                 descripcion = dr["descripcion"].ToString(),
                                 porcentajeRetencion = Convert.ToDecimal(dr["porcentajeRetencion"]),
+                                porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
+                                porcentajeDescuento = Convert.ToDecimal(dr["porcentajeDescuento"]),
                                 cajaAsociada = dr["cajaAsociada"].ToString()
                             });
                         }
@@ -60,7 +62,8 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARFORMAPAGO", oconexion);
                     cmd.Parameters.AddWithValue("descripcion", objFormaPago.descripcion);
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
-                    //cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
+                    cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
+                    cmd.Parameters.AddWithValue("porcentajeDescuento", objFormaPago.porcentajeDescuento);
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -97,7 +100,8 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("descripcion", objFormaPago.descripcion);
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
-                    //cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
+                    cmd.Parameters.AddWithValue("porcentajeDescuento", objFormaPago.porcentajeDescuento);
+                    cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -141,7 +145,8 @@ namespace CapaDatos
                                 idFormaPago = Convert.ToInt32(dr["idformapago"]),
                                 descripcion = dr["descripcion"].ToString(),
                                 porcentajeRetencion = Convert.ToDecimal(dr["porcentajeRetencion"]),
-                                //porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
+                                porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
+                                porcentajeDescuento = Convert.ToDecimal(dr["porcentajeDescuento"]),
                                 cajaAsociada = dr["cajaAsociada"].ToString(),
                             };
                         }

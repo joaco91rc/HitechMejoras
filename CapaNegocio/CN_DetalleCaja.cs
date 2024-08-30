@@ -18,9 +18,9 @@ namespace CapaNegocio
             return objcd_DetalleCaja.DetalleCaja(fechaConsulta);
         }
 
-        public List<DetalleCaja> Listar(string fecha)
+        public List<DetalleCaja> Listar(string fecha, int idNegocio)
         {
-            return objcd_DetalleCaja.Listar(fecha);
+            return objcd_DetalleCaja.Listar(fecha,idNegocio);
         }
     }
 }

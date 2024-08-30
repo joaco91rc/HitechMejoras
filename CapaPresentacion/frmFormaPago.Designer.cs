@@ -52,15 +52,20 @@ namespace CapaPresentacion
             this.cboCajaAsociada = new System.Windows.Forms.ComboBox();
             this.txtPorcentajeRecargo = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
+            this.txtPorcentajeDescuento = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRetencion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuento)).BeginInit();
             this.SuspendLayout();
             // 
             // txtPorcentajeRetencion
@@ -108,6 +113,8 @@ namespace CapaPresentacion
             this.idFormaPago,
             this.descripcion,
             this.porcentajeRetencion,
+            this.porcentajeRecargo,
+            this.porcentajeDescuento,
             this.cajaAsociada});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -130,7 +137,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(804, 370);
             this.dgvData.TabIndex = 107;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
             // 
             // txtCategoriaSeleccionado
             // 
@@ -310,7 +316,7 @@ namespace CapaPresentacion
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label4.Location = new System.Drawing.Point(15, 216);
+            this.label4.Location = new System.Drawing.Point(12, 243);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 17);
             this.label4.TabIndex = 112;
@@ -324,7 +330,7 @@ namespace CapaPresentacion
             "EFECTIVO",
             "MERCADO PAGO",
             "DOLARES"});
-            this.cboCajaAsociada.Location = new System.Drawing.Point(172, 216);
+            this.cboCajaAsociada.Location = new System.Drawing.Point(169, 243);
             this.cboCajaAsociada.Name = "cboCajaAsociada";
             this.cboCajaAsociada.Size = new System.Drawing.Size(190, 21);
             this.cboCajaAsociada.TabIndex = 113;
@@ -353,6 +359,31 @@ namespace CapaPresentacion
             this.label5.Size = new System.Drawing.Size(126, 17);
             this.label5.TabIndex = 114;
             this.label5.Text = "Porcentaje Recargo";
+            // 
+            // txtPorcentajeDescuento
+            // 
+            this.txtPorcentajeDescuento.DecimalPlaces = 2;
+            this.txtPorcentajeDescuento.Location = new System.Drawing.Point(172, 214);
+            this.txtPorcentajeDescuento.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.txtPorcentajeDescuento.Name = "txtPorcentajeDescuento";
+            this.txtPorcentajeDescuento.Size = new System.Drawing.Size(100, 20);
+            this.txtPorcentajeDescuento.TabIndex = 117;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label6.Location = new System.Drawing.Point(15, 214);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(126, 17);
+            this.label6.TabIndex = 116;
+            this.label6.Text = "Porcentaje Recargo";
             // 
             // btnSeleccionar
             // 
@@ -388,6 +419,20 @@ namespace CapaPresentacion
             this.porcentajeRetencion.ReadOnly = true;
             this.porcentajeRetencion.Width = 130;
             // 
+            // porcentajeRecargo
+            // 
+            this.porcentajeRecargo.HeaderText = "% RECARGO";
+            this.porcentajeRecargo.Name = "porcentajeRecargo";
+            this.porcentajeRecargo.ReadOnly = true;
+            this.porcentajeRecargo.Width = 120;
+            // 
+            // porcentajeDescuento
+            // 
+            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
+            this.porcentajeDescuento.Name = "porcentajeDescuento";
+            this.porcentajeDescuento.ReadOnly = true;
+            this.porcentajeDescuento.Width = 130;
+            // 
             // cajaAsociada
             // 
             this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -401,6 +446,8 @@ namespace CapaPresentacion
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtPorcentajeDescuento);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.txtPorcentajeRecargo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboCajaAsociada);
@@ -428,6 +475,7 @@ namespace CapaPresentacion
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuento)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,6 +507,10 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn idFormaPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRetencion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRecargo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeDescuento;
         private System.Windows.Forms.DataGridViewTextBoxColumn cajaAsociada;
+        private System.Windows.Forms.NumericUpDown txtPorcentajeDescuento;
+        private System.Windows.Forms.Label label6;
     }
 }

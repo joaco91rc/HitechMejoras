@@ -83,7 +83,7 @@ namespace CapaPresentacion
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.concepto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -93,6 +93,7 @@ namespace CapaPresentacion
             this.usuarioTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -224,7 +225,7 @@ namespace CapaPresentacion
             this.btnSeleccionar,
             this.idCajaRegistradora,
             this.idTransaccion,
-            this.hora,
+            this.fecha,
             this.concepto,
             this.tipoTransaccion,
             this.monto,
@@ -233,7 +234,8 @@ namespace CapaPresentacion
             this.docAsociado,
             this.usuarioTransaccion,
             this.idCompra,
-            this.idVenta});
+            this.idVenta,
+            this.idNegocio});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -263,7 +265,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(824, 373);
             this.dgvData.TabIndex = 82;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
             // 
             // txtIndice
             // 
@@ -782,13 +783,13 @@ namespace CapaPresentacion
             this.idTransaccion.Visible = false;
             this.idTransaccion.Width = 140;
             // 
-            // hora
+            // fecha
             // 
-            this.hora.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.hora.HeaderText = "FECHA Y HORA";
-            this.hora.Name = "hora";
-            this.hora.ReadOnly = true;
-            this.hora.Width = 125;
+            this.fecha.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.fecha.HeaderText = "FECHA Y HORA";
+            this.fecha.Name = "fecha";
+            this.fecha.ReadOnly = true;
+            this.fecha.Width = 125;
             // 
             // concepto
             // 
@@ -850,6 +851,12 @@ namespace CapaPresentacion
             this.idVenta.HeaderText = "ID VENTA";
             this.idVenta.Name = "idVenta";
             this.idVenta.ReadOnly = true;
+            // 
+            // idNegocio
+            // 
+            this.idNegocio.HeaderText = "ID NEGOCIO";
+            this.idNegocio.Name = "idNegocio";
+            this.idNegocio.ReadOnly = true;
             // 
             // frmCajaRegistradora
             // 
@@ -964,7 +971,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCajaRegistradora;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTransaccion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
         private System.Windows.Forms.DataGridViewTextBoxColumn concepto;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoTransaccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn monto;
@@ -974,5 +981,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn usuarioTransaccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
     }
 }
