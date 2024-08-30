@@ -50,8 +50,10 @@
     <Compile Include="DetalleCaja.cs" />
     <Compile Include="DetalleCompra.cs" />
     <Compile Include="DetalleVenta.cs" />
+    <Compile Include="EquipoST.cs" />
     <Compile Include="FormaPago.cs" />
     <Compile Include="GlobalSettings.cs" />
+    <Compile Include="HistorialST.cs" />
     <Compile Include="Negocio.cs" />
     <Compile Include="NetworkHelper.cs" />
     <Compile Include="OrdenTraspaso.cs" />
