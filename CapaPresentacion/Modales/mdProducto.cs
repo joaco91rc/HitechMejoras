@@ -52,6 +52,7 @@ namespace CapaPresentacion.Modales
 
         private void CargarListadoProductos()
         {
+            dgvData.Rows.Clear();
             List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
 
             foreach (Producto item in listaProducto)
@@ -70,11 +71,37 @@ namespace CapaPresentacion.Modales
                 
             }
         }
+
+        private void CargarListadoProductosPorLocal()
+        {
+            dgvData.Rows.Clear();
+            List<Producto> listaProducto = new CN_Producto().ListarPorNegocio(GlobalSettings.SucursalId);
+
+            foreach (Producto item in listaProducto)
+            {
+
+
+                dgvData.Rows.Add(new object[] {
+                item.idProducto,
+                item.codigo,
+                item.nombre,
+                item.oCategoria.descripcion,
+                item.stock,
+                item.precioCompra,
+                item.precioVenta,
+            });
+
+            }
+        }
         private void ActualizarListadoProductos()
         {
             dgvData.Rows.Clear(); // Limpiar la grilla
             CargarListadoProductos(); // Volver a cargar los productos
         }
+
+       
+
+        
 
         private void mdProducto_Load(object sender, EventArgs e)
         {
@@ -109,7 +136,7 @@ namespace CapaPresentacion.Modales
             cboCategoria.DisplayMember = "Texto";
             cboCategoria.ValueMember = "Valor";
             cboCategoria.SelectedIndex = 0;
-            CargarListadoProductos();
+            CargarListadoProductosPorLocal();
 
         }
 
@@ -386,6 +413,18 @@ namespace CapaPresentacion.Modales
                 txtPrecioCompra.Visible = true;
                 txtPrecioCompra.Select();
 
+            }
+        }
+
+        private void checkProductosLocales_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkProductosLocales.Checked)
+            {
+                CargarListadoProductos();
+            }
+            else
+            {
+                CargarListadoProductosPorLocal();
             }
         }
     }

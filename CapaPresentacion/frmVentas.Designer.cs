@@ -29,9 +29,9 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVentas));
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -72,7 +72,6 @@ namespace CapaPresentacion
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.gbInfoProducto = new System.Windows.Forms.GroupBox();
-            this.txtPagaCon = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -88,20 +87,26 @@ namespace CapaPresentacion
             this.txtCotizacion = new System.Windows.Forms.NumericUpDown();
             this.cboFormaPago2 = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtPagaCon2 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.cboFormaPago4 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.txtPagaCon4 = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.cboFormaPago3 = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.txtPagaCon3 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.txtRestaPagar = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.txtTotalVentaDolares = new System.Windows.Forms.TextBox();
             this.txtTotalAPagar = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon2 = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon3 = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon4 = new System.Windows.Forms.NumericUpDown();
+            this.txtRestaPagar = new System.Windows.Forms.NumericUpDown();
+            this.txtRestaPagarDolares = new System.Windows.Forms.NumericUpDown();
+            this.lblRestaPagarDolares = new System.Windows.Forms.Label();
+            this.txtTotalAPagarDolares = new System.Windows.Forms.NumericUpDown();
+            this.lblTotalAPagarDolares = new System.Windows.Forms.Label();
+            this.checkMonedaDolar = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
@@ -110,6 +115,13 @@ namespace CapaPresentacion
             this.gbInfoProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestaPagar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestaPagarDolares)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagarDolares)).BeginInit();
             this.SuspendLayout();
             // 
             // label10
@@ -153,7 +165,7 @@ namespace CapaPresentacion
             // 
             // btnRegistrarCompra
             // 
-            this.btnRegistrarCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRegistrarCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegistrarCompra.BackColor = System.Drawing.Color.Green;
             this.btnRegistrarCompra.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrarCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -162,7 +174,7 @@ namespace CapaPresentacion
             this.btnRegistrarCompra.IconColor = System.Drawing.Color.White;
             this.btnRegistrarCompra.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnRegistrarCompra.IconSize = 32;
-            this.btnRegistrarCompra.Location = new System.Drawing.Point(844, 556);
+            this.btnRegistrarCompra.Location = new System.Drawing.Point(795, 439);
             this.btnRegistrarCompra.Name = "btnRegistrarCompra";
             this.btnRegistrarCompra.Size = new System.Drawing.Size(111, 32);
             this.btnRegistrarCompra.TabIndex = 81;
@@ -179,15 +191,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
@@ -197,21 +209,21 @@ namespace CapaPresentacion
             this.subTotal,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(26, 279);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -269,6 +281,7 @@ namespace CapaPresentacion
             this.txtIdProducto.Name = "txtIdProducto";
             this.txtIdProducto.Size = new System.Drawing.Size(30, 29);
             this.txtIdProducto.TabIndex = 68;
+            this.txtIdProducto.Visible = false;
             this.txtIdProducto.TextChanged += new System.EventHandler(this.txtIdProducto_TextChanged);
             // 
             // pictureBox1
@@ -285,10 +298,11 @@ namespace CapaPresentacion
             // txtCambioCliente
             // 
             this.txtCambioCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtCambioCliente.Location = new System.Drawing.Point(744, 537);
+            this.txtCambioCliente.Location = new System.Drawing.Point(850, 505);
             this.txtCambioCliente.Name = "txtCambioCliente";
-            this.txtCambioCliente.Size = new System.Drawing.Size(60, 20);
+            this.txtCambioCliente.Size = new System.Drawing.Size(91, 20);
             this.txtCambioCliente.TabIndex = 80;
+            this.txtCambioCliente.Text = "0";
             // 
             // label13
             // 
@@ -297,7 +311,7 @@ namespace CapaPresentacion
             this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label13.Location = new System.Drawing.Point(679, 537);
+            this.label13.Location = new System.Drawing.Point(847, 482);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(59, 17);
             this.label13.TabIndex = 79;
@@ -622,16 +636,6 @@ namespace CapaPresentacion
             this.gbInfoProducto.TabStop = false;
             this.gbInfoProducto.Text = "Informacion Producto";
             // 
-            // txtPagaCon
-            // 
-            this.txtPagaCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon.Location = new System.Drawing.Point(355, 481);
-            this.txtPagaCon.Name = "txtPagaCon";
-            this.txtPagaCon.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon.TabIndex = 84;
-            this.txtPagaCon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon_KeyDown);
-            this.txtPagaCon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPagaCon_KeyPress);
-            // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -652,11 +656,11 @@ namespace CapaPresentacion
             this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label14.Location = new System.Drawing.Point(438, 567);
+            this.label14.Location = new System.Drawing.Point(474, 569);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(94, 17);
+            this.label14.Size = new System.Drawing.Size(104, 17);
             this.label14.TabIndex = 85;
-            this.label14.Text = "Total a Pagar:";
+            this.label14.Text = "Total a Pagar $:";
             // 
             // label15
             // 
@@ -697,7 +701,7 @@ namespace CapaPresentacion
             this.txtMontoDescuento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtMontoDescuento.Location = new System.Drawing.Point(734, 505);
             this.txtMontoDescuento.Name = "txtMontoDescuento";
-            this.txtMontoDescuento.Size = new System.Drawing.Size(81, 20);
+            this.txtMontoDescuento.Size = new System.Drawing.Size(93, 20);
             this.txtMontoDescuento.TabIndex = 90;
             this.txtMontoDescuento.Text = "0";
             this.txtMontoDescuento.Visible = false;
@@ -779,12 +783,12 @@ namespace CapaPresentacion
             // 
             // label16
             // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
             this.label16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label16.Location = new System.Drawing.Point(438, 537);
+            this.label16.Location = new System.Drawing.Point(786, 349);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(103, 17);
             this.label16.TabIndex = 96;
@@ -792,23 +796,16 @@ namespace CapaPresentacion
             // 
             // txtCotizacion
             // 
-            this.txtCotizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtCotizacion.DecimalPlaces = 2;
-            this.txtCotizacion.Location = new System.Drawing.Point(558, 534);
+            this.txtCotizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCotizacion.Location = new System.Drawing.Point(789, 369);
             this.txtCotizacion.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.txtCotizacion.Name = "txtCotizacion";
-            this.txtCotizacion.ReadOnly = true;
-            this.txtCotizacion.Size = new System.Drawing.Size(101, 20);
+            this.txtCotizacion.Size = new System.Drawing.Size(74, 20);
             this.txtCotizacion.TabIndex = 97;
-            this.txtCotizacion.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.txtCotizacion.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCotizacion_KeyDown);
             // 
             // cboFormaPago2
@@ -819,6 +816,7 @@ namespace CapaPresentacion
             this.cboFormaPago2.Name = "cboFormaPago2";
             this.cboFormaPago2.Size = new System.Drawing.Size(134, 21);
             this.cboFormaPago2.TabIndex = 101;
+            this.cboFormaPago2.SelectedIndexChanged += new System.EventHandler(this.cboFormaPago2_SelectedIndexChanged);
             // 
             // label17
             // 
@@ -832,15 +830,6 @@ namespace CapaPresentacion
             this.label17.Size = new System.Drawing.Size(112, 17);
             this.label17.TabIndex = 100;
             this.label17.Text = "Forma de Pago 2";
-            // 
-            // txtPagaCon2
-            // 
-            this.txtPagaCon2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon2.Location = new System.Drawing.Point(355, 511);
-            this.txtPagaCon2.Name = "txtPagaCon2";
-            this.txtPagaCon2.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon2.TabIndex = 99;
-            this.txtPagaCon2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon2_KeyDown);
             // 
             // label18
             // 
@@ -877,15 +866,6 @@ namespace CapaPresentacion
             this.label19.TabIndex = 108;
             this.label19.Text = "Forma de Pago 4";
             // 
-            // txtPagaCon4
-            // 
-            this.txtPagaCon4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon4.Location = new System.Drawing.Point(355, 567);
-            this.txtPagaCon4.Name = "txtPagaCon4";
-            this.txtPagaCon4.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon4.TabIndex = 107;
-            this.txtPagaCon4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon4_KeyDown);
-            // 
             // label20
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -921,15 +901,6 @@ namespace CapaPresentacion
             this.label21.TabIndex = 104;
             this.label21.Text = "Forma de Pago 3";
             // 
-            // txtPagaCon3
-            // 
-            this.txtPagaCon3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon3.Location = new System.Drawing.Point(355, 537);
-            this.txtPagaCon3.Name = "txtPagaCon3";
-            this.txtPagaCon3.Size = new System.Drawing.Size(77, 20);
-            this.txtPagaCon3.TabIndex = 103;
-            this.txtPagaCon3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon3_KeyDown);
-            // 
             // label22
             // 
             this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -943,15 +914,6 @@ namespace CapaPresentacion
             this.label22.TabIndex = 102;
             this.label22.Text = "Monto FP3:";
             // 
-            // txtRestaPagar
-            // 
-            this.txtRestaPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtRestaPagar.Location = new System.Drawing.Point(731, 567);
-            this.txtRestaPagar.Name = "txtRestaPagar";
-            this.txtRestaPagar.Size = new System.Drawing.Size(96, 20);
-            this.txtRestaPagar.TabIndex = 111;
-            this.txtRestaPagar.TextChanged += new System.EventHandler(this.txtRestaPagar_TextChanged);
-            // 
             // label23
             // 
             this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -959,61 +921,209 @@ namespace CapaPresentacion
             this.label23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label23.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label23.Location = new System.Drawing.Point(640, 567);
+            this.label23.Location = new System.Drawing.Point(697, 569);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(85, 17);
+            this.label23.Size = new System.Drawing.Size(95, 17);
             this.label23.TabIndex = 110;
-            this.label23.Text = "Resta Pagar:";
+            this.label23.Text = "Resta Pagar $:";
             // 
             // txtTotalVentaDolares
             // 
             this.txtTotalVentaDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTotalVentaDolares.Location = new System.Drawing.Point(789, 352);
+            this.txtTotalVentaDolares.Location = new System.Drawing.Point(818, 12);
             this.txtTotalVentaDolares.Name = "txtTotalVentaDolares";
             this.txtTotalVentaDolares.Size = new System.Drawing.Size(77, 20);
             this.txtTotalVentaDolares.TabIndex = 112;
-            this.txtTotalVentaDolares.Visible = false;
             // 
             // txtTotalAPagar
             // 
             this.txtTotalAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTotalAPagar.DecimalPlaces = 2;
-            this.txtTotalAPagar.Location = new System.Drawing.Point(538, 565);
+            this.txtTotalAPagar.Location = new System.Drawing.Point(584, 568);
             this.txtTotalAPagar.Maximum = new decimal(new int[] {
-            100000,
+            999999999,
             0,
             0,
             0});
             this.txtTotalAPagar.Name = "txtTotalAPagar";
-            this.txtTotalAPagar.ReadOnly = true;
             this.txtTotalAPagar.Size = new System.Drawing.Size(101, 20);
             this.txtTotalAPagar.TabIndex = 113;
-            this.txtTotalAPagar.Value = new decimal(new int[] {
-            1,
+            // 
+            // txtPagaCon
+            // 
+            this.txtPagaCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon.DecimalPlaces = 2;
+            this.txtPagaCon.Location = new System.Drawing.Point(353, 481);
+            this.txtPagaCon.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.txtPagaCon.Name = "txtPagaCon";
+            this.txtPagaCon.Size = new System.Drawing.Size(79, 20);
+            this.txtPagaCon.TabIndex = 114;
+            this.txtPagaCon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon_KeyDown);
+            // 
+            // txtPagaCon2
+            // 
+            this.txtPagaCon2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon2.DecimalPlaces = 2;
+            this.txtPagaCon2.Location = new System.Drawing.Point(353, 511);
+            this.txtPagaCon2.Maximum = new decimal(new int[] {
+            999999999,
             0,
             0,
             0});
+            this.txtPagaCon2.Name = "txtPagaCon2";
+            this.txtPagaCon2.Size = new System.Drawing.Size(79, 20);
+            this.txtPagaCon2.TabIndex = 115;
+            this.txtPagaCon2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon2_KeyDown);
+            // 
+            // txtPagaCon3
+            // 
+            this.txtPagaCon3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon3.DecimalPlaces = 2;
+            this.txtPagaCon3.Location = new System.Drawing.Point(353, 538);
+            this.txtPagaCon3.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.txtPagaCon3.Name = "txtPagaCon3";
+            this.txtPagaCon3.Size = new System.Drawing.Size(79, 20);
+            this.txtPagaCon3.TabIndex = 116;
+            this.txtPagaCon3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon3_KeyDown);
+            // 
+            // txtPagaCon4
+            // 
+            this.txtPagaCon4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon4.DecimalPlaces = 2;
+            this.txtPagaCon4.Location = new System.Drawing.Point(353, 567);
+            this.txtPagaCon4.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtPagaCon4.Name = "txtPagaCon4";
+            this.txtPagaCon4.Size = new System.Drawing.Size(79, 20);
+            this.txtPagaCon4.TabIndex = 117;
+            this.txtPagaCon4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon4_KeyDown);
+            // 
+            // txtRestaPagar
+            // 
+            this.txtRestaPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtRestaPagar.DecimalPlaces = 2;
+            this.txtRestaPagar.Location = new System.Drawing.Point(815, 568);
+            this.txtRestaPagar.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtRestaPagar.Name = "txtRestaPagar";
+            this.txtRestaPagar.Size = new System.Drawing.Size(91, 20);
+            this.txtRestaPagar.TabIndex = 118;
+            this.txtRestaPagar.ValueChanged += new System.EventHandler(this.txtRestaPagar_TextChanged);
+            // 
+            // txtRestaPagarDolares
+            // 
+            this.txtRestaPagarDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtRestaPagarDolares.DecimalPlaces = 2;
+            this.txtRestaPagarDolares.Location = new System.Drawing.Point(815, 535);
+            this.txtRestaPagarDolares.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtRestaPagarDolares.Name = "txtRestaPagarDolares";
+            this.txtRestaPagarDolares.Size = new System.Drawing.Size(91, 20);
+            this.txtRestaPagarDolares.TabIndex = 120;
+            this.txtRestaPagarDolares.Visible = false;
+            // 
+            // lblRestaPagarDolares
+            // 
+            this.lblRestaPagarDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblRestaPagarDolares.AutoSize = true;
+            this.lblRestaPagarDolares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblRestaPagarDolares.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRestaPagarDolares.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblRestaPagarDolares.Location = new System.Drawing.Point(697, 536);
+            this.lblRestaPagarDolares.Name = "lblRestaPagarDolares";
+            this.lblRestaPagarDolares.Size = new System.Drawing.Size(111, 17);
+            this.lblRestaPagarDolares.TabIndex = 119;
+            this.lblRestaPagarDolares.Text = "Resta Pagar U$S:";
+            this.lblRestaPagarDolares.Visible = false;
+            // 
+            // txtTotalAPagarDolares
+            // 
+            this.txtTotalAPagarDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTotalAPagarDolares.DecimalPlaces = 2;
+            this.txtTotalAPagarDolares.Location = new System.Drawing.Point(584, 537);
+            this.txtTotalAPagarDolares.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtTotalAPagarDolares.Name = "txtTotalAPagarDolares";
+            this.txtTotalAPagarDolares.Size = new System.Drawing.Size(101, 20);
+            this.txtTotalAPagarDolares.TabIndex = 122;
+            this.txtTotalAPagarDolares.Visible = false;
+            // 
+            // lblTotalAPagarDolares
+            // 
+            this.lblTotalAPagarDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTotalAPagarDolares.AutoSize = true;
+            this.lblTotalAPagarDolares.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblTotalAPagarDolares.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAPagarDolares.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblTotalAPagarDolares.Location = new System.Drawing.Point(458, 538);
+            this.lblTotalAPagarDolares.Name = "lblTotalAPagarDolares";
+            this.lblTotalAPagarDolares.Size = new System.Drawing.Size(120, 17);
+            this.lblTotalAPagarDolares.TabIndex = 121;
+            this.lblTotalAPagarDolares.Text = "Total a Pagar U$S:";
+            this.lblTotalAPagarDolares.Visible = false;
+            // 
+            // checkMonedaDolar
+            // 
+            this.checkMonedaDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkMonedaDolar.AutoSize = true;
+            this.checkMonedaDolar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkMonedaDolar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkMonedaDolar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkMonedaDolar.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkMonedaDolar.Location = new System.Drawing.Point(717, 478);
+            this.checkMonedaDolar.Name = "checkMonedaDolar";
+            this.checkMonedaDolar.Size = new System.Drawing.Size(112, 21);
+            this.checkMonedaDolar.TabIndex = 123;
+            this.checkMonedaDolar.Text = "Moneda Dolar";
+            this.checkMonedaDolar.UseVisualStyleBackColor = false;
+            this.checkMonedaDolar.Visible = false;
             // 
             // frmVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 665);
+            this.Controls.Add(this.checkMonedaDolar);
+            this.Controls.Add(this.txtTotalAPagarDolares);
+            this.Controls.Add(this.lblTotalAPagarDolares);
+            this.Controls.Add(this.txtRestaPagarDolares);
+            this.Controls.Add(this.lblRestaPagarDolares);
+            this.Controls.Add(this.txtRestaPagar);
+            this.Controls.Add(this.txtPagaCon4);
+            this.Controls.Add(this.txtPagaCon3);
+            this.Controls.Add(this.txtPagaCon2);
+            this.Controls.Add(this.txtPagaCon);
             this.Controls.Add(this.txtTotalAPagar);
             this.Controls.Add(this.txtTotalVentaDolares);
-            this.Controls.Add(this.txtRestaPagar);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.cboFormaPago4);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.txtPagaCon4);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.cboFormaPago3);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.txtPagaCon3);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.cboFormaPago2);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.txtPagaCon2);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.txtCotizacion);
             this.Controls.Add(this.label16);
@@ -1027,7 +1137,6 @@ namespace CapaPresentacion
             this.Controls.Add(this.cboFormaPago);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.txtPagaCon);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btnRegistrarCompra);
             this.Controls.Add(this.dgvData);
@@ -1054,6 +1163,13 @@ namespace CapaPresentacion
             this.gbInfoProducto.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestaPagar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestaPagarDolares)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagarDolares)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1094,7 +1210,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox gbInfoProducto;
-        private System.Windows.Forms.TextBox txtPagaCon;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -1110,17 +1225,13 @@ namespace CapaPresentacion
         private System.Windows.Forms.NumericUpDown txtCotizacion;
         private System.Windows.Forms.ComboBox cboFormaPago2;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtPagaCon2;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboFormaPago4;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txtPagaCon4;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cboFormaPago3;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox txtPagaCon3;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtRestaPagar;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn producto;
@@ -1130,5 +1241,15 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
         private System.Windows.Forms.TextBox txtTotalVentaDolares;
         private System.Windows.Forms.NumericUpDown txtTotalAPagar;
+        private System.Windows.Forms.NumericUpDown txtPagaCon;
+        private System.Windows.Forms.NumericUpDown txtPagaCon2;
+        private System.Windows.Forms.NumericUpDown txtPagaCon3;
+        private System.Windows.Forms.NumericUpDown txtPagaCon4;
+        private System.Windows.Forms.NumericUpDown txtRestaPagar;
+        private System.Windows.Forms.NumericUpDown txtRestaPagarDolares;
+        private System.Windows.Forms.Label lblRestaPagarDolares;
+        private System.Windows.Forms.NumericUpDown txtTotalAPagarDolares;
+        private System.Windows.Forms.Label lblTotalAPagarDolares;
+        private System.Windows.Forms.CheckBox checkMonedaDolar;
     }
 }

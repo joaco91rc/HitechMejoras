@@ -59,6 +59,7 @@ namespace CapaDatos
             return lista;
         }
 
+
         public List<Producto> ListarPorNegocio(int idNegocio)
         {
             List<Producto> lista = new List<Producto>();

@@ -469,39 +469,7 @@ namespace CapaPresentacion
                
                 calcularTotal();
 
-                //if (checkCaja.Checked)
-                //{
-                //    List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
-
-                //    CajaRegistradora cajaAbierta = lista.Where(c => c.estado == true).FirstOrDefault();
-
-                //    if (cajaAbierta != null)
-
-                //    {
-                //        decimal montoCalculado = Convert.ToDecimal(txtTotalAPagar.Text) * -1;
-
-
-
-
-
-                //        TransaccionCaja objTransaccion = new TransaccionCaja()
-                //        {
-                //            idCajaRegistradora = cajaAbierta.idCajaRegistradora,
-
-                //            hora = dtpFecha.Value.Hour.ToString(),
-                //            tipoTransaccion = "SALIDA",
-                //            monto = montoCalculado,
-                //            docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
-                //            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario")
-                //        };
-
-
-
-
-                //        int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out mensaje);
-
-                //    }
-                //}
+               
 
                 List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
 
@@ -725,12 +693,11 @@ namespace CapaPresentacion
             txtRestaPagar.Text = txtTotalAPagar.Text;
 
         }
+
+
         private void txtPagaCon_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyData == Keys.Enter)
-            //{
-            //    CalcularCambio();
-            //}
+         
 
             if (e.KeyData == Keys.Enter)
             {
@@ -739,12 +706,12 @@ namespace CapaPresentacion
                     if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                     {
 
-                        txtTotalVentaDolares.Text = (Convert.ToDecimal(txtTotalVentaDolares.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString("0.00");
+                        txtTotalVentaDolares.Text = (Convert.ToDecimal(txtTotalVentaDolares.Text) - txtPagaCon.Value).ToString("0.00");
                         calcularTotalConDolares();
                     }
                     else
                     {
-                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
+                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - txtPagaCon.Value).ToString("0.00");
 
 
                         CalcularCambio();
@@ -763,7 +730,7 @@ namespace CapaPresentacion
             {
                 if (txtPagaCon2.Text != string.Empty)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - Convert.ToDecimal(txtPagaCon2.Text)).ToString("0.00");
+                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon2.Value).ToString("0.00");
 
 
                     CalcularCambio();
@@ -782,7 +749,7 @@ namespace CapaPresentacion
             {
                 if (txtPagaCon3.Text != string.Empty)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - Convert.ToDecimal(txtPagaCon3.Text)).ToString("0.00");
+                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon3.Value).ToString("0.00");
 
 
                     CalcularCambio();
@@ -801,7 +768,7 @@ namespace CapaPresentacion
             {
                 if (txtPagaCon4.Text != string.Empty)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - Convert.ToDecimal(txtPagaCon4.Text)).ToString("0.00");
+                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon4.Value).ToString("0.00");
 
 
                     CalcularCambio();
@@ -840,6 +807,10 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = false;
                 lblDescuento.Visible = false;
                 checkRecargo.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago2.SelectedIndex = -1;
+                cboFormaPago3.SelectedIndex = -1;
+                cboFormaPago4.SelectedIndex = -1;
                 calcularTotal();
             }
         }
@@ -889,9 +860,15 @@ namespace CapaPresentacion
                     if (checkDescuento.Checked == true)
                     {
                         txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - montoDescuentoRecargo).ToString("0.00");
+
+
                         if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                         {
                             txtRestaPagar.Text = txtTotalAPagar.Text;
+                        }
+                        else
+                        {
+                            txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - montoDescuentoRecargo).ToString("0.00");
                         }
                     }
                     if (checkRecargo.Checked == true)
@@ -901,10 +878,14 @@ namespace CapaPresentacion
                         {
                             txtRestaPagar.Text = txtTotalAPagar.Text;
                         }
+                        else
+                        {
+                            txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) + montoDescuentoRecargo).ToString("0.00");
+                        }
                     }
                     txtDescuento.Enabled = false;
                     lblDescuento.Visible = true;
-
+                    CalcularCambio();
                 }
                 else
                 {
@@ -939,6 +920,24 @@ namespace CapaPresentacion
                         e.Handled = true;
                     }
                 }
+            }
+        }
+
+        private void txtMontoDescuento_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (checkDescuento.Checked == true)
+                {
+                    txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+                    txtRestaPagar.Text = txtTotalAPagar.Value.ToString();
+                }
+                if (checkRecargo.Checked == true)
+                {
+                    txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+                    txtRestaPagar.Text = txtTotalAPagar.Value.ToString();
+                }
+
             }
         }
     }

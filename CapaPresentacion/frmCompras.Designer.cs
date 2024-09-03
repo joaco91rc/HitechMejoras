@@ -69,26 +69,21 @@ namespace CapaPresentacion
             this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtTotalAPagar = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnRegistrarCompra = new FontAwesome.Sharp.IconButton();
             this.btnAgregarProducto = new FontAwesome.Sharp.IconButton();
             this.checkCaja = new System.Windows.Forms.CheckBox();
             this.cboFormaPago4 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.txtPagaCon4 = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.cboFormaPago3 = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.txtPagaCon3 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.cboFormaPago2 = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtPagaCon2 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.cboFormaPago = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtPagaCon = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtCotizacion = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -104,6 +99,11 @@ namespace CapaPresentacion
             this.txtMontoDescuento = new System.Windows.Forms.TextBox();
             this.txtDescuento = new System.Windows.Forms.TextBox();
             this.txtTotalVentaDolares = new System.Windows.Forms.TextBox();
+            this.txtTotalAPagar = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon4 = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon3 = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon2 = new System.Windows.Forms.NumericUpDown();
+            this.txtPagaCon = new System.Windows.Forms.NumericUpDown();
             this.gbRegistrarCompra.SuspendLayout();
             this.gbInfoProveedor.SuspendLayout();
             this.gbInfoProducto.SuspendLayout();
@@ -111,6 +111,11 @@ namespace CapaPresentacion
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).BeginInit();
             this.SuspendLayout();
             // 
             // label11
@@ -582,15 +587,6 @@ namespace CapaPresentacion
             this.label13.TabIndex = 68;
             this.label13.Text = "Total a Pagar:";
             // 
-            // txtTotalAPagar
-            // 
-            this.txtTotalAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtTotalAPagar.Location = new System.Drawing.Point(645, 483);
-            this.txtTotalAPagar.Name = "txtTotalAPagar";
-            this.txtTotalAPagar.Size = new System.Drawing.Size(139, 20);
-            this.txtTotalAPagar.TabIndex = 69;
-            this.txtTotalAPagar.Text = "0";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -681,15 +677,6 @@ namespace CapaPresentacion
             this.label19.TabIndex = 124;
             this.label19.Text = "Forma de Pago 4";
             // 
-            // txtPagaCon4
-            // 
-            this.txtPagaCon4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon4.Location = new System.Drawing.Point(398, 569);
-            this.txtPagaCon4.Name = "txtPagaCon4";
-            this.txtPagaCon4.Size = new System.Drawing.Size(129, 20);
-            this.txtPagaCon4.TabIndex = 123;
-            this.txtPagaCon4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon4_KeyDown);
-            // 
             // label20
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -724,15 +711,6 @@ namespace CapaPresentacion
             this.label21.Size = new System.Drawing.Size(112, 17);
             this.label21.TabIndex = 120;
             this.label21.Text = "Forma de Pago 3";
-            // 
-            // txtPagaCon3
-            // 
-            this.txtPagaCon3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon3.Location = new System.Drawing.Point(398, 539);
-            this.txtPagaCon3.Name = "txtPagaCon3";
-            this.txtPagaCon3.Size = new System.Drawing.Size(129, 20);
-            this.txtPagaCon3.TabIndex = 119;
-            this.txtPagaCon3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon3_KeyDown);
             // 
             // label22
             // 
@@ -769,15 +747,6 @@ namespace CapaPresentacion
             this.label17.TabIndex = 116;
             this.label17.Text = "Forma de Pago 2";
             // 
-            // txtPagaCon2
-            // 
-            this.txtPagaCon2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon2.Location = new System.Drawing.Point(398, 513);
-            this.txtPagaCon2.Name = "txtPagaCon2";
-            this.txtPagaCon2.Size = new System.Drawing.Size(129, 20);
-            this.txtPagaCon2.TabIndex = 115;
-            this.txtPagaCon2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon2_KeyDown);
-            // 
             // label18
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -813,16 +782,6 @@ namespace CapaPresentacion
             this.label15.TabIndex = 112;
             this.label15.Text = "Forma de Pago 1";
             // 
-            // txtPagaCon
-            // 
-            this.txtPagaCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtPagaCon.Location = new System.Drawing.Point(398, 483);
-            this.txtPagaCon.Name = "txtPagaCon";
-            this.txtPagaCon.Size = new System.Drawing.Size(129, 20);
-            this.txtPagaCon.TabIndex = 111;
-            this.txtPagaCon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon_KeyDown);
-            this.txtPagaCon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPagaCon_KeyPress);
-            // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -850,11 +809,6 @@ namespace CapaPresentacion
             this.txtCotizacion.ReadOnly = true;
             this.txtCotizacion.Size = new System.Drawing.Size(138, 20);
             this.txtCotizacion.TabIndex = 126;
-            this.txtCotizacion.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // label8
             // 
@@ -994,6 +948,7 @@ namespace CapaPresentacion
             this.txtMontoDescuento.TabIndex = 133;
             this.txtMontoDescuento.Text = "0";
             this.txtMontoDescuento.Visible = false;
+            this.txtMontoDescuento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMontoDescuento_KeyDown);
             // 
             // txtDescuento
             // 
@@ -1014,12 +969,92 @@ namespace CapaPresentacion
             this.txtTotalVentaDolares.Size = new System.Drawing.Size(77, 20);
             this.txtTotalVentaDolares.TabIndex = 139;
             // 
+            // txtTotalAPagar
+            // 
+            this.txtTotalAPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTotalAPagar.DecimalPlaces = 2;
+            this.txtTotalAPagar.Location = new System.Drawing.Point(646, 480);
+            this.txtTotalAPagar.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtTotalAPagar.Name = "txtTotalAPagar";
+            this.txtTotalAPagar.ReadOnly = true;
+            this.txtTotalAPagar.Size = new System.Drawing.Size(138, 20);
+            this.txtTotalAPagar.TabIndex = 140;
+            // 
+            // txtPagaCon4
+            // 
+            this.txtPagaCon4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon4.DecimalPlaces = 2;
+            this.txtPagaCon4.Location = new System.Drawing.Point(396, 570);
+            this.txtPagaCon4.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtPagaCon4.Name = "txtPagaCon4";
+            this.txtPagaCon4.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon4.TabIndex = 144;
+            this.txtPagaCon4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon4_KeyDown);
+            // 
+            // txtPagaCon3
+            // 
+            this.txtPagaCon3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon3.DecimalPlaces = 2;
+            this.txtPagaCon3.Location = new System.Drawing.Point(396, 541);
+            this.txtPagaCon3.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtPagaCon3.Name = "txtPagaCon3";
+            this.txtPagaCon3.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon3.TabIndex = 143;
+            this.txtPagaCon3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon3_KeyDown);
+            // 
+            // txtPagaCon2
+            // 
+            this.txtPagaCon2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon2.DecimalPlaces = 2;
+            this.txtPagaCon2.Location = new System.Drawing.Point(398, 514);
+            this.txtPagaCon2.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtPagaCon2.Name = "txtPagaCon2";
+            this.txtPagaCon2.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon2.TabIndex = 142;
+            this.txtPagaCon2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon2_KeyDown);
+            // 
+            // txtPagaCon
+            // 
+            this.txtPagaCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPagaCon.DecimalPlaces = 2;
+            this.txtPagaCon.Location = new System.Drawing.Point(398, 484);
+            this.txtPagaCon.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtPagaCon.Name = "txtPagaCon";
+            this.txtPagaCon.Size = new System.Drawing.Size(129, 20);
+            this.txtPagaCon.TabIndex = 141;
+            this.txtPagaCon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPagaCon_KeyDown);
+            // 
             // frmCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtPagaCon4);
+            this.Controls.Add(this.txtPagaCon3);
+            this.Controls.Add(this.txtPagaCon2);
+            this.Controls.Add(this.txtPagaCon);
+            this.Controls.Add(this.txtTotalAPagar);
             this.Controls.Add(this.txtTotalVentaDolares);
             this.Controls.Add(this.checkRecargo);
             this.Controls.Add(this.checkDescuento);
@@ -1036,25 +1071,20 @@ namespace CapaPresentacion
             this.Controls.Add(this.txtCotizacion);
             this.Controls.Add(this.cboFormaPago4);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.txtPagaCon4);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.cboFormaPago3);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.txtPagaCon3);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.cboFormaPago2);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.txtPagaCon2);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.cboFormaPago);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.txtPagaCon);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.checkCaja);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnRegistrarCompra);
             this.Controls.Add(this.btnAgregarProducto);
-            this.Controls.Add(this.txtTotalAPagar);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.gbInfoProducto);
@@ -1075,6 +1105,11 @@ namespace CapaPresentacion
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1112,25 +1147,20 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnAgregarProducto;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtTotalAPagar;
         private FontAwesome.Sharp.IconButton btnRegistrarCompra;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox checkCaja;
         private System.Windows.Forms.ComboBox cboFormaPago4;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txtPagaCon4;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cboFormaPago3;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox txtPagaCon3;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox cboFormaPago2;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtPagaCon2;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboFormaPago;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtPagaCon;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown txtCotizacion;
         private System.Windows.Forms.Label label8;
@@ -1153,5 +1183,10 @@ namespace CapaPresentacion
         private System.Windows.Forms.TextBox txtMontoDescuento;
         private System.Windows.Forms.TextBox txtDescuento;
         private System.Windows.Forms.TextBox txtTotalVentaDolares;
+        private System.Windows.Forms.NumericUpDown txtTotalAPagar;
+        private System.Windows.Forms.NumericUpDown txtPagaCon4;
+        private System.Windows.Forms.NumericUpDown txtPagaCon3;
+        private System.Windows.Forms.NumericUpDown txtPagaCon2;
+        private System.Windows.Forms.NumericUpDown txtPagaCon;
     }
 }
