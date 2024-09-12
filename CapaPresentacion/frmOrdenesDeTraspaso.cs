@@ -50,6 +50,7 @@ namespace CapaPresentacion
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            string actualizacionStock = string.Empty;
             if (dgvData.Columns[e.ColumnIndex].Name == "btnConfirmarRecepcion")
             {
                 // Obtener la fila seleccionada
@@ -66,9 +67,9 @@ namespace CapaPresentacion
 
                 if (ConfirmarOrden)
                 {
-                    new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                    actualizacionStock = new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
 
-                    MessageBox.Show("Producto Ingresado");
+                    MessageBox.Show("Producto Ingresado. " + actualizacionStock);
                     CargarGrilla();
                 }
                 else

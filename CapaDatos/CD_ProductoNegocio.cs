@@ -38,50 +38,63 @@ namespace CapaDatos
         }
 
         //este metodo ses como deberia de funcionar la realidad pero el cliente m,epide otro emtodo que pise stock y que no actualice el ya existente
-            public void CargarOActualizarStockProducto(int idProducto, int idNegocio, int stock)
+        public string CargarOActualizarStockProducto(int idProducto, int idNegocio, int stock)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                SqlCommand checkCmd = new SqlCommand(@"
+            SELECT stock 
+            FROM PRODUCTONEGOCIO 
+            WHERE idProducto = @idProducto AND idNegocio = @idNegocio", oconexion);
+                checkCmd.Parameters.AddWithValue("@idProducto", idProducto);
+                checkCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+
+                oconexion.Open();
+                object result = checkCmd.ExecuteScalar();
+
+                if (result == null)
                 {
-                    SqlCommand checkCmd = new SqlCommand(@"
-                SELECT stock 
-                FROM PRODUCTONEGOCIO 
-                WHERE idProducto = @idProducto AND idNegocio = @idNegocio", oconexion);
-                    checkCmd.Parameters.AddWithValue("@idProducto", idProducto);
-                    checkCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    // Insertar nuevo registro
+                    SqlCommand insertCmd = new SqlCommand(@"
+                INSERT INTO PRODUCTONEGOCIO (idProducto, idNegocio, stock)
+                VALUES (@idProducto, @idNegocio, @stock)", oconexion);
+                    insertCmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    insertCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    insertCmd.Parameters.AddWithValue("@stock", stock);
 
-                    oconexion.Open();
-                    object result = checkCmd.ExecuteScalar();
+                    int rowsAffected = insertCmd.ExecuteNonQuery();
 
-                    if (result == null)
+                    if (rowsAffected > 0)
                     {
-                        // Insertar nuevo registro
-                        SqlCommand insertCmd = new SqlCommand(@"
-                    INSERT INTO PRODUCTONEGOCIO (idProducto, idNegocio, stock)
-                    VALUES (@idProducto, @idNegocio, @stock)", oconexion);
-                        insertCmd.Parameters.AddWithValue("@idProducto", idProducto);
-                        insertCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
-                        insertCmd.Parameters.AddWithValue("@stock", stock);
-
-                        insertCmd.ExecuteNonQuery();
+                        return "Se ha insertado un nuevo registro de stock.";
                     }
-                    else
+                }
+                else
+                {
+                    // Actualizar el stock existente
+                    int currentStock = Convert.ToInt32(result);
+                    int newStock = currentStock + stock;
+
+                    SqlCommand updateCmd = new SqlCommand(@"
+                UPDATE PRODUCTONEGOCIO
+                SET stock = @newStock
+                WHERE idProducto = @idProducto AND idNegocio = @idNegocio", oconexion);
+                    updateCmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    updateCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    updateCmd.Parameters.AddWithValue("@newStock", newStock);
+
+                    int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
                     {
-                        // Actualizar el stock existente
-                        int currentStock = Convert.ToInt32(result);
-                        int newStock = currentStock + stock;
-
-                        SqlCommand updateCmd = new SqlCommand(@"
-                    UPDATE PRODUCTONEGOCIO
-                    SET stock = @newStock
-                    WHERE idProducto = @idProducto AND idNegocio = @idNegocio", oconexion);
-                        updateCmd.Parameters.AddWithValue("@idProducto", idProducto);
-                        updateCmd.Parameters.AddWithValue("@idNegocio", idNegocio);
-                        updateCmd.Parameters.AddWithValue("@newStock", newStock);
-
-                        updateCmd.ExecuteNonQuery();
+                        return "El stock se ha actualizado correctamente.";
                     }
                 }
             }
+
+            return "No se realizó ninguna operación.";
+        }
+
         //este es el metodo q sobrescribe stock
         public void SobrescribirStock(int idProducto, int idNegocio, int stock)
         {

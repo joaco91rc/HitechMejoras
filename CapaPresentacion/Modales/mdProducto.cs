@@ -157,8 +157,16 @@ namespace CapaPresentacion.Modales
                     precioCompra = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioCompra"].Value.ToString()),
                     precioVenta = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString())
                 };
-                
-                
+
+                int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(_Producto.idProducto, GlobalSettings.SucursalId);
+
+                // Cierra el modal y pasa el stock al formulario de ventas
+                // Asumiendo que tienes una instancia del formulario frmVentas
+                frmVentas frm = (frmVentas)this.Owner;  // Asegúrate de haber configurado el Owner del modal al abrirlo
+                frm.StockProducto = stockProducto;
+                frm.ActualizarStock();
+
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

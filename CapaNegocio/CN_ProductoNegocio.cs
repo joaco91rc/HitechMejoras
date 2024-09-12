@@ -18,10 +18,10 @@ namespace CapaNegocio
 
         }
 
-        public void CargarOActualizarStockProducto(int idProducto, int idNegocio, int nuevoStock)
+        public string CargarOActualizarStockProducto(int idProducto, int idNegocio, int nuevoStock)
         {
 
-             objcd_ProductoNegocio.CargarOActualizarStockProducto(idProducto, idNegocio, nuevoStock);
+            return objcd_ProductoNegocio.CargarOActualizarStockProducto(idProducto, idNegocio, nuevoStock);
 
         }
 

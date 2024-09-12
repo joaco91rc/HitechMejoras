@@ -163,6 +163,7 @@ namespace CapaPresentacion
             string mensaje = string.Empty;
             string eliminacionCompra = string.Empty;
             string eliminacionMovimientos = string.Empty;
+            string actualizacionStock = string.Empty;
             if (GlobalSettings.RolUsuario == 1)
             {
                 DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta Compra?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -183,10 +184,10 @@ namespace CapaPresentacion
                                 int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                                 int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
-                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
+                                actualizacionStock =new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
                             }
                         }
-                        eliminacionCompra = "Se ha Eliminado la Compra.";
+                        eliminacionCompra = "Se ha Eliminado la Compra. ";
                         Limpiar();
                     }
                     else
@@ -207,7 +208,7 @@ namespace CapaPresentacion
                         eliminacionMovimientos = " No se pudo Eliminar los Moviemientos en la Caja";
                     }
 
-                    MessageBox.Show(eliminacionCompra + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(eliminacionCompra + actualizacionStock +eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else

@@ -72,7 +72,8 @@ namespace CapaPresentacion.Modales
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if(txtCantidad.Value > 0 && cboSucursal.SelectedIndex != -1)
+            string actualizacionStock = string.Empty;
+            if (txtCantidad.Value > 0 && cboSucursal.SelectedIndex != -1)
             {
                 OrdenTraspaso orden = new OrdenTraspaso();
                 orden.FechaCreacion = txtFechaTraspaso.Value.Date;
@@ -89,7 +90,7 @@ namespace CapaPresentacion.Modales
                     bool insertar = new CN_OrdenTraspaso().InsertarOrdenTraspaso(orden);
                     if (insertar)
                     {
-                        new CN_ProductoNegocio().CargarOActualizarStockProducto(orden.IdProducto, GlobalSettings.SucursalId, -orden.Cantidad);
+                        actualizacionStock= new CN_ProductoNegocio().CargarOActualizarStockProducto(orden.IdProducto, GlobalSettings.SucursalId, -orden.Cantidad);
                         MessageBox.Show("Orden de Traspaso Generada y Stock Descontado de la Sucursal Actual");
                         this.Close();
                     }

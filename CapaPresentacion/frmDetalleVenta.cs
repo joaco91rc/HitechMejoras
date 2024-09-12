@@ -196,6 +196,7 @@ namespace CapaPresentacion
         {
             string elimnacionVenta = string.Empty;
             string eliminacionMovimientos = string.Empty;
+            string actualizacionStock = string.Empty;
             string mensaje = string.Empty;
             if (GlobalSettings.RolUsuario == 1)
             {
@@ -217,11 +218,11 @@ namespace CapaPresentacion
                                 int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                                 int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
-                                new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                                actualizacionStock = new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
                             }
                         }
-                        elimnacionVenta = "Se ha Eliminado la Venta.";
-                        Limpiar();
+                        elimnacionVenta = "Se ha Eliminado la Venta. ";
+                        
 
                     } else
                     {
@@ -238,11 +239,11 @@ namespace CapaPresentacion
                     }
                     else
                     {
-                        eliminacionMovimientos = " No se pudo Eliminar los Moviemientos en la Caja";
+                        eliminacionMovimientos = mensaje;
                     }
                     
-                   MessageBox.Show(elimnacionVenta + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+                   MessageBox.Show(elimnacionVenta + actualizacionStock + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
                 }
             }
             else

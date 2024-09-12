@@ -361,7 +361,7 @@ namespace CapaDatos
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
 
-                    query.AppendLine("SELECT P.nombre,DV.precioVenta,DV.cantidad,DV.subTotal FROM DETALLE_VENTA DV");
+                    query.AppendLine("SELECT P.idProducto, P.nombre,DV.precioVenta,DV.cantidad,DV.subTotal FROM DETALLE_VENTA DV");
                     query.AppendLine("INNER JOIN  PRODUCTO P ON P.idProducto= DV.idProducto");
                     query.AppendLine("WHERE DV.idVenta=@idVenta");
 
@@ -378,7 +378,7 @@ namespace CapaDatos
                             oLista.Add(new DetalleVenta()
                             {
 
-                                oProducto = new Producto() { nombre = dr["nombre"].ToString() },
+                                oProducto = new Producto() { idProducto= Convert.ToInt32(dr["idProducto"]), nombre = dr["nombre"].ToString() },
                                 precioVenta = Convert.ToDecimal(dr["precioVenta"].ToString()),
                                 cantidad = Convert.ToInt32(dr["cantidad"].ToString()),
                                 subTotal = Convert.ToDecimal(dr["subTotal"].ToString())

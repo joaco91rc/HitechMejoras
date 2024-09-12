@@ -345,6 +345,90 @@ namespace CapaPresentacion
                 }
             }
         }
+        private void CalcularRestaAPagar()
+        {
+            decimal cotizacionDolar = txtCotizacion.Value;
+            decimal totalAPagar = txtTotalAPagar.Value;
+            decimal totalAPagarDolares = txtTotalAPagarDolares.Value;
+            decimal pagoTotal = 0;
+            decimal pagoTotalDolares = 0;
+
+            // Arreglo de formas de pago y montos pagados
+            var formasDePago = new[]
+            {
+                new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
+                new { FormaPago = cboFormaPago2.Text, Monto = txtPagaCon2.Value },
+                new { FormaPago = cboFormaPago3.Text, Monto = txtPagaCon3.Value },
+                new { FormaPago = cboFormaPago4.Text, Monto = txtPagaCon4.Value }
+            };
+
+            // Recorre las formas de pago y acumula los montos en dólares o en la moneda local
+            foreach (var pago in formasDePago)
+            {
+                if (pago.FormaPago == "DOLAR" || pago.FormaPago == "DOLAR EFECTIVO")
+                {
+                    pagoTotalDolares += pago.Monto;
+                }
+                else
+                {
+                    pagoTotal += pago.Monto;
+                }
+            }
+
+            // Manejo de descuentos
+            if (checkDescuento.Checked)
+            {
+                decimal montoDescuento = Convert.ToDecimal(txtMontoDescuento.Text);
+
+                if (checkMonedaDolar.Checked)
+                {
+                    totalAPagarDolares -= montoDescuento;
+                }
+                else
+                {
+                    totalAPagar -= montoDescuento;
+                }
+            }
+
+            // Manejo de recargos
+            if (checkRecargo.Checked)
+            {
+                decimal montoRecargo = Convert.ToDecimal(txtMontoDescuento.Text);  // Usar txtMontoRecargo en lugar de txtMontoDescuento
+
+                if (checkMonedaDolar.Checked)
+                {
+                    totalAPagarDolares += montoRecargo;
+                }
+                else
+                {
+                    totalAPagar += montoRecargo;
+                }
+            }
+
+            // Calcula el resto a pagar en cada moneda
+            decimal restoAPagar = totalAPagar - pagoTotal;
+            decimal restoAPagarDolares = totalAPagarDolares - pagoTotalDolares;
+
+            // Evita restar más de lo que hay que pagar
+            if (restoAPagar < 0) restoAPagar = 0;
+            if (restoAPagarDolares < 0) restoAPagarDolares = 0;
+
+            // Actualiza los valores en los controles
+            txtTotalAPagar.Value = totalAPagar;
+            txtTotalAPagarDolares.Value = totalAPagarDolares;
+            txtRestaPagar.Value = restoAPagar;
+            txtRestaPagarDolares.Value = restoAPagarDolares;
+
+            // Si alguna de las "restas a pagar" es 0, ambas deben ser 0
+            if (txtRestaPagar.Value == 0)
+            {
+                txtRestaPagarDolares.Value = 0;
+            }
+            if (txtRestaPagarDolares.Value == 0)
+            {
+                txtRestaPagar.Value = 0;
+            }
+        }
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
@@ -446,6 +530,7 @@ namespace CapaPresentacion
             };
 
             string mensaje = string.Empty;
+            string actualizacionStock = string.Empty;
             int idCompragenerado = 0;
             bool respuesta = new CN_Compra().Registrar(oCompra,detalle_compra,out mensaje, out idCompragenerado);
             if (respuesta)
@@ -458,7 +543,7 @@ namespace CapaPresentacion
                         int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
                         // Actualizar el stock del producto
-                        new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                        actualizacionStock =new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
                     }
                 }
                 txtIdProducto.Text = string.Empty;
@@ -697,30 +782,39 @@ namespace CapaPresentacion
 
         private void txtPagaCon_KeyDown(object sender, KeyEventArgs e)
         {
-         
 
             if (e.KeyData == Keys.Enter)
             {
-                if (txtPagaCon.Text != string.Empty)
+                //if (txtPagaCon.Text != string.Empty) {
+                //    if(cboFormaPago.Text =="DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                //    {
+
+
+                //       calcularTotalConDolares();
+                //        txtRestaPagarDolares.Value = (txtTotalAPagarDolares.Value -txtPagaCon.Value);
+                //    }
+                //    else { 
+                //    txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
+
+
+                //    CalcularCambio();
+                //    }
+                //}
+                CalcularRestaAPagar();
+                CalcularCambio();
+                if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                 {
-                    if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                    {
-
-                        txtTotalVentaDolares.Text = (Convert.ToDecimal(txtTotalVentaDolares.Text) - txtPagaCon.Value).ToString("0.00");
-                        calcularTotalConDolares();
-                    }
-                    else
-                    {
-                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - txtPagaCon.Value).ToString("0.00");
-
-
-                        CalcularCambio();
-                    }
+                    txtTotalAPagar.Value = txtRestaPagarDolares.Value * txtCotizacion.Value;
+                    CalcularRestaAPagar();
                 }
 
 
 
             }
+
+
+
+        
         }
 
 
@@ -730,12 +824,29 @@ namespace CapaPresentacion
             {
                 if (txtPagaCon2.Text != string.Empty)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon2.Value).ToString("0.00");
+
+                    //if (cboFormaPago2.Text == "DOLAR" || cboFormaPago2.Text == "DOLAR EFECTIVO")
+                    //{
 
 
+                    //    calcularTotalConDolares();
+                    //    txtRestaPagarDolares.Value = (txtRestaPagarDolares.Value - txtPagaCon2.Value);
+                    //}
+                    //else
+                    //{
+                    //    txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
+
+
+                    //    CalcularCambio();
+                    //}
+                    CalcularRestaAPagar();
                     CalcularCambio();
-
+                    if (txtRestaPagar.Value == 0)
+                    {
+                        txtRestaPagarDolares.Value = 0;
+                    }
                 }
+
 
             }
 
@@ -747,15 +858,20 @@ namespace CapaPresentacion
 
             if (e.KeyData == Keys.Enter)
             {
-                if (txtPagaCon3.Text != string.Empty)
+                //if (txtPagaCon3.Text != string.Empty)
+                //{
+                //    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon3.Value).ToString("0.00");
+
+
+                //    CalcularCambio();
+
+                //}
+                CalcularRestaAPagar();
+                CalcularCambio();
+                if (txtRestaPagar.Value == 0)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon3.Value).ToString("0.00");
-
-
-                    CalcularCambio();
-
+                    txtRestaPagarDolares.Value = 0;
                 }
-
             }
 
 
@@ -766,15 +882,20 @@ namespace CapaPresentacion
 
             if (e.KeyData == Keys.Enter)
             {
-                if (txtPagaCon4.Text != string.Empty)
+                //if (txtPagaCon4.Text != string.Empty)
+                //{
+                //    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon4.Value).ToString("0.00");
+
+
+                //    CalcularCambio();
+
+                //}
+                CalcularRestaAPagar();
+                CalcularCambio();
+                if (txtRestaPagar.Value == 0)
                 {
-                    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon4.Value).ToString("0.00");
-
-
-                    CalcularCambio();
-
+                    txtRestaPagarDolares.Value = 0;
                 }
-
             }
 
 
@@ -793,7 +914,7 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = true;
                 txtMontoDescuento.Text = "0";
                 checkRecargo.Visible = false;
-
+                checkMonedaDolar.Visible = true;
 
             }
 
@@ -811,6 +932,7 @@ namespace CapaPresentacion
                 cboFormaPago2.SelectedIndex = -1;
                 cboFormaPago3.SelectedIndex = -1;
                 cboFormaPago4.SelectedIndex = -1;
+                checkMonedaDolar.Visible = false;
                 calcularTotal();
             }
         }
@@ -827,7 +949,7 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = true;
                 txtMontoDescuento.Text = "0";
                 checkDescuento.Visible = false;
-
+                checkMonedaDolar.Visible = true;
 
 
             }
@@ -842,6 +964,11 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = false;
                 lblDescuento.Visible = false;
                 checkDescuento.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago2.SelectedIndex = -1;
+                cboFormaPago3.SelectedIndex = -1;
+                cboFormaPago4.SelectedIndex = -1;
+                checkMonedaDolar.Visible = false;
                 calcularTotal();
             }
         }
@@ -927,17 +1054,49 @@ namespace CapaPresentacion
         {
             if (e.KeyData == Keys.Enter)
             {
-                if (checkDescuento.Checked == true)
-                {
-                    txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
-                    txtRestaPagar.Text = txtTotalAPagar.Value.ToString();
-                }
-                if (checkRecargo.Checked == true)
-                {
-                    txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
-                    txtRestaPagar.Text = txtTotalAPagar.Value.ToString();
-                }
 
+                if (Convert.ToDecimal(txtDescuento.Text) > 0 && Convert.ToDecimal(txtDescuento.Text) <= 100 && (txtDescuento.Text != ""))
+                {
+                    txtMontoDescuento.Visible = true;
+                    txtMontoDescuento.Enabled = false;
+                    decimal montoDescuentoRecargo = (txtRestaPagar.Value * Convert.ToDecimal(txtDescuento.Text)) / 100;
+                    txtMontoDescuento.Text = montoDescuentoRecargo.ToString("0.00");
+                    if (checkDescuento.Checked == true)
+                    {
+                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - montoDescuentoRecargo).ToString("0.00");
+
+
+                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                        {
+                            txtRestaPagar.Value -= montoDescuentoRecargo;
+                        }
+                        else
+                        {
+                            CalcularRestaAPagar();
+                        }
+                    }
+                    if (checkRecargo.Checked == true)
+                    {
+                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + montoDescuentoRecargo).ToString("0.00");
+                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                        {
+                            txtRestaPagar.Value += montoDescuentoRecargo;
+                        }
+                        else
+                        {
+                            CalcularRestaAPagar();
+                        }
+                    }
+                    txtDescuento.Enabled = false;
+                    lblDescuento.Visible = true;
+                    CalcularCambio();
+                }
+                else
+                {
+                    txtMontoDescuento.Visible = false;
+                    MessageBox.Show("Ingrese un valor entre 1 y 100 para el porcentaje de descuento o recargo", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                }
             }
         }
     }
