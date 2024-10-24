@@ -225,7 +225,7 @@ namespace CapaPresentacion
                     txtCliente.Text = dgvData.Rows[indice].Cells["nombreCompleto"].Value.ToString();
                     cboFormaPago.Text = dgvData.Rows[indice].Cells["formaPago"].Value.ToString();
                     txtMonto.Value = Convert.ToDecimal(dgvData.Rows[indice].Cells["monto"].Value);
-                    
+                
 
 
 
