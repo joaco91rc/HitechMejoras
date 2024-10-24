@@ -13,19 +13,18 @@ namespace CapaEntidad
         public string tipoDocumento { get; set; }
         public string nroDocumento { get; set; }
         public string montoTotal { get; set; }
-        public string usuarioRegistro { get; set; }
+        public string cotizacionDolar { get; set; }
         public string documentoCliente { get; set; }
         public string nombreCliente { get; set; }
-        public string codigoProducto { get; set; }
-        public string nombreProducto { get; set; }
-        public string categoria { get; set; }
-        public string precioVenta { get; set; }
-        public string cantidad { get; set; }
-        public string subTotal { get; set; }
-        public string formaPago { get; set; }
-        public string cotizacionDolar { get; set; }
-        public string descuento { get; set; }
-        public string montoDescuento { get; set; }
+       
+
+        public string costoTotalProductos { get; set; }
+
+
+        public string margenGananciaEnDolares {get;set;}
+        public string porcentajeMargenGanancia { get; set; }
+        public string vendedor { get; set; }
+        public string nombreLocal { get; set; }
     }
 
 }

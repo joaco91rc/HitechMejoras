@@ -35,6 +35,13 @@ namespace CapaPresentacion
             this.txtPorcentajeRetencion = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtCategoriaSeleccionado = new System.Windows.Forms.TextBox();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.txtIdFormaPago = new System.Windows.Forms.TextBox();
@@ -54,13 +61,6 @@ namespace CapaPresentacion
             this.label5 = new System.Windows.Forms.Label();
             this.txtPorcentajeDescuento = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRetencion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -137,6 +137,62 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(804, 370);
             this.dgvData.TabIndex = 107;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idFormaPago
+            // 
+            this.idFormaPago.HeaderText = "ID FORMA PAGO";
+            this.idFormaPago.Name = "idFormaPago";
+            this.idFormaPago.ReadOnly = true;
+            this.idFormaPago.Visible = false;
+            // 
+            // descripcion
+            // 
+            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.descripcion.FillWeight = 11.97604F;
+            this.descripcion.HeaderText = "FORMA DE PAGO";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // porcentajeRetencion
+            // 
+            this.porcentajeRetencion.FillWeight = 11.97604F;
+            this.porcentajeRetencion.HeaderText = "% RETENCION";
+            this.porcentajeRetencion.MinimumWidth = 100;
+            this.porcentajeRetencion.Name = "porcentajeRetencion";
+            this.porcentajeRetencion.ReadOnly = true;
+            this.porcentajeRetencion.Width = 130;
+            // 
+            // porcentajeRecargo
+            // 
+            this.porcentajeRecargo.HeaderText = "% RECARGO";
+            this.porcentajeRecargo.Name = "porcentajeRecargo";
+            this.porcentajeRecargo.ReadOnly = true;
+            this.porcentajeRecargo.Width = 120;
+            // 
+            // porcentajeDescuento
+            // 
+            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
+            this.porcentajeDescuento.Name = "porcentajeDescuento";
+            this.porcentajeDescuento.ReadOnly = true;
+            this.porcentajeDescuento.Width = 130;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cajaAsociada.FillWeight = 11.97604F;
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
             // 
             // txtCategoriaSeleccionado
             // 
@@ -381,65 +437,9 @@ namespace CapaPresentacion
             this.label6.ForeColor = System.Drawing.Color.ForestGreen;
             this.label6.Location = new System.Drawing.Point(15, 214);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(126, 17);
+            this.label6.Size = new System.Drawing.Size(142, 17);
             this.label6.TabIndex = 116;
-            this.label6.Text = "Porcentaje Recargo";
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
-            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idFormaPago
-            // 
-            this.idFormaPago.HeaderText = "ID FORMA PAGO";
-            this.idFormaPago.Name = "idFormaPago";
-            this.idFormaPago.ReadOnly = true;
-            this.idFormaPago.Visible = false;
-            // 
-            // descripcion
-            // 
-            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descripcion.FillWeight = 11.97604F;
-            this.descripcion.HeaderText = "FORMA DE PAGO";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // porcentajeRetencion
-            // 
-            this.porcentajeRetencion.FillWeight = 11.97604F;
-            this.porcentajeRetencion.HeaderText = "% RETENCION";
-            this.porcentajeRetencion.MinimumWidth = 100;
-            this.porcentajeRetencion.Name = "porcentajeRetencion";
-            this.porcentajeRetencion.ReadOnly = true;
-            this.porcentajeRetencion.Width = 130;
-            // 
-            // porcentajeRecargo
-            // 
-            this.porcentajeRecargo.HeaderText = "% RECARGO";
-            this.porcentajeRecargo.Name = "porcentajeRecargo";
-            this.porcentajeRecargo.ReadOnly = true;
-            this.porcentajeRecargo.Width = 120;
-            // 
-            // porcentajeDescuento
-            // 
-            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
-            this.porcentajeDescuento.Name = "porcentajeDescuento";
-            this.porcentajeDescuento.ReadOnly = true;
-            this.porcentajeDescuento.Width = 130;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cajaAsociada.FillWeight = 11.97604F;
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
+            this.label6.Text = "Porcentaje Descuento";
             // 
             // frmFormaPago
             // 

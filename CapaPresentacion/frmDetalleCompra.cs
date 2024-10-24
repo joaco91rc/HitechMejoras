@@ -209,6 +209,8 @@ namespace CapaPresentacion
                     }
 
                     MessageBox.Show(eliminacionCompra + actualizacionStock +eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                    this.Close();
                 }
             }
             else

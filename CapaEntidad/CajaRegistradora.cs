@@ -18,6 +18,10 @@ namespace CapaEntidad
         public decimal saldoMP { get; set; }
         public decimal saldoUSS { get; set; }
         public decimal saldoGalicia { get; set; }
+        public decimal saldoInicio { get; set; }
+        public decimal saldoInicioMP { get; set; }
+        public decimal saldoInicioUSS { get; set; }
+        public decimal saldoInicioGalicia { get; set; }
         public bool estado { get; set; }
 
     }

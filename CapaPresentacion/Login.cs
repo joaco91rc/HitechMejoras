@@ -86,10 +86,20 @@ namespace CapaPresentacion
 
             if (oUsuario != null)
             {
-                Form form1 = new Inicio(oUsuario);
-                form1.Show();
-                this.Hide();
-                form1.FormClosing += form_closing;
+                int idNegocio = Convert.ToInt32(((OpcionCombo)cboSucursal.SelectedItem).Valor);
+
+                var accesoLocal = new CN_AccesoNegocio().TienePermiso(oUsuario.idUsuario, idNegocio);
+                if (accesoLocal)
+                {
+                    Form form1 = new Inicio(oUsuario);
+                    form1.Show();
+                    this.Hide();
+                    form1.FormClosing += form_closing;
+                }
+                else
+                {
+                    MessageBox.Show("Usted No tiene permiso para entrar a la Sucursal Seleccionada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
 

@@ -48,6 +48,7 @@ namespace CapaPresentacion.Modales
             this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnTraspasar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
@@ -76,6 +77,7 @@ namespace CapaPresentacion.Modales
             this.stock,
             this.precioCompra,
             this.precioVenta,
+            this.serializable,
             this.btnTraspasar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -266,6 +268,12 @@ namespace CapaPresentacion.Modales
             this.precioVenta.Visible = false;
             this.precioVenta.Width = 140;
             // 
+            // serializable
+            // 
+            this.serializable.HeaderText = "SERIALIZABLE";
+            this.serializable.Name = "serializable";
+            this.serializable.ReadOnly = true;
+            // 
             // btnTraspasar
             // 
             this.btnTraspasar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -319,6 +327,7 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn stock;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serializable;
         private System.Windows.Forms.DataGridViewButtonColumn btnTraspasar;
     }
 }

@@ -16,21 +16,52 @@ namespace CapaPresentacion
 {
     public partial class frmVentas : Form
     {
-
+        private bool cotizacionCambio = false;
         private Image defaultImage = Properties.Resources.trash;
         private bool isUpdated = false;
         private Usuario _Usuario;
         private Venta _Venta;
+        public List<ProductoDetalle> ListaProductoDetalles { get; set; } = new List<ProductoDetalle>();
         public int StockProducto { get; set; }
+        public bool modoEdicion { get; set; }
         public frmVentas(Usuario oUsuario = null, Venta oVenta = null)
         {
             _Usuario = oUsuario;
             _Venta = oVenta;
+            modoEdicion = false;
             InitializeComponent();
 
             if (_Venta != null)
             {
                 CargarDatosVenta();
+                modoEdicion = true;
+            }
+        }
+        private void CargarComboBoxVendedores()
+        {
+            // Crear una instancia de la capa de negocio para vendedores
+            CN_Vendedor objCN_Vendedor = new CN_Vendedor();
+
+            // Obtener la lista de vendedores desde la base de datos
+            List<Vendedor> listaVendedores = objCN_Vendedor.ListarVendedores();
+
+            // Limpiar los items actuales del ComboBox
+            cboVendedores.Items.Clear();
+
+            // Llenar el ComboBox con los datos obtenidos
+            foreach (Vendedor vendedor in listaVendedores)
+            {
+                cboVendedores.Items.Add(new OpcionCombo() { Valor = vendedor.idVendedor, Texto = $"{vendedor.nombre} {vendedor.apellido}" });
+            }
+
+            // Establecer DisplayMember y ValueMember
+            cboVendedores.DisplayMember = "Texto";
+            cboVendedores.ValueMember = "Valor";
+
+            // Seleccionar el primer item por defecto si hay elementos en el ComboBox
+            if (cboVendedores.Items.Count > 0)
+            {
+                cboVendedores.SelectedIndex = -1; // O puedes poner `0` si deseas seleccionar el primer item
             }
         }
         public void ActualizarStock()
@@ -38,15 +69,20 @@ namespace CapaPresentacion
             txtStock.Text = StockProducto.ToString();
         }
         private void CargarDatosVenta()
-        { lblTitulo.Text = String.Format("EDITAR VENTA NUMERO {0}", _Venta.nroDocumento);
+           
+        {
+            int idCliente = new CN_Cliente().ObtenerIdClientePorDocumentoYNombre(_Venta.documentoCliente, _Venta.nombreCliente);
+            CargarComboBoxVendedores();
+            lblTitulo.Text = String.Format("EDITAR VENTA NUMERO {0}", _Venta.nroDocumento);
             // Aquí puedes cargar los datos de la venta en los controles del formulario
             cboTipoDocumento.Text = _Venta.tipoDocumento;
-            txtNombreCliente.Text = _Venta.nombreCliente;
+            txtNombreCliente.Text = _Venta.nombreCliente;           
             txtDocumentoCliente.Text = _Venta.documentoCliente;
-            
+            txtIdCliente.Text = idCliente.ToString();
+             txtObservaciones.Text = _Venta.observaciones;
             foreach(var item in _Venta.oDetalleVenta)
             {
-                dgvData.Rows.Add(item.oProducto.idProducto,item.oProducto.nombre, item.precioVenta, item.cantidad, item.subTotal,"");
+                dgvData.Rows.Add(item.oProducto.idProducto,item.oProducto.nombre, item.precioVenta,item.precioVenta*1.30m, item.cantidad, item.subTotal,item.oProducto.prodSerializable);
             }
             cboFormaPago.Text = _Venta.formaPago;
             cboFormaPago2.Text = _Venta.formaPago2;
@@ -57,6 +93,13 @@ namespace CapaPresentacion
             txtPagaCon3.Text = _Venta.montoFP3.ToString();
             txtPagaCon4.Text = _Venta.montoFP4.ToString();
             txtTotalAPagar.Text = _Venta.montoTotal.ToString();
+
+            OpcionCombo vendedorSeleccionado = cboVendedores.Items.Cast<OpcionCombo>()
+                                    .FirstOrDefault(x => Convert.ToInt32(x.Valor) == _Venta.idVendedor);
+            if (vendedorSeleccionado != null)
+            {
+                cboVendedores.SelectedItem = vendedorSeleccionado; // Establecer el item seleccionado
+            }
         }
 
         private void CargarComboBoxFormaPago()
@@ -114,7 +157,7 @@ namespace CapaPresentacion
             cboTipoDocumento.SelectedIndex = 3;
 
             CargarComboBoxFormaPago();
-            
+            CargarComboBoxVendedores();
 
             
 
@@ -129,7 +172,7 @@ namespace CapaPresentacion
 
             var cotizacionDolar = new CN_Cotizacion().CotizacionActiva();
             txtCotizacion.Value = cotizacionDolar.importe;
-            txtCotizacion.ReadOnly = true;
+            
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
@@ -142,6 +185,7 @@ namespace CapaPresentacion
 
                     txtDocumentoCliente.Text = modal._Cliente.documento;
                     txtNombreCliente.Text = modal._Cliente.nombreCompleto;
+                    txtIdCliente.Text = modal._Cliente.idCliente.ToString();
                     txtCodigoProducto.Select();
                 }
                 else
@@ -151,10 +195,50 @@ namespace CapaPresentacion
             }
         }
 
+        public void AgregarDetalleProductoADataGridView(ProductoDetalle productoDetalle)
+        {
+            string mensaje = string.Empty;
+            bool serialExistente = false;
+
+            // Verifica si ya existe el número de serie en el DataGridView
+            foreach (DataGridViewRow row in dgvSeriales.Rows)
+            {
+                if (row.Cells["serialNumber"].Value != null &&
+                    row.Cells["serialNumber"].Value.ToString() == productoDetalle.numeroSerie)
+                {
+                    serialExistente = true;
+                    break;
+                }
+            }
+
+            // Si el serial ya existe, no agregues el producto y muestra un mensaje
+            if (serialExistente)
+            {
+                MessageBox.Show("El número de serie ya existe en el listado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Agrega el producto al DataGridView si el número de serie no existe
+                dgvSeriales.Rows.Add(
+                    productoDetalle.idProductoDetalle,
+                    productoDetalle.idProducto,
+                    productoDetalle.nombre,
+                    productoDetalle.marca,
+                    productoDetalle.modelo,
+                    productoDetalle.color,
+                    productoDetalle.numeroSerie
+                );
+                dgvSeriales.Visible = true;
+
+                // Llama al método para desactivar el producto si es necesario
+                //bool desactivarProductoSerial = new CN_Producto().DesactivarProductoDetalle(productoDetalle.idProductoDetalle, 0, out mensaje);
+            }
+        }
+
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
 
-            using (var modal = new mdProducto())
+            using (var modal = new mdProducto(this))
             {
                 modal.Owner = this;
                 var result = modal.ShowDialog();
@@ -164,8 +248,9 @@ namespace CapaPresentacion
                     txtCodigoProducto.Text = modal._Producto.codigo;
                     txtProducto.Text = modal._Producto.nombre;
                     txtPrecio.Text = modal._Producto.precioVenta.ToString("0.00");
-                    
+                    txtSerializable.Text = modal._Producto.prodSerializable.ToString();
                     txtCantidad.Select();
+                    
                 }
                 else
                 {
@@ -206,9 +291,9 @@ namespace CapaPresentacion
 
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-
             decimal precio = 0;
             bool producto_existe = false;
+            bool esSerializable = Convert.ToBoolean(txtSerializable.Text);
 
             if (int.Parse(txtIdProducto.Text) == 0)
             {
@@ -226,40 +311,94 @@ namespace CapaPresentacion
             if (Convert.ToInt32(txtStock.Text) < Convert.ToInt32(txtCantidad.Value.ToString()))
             {
                 MessageBox.Show("La cantidad ingresada deber ser menor al Stock Fisico", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
                 return;
             }
 
+            // Verificar si el producto ya existe en dgvData
             foreach (DataGridViewRow fila in dgvData.Rows)
             {
                 if (fila.Cells["idProducto"].Value.ToString() == txtIdProducto.Text)
                 {
-                    producto_existe = true;
-                    break;
+                    if (!esSerializable) // Si el producto no es serializable, verifica si ya existe
+                    {
+                        producto_existe = true;
+                        break;
+                    }
                 }
-
             }
+
+            // Si el producto no existe, proceder a agregarlo
             if (!producto_existe)
             {
-                decimal precioLista30 = (((precio*txtCotizacion.Value)*30)/100 + (precio * txtCotizacion.Value));
-               
+                // Si es un producto serializable
+                if (esSerializable)
+                {
+                    // Abrir el modal para capturar los seriales
+                    using (var modal = new mdProductoSerializable(Convert.ToInt32(txtIdProducto.Text)))
+                    {
+                        if (modal.ShowDialog() == DialogResult.OK)
+                        {
+                            // Solo si hay seriales válidos, proceder a agregar el producto a dgvData
+                            if (modal.ListaProductoDetalles != null && modal.ListaProductoDetalles.Count > 0)
+                            {
+                                decimal precioLista30 = Math.Round((precio * txtCotizacion.Value) / 500) * 500 * 1.30m;
+
+                                // Agregar el producto a dgvData
+                                dgvData.Rows.Add(new object[]{
+                            txtIdProducto.Text,
+                            txtProducto.Text,
+                            precio.ToString("0.00"),
+                            precioLista30,
+                            txtCantidad.Value.ToString(),
+                            (txtCantidad.Value * precio).ToString("0.00"),
+                            txtSerializable.Text,
+                            defaultImage
+                        });
+
+                                // Agregar los seriales al dgvSeriales
+                                foreach (var productoDetalle in modal.ListaProductoDetalles)
+                                {
+                                    AgregarDetalleProductoADataGridView(productoDetalle);
+                                }
+
+                                calcularTotal();
+                                limpiarProducto();
+                                txtCodigoProducto.Select();
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se han agregado seriales. No se puede añadir el producto.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                }
+                else // Si es un producto no serializable
+                {
+                    decimal precioLista30 = Math.Round((precio * txtCotizacion.Value) / 500) * 500 * 1.30m;
+
+                    // Agregar el producto a dgvData directamente
                     dgvData.Rows.Add(new object[]{
-                    txtIdProducto.Text,
-                    txtProducto.Text,
-                    precio.ToString("0.00"),
-                    precioLista30,
-                    txtCantidad.Value.ToString(),
-                    (txtCantidad.Value * precio).ToString("0.00"),
-                    defaultImage
-                });
+                txtIdProducto.Text,
+                txtProducto.Text,
+                precio.ToString("0.00"),
+                precioLista30,
+                txtCantidad.Value.ToString(),
+                (txtCantidad.Value * precio).ToString("0.00"),
+                txtSerializable.Text,
+                defaultImage
+            });
+
                     calcularTotal();
                     limpiarProducto();
                     txtCodigoProducto.Select();
-
-                
-
+                }
+            }
+            else
+            {
+                MessageBox.Show("El producto ya existe en la lista y no es serializable.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
 
         private void calcularTotal()
@@ -270,15 +409,24 @@ namespace CapaPresentacion
                 foreach (DataGridViewRow row in dgvData.Rows)
                 {
                     total += Convert.ToDecimal(row.Cells["SubTotal"].Value.ToString());
-
                 }
-                decimal totalCotizado = total* txtCotizacion.Value;
-                decimal totalRedondeado = Math.Ceiling(totalCotizado / 500) * 500;
-                txtTotalAPagar.Value = totalRedondeado;
+                decimal totalCotizado = total * txtCotizacion.Value;
+                decimal totalProductos = 0;
+
+                // Verifica el estado de la variable cotizacionCambio
+                if (cotizacionCambio)
+                {
+                    totalProductos = totalCotizado; // Usa el valor exacto si la cotización cambió
+                }
+                else
+                {
+                    totalProductos = Math.Round(totalCotizado / 500) * 500; // Redondea si no cambió
+                }
+
+                txtTotalAPagar.Value = totalProductos;
                 txtTotalAPagarDolares.Value = total;
                 txtRestaPagar.Value = txtTotalAPagar.Value;
                 txtRestaPagarDolares.Value = txtTotalAPagarDolares.Value;
-
             }
         }
 
@@ -296,7 +444,7 @@ namespace CapaPresentacion
             
         }
 
-       
+
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -306,13 +454,21 @@ namespace CapaPresentacion
 
                 if (indice >= 0)
                 {
-                    bool respuesta = new CN_Venta().SumarStock(Convert.ToInt32(dgvData.Rows[indice].Cells["idProducto"].Value.ToString()), Convert.ToInt32(dgvData.Rows[indice].Cells["cantidad"].Value.ToString()));
+                    int idProducto = Convert.ToInt32(dgvData.Rows[indice].Cells["idProducto"].Value.ToString());
+                    
 
-
-                    if (respuesta)
-                    {
+                    
+                        // Eliminar el producto de dgvData
                         dgvData.Rows.RemoveAt(indice);
-                        
+
+                        // Eliminar también el producto correspondiente de dgvSeriales
+                        EliminarProductoDeSeriales(idProducto);
+                        if(dgvSeriales.Rows.Count == 0)
+                        {
+                            dgvSeriales.Visible = false;
+                        }
+
+                        // Reiniciar campos y recalcular totales
                         txtTotalAPagar.Value = 0;
                         txtTotalAPagarDolares.Value = 0;
                         txtRestaPagar.Value = 0;
@@ -325,13 +481,26 @@ namespace CapaPresentacion
                         txtPagaCon2.Value = 0;
                         txtPagaCon3.Value = 0;
                         txtPagaCon4.Value = 0;
+
                         calcularTotal();
-                    }
-
-
-
+                    
                 }
+            }
+        }
 
+
+        private void EliminarProductoDeSeriales(int idProducto)
+        {
+            string mensaje = string.Empty;
+            for (int i = dgvSeriales.Rows.Count - 1; i >= 0; i--)
+            {
+                int idProductoDetalle = Convert.ToInt32(dgvSeriales.Rows[i].Cells["idProductoDetalle"].Value);
+                // Asumiendo que hay una columna en dgvSeriales que contiene el idProducto
+                if (Convert.ToInt32(dgvSeriales.Rows[i].Cells["idProdSerial"].Value) == idProducto)
+                {
+                    dgvSeriales.Rows.RemoveAt(i);
+                    bool activarSerial = new CN_Producto().ActivarProductoDetalle(idProductoDetalle, out mensaje);
+                }
             }
         }
 
@@ -530,12 +699,16 @@ namespace CapaPresentacion
                 return;
             }
 
-
+            //if(cboVendedores.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show("Debe Seleccionar un Vendedor", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //    return;
+            //}
             DataTable detalle_venta = new DataTable();
 
             detalle_venta.Columns.Add("idProducto", typeof(int));
             detalle_venta.Columns.Add("precioVenta", typeof(decimal));
-            detalle_venta.Columns.Add("cantidad", typeof(int));
+            detalle_venta.Columns.Add("cantidad", typeof(decimal));
             detalle_venta.Columns.Add("subTotal", typeof(decimal));
 
 
@@ -613,19 +786,20 @@ namespace CapaPresentacion
     {
         oUsuario = new Usuario() { idUsuario = _Usuario.idUsuario },
         idNegocio = GlobalSettings.SucursalId,
-        fechaRegistro = dtpFecha.Value.Date,
+        fechaRegistro = Convert.ToDateTime(dtpFecha.Value),
         tipoDocumento = ((OpcionCombo)cboTipoDocumento.SelectedItem).Texto,
         nroDocumento = numeroDocumento,
         documentoCliente = txtDocumentoCliente.Text,
         nombreCliente = txtNombreCliente.Text,
-       
+        idVendedor = (OpcionCombo)cboVendedores.SelectedItem==null?_Venta.idVendedor: Convert.ToInt32(((OpcionCombo)cboVendedores.SelectedItem).Valor),
         montoCambio = Convert.ToDecimal(txtCambioCliente.Text),
-        montoTotal = Convert.ToDecimal(txtTotalAPagar.Text),
-        formaPago = (OpcionCombo)cboFormaPago.SelectedItem != null ? ((OpcionCombo)cboFormaPago.SelectedItem).Texto : "",
-        formaPago2 = (OpcionCombo)cboFormaPago2.SelectedItem != null ? ((OpcionCombo)cboFormaPago2.SelectedItem).Texto : "",
-        formaPago3 = (OpcionCombo)cboFormaPago3.SelectedItem != null ? ((OpcionCombo)cboFormaPago3.SelectedItem).Texto : "",
-        formaPago4 = (OpcionCombo)cboFormaPago4.SelectedItem != null? ((OpcionCombo)cboFormaPago4.SelectedItem).Texto :"" ,
-        descuento = Convert.ToDecimal(txtDescuento.Text),
+        montoTotal = Convert.ToDecimal(txtTotalAPagar.Text)==0? Convert.ToDecimal(txtTotalAPagarDolares.Text): Convert.ToDecimal(txtTotalAPagar.Text),
+        formaPago = cboFormaPago.SelectedItem != null ? ((OpcionCombo)cboFormaPago.SelectedItem).Texto : "",
+        formaPago2 = cboFormaPago2.SelectedItem != null ? ((OpcionCombo)cboFormaPago2.SelectedItem).Texto : "",
+        formaPago3 = cboFormaPago3.SelectedItem != null ? ((OpcionCombo)cboFormaPago3.SelectedItem).Texto : "",
+        formaPago4 = cboFormaPago4.SelectedItem != null ? ((OpcionCombo)cboFormaPago4.SelectedItem).Texto : "",
+
+                descuento = Convert.ToDecimal(txtDescuento.Text),
         montoDescuento = Convert.ToDecimal(txtMontoDescuento.Text),
         cotizacionDolar = txtCotizacion.Value,
         
@@ -639,15 +813,35 @@ namespace CapaPresentacion
         montoPagoFP2 = montoPagadoFP2,
         montoPagoFP3 = montoPagadoFP3,
         montoPagoFP4 = montoPagadoFP4,
+        observaciones = txtObservaciones.Text
 
 
     };
                 string actualizacionStock = string.Empty;
+                bool actualizarSerial = false;
                 string mensaje = string.Empty;
+                string mensajeSerialActualizado = string.Empty;
                 int idVentaGenerado = 0;
-    bool respuesta = new CN_Venta().Registrar(oVenta, detalle_venta, out mensaje, out idVentaGenerado);
+                bool respuesta = false;
+                string tipo = string.Empty;
+                if (oVenta.idVenta == 0)
+                {
+                     respuesta = new CN_Venta().Registrar(oVenta, detalle_venta, out mensaje, out idVentaGenerado);
+                    tipo = "Generado";
+                }
+                else
+                {
+                    oVenta.idVenta = _Venta.idVenta;
+                    respuesta = new CN_Venta().EditarVenta(oVenta, detalle_venta, out mensaje, out idVentaGenerado);
+                    tipo = "Modificado";
+                }
     if (respuesta)
-    {
+    {           var perteneceANegocio = new CN_ClienteNegocio().ClienteAsignadoANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
+                    if (!perteneceANegocio)
+                    {
+                        var asignarCliente = new CN_ClienteNegocio().AsignarClienteANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
+                    }
+                    
                     foreach (DataGridViewRow row in dgvData.Rows)
                     {
                         if (row.Cells["idProducto"].Value != null && row.Cells["cantidad"].Value != null)
@@ -659,7 +853,32 @@ namespace CapaPresentacion
                             actualizacionStock= new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, -cantidad);
                         }
                     }
-                    txtIdProducto.Text = string.Empty;
+                    
+                    if (dgvSeriales.Rows.Count > 0)
+                    {
+                        foreach (DataGridViewRow row in dgvSeriales.Rows)
+                        {
+                            if (row.Cells["idProductoDetalle"].Value != null) // Verificar que la celda no esté vacía
+                            {
+                                int idProductoDetalle = Convert.ToInt32(row.Cells["idProductoDetalle"].Value);
+                                actualizarSerial = new CN_Producto().DesactivarProductoDetalle(idProductoDetalle, idVentaGenerado, out  mensaje);
+                                if (actualizarSerial)
+                                {
+                                    mensajeSerialActualizado = "Se han dado de Baja el o los Numero de Serie";
+                                } else
+                                {
+                                    MessageBox.Show($"Error al dar de Baja el Numero de Serie: {mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    break; // Detener el loop si ocurre un error
+                                }
+                                
+                                   
+                                
+                            }
+                        }
+                    }
+                   
+
+                    txtIdProducto.Text = "0";
                     List<string> formasPago = new List<string>();
                     formasPago.Add(cboFormaPago.Text);
                     if (cboFormaPago2.SelectedIndex >= 0) formasPago.Add(cboFormaPago2.Text);
@@ -715,7 +934,7 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago2.Text,
                                 cajaAsociada = cajaAsociadaFP2,
-                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
                                 concepto = "VENTA"
@@ -741,7 +960,7 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago3.Text,
                                 cajaAsociada = cajaAsociadaFP3,
-                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
                                 concepto = "VENTA"
@@ -767,7 +986,7 @@ namespace CapaPresentacion
                                 usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
                                 formaPago = cboFormaPago4.Text,
                                 cajaAsociada= cajaAsociadaFP4,
-                                idVenta = Convert.ToInt32(oVenta.idVenta),
+                                idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
                                 concepto = "VENTA"
@@ -782,10 +1001,13 @@ namespace CapaPresentacion
                     }
                     
 
-                    var result = MessageBox.Show("Numero de Venta Generado:\n" + numeroDocumento, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var result = MessageBox.Show("Numero de Venta:\n"+ tipo + numeroDocumento +". " + mensajeSerialActualizado, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
         if (result == DialogResult.OK)
             Clipboard.SetText(numeroDocumento);
-        
+                    txtIdCliente.Text = string.Empty;
+                    dgvSeriales.Rows.Clear();
+                    dgvSeriales.Visible = false;
+                    txtObservaciones.Text = string.Empty;
         txtDocumentoCliente.Text = "";
         txtNombreCliente.Text = "";
         dgvData.Rows.Clear();
@@ -953,7 +1175,8 @@ namespace CapaPresentacion
         {
             if (e.KeyData == Keys.Enter)
             {
-                txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) * txtCotizacion.Value).ToString();
+                txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagarDolares.Text) * txtCotizacion.Value).ToString();
+                cotizacionCambio = true;
             }
         }
 
@@ -1203,10 +1426,11 @@ namespace CapaPresentacion
             decimal totalOriginal = Convert.ToDecimal(txtTotalAPagar.Text);
 
             // Aplica el recargo y descuento al total original
-            decimal totalConRecargoYDescuento = (totalOriginal + (totalOriginal * porcentajeRecargo)) - (totalOriginal * porcentajeDescuento);
-
-            // Actualiza el TextBox con el nuevo total
-            txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");
+            decimal totalConRecargo = (totalOriginal + (totalOriginal * porcentajeRecargo)) ;
+            decimal totalConRecargoYDescuento = totalConRecargo - (totalConRecargo * porcentajeDescuento);
+                
+                // Actualiza el TextBox con el nuevo total
+                txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");
             }
             checkDescuento.Checked = false;
             checkRecargo.Checked = false;

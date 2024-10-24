@@ -16,16 +16,17 @@ namespace CapaEntidad
 
         public decimal costoPesos { get; set; }
 
+        public decimal ventaPesos { get; set; }
 
-        
         public decimal precioCompra { get; set; }
         public decimal precioVenta { get; set; }
        
         public bool estado { get; set; }
+        public bool prodSerializable { get; set; }
         public string fechaRegistro { get; set; }
 
         public int stock { get; set; }
-
+        public string nombreLocal{ get; set; }
         public int stockH1 { get; set; }
         public int stockH2 { get; set; }
         public int stockAS { get; set; }
@@ -37,6 +38,7 @@ namespace CapaEntidad
                 return stockH1 + stockH2 + stockAS + stockAC;
             }
         }
+
 
     }
 }

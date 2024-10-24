@@ -1,5 +1,6 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using CapaPresentacion.Utilidades;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
@@ -24,10 +25,36 @@ namespace CapaPresentacion
             InitializeComponent();
             oVenta = venta;
         }
+        private void CargarComboBoxVendedores()
+        {
+            // Crear una instancia de la capa de negocio para vendedores
+            CN_Vendedor objCN_Vendedor = new CN_Vendedor();
 
+            // Obtener la lista de vendedores desde la base de datos
+            List<Vendedor> listaVendedores = objCN_Vendedor.ListarVendedores();
+
+            // Limpiar los items actuales del ComboBox
+            cboVendedores.Items.Clear();
+
+            // Llenar el ComboBox con los datos obtenidos
+            foreach (Vendedor vendedor in listaVendedores)
+            {
+                cboVendedores.Items.Add(new OpcionCombo() { Valor = vendedor.idVendedor, Texto = $"{vendedor.nombre} {vendedor.apellido}" });
+            }
+
+            // Establecer DisplayMember y ValueMember
+            cboVendedores.DisplayMember = "Texto";
+            cboVendedores.ValueMember = "Valor";
+
+            // Seleccionar el primer item por defecto si hay elementos en el ComboBox
+            if (cboVendedores.Items.Count > 0)
+            {
+                cboVendedores.SelectedIndex = -1; // O puedes poner `0` si deseas seleccionar el primer item
+            }
+        }
         private void frmDetalleVenta_Load(object sender, EventArgs e)
         {
-            
+            CargarComboBoxVendedores();
             lblIdVenta.Text = "0";
             if (oVenta != null)
             {
@@ -50,15 +77,32 @@ namespace CapaPresentacion
                 txtMontoFP3.Text = oVenta.montoFP3.ToString();
                 txtMontoFP4.Text = oVenta.montoFP4.ToString();
                 txtCotizacionDolar.Text = oVenta.cotizacionDolar.ToString();
+                txtObservaciones.Text = oVenta.observaciones;
                 dgvData.Rows.Clear();
                 foreach (DetalleVenta dv in oVenta.oDetalleVenta)
                 {
-                    dgvData.Rows.Add(new object[] {dv.oProducto.idProducto, dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal });
+                    dgvData.Rows.Add(new object[] {dv.oProducto.idProducto, dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal, dv.oProducto.prodSerializable });
                 }
 
                 txtTotalAPagar.Text = oVenta.montoTotal.ToString("0.00");
                 txtPagaCon.Text = oVenta.montoPago.ToString("0.00");
                 txtCambio.Text = oVenta.montoCambio.ToString("0.00");
+
+                // Establecer el item seleccionado en el ComboBox cboVendedores
+                if (cboVendedores.Items.Count > 0)
+                {
+                    foreach (var item in cboVendedores.Items)
+                    {
+                        var opcionCombo = item as OpcionCombo; // Cast al tipo OpcionCombo
+                        if (opcionCombo != null && Convert.ToInt32(opcionCombo.Valor) == oVenta.idVendedor) // Comparar con idVendedor
+                        {
+                            cboVendedores.SelectedItem = opcionCombo; // Selecciona el item correspondiente
+                            //cboVendedores.Text = opcionCombo.Texto;
+                            break;
+                        }
+                    }
+                }
+
             }
         }
 
@@ -105,49 +149,71 @@ namespace CapaPresentacion
             string textoHtml = Properties.Resources.PlantillaVenta.ToString();
             int idNegocio = GlobalSettings.SucursalId;
             Negocio odatos = new CN_Negocio().ObtenerDatos(idNegocio);
+            Cliente oCliente = new CN_Cliente().ObtenerClientePorDocumentoYNombre(txtDNI.Text, txtNombreCliente.Text);
+            // Reemplazar valores del negocio
+            textoHtml = textoHtml.Replace("@nombrenegocio", odatos.nombre?.ToUpper() ?? "");
+            textoHtml = textoHtml.Replace("@docnegocio", odatos.CUIT?.ToUpper() ?? "");
+            textoHtml = textoHtml.Replace("@direcnegocio", odatos.direccion?.ToUpper() ?? "");
 
-            textoHtml = textoHtml.Replace("@nombrenegocio", odatos.nombre.ToUpper());
-            textoHtml = textoHtml.Replace("@docnegocio", odatos.CUIT.ToUpper());
-            textoHtml = textoHtml.Replace("@direcnegocio", odatos.direccion.ToUpper());
-
-            //textoHtml = textoHtml.Replace("@tipodocumento", cboTipoDocumento.Text.ToString().ToUpper());
+            // Reemplazar valores del documento y cliente
             textoHtml = textoHtml.Replace("@numerodocumento", txtnroDocumento.Text.ToUpper());
-
             textoHtml = textoHtml.Replace("@doccliente", txtDNI.Text);
             textoHtml = textoHtml.Replace("@nombrecliente", txtNombreCliente.Text);
-            textoHtml = textoHtml.Replace("@fecharegistro", dtpFecha.Text);
-            textoHtml = textoHtml.Replace("@usuarioregistro", txtUsuario.Text);
+            textoHtml = textoHtml.Replace("@direccion", oCliente.direccion);
+            textoHtml = textoHtml.Replace("@ciudad", oCliente.ciudad);
+            textoHtml = textoHtml.Replace("@telefono", oCliente.telefono);
+            textoHtml = textoHtml.Replace("@mail", oCliente.correo);
 
-
+            // Crear las filas de la tabla
             string filas = string.Empty;
 
             foreach (DataGridViewRow row in dgvData.Rows)
             {
-
                 filas += "<tr>";
-                filas += "<td>" + row.Cells["producto"].Value.ToString() + "</td>";
-                filas += "<td>" + row.Cells["precioVenta"].Value.ToString() + "</td>";
-                filas += "<td>" + row.Cells["cantidad"].Value.ToString() + "</td>";
-                filas += "<td>" + row.Cells["subTotal"].Value.ToString() + "</td>";
+                filas += "<td>" + (row.Cells["producto"].Value?.ToString() ?? "") + "</td>";
+                filas += "<td>" + (row.Cells["precioVenta"].Value?.ToString() ?? "") + "</td>";
+                filas += "<td>" + (row.Cells["cantidad"].Value?.ToString() ?? "") + "</td>";
+                filas += "<td>" + (row.Cells["subTotal"].Value?.ToString() ?? "") + "</td>";
                 filas += "</tr>";
-
             }
 
             textoHtml = textoHtml.Replace("@filas", filas);
-            textoHtml = textoHtml.Replace("@descuento", txtDescuento.Text);
-            textoHtml = textoHtml.Replace("@montodescuento", txtMontoDescuento.Text);
-            textoHtml = textoHtml.Replace("@montototal", txtTotalAPagar.Text);
-            //textoHtml = textoHtml.Replace("@pagocon", txtPagaCon.Text);
-            textoHtml = textoHtml.Replace("@cambio", txtCambio.Text);
-            textoHtml = textoHtml.Replace("@cotizacionDolar", txtCotizacionDolar.Text);
-            textoHtml = textoHtml.Replace("@formaPago", txtFormaPago1.Text);
-            textoHtml = textoHtml.Replace("@montoFP1", txtMontoFP1.Text);
-            textoHtml = textoHtml.Replace("@formaPago2", txtFormaPago2.Text);
-            textoHtml = textoHtml.Replace("@montoFP2", txtMontoFP2.Text);
-            textoHtml = textoHtml.Replace("@formaPago3", txtFormaPago3.Text);
-            textoHtml = textoHtml.Replace("@montoFP3", txtMontoFP3.Text);
-            textoHtml = textoHtml.Replace("@formaPago4", txtFormaPago4.Text);
-            textoHtml = textoHtml.Replace("@montoFP4", txtMontoFP4.Text);
+
+            // Reemplazar los demás valores con verificación de nulos o vacíos
+            textoHtml = textoHtml.Replace("@descuento", string.IsNullOrEmpty(txtDescuento.Text) ? "" : txtDescuento.Text);
+            textoHtml = textoHtml.Replace("@montodescuento", string.IsNullOrEmpty(txtMontoDescuento.Text) ? "" : txtMontoDescuento.Text);
+            textoHtml = textoHtml.Replace("@montototal", string.IsNullOrEmpty(txtTotalAPagar.Text) ? "" : txtTotalAPagar.Text);
+            textoHtml = textoHtml.Replace("@cambio", string.IsNullOrEmpty(txtCambio.Text) ? "" : txtCambio.Text);
+            textoHtml = textoHtml.Replace("@cotizacionDolar", string.IsNullOrEmpty(txtCotizacionDolar.Text) ? "" : txtCotizacionDolar.Text);
+
+            string formaPago1 = string.IsNullOrEmpty(txtFormaPago1.Text) ? "" : txtFormaPago1.Text;
+            string montoFP1 = string.IsNullOrEmpty(txtMontoFP1.Text) || txtMontoFP1.Text == "0.00" ? "" : txtMontoFP1.Text;
+
+            string formaPago2 = string.IsNullOrEmpty(txtFormaPago2.Text) ? "" : txtFormaPago2.Text;
+            string montoFP2 = string.IsNullOrEmpty(txtMontoFP2.Text) || txtMontoFP2.Text == "0.00" ? "" : txtMontoFP2.Text;
+
+            string formaPago3 = string.IsNullOrEmpty(txtFormaPago3.Text) ? "" : txtFormaPago3.Text;
+            string montoFP3 = string.IsNullOrEmpty(txtMontoFP3.Text) || txtMontoFP3.Text == "0.00" ? "" : txtMontoFP3.Text;
+
+            string formaPago4 = string.IsNullOrEmpty(txtFormaPago4.Text) ? "" : txtFormaPago4.Text;
+            string montoFP4 = string.IsNullOrEmpty(txtMontoFP4.Text) || txtMontoFP4.Text == "0.00" ? "" : txtMontoFP4.Text;
+
+
+            // Reemplazar en el texto HTML
+            textoHtml = textoHtml.Replace("@formaPago1", formaPago1);
+            textoHtml = textoHtml.Replace("@montoFP1", montoFP1);
+            textoHtml = textoHtml.Replace("@formaPago2", formaPago2);
+            textoHtml = textoHtml.Replace("@montoFP2", montoFP2);
+            textoHtml = textoHtml.Replace("@formaPago3", formaPago3);
+            textoHtml = textoHtml.Replace("@montoFP3", montoFP3);
+            textoHtml = textoHtml.Replace("@formaPago4", formaPago4);
+            textoHtml = textoHtml.Replace("@montoFP4", montoFP4);
+
+            // Reemplazar valores de contacto
+            textoHtml = textoHtml.Replace("@telefono", odatos.telefono ?? "");
+            textoHtml = textoHtml.Replace("@instagram", odatos.instagram ?? "");
+            textoHtml = textoHtml.Replace("@mail", odatos.mail ?? "");
+
 
 
             SaveFileDialog saveFile = new SaveFileDialog();
@@ -159,34 +225,47 @@ namespace CapaPresentacion
             {
                 using (FileStream stream = new FileStream(saveFile.FileName, FileMode.Create))
                 {
-                    Document pdfdoc = new Document(PageSize.A4, 25, 25, 25, 25);
+                    // Crear documento PDF con márgenes
+                    Document pdfdoc = new Document(PageSize.A4, 25, 25, 25, 100);
                     PdfWriter writer = PdfWriter.GetInstance(pdfdoc, stream);
                     pdfdoc.Open();
 
+                    // Obtener logo
                     bool obtenido = true;
                     byte[] byteImage = new CN_Negocio().ObtenerLogo(out obtenido);
+                    float positionAfterLogo = pdfdoc.GetTop(70); // Posición inicial para calcular la línea después del logo
                     if (obtenido)
                     {
                         iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(byteImage);
                         img.ScaleToFit(110, 110);
-                        img.Alignment = iTextSharp.text.Image.UNDERLYING;
-                        img.SetAbsolutePosition(pdfdoc.Left, pdfdoc.GetTop(70));
+                        img.SetAbsolutePosition(pdfdoc.Left, pdfdoc.GetTop(70)); // Sin la alineación
                         pdfdoc.Add(img);
                     }
 
+
+                    // Dibujar una línea con el color hexadecimal #028635
+                    PdfContentByte cb = writer.DirectContent;
+                    BaseColor greenColor = new BaseColor(2, 134, 53); // Color hexadecimal #028635
+                    cb.SetColorStroke(greenColor); // Establecer el color
+                    cb.SetLineWidth(2f); // Ancho de la línea
+                    cb.MoveTo(25, positionAfterLogo); // Posición inicial de la línea (x, y)
+                    cb.LineTo(pdfdoc.PageSize.Width - 25, positionAfterLogo); // Posición final de la línea (x, y)
+                    cb.Stroke(); // Dibujar la línea
+
+                    // Añadir el contenido HTML
                     using (StringReader sr = new StringReader(textoHtml))
                     {
-
                         XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfdoc, sr);
-
                     }
 
+                    // Cerrar el documento y el stream
                     pdfdoc.Close();
                     stream.Close();
 
                     MessageBox.Show("Documento Generado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
+
+
             }
 
         }
@@ -198,7 +277,8 @@ namespace CapaPresentacion
             string eliminacionMovimientos = string.Empty;
             string actualizacionStock = string.Empty;
             string mensaje = string.Empty;
-            if (GlobalSettings.RolUsuario == 1)
+            string mensajeActivarSerial = string.Empty;
+            if (GlobalSettings.RolUsuario == 1 || GlobalSettings.RolUsuario == 2)
             {
                 // Mostrar un cuadro de diálogo de confirmación
                 DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta venta?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -219,6 +299,18 @@ namespace CapaPresentacion
                                 int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
 
                                 actualizacionStock = new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                                var listaSeriales = new CN_Producto().ListarProductosSerialesPorVenta(Convert.ToInt32(lblIdVenta.Text));
+                                if(listaSeriales.Count > 0)
+                                {
+                                    foreach(var item in listaSeriales)
+                                    {
+                                        bool activarSerial = new CN_Producto().ActivarProductoDetalle(item.idProductoDetalle, out mensajeActivarSerial);
+                                        if (activarSerial)
+                                        {
+                                            mensajeActivarSerial = "Productos con Numero de Serie Devueltos al Stock";
+                                        }
+                                    }
+                                }
                             }
                         }
                         elimnacionVenta = "Se ha Eliminado la Venta. ";
@@ -242,8 +334,9 @@ namespace CapaPresentacion
                         eliminacionMovimientos = mensaje;
                     }
                     
-                   MessageBox.Show(elimnacionVenta + actualizacionStock + eliminacionMovimientos, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   MessageBox.Show(elimnacionVenta + actualizacionStock + eliminacionMovimientos + mensajeActivarSerial, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Limpiar();
+                    this.Close();
                 }
             }
             else

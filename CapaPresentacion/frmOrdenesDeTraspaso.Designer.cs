@@ -41,13 +41,16 @@ namespace CapaPresentacion
             this.FechaCreacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SerialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Confirmada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdOrdenTraspaso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaConfirmacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnConfirmarRecepcion = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnRechazarRecepcion = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -84,13 +87,16 @@ namespace CapaPresentacion
             this.FechaCreacion,
             this.idProducto,
             this.producto,
+            this.SerialNumber,
             this.Cantidad,
             this.Confirmada,
             this.IdOrdenTraspaso,
             this.idSucursalOrigen,
             this.idSucursalDestino,
             this.FechaConfirmacion,
-            this.btnConfirmarRecepcion});
+            this.CostoProducto,
+            this.btnConfirmarRecepcion,
+            this.btnRechazarRecepcion});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -112,7 +118,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(1308, 496);
             this.dgvData.TabIndex = 91;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
             // 
             // txtProductoSeleccionado
             // 
@@ -186,6 +191,13 @@ namespace CapaPresentacion
             this.producto.Name = "producto";
             this.producto.ReadOnly = true;
             // 
+            // SerialNumber
+            // 
+            this.SerialNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SerialNumber.HeaderText = "S/N";
+            this.SerialNumber.Name = "SerialNumber";
+            this.SerialNumber.ReadOnly = true;
+            // 
             // Cantidad
             // 
             this.Cantidad.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -207,7 +219,6 @@ namespace CapaPresentacion
             this.IdOrdenTraspaso.HeaderText = "ID ORDEN TRASPASO";
             this.IdOrdenTraspaso.Name = "IdOrdenTraspaso";
             this.IdOrdenTraspaso.ReadOnly = true;
-            this.IdOrdenTraspaso.Visible = false;
             this.IdOrdenTraspaso.Width = 140;
             // 
             // idSucursalOrigen
@@ -215,7 +226,6 @@ namespace CapaPresentacion
             this.idSucursalOrigen.HeaderText = "ID SUCURSAL ORIGEN";
             this.idSucursalOrigen.Name = "idSucursalOrigen";
             this.idSucursalOrigen.ReadOnly = true;
-            this.idSucursalOrigen.Visible = false;
             this.idSucursalOrigen.Width = 140;
             // 
             // idSucursalDestino
@@ -223,7 +233,6 @@ namespace CapaPresentacion
             this.idSucursalDestino.HeaderText = "ID SUCURSAL DESTINO";
             this.idSucursalDestino.Name = "idSucursalDestino";
             this.idSucursalDestino.ReadOnly = true;
-            this.idSucursalDestino.Visible = false;
             this.idSucursalDestino.Width = 150;
             // 
             // FechaConfirmacion
@@ -233,6 +242,12 @@ namespace CapaPresentacion
             this.FechaConfirmacion.ReadOnly = true;
             this.FechaConfirmacion.Visible = false;
             this.FechaConfirmacion.Width = 140;
+            // 
+            // CostoProducto
+            // 
+            this.CostoProducto.HeaderText = "COSTO";
+            this.CostoProducto.Name = "CostoProducto";
+            this.CostoProducto.ReadOnly = true;
             // 
             // btnConfirmarRecepcion
             // 
@@ -245,6 +260,15 @@ namespace CapaPresentacion
             this.btnConfirmarRecepcion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.btnConfirmarRecepcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnConfirmarRecepcion.Width = 30;
+            // 
+            // btnRechazarRecepcion
+            // 
+            this.btnRechazarRecepcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnRechazarRecepcion.HeaderText = "";
+            this.btnRechazarRecepcion.MinimumWidth = 30;
+            this.btnRechazarRecepcion.Name = "btnRechazarRecepcion";
+            this.btnRechazarRecepcion.ReadOnly = true;
+            this.btnRechazarRecepcion.Width = 30;
             // 
             // frmOrdenesDeTraspaso
             // 
@@ -277,12 +301,15 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaCreacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SerialNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn Confirmada;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdOrdenTraspaso;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalOrigen;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalDestino;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaConfirmacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CostoProducto;
         private System.Windows.Forms.DataGridViewImageColumn btnConfirmarRecepcion;
+        private System.Windows.Forms.DataGridViewImageColumn btnRechazarRecepcion;
     }
 }

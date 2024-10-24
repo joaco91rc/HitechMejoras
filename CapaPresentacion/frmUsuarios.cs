@@ -73,8 +73,41 @@ namespace CapaPresentacion
 
         }
 
+        public void AgregarPermisosNegocio(List<int> permisosNegocio)
+        {
+            // Limpiar la lista antes de agregar nuevos permisos
+            permisosNegocio.Clear();
+
+            // Agregar los permisos basados en los checkboxes seleccionados
+            if (checkHitech1.Checked)
+            {
+                permisosNegocio.Add(1); // ID del negocio para el primer local
+            }
+            if (checkHitech2.Checked)
+            {
+                permisosNegocio.Add(2); // ID del negocio para el segundo local
+            }
+            if (checkApple.Checked)
+            {
+                permisosNegocio.Add(3); // ID del negocio para el tercer local
+            }
+            if (checkAppleCafe.Checked)
+            {
+                permisosNegocio.Add(4); // ID del negocio para el cuarto local
+            }
+
+            // Verificar si la lista está vacía y mostrar mensaje
+            if (permisosNegocio.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos un Permiso de Acceso a una Sucursal.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            List<int> permisosNegocio = new List<int>();
+            AgregarPermisosNegocio(permisosNegocio);
             string mensaje = string.Empty;
             Usuario objUsuario = new Usuario()
             {
@@ -102,7 +135,11 @@ namespace CapaPresentacion
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
             });
-                    
+                    foreach (var item in permisosNegocio)
+                    {
+                        bool asignarPermisos = new CN_AccesoNegocio().AsignarPermiso(idUsuarioGenerado, item);
+                    }
+
                     Limpiar();
                 }
                 else
@@ -128,11 +165,14 @@ namespace CapaPresentacion
                     row.Cells["rol"].Value = ((OpcionCombo)cboRol.SelectedItem).Texto.ToString();
                     row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
                     row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
-
+                   
+                    bool modificarPermisos = new CN_AccesoNegocio().ModificarPermisos(Convert.ToInt32(txtIdUsuario.Text), permisosNegocio);
                     
+
+
                     Limpiar();
-                    MessageBox.Show("Datos Modificados.Por favor Inicie Sesion de Nuevo.", "Mensaje",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    Application.Restart();
+                    MessageBox.Show("Datos Modificados.", "Mensaje",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    
 
                 }
                 else {
@@ -158,6 +198,7 @@ namespace CapaPresentacion
             cboRol.SelectedIndex = 0;
             cboEstado.SelectedIndex = 0;
             txtDocumento.Select();
+            DesmarcarTodosLosChecks();
         }
 
        
@@ -166,7 +207,7 @@ namespace CapaPresentacion
         {
             if (dgvData.Columns[e.ColumnIndex].Name == "btnSeleccionar") {
                 int indice = e.RowIndex;
-                
+                DesmarcarTodosLosChecks();
                 if (indice >= 0) {
                     txtIndice.Text = indice.ToString();
                     txtUsuarioSeleccionado.Text = dgvData.Rows[indice].Cells["nombreCompleto"].Value.ToString();
@@ -202,10 +243,41 @@ namespace CapaPresentacion
 
                     }
 
+                    var listaPermisosUsuario = new CN_AccesoNegocio().ListarNegociosPermitidos(Convert.ToInt32(txtIdUsuario.Text));
+                    foreach(var item in listaPermisosUsuario)
+                    {
+                        switch (item)
+                        {
+                            case 1:
+                                checkHitech1.Checked = true;
+                                break;
+                            case 2:
+                                checkHitech2.Checked = true;
+                                break;
+                            case 3:
+                                checkApple.Checked = true;
+                                break;
+                            case 4:
+                                checkAppleCafe.Checked = true;
+                                break;
+                            default:
+                                // Si hay algún caso que no está cubierto, opcionalmente lo puedes manejar aquí
+                                break;
+                        }
+                    }
                 }
             
             }
         }
+
+        public void DesmarcarTodosLosChecks()
+        {
+            checkHitech1.Checked = false;
+            checkHitech2.Checked = false;
+            checkApple.Checked = false;
+            checkAppleCafe.Checked = false;
+        }
+
 
         private void btnLimpiarDatos_Click(object sender, EventArgs e)
         {
@@ -223,24 +295,29 @@ namespace CapaPresentacion
                         idUsuario = Convert.ToInt32(txtIdUsuario.Text),
                         
                     };
+                    bool eliminarPermisos = new CN_AccesoNegocio().EliminarPermisos(objUsuario.idUsuario);
+                    if (eliminarPermisos)
+                    {
+                        bool respuesta = new CN_Usuario().Eliminar(objUsuario, out mensaje);
 
-                    bool respuesta = new CN_Usuario().Eliminar(objUsuario, out mensaje);
+                        if (respuesta)
+                        {
+
+                            dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));
+                            txtIndice.Text = "-1";
+                            txtIdUsuario.Text = "0";
+                            Limpiar();
+                        }
+
+                        else
+                        {
+
+                            MessageBox.Show(mensaje, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+
+                        }
+                    }
                     
-                    if (respuesta)
-                    {
-
-                        dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));
-                        txtIndice.Text = "-1";
-                        txtIdUsuario.Text = "0";
-                    }
-
-                    else
-                    {
-
-                        MessageBox.Show(mensaje, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-
-                    }
                     
                     
                     

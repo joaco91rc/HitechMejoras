@@ -35,5 +35,9 @@ namespace CapaEntidad
         public decimal descuento { get; set; }
         public decimal montoDescuento { get; set; }
         public decimal cotizacionDolar { get; set; }
+        public int idVendedor { get; set; }
+        public string nombreVendedor { get; set; }  // Nueva propiedad
+        public string observaciones { get; set; }
     }
 }
+

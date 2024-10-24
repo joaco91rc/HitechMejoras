@@ -43,16 +43,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CN-Cotizacion.cs" />
+    <Compile Include="CN_AccesoNegocio.cs" />
     <Compile Include="CN_CajaRegistradora.cs" />
     <Compile Include="CN_Categoria.cs" />
     <Compile Include="CN-Permiso.cs" />
     <Compile Include="CN_Cliente.cs" />
+    <Compile Include="CN_ClienteNegocio.cs" />
     <Compile Include="CN_Compra.cs" />
     <Compile Include="CN_Concepto.cs" />
     <Compile Include="CN_DetalleCaja.cs" />
+    <Compile Include="CN_Deuda.cs" />
     <Compile Include="CN_FormaPago.cs" />
     <Compile Include="CN_Negocio.cs" />
     <Compile Include="CN_OrdenTraspaso.cs" />
+    <Compile Include="CN_PagoParcial.cs" />
     <Compile Include="CN_Producto.cs" />
     <Compile Include="CN-ROL.cs" />
     <Compile Include="CN-Usuario.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="CN_Reporte.cs" />
     <Compile Include="CN_ServicioTecnico.cs" />
     <Compile Include="CN_Transaccion.cs" />
+    <Compile Include="CN_Vendedor.cs" />
     <Compile Include="CN_Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SucursalService.cs" />

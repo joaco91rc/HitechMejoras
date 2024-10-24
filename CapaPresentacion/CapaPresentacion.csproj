@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICONOPROGRAMA.ico</ApplicationIcon>
+    <ApplicationIcon>IconoSistema.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -182,11 +182,23 @@
     <Compile Include="frmDetalleCompra.Designer.cs">
       <DependentUpon>frmDetalleCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDetalleProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetalleProducto.Designer.cs">
+      <DependentUpon>frmDetalleProducto.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDetalleVenta.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDetalleVenta.Designer.cs">
       <DependentUpon>frmDetalleVenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDeuda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeuda.Designer.cs">
+      <DependentUpon>frmDeuda.cs</DependentUpon>
     </Compile>
     <Compile Include="frmFormaPago.cs">
       <SubType>Form</SubType>
@@ -218,11 +230,23 @@
     <Compile Include="frmOrdenesDeTraspaso.Designer.cs">
       <DependentUpon>frmOrdenesDeTraspaso.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPagoParcial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPagoParcial.Designer.cs">
+      <DependentUpon>frmPagoParcial.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmProducto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmProducto.Designer.cs">
       <DependentUpon>frmProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProductosSerializados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductosSerializados.Designer.cs">
+      <DependentUpon>frmProductosSerializados.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProveedores.cs">
       <SubType>Form</SubType>
@@ -248,6 +272,12 @@
     <Compile Include="frmRMA.Designer.cs">
       <DependentUpon>frmRMA.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSerialesVendidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSerialesVendidos.Designer.cs">
+      <DependentUpon>frmSerialesVendidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmServicioTecnico.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +289,12 @@
     </Compile>
     <Compile Include="frmUsuarios.Designer.cs">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVendedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVendedor.Designer.cs">
+      <DependentUpon>frmVendedor.cs</DependentUpon>
     </Compile>
     <Compile Include="frmVentas.cs">
       <SubType>Form</SubType>
@@ -308,11 +344,23 @@
     <Compile Include="Modales\mdProducto.Designer.cs">
       <DependentUpon>mdProducto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modales\mdProductoSerializable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modales\mdProductoSerializable.Designer.cs">
+      <DependentUpon>mdProductoSerializable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modales\mdProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modales\mdProveedor.Designer.cs">
       <DependentUpon>mdProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modales\mdSeleccionProductosSerializables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modales\mdSeleccionProductosSerializables.Designer.cs">
+      <DependentUpon>mdSeleccionProductosSerializables.cs</DependentUpon>
     </Compile>
     <Compile Include="Modales\mdTraspasoASucursal.cs">
       <SubType>Form</SubType>
@@ -359,8 +407,14 @@
     <EmbeddedResource Include="frmDetalleCompra.resx">
       <DependentUpon>frmDetalleCompra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDetalleProducto.resx">
+      <DependentUpon>frmDetalleProducto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDetalleVenta.resx">
       <DependentUpon>frmDetalleVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDeuda.resx">
+      <DependentUpon>frmDeuda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFormaPago.resx">
       <DependentUpon>frmFormaPago.cs</DependentUpon>
@@ -377,8 +431,14 @@
     <EmbeddedResource Include="frmOrdenesDeTraspaso.resx">
       <DependentUpon>frmOrdenesDeTraspaso.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPagoParcial.resx">
+      <DependentUpon>frmPagoParcial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmProducto.resx">
       <DependentUpon>frmProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductosSerializados.resx">
+      <DependentUpon>frmProductosSerializados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProveedores.resx">
       <DependentUpon>frmProveedores.cs</DependentUpon>
@@ -392,11 +452,17 @@
     <EmbeddedResource Include="frmRMA.resx">
       <DependentUpon>frmRMA.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmSerialesVendidos.resx">
+      <DependentUpon>frmSerialesVendidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmServicioTecnico.resx">
       <DependentUpon>frmServicioTecnico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVendedor.resx">
+      <DependentUpon>frmVendedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVentas.resx">
       <DependentUpon>frmVentas.cs</DependentUpon>
@@ -422,8 +488,14 @@
     <EmbeddedResource Include="Modales\mdProducto.resx">
       <DependentUpon>mdProducto.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Modales\mdProductoSerializable.resx">
+      <DependentUpon>mdProductoSerializable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modales\mdProveedor.resx">
       <DependentUpon>mdProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modales\mdSeleccionProductosSerializables.resx">
+      <DependentUpon>mdSeleccionProductosSerializables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modales\mdTraspasoASucursal.resx">
       <DependentUpon>mdTraspasoASucursal.cs</DependentUpon>
@@ -485,7 +557,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICONOPROGRAMA.ico" />
+    <Content Include="IconoSistema.ico" />
     <Content Include="LogoAcuarioIcono2.ico" />
+    <None Include="Resources\redIcon.png" />
+    <None Include="Resources\greenIcon.png" />
     <None Include="Resources\complete.png" />
     <None Include="Resources\cashIcon.png" />
     <None Include="Resources\VIEWICON.png" />

@@ -57,6 +57,7 @@ namespace CapaPresentacion
             this.montoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDetalle = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnEditarCompra = new System.Windows.Forms.DataGridViewImageColumn();
             this.groupBox1.SuspendLayout();
             this.gbRegistrarCompra.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -83,9 +84,9 @@ namespace CapaPresentacion
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.label6.Location = new System.Drawing.Point(12, 9);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(248, 32);
+            this.label6.Size = new System.Drawing.Size(275, 32);
             this.label6.TabIndex = 104;
-            this.label6.Text = "LISTADO DE VENTAS";
+            this.label6.Text = "LISTADO DE COMPRAS";
             // 
             // btnBuscar
             // 
@@ -107,6 +108,7 @@ namespace CapaPresentacion
             this.btnBuscar.Size = new System.Drawing.Size(35, 28);
             this.btnBuscar.TabIndex = 81;
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBusqueda
             // 
@@ -136,6 +138,7 @@ namespace CapaPresentacion
             this.btnLimpiarFiltros.Size = new System.Drawing.Size(35, 28);
             this.btnLimpiarFiltros.TabIndex = 82;
             this.btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            this.btnLimpiarFiltros.Click += new System.EventHandler(this.btnLimpiarFiltros_Click);
             // 
             // btnExportarExcel
             // 
@@ -158,6 +161,7 @@ namespace CapaPresentacion
             this.btnExportarExcel.TabIndex = 84;
             this.btnExportarExcel.Text = "Exportar";
             this.btnExportarExcel.UseVisualStyleBackColor = false;
+            this.btnExportarExcel.Click += new System.EventHandler(this.btnExportarExcel_Click);
             // 
             // cboBusqueda
             // 
@@ -229,6 +233,7 @@ namespace CapaPresentacion
             this.btnBuscarReporte.Size = new System.Drawing.Size(35, 25);
             this.btnBuscarReporte.TabIndex = 81;
             this.btnBuscarReporte.UseVisualStyleBackColor = false;
+            this.btnBuscarReporte.Click += new System.EventHandler(this.btnBuscarReporte_Click);
             // 
             // label2
             // 
@@ -262,6 +267,7 @@ namespace CapaPresentacion
             this.btnLimpiar.Size = new System.Drawing.Size(35, 27);
             this.btnLimpiar.TabIndex = 82;
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // label5
             // 
@@ -325,7 +331,8 @@ namespace CapaPresentacion
             this.nroDocumento,
             this.montoTotal,
             this.nombreCliente,
-            this.btnDetalle});
+            this.btnDetalle,
+            this.btnEditarCompra});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -348,7 +355,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(837, 331);
             this.dgvData.TabIndex = 105;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
             // 
             // label1
             // 
@@ -411,6 +417,14 @@ namespace CapaPresentacion
             this.btnDetalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnDetalle.Width = 30;
             // 
+            // btnEditarCompra
+            // 
+            this.btnEditarCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnEditarCompra.HeaderText = "";
+            this.btnEditarCompra.Name = "btnEditarCompra";
+            this.btnEditarCompra.ReadOnly = true;
+            this.btnEditarCompra.Width = 30;
+            // 
             // frmListadoCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -462,5 +476,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn montoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
         private System.Windows.Forms.DataGridViewImageColumn btnDetalle;
+        private System.Windows.Forms.DataGridViewImageColumn btnEditarCompra;
     }
 }

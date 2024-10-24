@@ -39,6 +39,7 @@ namespace CapaPresentacion.Modales
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -74,6 +75,8 @@ namespace CapaPresentacion.Modales
             this.txtCategoria = new System.Windows.Forms.TextBox();
             this.txtIdCategoria = new System.Windows.Forms.TextBox();
             this.checkProductosLocales = new System.Windows.Forms.CheckBox();
+            this.txtVentaPesos = new System.Windows.Forms.TextBox();
+            this.lblVentaPesos = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -99,6 +102,7 @@ namespace CapaPresentacion.Modales
             this.nombre,
             this.categoria,
             this.stock,
+            this.prodSerializable,
             this.precioCompra,
             this.precioVenta});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -128,7 +132,7 @@ namespace CapaPresentacion.Modales
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(670, 467);
+            this.dgvData.Size = new System.Drawing.Size(944, 467);
             this.dgvData.TabIndex = 60;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
             // 
@@ -168,6 +172,13 @@ namespace CapaPresentacion.Modales
             this.stock.Name = "stock";
             this.stock.ReadOnly = true;
             this.stock.Width = 70;
+            // 
+            // prodSerializable
+            // 
+            this.prodSerializable.HeaderText = "ESSERIALIZABLE";
+            this.prodSerializable.Name = "prodSerializable";
+            this.prodSerializable.ReadOnly = true;
+            this.prodSerializable.Visible = false;
             // 
             // precioCompra
             // 
@@ -283,7 +294,7 @@ namespace CapaPresentacion.Modales
             this.iconPictureBox1.IconColor = System.Drawing.Color.White;
             this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconPictureBox1.IconSize = 19;
-            this.iconPictureBox1.Location = new System.Drawing.Point(738, 12);
+            this.iconPictureBox1.Location = new System.Drawing.Point(943, 12);
             this.iconPictureBox1.Name = "iconPictureBox1";
             this.iconPictureBox1.Size = new System.Drawing.Size(19, 22);
             this.iconPictureBox1.TabIndex = 71;
@@ -296,7 +307,7 @@ namespace CapaPresentacion.Modales
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(769, 36);
+            this.label1.Size = new System.Drawing.Size(974, 36);
             this.label1.TabIndex = 72;
             // 
             // btnNuevoProducto
@@ -462,7 +473,7 @@ namespace CapaPresentacion.Modales
             this.txtCostoPesos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCostoPesos.Location = new System.Drawing.Point(449, 721);
             this.txtCostoPesos.Name = "txtCostoPesos";
-            this.txtCostoPesos.Size = new System.Drawing.Size(153, 20);
+            this.txtCostoPesos.Size = new System.Drawing.Size(124, 20);
             this.txtCostoPesos.TabIndex = 91;
             this.txtCostoPesos.Visible = false;
             // 
@@ -533,7 +544,7 @@ namespace CapaPresentacion.Modales
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(617, 719);
+            this.btnGuardar.Location = new System.Drawing.Point(827, 723);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 31);
             this.btnGuardar.TabIndex = 100;
@@ -598,7 +609,7 @@ namespace CapaPresentacion.Modales
             this.txtIdCategoria.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIdCategoria.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIdCategoria.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtIdCategoria.Location = new System.Drawing.Point(725, 610);
+            this.txtIdCategoria.Location = new System.Drawing.Point(767, 633);
             this.txtIdCategoria.Name = "txtIdCategoria";
             this.txtIdCategoria.Size = new System.Drawing.Size(36, 18);
             this.txtIdCategoria.TabIndex = 105;
@@ -620,12 +631,36 @@ namespace CapaPresentacion.Modales
             this.checkProductosLocales.UseVisualStyleBackColor = false;
             this.checkProductosLocales.CheckedChanged += new System.EventHandler(this.checkProductosLocales_CheckedChanged);
             // 
+            // txtVentaPesos
+            // 
+            this.txtVentaPesos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtVentaPesos.Location = new System.Drawing.Point(667, 722);
+            this.txtVentaPesos.Name = "txtVentaPesos";
+            this.txtVentaPesos.Size = new System.Drawing.Size(154, 20);
+            this.txtVentaPesos.TabIndex = 108;
+            this.txtVentaPesos.Visible = false;
+            // 
+            // lblVentaPesos
+            // 
+            this.lblVentaPesos.AutoSize = true;
+            this.lblVentaPesos.BackColor = System.Drawing.Color.White;
+            this.lblVentaPesos.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVentaPesos.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblVentaPesos.Location = new System.Drawing.Point(579, 724);
+            this.lblVentaPesos.Name = "lblVentaPesos";
+            this.lblVentaPesos.Size = new System.Drawing.Size(82, 17);
+            this.lblVentaPesos.TabIndex = 107;
+            this.lblVentaPesos.Text = "Venta Pesos";
+            this.lblVentaPesos.Visible = false;
+            // 
             // mdProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(769, 756);
+            this.ClientSize = new System.Drawing.Size(974, 756);
+            this.Controls.Add(this.txtVentaPesos);
+            this.Controls.Add(this.lblVentaPesos);
             this.Controls.Add(this.checkProductosLocales);
             this.Controls.Add(this.txtIdCategoria);
             this.Controls.Add(this.txtCategoria);
@@ -707,13 +742,16 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.CheckBox checkCategoria;
         private System.Windows.Forms.TextBox txtCategoria;
         private System.Windows.Forms.TextBox txtIdCategoria;
+        private System.Windows.Forms.CheckBox checkProductosLocales;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn categoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn stock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.CheckBox checkProductosLocales;
+        private System.Windows.Forms.TextBox txtVentaPesos;
+        private System.Windows.Forms.Label lblVentaPesos;
     }
 }

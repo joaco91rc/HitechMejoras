@@ -60,12 +60,19 @@ namespace CapaPresentacion
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtCiudad = new System.Windows.Forms.TextBox();
+            this.txtDireccion = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.correo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.direccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ciudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.telefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hitech1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -212,7 +219,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(281, 409);
+            this.btnEliminar.Location = new System.Drawing.Point(278, 398);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(141, 31);
             this.btnEliminar.TabIndex = 53;
@@ -235,7 +242,7 @@ namespace CapaPresentacion
             this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarDatos.IconSize = 28;
             this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarDatos.Location = new System.Drawing.Point(161, 409);
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(158, 398);
             this.btnLimpiarDatos.Name = "btnLimpiarDatos";
             this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
             this.btnLimpiarDatos.TabIndex = 52;
@@ -247,9 +254,9 @@ namespace CapaPresentacion
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(491, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(435, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(859, 729);
+            this.pictureBox1.Size = new System.Drawing.Size(915, 729);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 51;
             this.pictureBox1.TabStop = false;
@@ -269,7 +276,7 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(15, 409);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 398);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 31);
             this.btnGuardar.TabIndex = 49;
@@ -293,6 +300,8 @@ namespace CapaPresentacion
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -311,7 +320,10 @@ namespace CapaPresentacion
             this.documento,
             this.nombreCompleto,
             this.correo,
+            this.direccion,
+            this.ciudad,
             this.telefono,
+            this.hitech1,
             this.estadoValor,
             this.estado});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -324,7 +336,7 @@ namespace CapaPresentacion
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
-            this.dgvData.Location = new System.Drawing.Point(519, 152);
+            this.dgvData.Location = new System.Drawing.Point(441, 152);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
@@ -332,19 +344,18 @@ namespace CapaPresentacion
             this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
-            this.dgvData.Size = new System.Drawing.Size(768, 497);
+            this.dgvData.Size = new System.Drawing.Size(897, 497);
             this.dgvData.TabIndex = 54;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
             // 
             // label10
             // 
             this.label10.BackColor = System.Drawing.Color.White;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.label10.Location = new System.Drawing.Point(491, 0);
+            this.label10.Location = new System.Drawing.Point(435, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(859, 729);
+            this.label10.Size = new System.Drawing.Size(915, 729);
             this.label10.TabIndex = 50;
             // 
             // label9
@@ -396,7 +407,7 @@ namespace CapaPresentacion
             this.cboEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboEstado.FormattingEnabled = true;
-            this.cboEstado.Location = new System.Drawing.Point(172, 264);
+            this.cboEstado.Location = new System.Drawing.Point(172, 335);
             this.cboEstado.Name = "cboEstado";
             this.cboEstado.Size = new System.Drawing.Size(178, 21);
             this.cboEstado.TabIndex = 42;
@@ -407,7 +418,7 @@ namespace CapaPresentacion
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label8.Location = new System.Drawing.Point(12, 264);
+            this.label8.Location = new System.Drawing.Point(12, 335);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(49, 17);
             this.label8.TabIndex = 40;
@@ -468,8 +479,49 @@ namespace CapaPresentacion
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(491, 729);
+            this.label1.Size = new System.Drawing.Size(435, 729);
             this.label1.TabIndex = 33;
+            // 
+            // txtCiudad
+            // 
+            this.txtCiudad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCiudad.Location = new System.Drawing.Point(171, 293);
+            this.txtCiudad.Name = "txtCiudad";
+            this.txtCiudad.Size = new System.Drawing.Size(178, 20);
+            this.txtCiudad.TabIndex = 68;
+            this.txtCiudad.Text = "LA PLATA";
+            // 
+            // txtDireccion
+            // 
+            this.txtDireccion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDireccion.Location = new System.Drawing.Point(171, 250);
+            this.txtDireccion.Name = "txtDireccion";
+            this.txtDireccion.Size = new System.Drawing.Size(178, 20);
+            this.txtDireccion.TabIndex = 67;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label6.Location = new System.Drawing.Point(15, 293);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 17);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "Ciudad";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label7.Location = new System.Drawing.Point(15, 250);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 17);
+            this.label7.TabIndex = 65;
+            this.label7.Text = "Direccion";
             // 
             // btnSeleccionar
             // 
@@ -509,11 +561,31 @@ namespace CapaPresentacion
             this.correo.ReadOnly = true;
             this.correo.Width = 150;
             // 
+            // direccion
+            // 
+            this.direccion.HeaderText = "DIRECCION";
+            this.direccion.Name = "direccion";
+            this.direccion.ReadOnly = true;
+            // 
+            // ciudad
+            // 
+            this.ciudad.HeaderText = "CIUDAD";
+            this.ciudad.Name = "ciudad";
+            this.ciudad.ReadOnly = true;
+            // 
             // telefono
             // 
             this.telefono.HeaderText = "TELEFONO";
             this.telefono.Name = "telefono";
             this.telefono.ReadOnly = true;
+            // 
+            // hitech1
+            // 
+            this.hitech1.HeaderText = "LOCALES EN LOS QUE COMPRO";
+            this.hitech1.Name = "hitech1";
+            this.hitech1.ReadOnly = true;
+            this.hitech1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.hitech1.Width = 250;
             // 
             // estadoValor
             // 
@@ -533,6 +605,10 @@ namespace CapaPresentacion
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtCiudad);
+            this.Controls.Add(this.txtDireccion);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.txtUsuarioSeleccionado);
             this.Controls.Add(this.txtIndice);
@@ -601,12 +677,19 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtCiudad;
+        private System.Windows.Forms.TextBox txtDireccion;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn documento;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreCompleto;
         private System.Windows.Forms.DataGridViewTextBoxColumn correo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn direccion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ciudad;
         private System.Windows.Forms.DataGridViewTextBoxColumn telefono;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hitech1;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoValor;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
     }

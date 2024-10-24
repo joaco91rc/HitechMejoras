@@ -29,9 +29,9 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,6 +50,16 @@ namespace CapaPresentacion
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.correo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.txtIdUsuario = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -64,18 +74,14 @@ namespace CapaPresentacion
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txtUsuarioSeleccionado = new System.Windows.Forms.TextBox();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.idUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.correo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clave = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkHitech1 = new System.Windows.Forms.CheckBox();
+            this.checkHitech2 = new System.Windows.Forms.CheckBox();
+            this.checkApple = new System.Windows.Forms.CheckBox();
+            this.checkAppleCafe = new System.Windows.Forms.CheckBox();
+            this.gbInfoProveedor = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gbInfoProveedor.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -259,15 +265,15 @@ namespace CapaPresentacion
             this.dgvData.AllowUserToAddRows = false;
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.btnSeleccionar,
@@ -281,27 +287,96 @@ namespace CapaPresentacion
             this.estadoValor,
             this.estado});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(519, 141);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(819, 497);
             this.dgvData.TabIndex = 22;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idUsuario
+            // 
+            this.idUsuario.HeaderText = "ID USUARIO";
+            this.idUsuario.Name = "idUsuario";
+            this.idUsuario.ReadOnly = true;
+            this.idUsuario.Visible = false;
+            // 
+            // documento
+            // 
+            this.documento.HeaderText = "DNI";
+            this.documento.Name = "documento";
+            this.documento.ReadOnly = true;
+            // 
+            // nombreCompleto
+            // 
+            this.nombreCompleto.HeaderText = "NOMBRE COMPLETO";
+            this.nombreCompleto.Name = "nombreCompleto";
+            this.nombreCompleto.ReadOnly = true;
+            this.nombreCompleto.Width = 180;
+            // 
+            // correo
+            // 
+            this.correo.HeaderText = "CORREO";
+            this.correo.Name = "correo";
+            this.correo.ReadOnly = true;
+            this.correo.Width = 250;
+            // 
+            // clave
+            // 
+            this.clave.HeaderText = "CLAVE";
+            this.clave.Name = "clave";
+            this.clave.ReadOnly = true;
+            this.clave.Visible = false;
+            // 
+            // idRol
+            // 
+            this.idRol.HeaderText = "ID ROL";
+            this.idRol.Name = "idRol";
+            this.idRol.ReadOnly = true;
+            this.idRol.Visible = false;
+            // 
+            // rol
+            // 
+            this.rol.HeaderText = "ROL";
+            this.rol.Name = "rol";
+            this.rol.ReadOnly = true;
+            // 
+            // estadoValor
+            // 
+            this.estadoValor.HeaderText = "ESTADO VALOR";
+            this.estadoValor.Name = "estadoValor";
+            this.estadoValor.ReadOnly = true;
+            this.estadoValor.Visible = false;
+            // 
+            // estado
+            // 
+            this.estado.HeaderText = "ESTADO";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
             // 
             // label11
             // 
@@ -417,7 +492,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(281, 409);
+            this.btnEliminar.Location = new System.Drawing.Point(278, 521);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(141, 31);
             this.btnEliminar.TabIndex = 21;
@@ -440,7 +515,7 @@ namespace CapaPresentacion
             this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarDatos.IconSize = 28;
             this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarDatos.Location = new System.Drawing.Point(161, 409);
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(158, 521);
             this.btnLimpiarDatos.Name = "btnLimpiarDatos";
             this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
             this.btnLimpiarDatos.TabIndex = 20;
@@ -474,7 +549,7 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(15, 409);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 521);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 31);
             this.btnGuardar.TabIndex = 16;
@@ -520,75 +595,77 @@ namespace CapaPresentacion
             this.txtUsuarioSeleccionado.TabIndex = 32;
             this.txtUsuarioSeleccionado.Text = "Ninguno";
             // 
-            // btnSeleccionar
+            // checkHitech1
             // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
-            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnSeleccionar.Width = 30;
+            this.checkHitech1.AutoSize = true;
+            this.checkHitech1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkHitech1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkHitech1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkHitech1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkHitech1.Location = new System.Drawing.Point(6, 52);
+            this.checkHitech1.Name = "checkHitech1";
+            this.checkHitech1.Size = new System.Drawing.Size(75, 21);
+            this.checkHitech1.TabIndex = 101;
+            this.checkHitech1.Text = "Hitech 1";
+            this.checkHitech1.UseVisualStyleBackColor = false;
             // 
-            // idUsuario
+            // checkHitech2
             // 
-            this.idUsuario.HeaderText = "ID USUARIO";
-            this.idUsuario.Name = "idUsuario";
-            this.idUsuario.ReadOnly = true;
-            this.idUsuario.Visible = false;
+            this.checkHitech2.AutoSize = true;
+            this.checkHitech2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkHitech2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkHitech2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkHitech2.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkHitech2.Location = new System.Drawing.Point(125, 52);
+            this.checkHitech2.Name = "checkHitech2";
+            this.checkHitech2.Size = new System.Drawing.Size(75, 21);
+            this.checkHitech2.TabIndex = 102;
+            this.checkHitech2.Text = "Hitech 2";
+            this.checkHitech2.UseVisualStyleBackColor = false;
             // 
-            // documento
+            // checkApple
             // 
-            this.documento.HeaderText = "DNI";
-            this.documento.Name = "documento";
-            this.documento.ReadOnly = true;
+            this.checkApple.AutoSize = true;
+            this.checkApple.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkApple.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkApple.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkApple.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkApple.Location = new System.Drawing.Point(225, 52);
+            this.checkApple.Name = "checkApple";
+            this.checkApple.Size = new System.Drawing.Size(78, 21);
+            this.checkApple.TabIndex = 103;
+            this.checkApple.Text = "Apple 49";
+            this.checkApple.UseVisualStyleBackColor = false;
             // 
-            // nombreCompleto
+            // checkAppleCafe
             // 
-            this.nombreCompleto.HeaderText = "NOMBRE COMPLETO";
-            this.nombreCompleto.Name = "nombreCompleto";
-            this.nombreCompleto.ReadOnly = true;
-            this.nombreCompleto.Width = 180;
+            this.checkAppleCafe.AutoSize = true;
+            this.checkAppleCafe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkAppleCafe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkAppleCafe.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkAppleCafe.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkAppleCafe.Location = new System.Drawing.Point(325, 52);
+            this.checkAppleCafe.Name = "checkAppleCafe";
+            this.checkAppleCafe.Size = new System.Drawing.Size(91, 21);
+            this.checkAppleCafe.TabIndex = 104;
+            this.checkAppleCafe.Text = "Apple Cafe";
+            this.checkAppleCafe.UseVisualStyleBackColor = false;
             // 
-            // correo
+            // gbInfoProveedor
             // 
-            this.correo.HeaderText = "CORREO";
-            this.correo.Name = "correo";
-            this.correo.ReadOnly = true;
-            this.correo.Width = 250;
-            // 
-            // clave
-            // 
-            this.clave.HeaderText = "CLAVE";
-            this.clave.Name = "clave";
-            this.clave.ReadOnly = true;
-            this.clave.Visible = false;
-            // 
-            // idRol
-            // 
-            this.idRol.HeaderText = "ID ROL";
-            this.idRol.Name = "idRol";
-            this.idRol.ReadOnly = true;
-            this.idRol.Visible = false;
-            // 
-            // rol
-            // 
-            this.rol.HeaderText = "ROL";
-            this.rol.Name = "rol";
-            this.rol.ReadOnly = true;
-            // 
-            // estadoValor
-            // 
-            this.estadoValor.HeaderText = "ESTADO VALOR";
-            this.estadoValor.Name = "estadoValor";
-            this.estadoValor.ReadOnly = true;
-            this.estadoValor.Visible = false;
-            // 
-            // estado
-            // 
-            this.estado.HeaderText = "ESTADO";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
+            this.gbInfoProveedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.gbInfoProveedor.Controls.Add(this.checkHitech1);
+            this.gbInfoProveedor.Controls.Add(this.checkAppleCafe);
+            this.gbInfoProveedor.Controls.Add(this.checkHitech2);
+            this.gbInfoProveedor.Controls.Add(this.checkApple);
+            this.gbInfoProveedor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbInfoProveedor.ForeColor = System.Drawing.Color.ForestGreen;
+            this.gbInfoProveedor.Location = new System.Drawing.Point(12, 392);
+            this.gbInfoProveedor.Name = "gbInfoProveedor";
+            this.gbInfoProveedor.Size = new System.Drawing.Size(428, 93);
+            this.gbInfoProveedor.TabIndex = 123;
+            this.gbInfoProveedor.TabStop = false;
+            this.gbInfoProveedor.Text = "Permiso de Acceso a Sucursales";
             // 
             // frmUsuarios
             // 
@@ -596,6 +673,7 @@ namespace CapaPresentacion
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.gbInfoProveedor);
             this.Controls.Add(this.txtIndice);
             this.Controls.Add(this.txtIdUsuario);
             this.Controls.Add(this.txtUsuarioSeleccionado);
@@ -633,6 +711,8 @@ namespace CapaPresentacion
             this.Load += new System.EventHandler(this.frmUsuarios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.gbInfoProveedor.ResumeLayout(false);
+            this.gbInfoProveedor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -682,5 +762,10 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn rol;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoValor;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
+        private System.Windows.Forms.CheckBox checkHitech1;
+        private System.Windows.Forms.CheckBox checkHitech2;
+        private System.Windows.Forms.CheckBox checkApple;
+        private System.Windows.Forms.CheckBox checkAppleCafe;
+        private System.Windows.Forms.GroupBox gbInfoProveedor;
     }
 }

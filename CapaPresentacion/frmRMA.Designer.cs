@@ -47,6 +47,15 @@ namespace CapaPresentacion
             this.btnGuardar = new FontAwesome.Sharp.IconButton();
             this.label13 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idProductoRMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcionProductoRMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaEgreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtProducto = new System.Windows.Forms.TextBox();
@@ -62,15 +71,6 @@ namespace CapaPresentacion
             this.txtIdProductoRMA = new System.Windows.Forms.TextBox();
             this.dtpFechaEgreso = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.idProductoRMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcionProductoRMA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaEgreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
@@ -338,7 +338,75 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(819, 497);
             this.dgvData.TabIndex = 54;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idProductoRMA
+            // 
+            this.idProductoRMA.HeaderText = "ID PRODUCTO RMA";
+            this.idProductoRMA.Name = "idProductoRMA";
+            this.idProductoRMA.ReadOnly = true;
+            this.idProductoRMA.Visible = false;
+            // 
+            // descripcionProductoRMA
+            // 
+            this.descripcionProductoRMA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.descripcionProductoRMA.HeaderText = "PRODUCTO";
+            this.descripcionProductoRMA.Name = "descripcionProductoRMA";
+            this.descripcionProductoRMA.ReadOnly = true;
+            // 
+            // cantidad
+            // 
+            this.cantidad.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cantidad.HeaderText = "CANTIDAD";
+            this.cantidad.Name = "cantidad";
+            this.cantidad.ReadOnly = true;
+            this.cantidad.Width = 80;
+            // 
+            // estado
+            // 
+            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.estado.HeaderText = "ESTADO";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            // 
+            // estadoValor
+            // 
+            this.estadoValor.HeaderText = "ESTADO VALOR";
+            this.estadoValor.Name = "estadoValor";
+            this.estadoValor.ReadOnly = true;
+            this.estadoValor.Visible = false;
+            // 
+            // fechaIngreso
+            // 
+            this.fechaIngreso.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.fechaIngreso.HeaderText = "FECHA INGRESO";
+            this.fechaIngreso.Name = "fechaIngreso";
+            this.fechaIngreso.ReadOnly = true;
+            this.fechaIngreso.Width = 120;
+            // 
+            // fechaEgreso
+            // 
+            this.fechaEgreso.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.fechaEgreso.HeaderText = "FECHA EGRESO";
+            this.fechaEgreso.Name = "fechaEgreso";
+            this.fechaEgreso.ReadOnly = true;
+            this.fechaEgreso.Width = 120;
+            // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
             // 
             // label10
             // 
@@ -522,83 +590,20 @@ namespace CapaPresentacion
             this.label5.TabIndex = 94;
             this.label5.Text = "Fecha Egreso:";
             // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
-            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idProductoRMA
-            // 
-            this.idProductoRMA.HeaderText = "ID PRODUCTO RMA";
-            this.idProductoRMA.Name = "idProductoRMA";
-            this.idProductoRMA.ReadOnly = true;
-            this.idProductoRMA.Visible = false;
-            // 
-            // descripcionProductoRMA
-            // 
-            this.descripcionProductoRMA.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descripcionProductoRMA.HeaderText = "PRODUCTO";
-            this.descripcionProductoRMA.Name = "descripcionProductoRMA";
-            this.descripcionProductoRMA.ReadOnly = true;
-            // 
-            // cantidad
-            // 
-            this.cantidad.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.cantidad.HeaderText = "CANTIDAD";
-            this.cantidad.Name = "cantidad";
-            this.cantidad.ReadOnly = true;
-            this.cantidad.Width = 80;
-            // 
-            // estado
-            // 
-            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.estado.HeaderText = "ESTADO";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            // 
-            // estadoValor
-            // 
-            this.estadoValor.HeaderText = "ESTADO VALOR";
-            this.estadoValor.Name = "estadoValor";
-            this.estadoValor.ReadOnly = true;
-            this.estadoValor.Visible = false;
-            // 
-            // fechaIngreso
-            // 
-            this.fechaIngreso.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.fechaIngreso.HeaderText = "FECHA INGRESO";
-            this.fechaIngreso.Name = "fechaIngreso";
-            this.fechaIngreso.ReadOnly = true;
-            this.fechaIngreso.Width = 120;
-            // 
-            // fechaEgreso
-            // 
-            this.fechaEgreso.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.fechaEgreso.HeaderText = "FECHA EGRESO";
-            this.fechaEgreso.Name = "fechaEgreso";
-            this.fechaEgreso.ReadOnly = true;
-            this.fechaEgreso.Width = 120;
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
             // frmRMA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
-            this.Controls.Add(this.txtIdProducto);
-            this.Controls.Add(this.dtpFechaEgreso);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.dtpFechaEgreso);
+            this.Controls.Add(this.cboEstado);
+            this.Controls.Add(this.txtProducto);
+            this.Controls.Add(this.txtIdProducto);
             this.Controls.Add(this.txtIdProductoRMA);
             this.Controls.Add(this.dtpFechaIngreso);
             this.Controls.Add(this.label4);
@@ -616,15 +621,9 @@ namespace CapaPresentacion
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnLimpiarDatos);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtProducto);
-            this.Controls.Add(this.cboEstado);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "frmRMA";
             this.Text = "frmRMA";

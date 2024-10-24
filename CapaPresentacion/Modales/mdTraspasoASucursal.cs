@@ -15,7 +15,7 @@ namespace CapaPresentacion.Modales
 {
     public partial class mdTraspasoASucursal : Form
     {
-        public mdTraspasoASucursal(int idProducto, string nombre)
+        public mdTraspasoASucursal(int idProducto, string nombre, string serialNumber)
         {
             InitializeComponent();
 
@@ -23,6 +23,13 @@ namespace CapaPresentacion.Modales
             txtIdProducto.Text = idProducto.ToString();
             txtProducto.Text = nombre;
             lblCantStock.Text =new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(idProducto, GlobalSettings.SucursalId).ToString();
+            txtSerialNumber.Text = serialNumber;
+            if(serialNumber != "0")
+            {
+                txtCantidad.ReadOnly = true;
+                txtCantidad.Enabled = false;
+
+            }
 
         }
 
@@ -33,6 +40,8 @@ namespace CapaPresentacion.Modales
 
         private void mdTraspasoASucursal_Load(object sender, EventArgs e)
         {
+            txtCantidad.ReadOnly = false;
+            txtCantidad.Enabled = true;
             txtFechaTraspaso.Text = DateTime.Now.Date.ToString();
             CargarComboBoxSucursal();
            
@@ -75,6 +84,7 @@ namespace CapaPresentacion.Modales
             string actualizacionStock = string.Empty;
             if (txtCantidad.Value > 0 && cboSucursal.SelectedIndex != -1)
             {
+                decimal costoProducto = new CN_Producto().ObtenerCostoProducto(Convert.ToInt32(txtIdProducto.Text));
                 OrdenTraspaso orden = new OrdenTraspaso();
                 orden.FechaCreacion = txtFechaTraspaso.Value.Date;
                 orden.FechaConfirmacion = null;
@@ -83,6 +93,8 @@ namespace CapaPresentacion.Modales
                 orden.IdSucursalOrigen = GlobalSettings.SucursalId;
                 orden.Cantidad = Convert.ToInt32(txtCantidad.Value);
                 orden.Confirmada = "0";
+                orden.CostoProducto = costoProducto*orden.Cantidad;
+                orden.SerialNumber = txtSerialNumber.Text;
 
                 int stockactualproducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(orden.IdProducto, GlobalSettings.SucursalId);
                 if(orden.Cantidad <= stockactualproducto)

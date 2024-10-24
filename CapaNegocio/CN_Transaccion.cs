@@ -16,6 +16,33 @@ namespace CapaNegocio
             return objcd_TransaccionCaja.Listar(idCajaRegistradora, idNegocio);
         }
 
+        public bool ObtenerSaldosCajas(int idNegocio, int idCajaRegistradora, out Decimal saldoEfectivo, out Decimal saldoMercadoPago, out Decimal saldoDolares, out Decimal saldoGalicia, out string mensaje)
+        {
+            // Inicialización de los valores de salida
+            saldoEfectivo = 0;
+            saldoMercadoPago = 0;
+            saldoDolares = 0;
+            saldoGalicia = 0;
+            mensaje = string.Empty;
+
+            bool resultado = false;
+
+            try
+            {
+                // Llamar a la capa de datos para obtener los saldos de las cajas
+                resultado = objcd_TransaccionCaja.ObtenerSaldosCajas(idNegocio, idCajaRegistradora, out saldoEfectivo, out saldoMercadoPago, out saldoDolares, out saldoGalicia, out mensaje);
+            }
+            catch (Exception ex)
+            {
+                // En caso de error, capturar el mensaje de la excepción
+                mensaje = ex.Message;
+                resultado = false;
+            }
+
+            return resultado;
+        }
+
+
         public int RegistrarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
         {
             mensaje = string.Empty;

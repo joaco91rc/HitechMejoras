@@ -18,10 +18,9 @@ namespace CapaDatos
             {
                 try
                 {
-
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select idProductoRMA,fechaIngreso,descripcionProductoRMA, cantidad, estado, fechaEgreso, idProducto from productorma");
-                    
+                    query.AppendLine("SELECT idProductoRMA, fechaIngreso, descripcionProductoRMA, cantidad, estado, fechaEgreso, idProducto FROM productorma");
+
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
@@ -30,21 +29,21 @@ namespace CapaDatos
                     {
                         while (dr.Read())
                         {
-                            DateTime fechaEgreso = DateTime.MinValue; // Valor por defecto para el campo fechaEgreso si es NULL
+                            DateTime? fechaEgreso = null; // Usamos nullable DateTime para manejar el NULL
 
                             if (!Convert.IsDBNull(dr["fechaEgreso"]))
                             {
-                                fechaEgreso = Convert.ToDateTime(dr["fechaEgreso"]);
+                                fechaEgreso = Convert.ToDateTime(dr["fechaEgreso"]); // Incluye fecha y hora
                             }
 
                             lista.Add(new ProductoRMA()
                             {
                                 idProductoRMA = Convert.ToInt32(dr["idProductoRMA"]),
-                                fechaIngreso = Convert.ToDateTime(dr["fechaIngreso"]),
+                                fechaIngreso = Convert.ToDateTime(dr["fechaIngreso"]), // Incluye fecha y hora
                                 descripcionProductoRMA = dr["descripcionProductoRMA"].ToString(),
                                 cantidad = Convert.ToInt32(dr["cantidad"]),
                                 estado = dr["estado"].ToString(),
-                                fechaEgreso = fechaEgreso, // Asignamos la fechaEgreso o DateTime.MinValue si es NULL
+                                fechaEgreso = fechaEgreso, // Asignamos fechaEgreso (incluye fecha y hora) o null si es NULL
                                 idProducto = Convert.ToInt32(dr["idProducto"])
                             });
                         }
@@ -53,8 +52,8 @@ namespace CapaDatos
                 catch (Exception ex)
                 {
                     lista = new List<ProductoRMA>();
+                    // Manejar el error si es necesario
                 }
-
             }
             return lista;
         }

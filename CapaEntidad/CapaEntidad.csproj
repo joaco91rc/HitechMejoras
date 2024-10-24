@@ -41,15 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoNegocio.cs" />
     <Compile Include="CajaRegistradora.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="ClienteNegocio.cs" />
     <Compile Include="Compra.cs" />
     <Compile Include="Concepto.cs" />
     <Compile Include="Cotizacion.cs" />
     <Compile Include="DetalleCaja.cs" />
     <Compile Include="DetalleCompra.cs" />
     <Compile Include="DetalleVenta.cs" />
+    <Compile Include="Deuda.cs" />
     <Compile Include="EquipoST.cs" />
     <Compile Include="FormaPago.cs" />
     <Compile Include="GlobalSettings.cs" />
@@ -57,8 +60,10 @@
     <Compile Include="Negocio.cs" />
     <Compile Include="NetworkHelper.cs" />
     <Compile Include="OrdenTraspaso.cs" />
+    <Compile Include="PagoParcial.cs" />
     <Compile Include="Permiso.cs" />
     <Compile Include="Producto.cs" />
+    <Compile Include="ProductoDetalle.cs" />
     <Compile Include="ProductoNegocio.cs" />
     <Compile Include="ProductoRMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +75,7 @@
     <Compile Include="SucursalSettings.cs" />
     <Compile Include="TransaccionCaja.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="Vendedor.cs" />
     <Compile Include="Venta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

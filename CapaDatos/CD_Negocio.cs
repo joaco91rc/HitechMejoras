@@ -22,7 +22,7 @@ namespace CapaDatos
                 using (SqlConnection conexion = new SqlConnection(Conexion.cadena))
                 {
                     conexion.Open();
-                    string query = "select idNegocio,nombre,CUIT,direccion from NEGOCIO where idNegocio = @idNegocio";
+                    string query = "select * from NEGOCIO where idNegocio = @idNegocio";
                     
                     SqlCommand cmd = new SqlCommand(query, conexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
@@ -38,7 +38,10 @@ namespace CapaDatos
                                 idNegocio = int.Parse(dr["idNegocio"].ToString()),
                                 nombre = dr["nombre"].ToString(),
                                 CUIT = dr["CUIT"].ToString(),
-                                direccion = dr["direccion"].ToString()
+                                direccion = dr["direccion"].ToString(),
+                                telefono = dr["telefono"].ToString(),
+                                instagram = dr["instagram"].ToString(),
+                                mail= dr["mail"].ToString(),
                             };
                         }
                     }

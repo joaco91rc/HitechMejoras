@@ -551,3 +551,10 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacio
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmServicioTecnico.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmCobrarServicio.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.ConfirmarReparacion.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmDetalleProducto.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmProductosSerializados.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmVendedor.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdProductoSerializable.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmDeuda.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmSerialesVendidos.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdSeleccionProductosSerializables.resources

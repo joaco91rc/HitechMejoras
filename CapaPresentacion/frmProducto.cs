@@ -81,29 +81,7 @@ namespace CapaPresentacion
             cboBusqueda.ValueMember = "Valor";
             cboBusqueda.SelectedIndex = 1;
 
-            //Mostrar todos los Productos
-            List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
-            // Cargar la imagen desde los recursos
-            
-            foreach (Producto item in listaProducto)
-            {
-                dgvData.Rows.Add(new object[] {
-                defaultImage, // Asignar la imagen predeterminada
-                item.idProducto,
-                item.codigo,
-                item.nombre,
-                item.descripcion,
-                item.oCategoria.idCategoria,
-                item.oCategoria.descripcion,
-                item.stock,
-                item.precioCompra,
-                item.costoPesos,
-                item.precioVenta,
-                (Math.Ceiling((item.precioVenta * cotizacionActiva) / 500) * 500).ToString("0.00"),
-                item.estado == true ? 1 : 0,
-                item.estado == true ? "Activo" : "No Activo"
-                });
-            }
+            CargarGrilla();
 
 
 
@@ -131,43 +109,101 @@ namespace CapaPresentacion
                 MessageBox.Show("Debe seleccionar una categoría.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             Producto objProducto = new Producto()
             {
                 idProducto = Convert.ToInt32(txtIdProducto.Text),
                 codigo = txtCodigo.Text,
                 nombre = txtNombre.Text,
                 descripcion = txtDescripcion.Text,
-                
+
                 oCategoria = new Categoria { idCategoria = Convert.ToInt32(((OpcionCombo)cboCategoria.SelectedItem).Valor) },
                 estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false,
-               
-                precioCompra = Convert.ToDecimal(txtPrecioCompra.Text),
-                precioVenta = Convert.ToDecimal(txtPrecioVenta.Text),
+
+                
+                
             };
-           
-            if (checkCostoPesos.Checked)
+
+            // Variables para almacenar los valores de los NumericUpDown
+            decimal precioCompra = txtPrecioCompra.Value;
+            decimal precioVenta = txtPrecioVenta.Value;
+            decimal costoPesos = txtCostoPesos.Value;
+            decimal ventaPesos = txtVentaPesos.Value;
+
+            // Caso 1: Si el usuario ingresó precioCompra y precioVenta
+            if (precioCompra > 0 && precioVenta > 0)
             {
-                objProducto.costoPesos = Convert.ToDecimal(txtCostoPesos.Text);
-                objProducto.precioCompra = Math.Round(Convert.ToDecimal(txtCostoPesos.Text) / cotizacionActiva, 2);
-
-
-
+                txtCostoPesos.Value = (Math.Round(precioCompra * cotizacionActiva,2)/500)*500;
+                txtVentaPesos.Value = (Math.Round(precioVenta * cotizacionActiva,2)/500)*500;
+                txtPrecioCompra.Value = precioCompra;
+                txtPrecioVenta.Value = precioVenta;
+            }
+            // Caso 2: Si el usuario ingresó costoPesos y precioVenta
+            else if (costoPesos > 0 && precioVenta > 0)
+            {
+                txtPrecioCompra.Value = costoPesos / cotizacionActiva;
+                txtVentaPesos.Value = (Math.Round(precioVenta * cotizacionActiva,2)/500)*500;
+                txtCostoPesos.Value = costoPesos;
+                txtPrecioVenta.Value = precioVenta;
+            }
+            // Caso 3: Si el usuario ingresó costoPesos y ventaPesos
+            else if (costoPesos > 0 && ventaPesos > 0)
+            {
+                txtPrecioCompra.Value = costoPesos / cotizacionActiva;
+                txtPrecioVenta.Value = ventaPesos / cotizacionActiva;
+                txtCostoPesos.Value = costoPesos;
+                txtVentaPesos.Value = ventaPesos;
             }
             else
             {
-                objProducto.costoPesos = 0;
-                txtCostoPesos.Text = "0";
+                // Si no se cumplen las condiciones, mostrar un mensaje de error
+                MessageBox.Show("Por favor, complete los campos requeridos correctamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            objProducto.precioCompra = txtPrecioCompra.Value;
+            objProducto.precioVenta = txtPrecioVenta.Value;
+            objProducto.costoPesos = txtCostoPesos.Value;
+            objProducto.ventaPesos = txtVentaPesos.Value;
+
+            // Aquí podrías agregar cualquier lógica adicional que necesites para guardar los datos en la base de datos o procesarlos.
+
+
+
+
+            //if (checkCostoPesos.Checked)
+            //{
+            //    objProducto.costoPesos = Convert.ToDecimal(txtCostoPesos.Text);
+            //    objProducto.precioCompra = (Math.Round(Convert.ToDecimal(txtCostoPesos.Text) / cotizacionActiva, 2)/ 500)*500; 
+            //    objProducto.ventaPesos = Convert.ToDecimal(txtVentaPesos.Text);
+            //    objProducto.precioVenta = (Math.Round(Convert.ToDecimal(txtVentaPesos.Text) / cotizacionActiva, 2)/500)*500;
+
+            //}
+            //else
+            //{
+            //    objProducto.costoPesos = Convert.ToDecimal(txtPrecioCompra.Text)*cotizacionActiva; 
+            //    objProducto.ventaPesos = Convert.ToDecimal(txtPrecioVenta.Text) * cotizacionActiva;
+            //    objProducto.precioCompra = Convert.ToDecimal(txtPrecioCompra.Text);
+            //    objProducto.precioVenta = Convert.ToDecimal(txtPrecioVenta.Text);
+            //}
+
+            if (checkSerializable.Checked)
+            {
+                objProducto.prodSerializable = true;
+            } else
+            {
+                objProducto.prodSerializable = false;
+            }
+            bool esSerializable = objProducto.prodSerializable;
             if (objProducto.idProducto == 0)
             {
-                
+
                 int idProductoGenerado = new CN_Producto().Registrar(objProducto, out mensaje);
 
-                decimal precioCompra = objProducto.precioCompra;
+                decimal precioCompra2 = objProducto.precioCompra;
                 if (idProductoGenerado != 0)
                 {
                     int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(idProductoGenerado, GlobalSettings.SucursalId);
-
+                    
                     dgvData.Rows.Add(new object[] { defaultImage,
                         idProductoGenerado,
                         txtCodigo.Text,
@@ -177,13 +213,15 @@ namespace CapaPresentacion
                 ((OpcionCombo)cboCategoria.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboCategoria.SelectedItem).Texto.ToString(),
                 stockProducto,
-                 precioCompra,
-                 Convert.ToDecimal(txtCostoPesos.Text),
-                 Convert.ToDecimal(txtPrecioVenta.Text),
-                 Convert.ToDecimal(txtPrecioVenta.Text)*cotizacionActiva,
+                 precioCompra2.ToString("0.00"),
+                 Convert.ToDecimal(txtCostoPesos.Text).ToString("0.00"),
+                 Convert.ToDecimal(txtVentaPesos.Text).ToString("0.00"),
+                 Convert.ToDecimal(txtPrecioVenta.Text).ToString("0.00"),
+                 (Convert.ToDecimal(txtPrecioVenta.Text)*cotizacionActiva).ToString("0.00"),
+                 esSerializable == true?"SI":"NO",
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
-                
+
             });
                     Limpiar();
                 }
@@ -203,21 +241,23 @@ namespace CapaPresentacion
                 if (resultado)
                 {
                     DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
-                    row.Cells["idProducto"].Value = txtIdProducto.Text;
-                    row.Cells["codigo"].Value = txtCodigo.Text;
-                    row.Cells["nombre"].Value = txtNombre.Text;
-                    row.Cells["descripcion"].Value = txtDescripcion.Text;
-                    
+                    row.Cells["idProducto"].Value = objProducto.idProducto;
+                    row.Cells["codigo"].Value = objProducto.codigo;
+                    row.Cells["nombre"].Value = objProducto.nombre;
+                    row.Cells["descripcion"].Value = objProducto.descripcion;
+
                     row.Cells["idCategoria"].Value = ((OpcionCombo)cboCategoria.SelectedItem).Valor.ToString();
                     row.Cells["categoria"].Value = ((OpcionCombo)cboCategoria.SelectedItem).Texto.ToString();
                     row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
                     row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
                     row.Cells["stock"].Value = stockProducto;
-                    
-                    row.Cells["precioCompra"].Value = objProducto.precioCompra;
-                    row.Cells["costoPesos"].Value = txtCostoPesos.Text;
-                    row.Cells["precioVenta"].Value = txtPrecioVenta.Text;
-                    row.Cells["precioPesos"].Value = (Convert.ToDecimal(row.Cells["precioVenta"].Value) * cotizacionActiva).ToString();
+
+                    row.Cells["precioCompra"].Value = objProducto.precioCompra.ToString("0.00"); // Formato 0.00
+                    row.Cells["costoPesos"].Value = objProducto.costoPesos.ToString("0.00"); // Asegura formato 0.00
+                    row.Cells["ventaPesos"].Value = objProducto.ventaPesos.ToString("0.00"); // Asegura formato 0.00
+                    row.Cells["precioVenta"].Value = objProducto.precioVenta.ToString("0.00"); // Asegura formato 0.00
+                    row.Cells["precioPesos"].Value = objProducto.ventaPesos.ToString("0.00"); // Asegura formato 0.00
+                    row.Cells["prodSerializable"].Value = esSerializable == true ? "SI" : "NO";
 
                     Limpiar();
 
@@ -243,15 +283,16 @@ namespace CapaPresentacion
             txtPrecioCompra.Visible = true;
             txtPrecioCompra.Text = "";
             txtPrecioVenta.Text = "";
-            
+            txtVentaPesos.Text = string.Empty;
             cboCategoria.SelectedIndex = 0;
             cboEstado.SelectedIndex = 0;
             txtCodigo.Select();
             txtProductoSeleccionado.Text = "Ninguno";
             txtCostoPesos.Text = string.Empty;
+            checkSerializable.Checked = false;
         }
 
-        
+
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -267,10 +308,18 @@ namespace CapaPresentacion
                     txtCodigo.Text = dgvData.Rows[indice].Cells["codigo"].Value.ToString();
                     txtNombre.Text = dgvData.Rows[indice].Cells["nombre"].Value.ToString();
                     txtDescripcion.Text = dgvData.Rows[indice].Cells["descripcion"].Value.ToString();
-                    
+                    txtVentaPesos.Text= dgvData.Rows[indice].Cells["ventaPesos"].Value.ToString();
                     txtPrecioCompra.Text = dgvData.Rows[indice].Cells["precioCompra"].Value.ToString();
                     txtPrecioVenta.Text = dgvData.Rows[indice].Cells["precioVenta"].Value.ToString();
                     txtCostoPesos.Text = dgvData.Rows[indice].Cells["costoPesos"].Value.ToString();
+                    if(dgvData.Rows[indice].Cells["prodSerializable"].Value.ToString() == "SI")
+                    {
+                        checkSerializable.Checked = true;
+                    }
+                    else
+                    {
+                        checkSerializable.Checked= false;
+                    }
 
                     foreach (OpcionCombo oc in cboCategoria.Items)
                     {
@@ -366,11 +415,13 @@ namespace CapaPresentacion
                 MessageBox.Show("No hay datos para Exportar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             }
-            else {
+            else
+            {
                 DataTable dt = new DataTable();
 
-                foreach (DataGridViewColumn columna in dgvData.Columns) { 
-                    if(columna.HeaderText!= "" && columna.Visible)
+                foreach (DataGridViewColumn columna in dgvData.Columns)
+                {
+                    if (columna.HeaderText != "" && columna.Visible)
                     {
 
 
@@ -379,8 +430,10 @@ namespace CapaPresentacion
                     }
                 }
 
-                foreach (DataGridViewRow row in dgvData.Rows) {
-                    if (row.Visible) {
+                foreach (DataGridViewRow row in dgvData.Rows)
+                {
+                    if (row.Visible)
+                    {
                         dt.Rows.Add(new object[]
                         {
                             row.Cells[2].Value.ToString(),
@@ -391,11 +444,11 @@ namespace CapaPresentacion
                             row.Cells[8].Value.ToString(),
                             row.Cells[9].Value.ToString(),
                             row.Cells[11].Value.ToString(),
-                            
 
-                        }); 
+
+                        });
                     }
-                    
+
 
 
                 }
@@ -426,7 +479,7 @@ namespace CapaPresentacion
 
         private void txtBusqueda_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
 
                 string columnaFiltro = ((OpcionCombo)cboBusqueda.SelectedItem).Valor.ToString();
@@ -447,38 +500,120 @@ namespace CapaPresentacion
 
                 }
 
-                
+
 
 
             }
-            
+
         }
 
         private void checkCostoPesos_CheckedChanged(object sender, EventArgs e)
         {
             if (checkCostoPesos.Checked)
             {
+                lblVentaPesos.Visible = true;
                 lblCostoPesos.Visible = true;
                 txtCostoPesos.Visible = true;
+                txtVentaPesos.Visible = true;
                 lblPrecioCompra.Visible = false;
                 txtPrecioCompra.Visible = false;
                 if (txtIdProducto.Text == "0")
                 {
                     txtPrecioCompra.Text = "0";
                 }
-                txtCostoPesos.Select();   
+                txtCostoPesos.Select();
             }
             else
             {
+                lblVentaPesos.Visible = false;
+                txtVentaPesos.Visible = false;
                 lblCostoPesos.Visible = false;
                 txtCostoPesos.Visible = false;
                 lblPrecioCompra.Visible = true;
                 txtPrecioCompra.Visible = true;
                 txtPrecioCompra.Select();
-                
+
             }
         }
 
-        
+        private void CargarGrilla()
+        {
+            dgvData.Rows.Clear();
+            //Mostrar todos los Productos
+            List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
+
+            foreach (Producto item in listaProducto)
+            {
+                dgvData.Rows.Add(new object[] {
+                defaultImage, // Asignar la imagen predeterminada
+                item.idProducto,
+                item.codigo,
+                item.nombre,
+                item.descripcion,
+                item.oCategoria.idCategoria,
+                item.oCategoria.descripcion,
+                item.stock,
+                item.precioCompra,
+                item.costoPesos,
+                item.ventaPesos,
+                item.precioVenta,
+                (Math.Ceiling((item.precioVenta * cotizacionActiva) / 500) * 500).ToString("0.00"),
+                item.prodSerializable == true? "SI":"NO",
+                item.estado == true ? 1 : 0,
+                item.estado == true ? "Activo" : "No Activo"
+                });
+            }
+        }
+        private void CargarGrillaPorNegocio()
+        {
+            dgvData.Rows.Clear();
+            //Mostrar todos los Productos
+            List<Producto> listaProducto = new CN_Producto().ListarPorNegocio(GlobalSettings.SucursalId);
+
+            foreach (Producto item in listaProducto)
+            {
+                dgvData.Rows.Add(new object[] {
+                defaultImage, // Asignar la imagen predeterminada
+                item.idProducto,
+                item.codigo,
+                item.nombre,
+                item.descripcion,
+                item.oCategoria.idCategoria,
+                item.oCategoria.descripcion,
+                item.stock,
+                item.precioCompra,
+                item.costoPesos,
+                item.ventaPesos,
+                item.precioVenta,
+                (Math.Ceiling((item.precioVenta * cotizacionActiva) / 500) * 500).ToString("0.00"),
+                item.prodSerializable == true? "SI":"NO",
+                item.estado == true ? 1 : 0,
+                item.estado == true ? "Activo" : "No Activo"
+                });
+            }
+        }
+
+        private void checkProductosLocal_CheckedChanged(object sender, EventArgs e)
+        {
+           
+                if (checkProductosLocal.Checked)
+                {
+                    CargarGrillaPorNegocio();
+                }
+                else
+                {
+                    CargarGrilla();
+                }
+            
+        }
+
+        private void btnSetearPrecios_Click(object sender, EventArgs e)
+        {
+            txtPrecioCompra.Value = 0;
+            txtPrecioVenta.Value = 0;
+            txtCostoPesos.Value = 0;
+            txtVentaPesos.Value = 0;
+
+        }
     }
 }

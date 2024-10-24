@@ -82,6 +82,7 @@ namespace CapaPresentacion.Modales
                     item.stock,
                     item.precioCompra,
                     item.precioVenta,
+                    item.prodSerializable ==true?"SI":"NO"
 
                     });
             }
@@ -89,7 +90,6 @@ namespace CapaPresentacion.Modales
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
             if (dgvData.Columns[e.ColumnIndex].Name == "btnTraspasar")
             {
                 // Obtener la fila seleccionada
@@ -97,16 +97,35 @@ namespace CapaPresentacion.Modales
 
                 // Obtener los valores de las celdas de la fila seleccionada
                 int idProducto = Convert.ToInt32(selectedRow.Cells["idProducto"].Value);
-               
                 string nombre = selectedRow.Cells["nombre"].Value.ToString();
-              
+                string serializable = selectedRow.Cells["serializable"].Value.ToString();
 
-                // Crear una instancia del formulario modal y pasar los datos
-                mdTraspasoASucursal md = new mdTraspasoASucursal(idProducto, nombre);
+                // Inicializar el SerialNumber a 0 (o vacío si prefieres)
+                string serialNumber = "0";
+
+                // Verificar si el producto es serializable
+                if (serializable == "SI")
+                {
+                    // Abrir el modal para productos serializables pasando solo el idProducto
+                    mdProductoSerializable mdProducto = new mdProductoSerializable(idProducto);
+
+                    // Si el modal se cerró con resultado OK, se obtiene el serialNumber
+                    if (mdProducto.ShowDialog() == DialogResult.OK)
+                    {
+                        // Obtener el SerialNumber desde el modal
+                        serialNumber = mdProducto.SerialNumber;
+                    }
+                }
+
+                // Crear una instancia del formulario para el traspaso, pasando el SerialNumber
+                mdTraspasoASucursal md = new mdTraspasoASucursal(idProducto, nombre, serialNumber);
                 md.ShowDialog();
-                this.Close();
+
+                this.Close(); // Cerrar el formulario actual después del traspaso
             }
         }
+
+
 
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {

@@ -111,6 +111,16 @@ namespace CapaPresentacion.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap greenIcon {
+            get {
+                object obj = ResourceManager.GetObject("greenIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
         ///&lt;html&gt;
         ///&lt;head&gt;
@@ -171,6 +181,16 @@ namespace CapaPresentacion.Properties {
         internal static string PlantillaVenta {
             get {
                 return ResourceManager.GetString("PlantillaVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redIcon {
+            get {
+                object obj = ResourceManager.GetObject("redIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

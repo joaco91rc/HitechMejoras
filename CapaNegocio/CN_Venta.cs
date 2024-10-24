@@ -57,6 +57,12 @@ namespace CapaNegocio
             return resultado;
         }
 
+
+        public bool EditarVenta(Venta objventa, DataTable detalleVenta, out string mensaje, out int idVentaGenerado)
+        {
+            return objcd_venta.EditarVenta(objventa, detalleVenta, out mensaje, out idVentaGenerado);
+        }
+
         public Venta ObtenerVenta(string numero, int idNegocio)
         {
             Venta oVenta = objcd_venta.ObtenerVenta(numero,idNegocio);
@@ -69,7 +75,17 @@ namespace CapaNegocio
 
             return oVenta;
         }
+        public List<Venta> ObtenerVentasConDetalle(int idNegocio)
+        {
+            // Simplemente llamamos al método del DAL que ya trae todo junto
+            return objcd_venta.ObtenerVentasConDetalle(idNegocio);
+        }
 
+        public List<Venta> ObtenerVentasConDetalleEntreFechas(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
+        {
+            // Simplemente llamamos al método del DAL que ya trae todo junto
+            return objcd_venta.ObtenerVentasConDetalleEntreFechas(idNegocio,fechaInicio,fechaFin);
+        }
         public List<Venta> ObtenerVentasConDetalle()
         {
             List<Venta> listaVentas = objcd_venta.ObtenerVentasConDetalle();

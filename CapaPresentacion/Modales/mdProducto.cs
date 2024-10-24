@@ -15,12 +15,20 @@ namespace CapaPresentacion.Modales
 {
     public partial class mdProducto : Form
     {
-        public Producto _Producto { get; set; }
+        
 
         public decimal cotizacionActiva { get; set; } = new CN_Cotizacion().CotizacionActiva().importe;
-        public mdProducto()
+        //public mdProducto()
+        //{
+        //    InitializeComponent();
+        //}
+        public Producto _Producto { get; set; }
+        private Form _parentForm;  // Variable para almacenar el formulario que llama (frmVentas o frmDetalleProducto)
+
+        public mdProducto(Form parentForm)
         {
             InitializeComponent();
+            _parentForm = parentForm;  // Almacena el formulario padre que llama al modal
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -65,8 +73,11 @@ namespace CapaPresentacion.Modales
                 item.nombre,
                 item.oCategoria.descripcion,
                 item.stock,
+                
+                
+                item.prodSerializable,
                 item.precioCompra,
-                item.precioVenta,
+                item.precioVenta
             });
                 
             }
@@ -87,12 +98,18 @@ namespace CapaPresentacion.Modales
                 item.nombre,
                 item.oCategoria.descripcion,
                 item.stock,
+                
+                
+                item.prodSerializable,
                 item.precioCompra,
-                item.precioVenta,
+                item.precioVenta
+
             });
 
             }
         }
+        
+
         private void ActualizarListadoProductos()
         {
             dgvData.Rows.Clear(); // Limpiar la grilla
@@ -142,7 +159,6 @@ namespace CapaPresentacion.Modales
 
         private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
             int iRow = e.RowIndex;
             int iColumn = e.ColumnIndex;
             if (iRow >= 0 && iColumn > 0)
@@ -152,25 +168,47 @@ namespace CapaPresentacion.Modales
                     idProducto = Convert.ToInt32(dgvData.Rows[iRow].Cells["idProducto"].Value.ToString()),
                     codigo = dgvData.Rows[iRow].Cells["codigo"].Value.ToString(),
                     nombre = dgvData.Rows[iRow].Cells["nombre"].Value.ToString(),
-                    
-                    //stock = Convert.ToInt32(dgvData.Rows[iRow].Cells["stock"].Value.ToString()),
                     precioCompra = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioCompra"].Value.ToString()),
-                    precioVenta = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString())
+                    precioVenta = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString()),
+                    prodSerializable = Convert.ToBoolean(dgvData.Rows[iRow].Cells["prodSerializable"].Value.ToString()),
                 };
 
                 int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(_Producto.idProducto, GlobalSettings.SucursalId);
+                //if (stockProducto > 0 && _Producto.prodSerializable == true)
+                //{
+                //    // Abrir el modal y pasar el idProducto
+                //    using (var modal = new mdProductoSerializable(_Producto.idProducto))
+                //    {
+                //        if (modal.ShowDialog() == DialogResult.OK)
+                //        {
+                //            foreach (var productoDetalle in modal.ListaProductoDetalles)
+                //            {
+                //                // Llamar al método del formulario padre para agregar al DataGridView
+                //                ((frmVentas)_parentForm).AgregarDetalleProductoADataGridView(productoDetalle);
+                //            }
+                //        }
+                //    }
+                //}
 
-                // Cierra el modal y pasa el stock al formulario de ventas
-                // Asumiendo que tienes una instancia del formulario frmVentas
-                frmVentas frm = (frmVentas)this.Owner;  // Asegúrate de haber configurado el Owner del modal al abrirlo
-                frm.StockProducto = stockProducto;
-                frm.ActualizarStock();
-
+                // Actualizar stock en el formulario padre
+                if (_parentForm is frmVentas frmVentas)
+                {
+                    frmVentas.StockProducto = stockProducto;
+                    frmVentas.ActualizarStock();
+                }
+                else if (_parentForm is frmDetalleProducto frmDetalleProducto)
+                {
+                    frmDetalleProducto.StockProducto = stockProducto;
+                    frmDetalleProducto.ActualizarStock();
+                }
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
+
+        
+
 
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {
@@ -280,8 +318,9 @@ namespace CapaPresentacion.Modales
             if (checkCostoPesos.Checked)
             {
                 objProducto.costoPesos = Convert.ToDecimal(txtCostoPesos.Text);
-                objProducto.precioCompra = Convert.ToDecimal(txtCostoPesos.Text) / cotizacionActiva;
-
+                objProducto.precioCompra = Math.Round(Convert.ToDecimal(txtCostoPesos.Text) / cotizacionActiva, 2);
+                objProducto.ventaPesos = Convert.ToDecimal(txtVentaPesos.Text);
+                objProducto.precioVenta = Math.Round(Convert.ToDecimal(txtVentaPesos.Text) / cotizacionActiva, 2);
 
             }
             else
@@ -299,23 +338,7 @@ namespace CapaPresentacion.Modales
                 {
                     int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(idProductoGenerado, GlobalSettings.SucursalId);
 
-            //        dgvData.Rows.Add(new object[] { "",
-            //            idProductoGenerado,
-            //            txtCodigo.Text,
-            //            txtNombre.Text,
-            //            txtDescripcion.Text,
-
-            //    ((OpcionCombo)cboCategoria.SelectedItem).Valor.ToString(),
-            //    ((OpcionCombo)cboCategoria.SelectedItem).Texto.ToString(),
-            //    stockProducto,
-            //     precioCompra,
-            //     Convert.ToDecimal(txtCostoPesos.Text),
-            //     Convert.ToDecimal(txtPrecioVenta.Text),
-            //     Convert.ToDecimal(txtPrecioVenta.Text)*cotizacionActiva,
-            //    ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
-            //    ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
-
-            //});
+           
                     Limpiar();
                     ActualizarListadoProductos();
                 }
@@ -334,22 +357,7 @@ namespace CapaPresentacion.Modales
                 int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(objProducto.idProducto, GlobalSettings.SucursalId);
                 if (resultado)
                 {
-                    //DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
-                    //row.Cells["idProducto"].Value = txtIdProducto.Text;
-                    //row.Cells["codigo"].Value = txtCodigo.Text;
-                    //row.Cells["nombre"].Value = txtNombre.Text;
-                    //row.Cells["descripcion"].Value = txtDescripcion.Text;
-
-                    //row.Cells["idCategoria"].Value = ((OpcionCombo)cboCategoria.SelectedItem).Valor.ToString();
-                    //row.Cells["categoria"].Value = ((OpcionCombo)cboCategoria.SelectedItem).Texto.ToString();
-                    //row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
-                    //row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
-                    //row.Cells["stock"].Value = stockProducto;
-
-                    //row.Cells["precioCompra"].Value = objProducto.precioCompra;
-                    //row.Cells["costoPesos"].Value = txtCostoPesos.Text;
-                    //row.Cells["precioVenta"].Value = txtPrecioVenta.Text;
-                    //row.Cells["precioPesos"].Value = (Convert.ToDecimal(row.Cells["precioVenta"].Value) * cotizacionActiva).ToString();
+                   
 
                     Limpiar();
                     ActualizarListadoProductos();
@@ -405,6 +413,8 @@ namespace CapaPresentacion.Modales
             {
                 lblCostoPesos.Visible = true;
                 txtCostoPesos.Visible = true;
+                lblVentaPesos.Visible = true;
+                txtVentaPesos.Visible = true;
                 lblPrecioCompra.Visible = false;
                 txtPrecioCompra.Visible = false;
                 if (txtIdProducto.Text == "0")
@@ -419,6 +429,8 @@ namespace CapaPresentacion.Modales
                 txtCostoPesos.Visible = false;
                 lblPrecioCompra.Visible = true;
                 txtPrecioCompra.Visible = true;
+                lblVentaPesos.Visible = false;
+                txtVentaPesos.Visible = false;
                 txtPrecioCompra.Select();
 
             }
@@ -435,5 +447,7 @@ namespace CapaPresentacion.Modales
                 CargarListadoProductosPorLocal();
             }
         }
+
+       
     }
 }

@@ -17,7 +17,23 @@ namespace CapaNegocio
         {
             return objcd_Cliente.Listar();
         }
+        public List<Cliente> ListarClientes()
+        {
+            return objcd_Cliente.ListarClientes();
+        }
 
+        public int ObtenerIdClientePorDocumentoYNombre(string documentoCliente, string nombreCompleto)
+        {
+            return objcd_Cliente.ObtenerIdClientePorDocumentoYNombre(documentoCliente,nombreCompleto);
+        }
+        public Cliente ObtenerClientePorDocumentoYNombre(string documentoCliente, string nombreCompleto)
+        {
+            return objcd_Cliente.ObtenerClientePorDocumentoYNombre(documentoCliente, nombreCompleto);
+        }
+            public List<Cliente> ListarClientesPorNegocio(int idNegocio)
+        {
+            return objcd_Cliente.ListarClientesPorNegocio(idNegocio);
+        }
         public int Registrar(Cliente objCliente, out string mensaje)
         {
             mensaje = string.Empty;

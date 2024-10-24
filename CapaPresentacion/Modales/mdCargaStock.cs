@@ -123,6 +123,10 @@ namespace CapaPresentacion.Modales
             cboBusqueda.SelectedIndex = 1;
 
             CargarGrilla();
+            if(GlobalSettings.RolUsuario == 1)
+            {
+                btnActualizarStock.Visible = true;
+            }
         }
 
         private void iconPictureBox1_Click(object sender, EventArgs e)

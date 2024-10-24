@@ -17,11 +17,57 @@ namespace CapaPresentacion
     public partial class frmCompras : Form
     {
         private Usuario _Usuario;
-        public frmCompras(Usuario oUsuario = null)
+        private Compra _Compra;
+        public frmCompras(Usuario oUsuario = null, Compra oCompra = null)
         {
             _Usuario = oUsuario;
+            _Compra = oCompra;
             InitializeComponent();
+            if(_Compra != null)
+            {
+                CargarDatosCompra();
+            }
         }
+        private void CargarDatosCompra()
+
+        {
+            //CargarComboBoxVendedores();
+            lblTitulo.Text = String.Format("EDITAR COMPRA NUMERO {0}", _Compra.nroDocumento);
+            // Aquí puedes cargar los datos de la venta en los controles del formulario
+            cboTipoDocumento.Text = _Compra.tipoDocumento;
+            txtRazonSocial.Text = _Compra.oProveedor.razonSocial;
+            txtCUIT.Text = _Compra.oProveedor.documento;
+            txtObservaciones.Text = _Compra.observaciones;
+            foreach (var item in _Compra.oDetalleCompra)
+            {
+                dgvData.Rows.Add(item.oProducto.idProducto, item.oProducto.nombre, item.precioCompra, item.precioVenta, item.cantidad, item.montoTotal, "");
+            }
+            cboFormaPago.Text = _Compra.formaPago;
+            cboFormaPago2.Text = _Compra.formaPago2;
+            cboFormaPago3.Text = _Compra.formaPago3;
+            cboFormaPago4.Text = _Compra.formaPago4;
+            txtPagaCon.Text = _Compra.montoFP1.ToString("0.00");
+            txtPagaCon2.Text = _Compra.montoFP2.ToString();
+            txtPagaCon3.Text = _Compra.montoFP3.ToString();
+            txtPagaCon4.Text = _Compra.montoFP4.ToString();
+            txtTotalAPagar.Text = _Compra.montoTotal.ToString();
+
+            // Establecer el item seleccionado en el ComboBox cboVendedores
+            //if (cboVendedores.Items.Count > 0)
+            //{
+            //    foreach (var item in cboVendedores.Items)
+            //    {
+            //        var opcionCombo = item as OpcionCombo; // Cast al tipo OpcionCombo
+            //        if (opcionCombo != null && Convert.ToInt32(opcionCombo.Valor) == _Compra.idVendedor) // Comparar con idVendedor
+            //        {
+            //            cboVendedores.SelectedItem = opcionCombo; // Selecciona el item correspondiente
+            //            //cboVendedores.Text = opcionCombo.Texto;
+            //            break;
+            //        }
+            //    }
+            //}
+        }
+
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -90,7 +136,7 @@ namespace CapaPresentacion
             txtIdProducto.Text = "0";
             txtIdProducto.Text = "0";
 
-            if(_Usuario.oRol.idRol == 1)
+            if (_Usuario.oRol.idRol == 1)
             {
                 txtPrecioventa.Visible = true;
                 txtPrecioCompra.Visible = true;
@@ -111,9 +157,9 @@ namespace CapaPresentacion
             using (var modal = new mdProveedor())
             {
                 var result = modal.ShowDialog();
-                if(result== DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
-                    txtIdProveedor.Text = modal._Proveedor.idProveedor.ToString() ;
+                    txtIdProveedor.Text = modal._Proveedor.idProveedor.ToString();
                     txtCUIT.Text = modal._Proveedor.documento;
                     txtRazonSocial.Text = modal._Proveedor.razonSocial;
                 }
@@ -127,8 +173,9 @@ namespace CapaPresentacion
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
 
-            using (var modal = new mdProducto())
+            using (var modal = new mdProducto(this))
             {
+                modal.Owner = this;
                 var result = modal.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -150,7 +197,7 @@ namespace CapaPresentacion
 
         private void txtCodigoProducto_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyData== Keys.Enter)
+            if (e.KeyData == Keys.Enter)
             {
                 Producto oProducto = new CN_Producto().Listar(GlobalSettings.SucursalId).Where(p => p.codigo == txtCodigoProducto.Text && p.estado == true).FirstOrDefault();
                 if (oProducto != null)
@@ -160,11 +207,12 @@ namespace CapaPresentacion
                     txtProducto.Text = oProducto.nombre;
                     txtPrecioCompra.Select();
                 }
-                else {
+                else
+                {
                     txtCodigoProducto.BackColor = Color.IndianRed;
                     txtIdProducto.Text = "0";
                     txtProducto.Text = "";
-                    
+
 
 
                 }
@@ -183,7 +231,7 @@ namespace CapaPresentacion
                 return;
             }
 
-            if(!decimal.TryParse(txtPrecioCompra.Text, out precioCompra))
+            if (!decimal.TryParse(txtPrecioCompra.Text, out precioCompra))
             {
                 MessageBox.Show("Precio Compra - Formato Moneda incorrecto", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtPrecioCompra.Select();
@@ -199,7 +247,7 @@ namespace CapaPresentacion
 
             foreach (DataGridViewRow fila in dgvData.Rows)
             {
-                if(fila.Cells["idProducto"].Value.ToString()== txtIdProducto.Text)
+                if (fila.Cells["idProducto"].Value.ToString() == txtIdProducto.Text)
                 {
                     producto_existe = true;
                     break;
@@ -248,7 +296,7 @@ namespace CapaPresentacion
 
                 }
                 decimal totalCotizado = total * txtCotizacion.Value;
-                
+
                 txtTotalAPagar.Text = totalCotizado.ToString("0.00");
                 txtTotalVentaDolares.Text = total.ToString("0.00");
             }
@@ -284,9 +332,9 @@ namespace CapaPresentacion
 
                     dgvData.Rows.RemoveAt(indice);
                     calcularTotal();
-                   
 
-                    
+
+
 
                 }
 
@@ -295,19 +343,20 @@ namespace CapaPresentacion
 
         private void txtPrecioCompra_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) {
+            if (Char.IsDigit(e.KeyChar))
+            {
 
                 e.Handled = false;
             }
             else
             {
-                if(txtPrecioCompra.Text.Trim().Length ==0 && e.KeyChar.ToString() == ".")
+                if (txtPrecioCompra.Text.Trim().Length == 0 && e.KeyChar.ToString() == ".")
                 {
                     e.Handled = true;
                 }
                 else
                 {
-                    if(Char.IsControl(e.KeyChar) || e.KeyChar.ToString() == ".")
+                    if (Char.IsControl(e.KeyChar) || e.KeyChar.ToString() == ".")
                     {
                         e.Handled = false;
                     }
@@ -432,12 +481,12 @@ namespace CapaPresentacion
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
-            if(Convert.ToInt32(txtIdProveedor.Text) == 0)
+            if (Convert.ToInt32(txtIdProveedor.Text) == 0)
             {
                 MessageBox.Show("Debe seleccionar un proveedor", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if(dgvData.Rows.Count < 1)
+            if (dgvData.Rows.Count < 1)
             {
                 MessageBox.Show("Debe ingresar Productos en la Compra", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -483,7 +532,7 @@ namespace CapaPresentacion
                 FormaPago fp2 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago2.SelectedItem).Texto);
                 if (txtPagaCon2.Text != string.Empty)
                 {
-                    montoPagadoFP2 = montoPagadoFP2 + Convert.ToDecimal(txtPagaCon2.Text) ;
+                    montoPagadoFP2 = montoPagadoFP2 + Convert.ToDecimal(txtPagaCon2.Text);
                 }
             }
             if (cboFormaPago3.SelectedItem != null)
@@ -499,7 +548,7 @@ namespace CapaPresentacion
                 FormaPago fp4 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago4.SelectedItem).Texto);
                 if (txtPagaCon4.Text != string.Empty)
                 {
-                    montoPagadoFP4 = montoPagadoFP4 + Convert.ToDecimal(txtPagaCon4.Text) ;
+                    montoPagadoFP4 = montoPagadoFP4 + Convert.ToDecimal(txtPagaCon4.Text);
                 }
             }
 
@@ -508,9 +557,9 @@ namespace CapaPresentacion
 
             Compra oCompra = new Compra()
             {
-                oUsuario = new Usuario() {idUsuario = _Usuario.idUsuario },
+                oUsuario = new Usuario() { idUsuario = _Usuario.idUsuario },
                 idNegocio = GlobalSettings.SucursalId,
-                oProveedor = new Proveedor() { idProveedor = Convert.ToInt32(txtIdProveedor.Text)},
+                oProveedor = new Proveedor() { idProveedor = Convert.ToInt32(txtIdProveedor.Text) },
                 tipoDocumento = ((OpcionCombo)cboTipoDocumento.SelectedItem).Texto,
                 nroDocumento = numeroDocumento,
                 montoTotal = Convert.ToDecimal(txtTotalAPagar.Text),
@@ -526,13 +575,15 @@ namespace CapaPresentacion
                 montoPagoFP2 = montoPagadoFP2,
                 montoPagoFP3 = montoPagadoFP3,
                 montoPagoFP4 = montoPagadoFP4,
+                observaciones = txtObservaciones.Text
 
             };
 
             string mensaje = string.Empty;
             string actualizacionStock = string.Empty;
+            string actualizacionPrecios = string.Empty;
             int idCompragenerado = 0;
-            bool respuesta = new CN_Compra().Registrar(oCompra,detalle_compra,out mensaje, out idCompragenerado);
+            bool respuesta = new CN_Compra().Registrar(oCompra, detalle_compra, out mensaje, out idCompragenerado);
             if (respuesta)
             {
                 foreach (DataGridViewRow row in dgvData.Rows)
@@ -541,132 +592,158 @@ namespace CapaPresentacion
                     {
                         int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                         int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
+                        decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
+                        decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
 
                         // Actualizar el stock del producto
-                        actualizacionStock =new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                        actualizacionStock = new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, GlobalSettings.SucursalId, cantidad);
+                        Producto actualizarPrecios = new Producto();
+                        actualizarPrecios.idProducto = idProducto;
+                        if (checkCompraPesos.Checked)
+                        {
+                            
+                            actualizarPrecios.costoPesos = precioCompra;
+                            actualizarPrecios.ventaPesos = precioVenta;
+                            actualizarPrecios.precioCompra = Math.Round(precioCompra / txtCotizacion.Value,2);
+                            actualizarPrecios.precioVenta = Math.Round(precioVenta / txtCotizacion.Value, 2);
+                        } else
+                        {
+                            
+                            actualizarPrecios.precioCompra = precioCompra;
+                            actualizarPrecios.precioVenta = precioVenta;
+                            actualizarPrecios.costoPesos = 0;
+                            actualizarPrecios.ventaPesos = 0;
+
+                        }
+                        
+                        
+                        bool editarPrecios = new CN_Producto().EditarPrecios(actualizarPrecios, out mensaje);
+                        
                     }
                 }
                 txtIdProducto.Text = string.Empty;
                 string nombreProveedor = txtRazonSocial.Text;
-               
-                
 
-               
+
+
+
                 calcularTotal();
 
-               
-
-                List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
-
-                CajaRegistradora cajaAbierta = lista.Where(c => c.estado == true).FirstOrDefault();
-                if (cajaAbierta != null)
-
+                if (!checkCaja.Checked)
                 {
 
-                    if (oCompra.montoPago > 0)
+                    List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
+
+                    CajaRegistradora cajaAbierta = lista.Where(c => c.estado == true).FirstOrDefault();
+                    if (cajaAbierta != null)
+
                     {
-                        var cajaAsociadaFP1 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago).cajaAsociada;
-                        TransaccionCaja objTransaccion = new TransaccionCaja()
+
+                        if (oCompra.montoPago > 0)
                         {
-                            idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                            var cajaAsociadaFP1 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago).cajaAsociada;
+                            TransaccionCaja objTransaccion = new TransaccionCaja()
+                            {
+                                idCajaRegistradora = cajaAbierta.idCajaRegistradora,
 
-                            hora = dtpFecha.Value.Hour.ToString(),
-                            tipoTransaccion = "SALIDA",
-                            monto = oCompra.montoPago*-1,
-                            docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
-                            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
-                            formaPago = cboFormaPago.Text,
-                            cajaAsociada = cajaAsociadaFP1,
-                            idVenta = null,
-                            idCompra = idCompragenerado,
-                            idNegocio = GlobalSettings.SucursalId,
-                            concepto = "COMPRA"
-                        };
+                                hora = dtpFecha.Value.Hour.ToString(),
+                                tipoTransaccion = "SALIDA",
+                                monto = oCompra.montoPago * -1,
+                                docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
+                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                formaPago = cboFormaPago.Text,
+                                cajaAsociada = cajaAsociadaFP1,
+                                idVenta = null,
+                                idCompra = idCompragenerado,
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "COMPRA"
+                            };
 
 
 
 
-                        int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out mensaje);
-                    }
+                            int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out mensaje);
+                        }
 
-                    if (oCompra.montoPagoFP2 > 0)
-                    {
-                        var cajaAsociadaFP2 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago2).cajaAsociada;
-                        TransaccionCaja objTransaccion2 = new TransaccionCaja()
+                        if (oCompra.montoPagoFP2 > 0)
                         {
-                            idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                            var cajaAsociadaFP2 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago2).cajaAsociada;
+                            TransaccionCaja objTransaccion2 = new TransaccionCaja()
+                            {
+                                idCajaRegistradora = cajaAbierta.idCajaRegistradora,
 
-                            hora = dtpFecha.Value.Hour.ToString(),
-                            tipoTransaccion = "SALIDA",
-                            monto = oCompra.montoPagoFP2*-1,
-                            docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
-                            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
-                            formaPago = cboFormaPago2.Text,
-                            cajaAsociada = cajaAsociadaFP2,
-                            idVenta = null,
-                            idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId,
-                            concepto = "COMPRA"
-                        };
+                                hora = dtpFecha.Value.Hour.ToString(),
+                                tipoTransaccion = "SALIDA",
+                                monto = oCompra.montoPagoFP2 * -1,
+                                docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
+                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                formaPago = cboFormaPago2.Text,
+                                cajaAsociada = cajaAsociadaFP2,
+                                idVenta = null,
+                                idCompra = idCompragenerado,
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "COMPRA"
+                            };
 
 
 
 
-                        int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion2, out mensaje);
-                    }
+                            int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion2, out mensaje);
+                        }
 
-                    if (oCompra.montoPagoFP3 > 0)
-                    {
-                        var cajaAsociadaFP3 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago3).cajaAsociada;
-                        TransaccionCaja objTransaccion3 = new TransaccionCaja()
+                        if (oCompra.montoPagoFP3 > 0)
                         {
-                            idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                            var cajaAsociadaFP3 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago3).cajaAsociada;
+                            TransaccionCaja objTransaccion3 = new TransaccionCaja()
+                            {
+                                idCajaRegistradora = cajaAbierta.idCajaRegistradora,
 
-                            hora = dtpFecha.Value.Hour.ToString(),
-                            tipoTransaccion = "SALIDA",
-                            monto = oCompra.montoPagoFP3,
-                            docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
-                            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
-                            formaPago = cboFormaPago3.Text,
-                            cajaAsociada = cajaAsociadaFP3,
-                            idVenta = null,
-                            idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId,
-                            concepto = "COMPRA"
-                        };
+                                hora = dtpFecha.Value.Hour.ToString(),
+                                tipoTransaccion = "SALIDA",
+                                monto = oCompra.montoPagoFP3,
+                                docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
+                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                formaPago = cboFormaPago3.Text,
+                                cajaAsociada = cajaAsociadaFP3,
+                                idVenta = null,
+                                idCompra = idCompragenerado,
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "COMPRA"
+                            };
 
 
 
 
-                        int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion3, out mensaje);
-                    }
+                            int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion3, out mensaje);
+                        }
 
-                    if (oCompra.montoPagoFP4 > 0)
-                    {
-                        var cajaAsociadaFP4 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago4).cajaAsociada;
-                        TransaccionCaja objTransaccion4 = new TransaccionCaja()
+                        if (oCompra.montoPagoFP4 > 0)
                         {
-                            idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                            var cajaAsociadaFP4 = new CN_FormaPago().ObtenerFPPorDescripcion(oCompra.formaPago4).cajaAsociada;
+                            TransaccionCaja objTransaccion4 = new TransaccionCaja()
+                            {
+                                idCajaRegistradora = cajaAbierta.idCajaRegistradora,
 
-                            hora = dtpFecha.Value.Hour.ToString(),
-                            tipoTransaccion = "SALIDA",
-                            monto = oCompra.montoPagoFP4,
-                            docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
-                            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
-                            formaPago = cboFormaPago4.Text,
-                            cajaAsociada = cajaAsociadaFP4,
-                            idVenta = null,
-                            idCompra = oCompra.idCompra,
-                            idNegocio = GlobalSettings.SucursalId,
-                            concepto = "COMPRA"
-                        };
+                                hora = dtpFecha.Value.Hour.ToString(),
+                                tipoTransaccion = "SALIDA",
+                                monto = oCompra.montoPagoFP4,
+                                docAsociado = "Compra Numero:" + " " + numeroDocumento + " Proveedor:" + " " + nombreProveedor,
+                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                formaPago = cboFormaPago4.Text,
+                                cajaAsociada = cajaAsociadaFP4,
+                                idVenta = null,
+                                idCompra = idCompragenerado,
+                                idNegocio = GlobalSettings.SucursalId,
+                                concepto = "COMPRA"
+                            };
 
 
 
 
-                        int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion4, out mensaje);
+                            int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion4, out mensaje);
+                        }
+
                     }
-
                 }
                 MessageBox.Show("Numero de Compra Generado:\n" + numeroDocumento, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Limpiar();
@@ -694,6 +771,7 @@ namespace CapaPresentacion
             txtPagaCon4.Text = string.Empty;
             txtTotalAPagar.Text = string.Empty;
             dgvData.Rows.Clear();
+            txtObservaciones.Text = string.Empty;
 
         }
         private void CalcularCambio()
@@ -712,7 +790,7 @@ namespace CapaPresentacion
             }
             else
             {
-                pagacon = Convert.ToInt32(txtPagaCon.Text);
+                pagacon = Convert.ToDecimal(txtPagaCon.Text);
             }
 
             if (txtPagaCon2.Text != string.Empty)
@@ -814,7 +892,7 @@ namespace CapaPresentacion
 
 
 
-        
+
         }
 
 
@@ -1054,49 +1132,38 @@ namespace CapaPresentacion
         {
             if (e.KeyData == Keys.Enter)
             {
-
-                if (Convert.ToDecimal(txtDescuento.Text) > 0 && Convert.ToDecimal(txtDescuento.Text) <= 100 && (txtDescuento.Text != ""))
+                if (checkDescuento.Checked == true)
                 {
-                    txtMontoDescuento.Visible = true;
-                    txtMontoDescuento.Enabled = false;
-                    decimal montoDescuentoRecargo = (txtRestaPagar.Value * Convert.ToDecimal(txtDescuento.Text)) / 100;
-                    txtMontoDescuento.Text = montoDescuentoRecargo.ToString("0.00");
-                    if (checkDescuento.Checked == true)
+                    if (checkMonedaDolar.Checked)
                     {
-                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - montoDescuentoRecargo).ToString("0.00");
 
+                        txtRestaPagarDolares.Value = txtRestaPagarDolares.Value - Convert.ToDecimal(txtMontoDescuento.Text);
+                        txtRestaPagar.Value = txtTotalAPagarDolares.Value * txtCotizacion.Value - Convert.ToDecimal(txtMontoDescuento.Text) * txtCotizacion.Value;
 
-                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                        {
-                            txtRestaPagar.Value -= montoDescuentoRecargo;
-                        }
-                        else
-                        {
-                            CalcularRestaAPagar();
-                        }
                     }
-                    if (checkRecargo.Checked == true)
+                    else
                     {
-                        txtTotalAPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + montoDescuentoRecargo).ToString("0.00");
-                        if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                        {
-                            txtRestaPagar.Value += montoDescuentoRecargo;
-                        }
-                        else
-                        {
-                            CalcularRestaAPagar();
-                        }
+                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+
                     }
-                    txtDescuento.Enabled = false;
-                    lblDescuento.Visible = true;
-                    CalcularCambio();
+                    CalcularRestaAPagar();
                 }
-                else
+                if (checkRecargo.Checked == true)
+
                 {
-                    txtMontoDescuento.Visible = false;
-                    MessageBox.Show("Ingrese un valor entre 1 y 100 para el porcentaje de descuento o recargo", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (checkMonedaDolar.Checked)
+                    {
 
+                        txtRestaPagarDolares.Value = txtRestaPagarDolares.Value + Convert.ToDecimal(txtMontoDescuento.Text);
+                        txtRestaPagar.Value = txtTotalAPagarDolares.Value * txtCotizacion.Value + Convert.ToDecimal(txtMontoDescuento.Text) * txtCotizacion.Value;
+                    }
+                    else
+                    {
+                        txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) + Convert.ToDecimal(txtMontoDescuento.Text)).ToString("0.00");
+                    }
+                    CalcularRestaAPagar();
                 }
+
             }
         }
     }

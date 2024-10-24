@@ -29,12 +29,12 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCompras));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label11 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
             this.gbRegistrarCompra = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboTipoDocumento = new System.Windows.Forms.ComboBox();
@@ -60,6 +60,9 @@ namespace CapaPresentacion
             this.txtCodigoProducto = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.txtTotalVentaDolares = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCotizacion = new System.Windows.Forms.NumericUpDown();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,10 +72,9 @@ namespace CapaPresentacion
             this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label13 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnRegistrarCompra = new FontAwesome.Sharp.IconButton();
             this.btnAgregarProducto = new FontAwesome.Sharp.IconButton();
-            this.checkCaja = new System.Windows.Forms.CheckBox();
+            this.checkCompraPesos = new System.Windows.Forms.CheckBox();
             this.cboFormaPago4 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -85,8 +87,6 @@ namespace CapaPresentacion
             this.cboFormaPago = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtCotizacion = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.txtCambioCliente = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -97,7 +97,6 @@ namespace CapaPresentacion
             this.lblDescuento = new System.Windows.Forms.Label();
             this.txtMontoDescuento = new System.Windows.Forms.TextBox();
             this.txtDescuento = new System.Windows.Forms.TextBox();
-            this.txtTotalVentaDolares = new System.Windows.Forms.TextBox();
             this.txtTotalAPagar = new System.Windows.Forms.NumericUpDown();
             this.txtPagaCon4 = new System.Windows.Forms.NumericUpDown();
             this.txtPagaCon3 = new System.Windows.Forms.NumericUpDown();
@@ -109,13 +108,15 @@ namespace CapaPresentacion
             this.lblTotalAPagarDolares = new System.Windows.Forms.Label();
             this.txtRestaPagarDolares = new System.Windows.Forms.NumericUpDown();
             this.lblRestaPagarDolares = new System.Windows.Forms.Label();
+            this.checkCaja = new System.Windows.Forms.CheckBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.gbRegistrarCompra.SuspendLayout();
             this.gbInfoProveedor.SuspendLayout();
             this.gbInfoProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).BeginInit();
@@ -136,20 +137,20 @@ namespace CapaPresentacion
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.label11.Location = new System.Drawing.Point(-3, -2);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(973, 731);
+            this.label11.Size = new System.Drawing.Size(1354, 731);
             this.label11.TabIndex = 24;
             // 
-            // label1
+            // lblTitulo
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(256, 32);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "REGISTRAR COMPRA";
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblTitulo.Location = new System.Drawing.Point(12, 9);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(256, 32);
+            this.lblTitulo.TabIndex = 25;
+            this.lblTitulo.Text = "REGISTRAR COMPRA";
             // 
             // gbRegistrarCompra
             // 
@@ -222,14 +223,14 @@ namespace CapaPresentacion
             this.gbInfoProveedor.ForeColor = System.Drawing.Color.ForestGreen;
             this.gbInfoProveedor.Location = new System.Drawing.Point(547, 44);
             this.gbInfoProveedor.Name = "gbInfoProveedor";
-            this.gbInfoProveedor.Size = new System.Drawing.Size(412, 117);
+            this.gbInfoProveedor.Size = new System.Drawing.Size(639, 117);
             this.gbInfoProveedor.TabIndex = 27;
             this.gbInfoProveedor.TabStop = false;
             this.gbInfoProveedor.Text = "Informacion Proveedor";
             // 
             // txtIdProveedor
             // 
-            this.txtIdProveedor.Location = new System.Drawing.Point(376, 28);
+            this.txtIdProveedor.Location = new System.Drawing.Point(236, 28);
             this.txtIdProveedor.Name = "txtIdProveedor";
             this.txtIdProveedor.Size = new System.Drawing.Size(30, 29);
             this.txtIdProveedor.TabIndex = 51;
@@ -250,7 +251,7 @@ namespace CapaPresentacion
             this.btnBuscarProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnBuscarProveedor.IconSize = 28;
             this.btnBuscarProveedor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscarProveedor.Location = new System.Drawing.Point(154, 77);
+            this.btnBuscarProveedor.Location = new System.Drawing.Point(236, 77);
             this.btnBuscarProveedor.Name = "btnBuscarProveedor";
             this.btnBuscarProveedor.Size = new System.Drawing.Size(35, 29);
             this.btnBuscarProveedor.TabIndex = 61;
@@ -261,9 +262,9 @@ namespace CapaPresentacion
             // 
             this.txtRazonSocial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRazonSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtRazonSocial.Location = new System.Drawing.Point(206, 78);
+            this.txtRazonSocial.Location = new System.Drawing.Point(290, 78);
             this.txtRazonSocial.Name = "txtRazonSocial";
-            this.txtRazonSocial.Size = new System.Drawing.Size(196, 29);
+            this.txtRazonSocial.Size = new System.Drawing.Size(339, 29);
             this.txtRazonSocial.TabIndex = 51;
             // 
             // txtCUIT
@@ -271,7 +272,7 @@ namespace CapaPresentacion
             this.txtCUIT.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCUIT.Location = new System.Drawing.Point(9, 77);
             this.txtCUIT.Name = "txtCUIT";
-            this.txtCUIT.Size = new System.Drawing.Size(139, 29);
+            this.txtCUIT.Size = new System.Drawing.Size(218, 29);
             this.txtCUIT.TabIndex = 50;
             // 
             // label3
@@ -281,7 +282,7 @@ namespace CapaPresentacion
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label3.Location = new System.Drawing.Point(203, 50);
+            this.label3.Location = new System.Drawing.Point(287, 50);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 17);
             this.label3.TabIndex = 49;
@@ -316,13 +317,14 @@ namespace CapaPresentacion
             this.gbInfoProducto.Controls.Add(this.txtCodigoProducto);
             this.gbInfoProducto.Controls.Add(this.label6);
             this.gbInfoProducto.Controls.Add(this.label7);
+            this.gbInfoProducto.Controls.Add(this.txtTotalVentaDolares);
             this.gbInfoProducto.Controls.Add(this.label8);
             this.gbInfoProducto.Controls.Add(this.txtCotizacion);
             this.gbInfoProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbInfoProducto.ForeColor = System.Drawing.Color.ForestGreen;
             this.gbInfoProducto.Location = new System.Drawing.Point(18, 167);
             this.gbInfoProducto.Name = "gbInfoProducto";
-            this.gbInfoProducto.Size = new System.Drawing.Size(941, 117);
+            this.gbInfoProducto.Size = new System.Drawing.Size(1168, 117);
             this.gbInfoProducto.TabIndex = 28;
             this.gbInfoProducto.TabStop = false;
             this.gbInfoProducto.Text = "Informacion Producto";
@@ -342,7 +344,7 @@ namespace CapaPresentacion
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label10.Location = new System.Drawing.Point(425, 51);
+            this.label10.Location = new System.Drawing.Point(652, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(67, 17);
             this.label10.TabIndex = 50;
@@ -355,7 +357,7 @@ namespace CapaPresentacion
             this.lblPrecioVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblPrecioVenta.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecioVenta.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblPrecioVenta.Location = new System.Drawing.Point(782, 50);
+            this.lblPrecioVenta.Location = new System.Drawing.Point(1009, 50);
             this.lblPrecioVenta.Name = "lblPrecioVenta";
             this.lblPrecioVenta.Size = new System.Drawing.Size(89, 17);
             this.lblPrecioVenta.TabIndex = 67;
@@ -369,7 +371,7 @@ namespace CapaPresentacion
             this.lblPrecioCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblPrecioCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecioCompra.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblPrecioCompra.Location = new System.Drawing.Point(634, 50);
+            this.lblPrecioCompra.Location = new System.Drawing.Point(861, 50);
             this.lblPrecioCompra.Name = "lblPrecioCompra";
             this.lblPrecioCompra.Size = new System.Drawing.Size(102, 17);
             this.lblPrecioCompra.TabIndex = 50;
@@ -379,7 +381,7 @@ namespace CapaPresentacion
             // txtCantidad
             // 
             this.txtCantidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCantidad.Location = new System.Drawing.Point(428, 72);
+            this.txtCantidad.Location = new System.Drawing.Point(655, 72);
             this.txtCantidad.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -398,7 +400,7 @@ namespace CapaPresentacion
             // 
             this.txtPrecioventa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPrecioventa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPrecioventa.Location = new System.Drawing.Point(780, 72);
+            this.txtPrecioventa.Location = new System.Drawing.Point(1007, 72);
             this.txtPrecioventa.Name = "txtPrecioventa";
             this.txtPrecioventa.Size = new System.Drawing.Size(139, 29);
             this.txtPrecioventa.TabIndex = 66;
@@ -409,7 +411,7 @@ namespace CapaPresentacion
             // 
             this.txtPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPrecioCompra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPrecioCompra.Location = new System.Drawing.Point(637, 72);
+            this.txtPrecioCompra.Location = new System.Drawing.Point(864, 72);
             this.txtPrecioCompra.Name = "txtPrecioCompra";
             this.txtPrecioCompra.Size = new System.Drawing.Size(139, 29);
             this.txtPrecioCompra.TabIndex = 65;
@@ -421,9 +423,9 @@ namespace CapaPresentacion
             this.txtProducto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProducto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtProducto.Location = new System.Drawing.Point(216, 71);
+            this.txtProducto.Location = new System.Drawing.Point(203, 69);
             this.txtProducto.Name = "txtProducto";
-            this.txtProducto.Size = new System.Drawing.Size(206, 29);
+            this.txtProducto.Size = new System.Drawing.Size(433, 29);
             this.txtProducto.TabIndex = 64;
             // 
             // btnBuscarProducto
@@ -483,6 +485,48 @@ namespace CapaPresentacion
             this.label7.TabIndex = 47;
             this.label7.Text = "Codigo Producto:";
             // 
+            // txtTotalVentaDolares
+            // 
+            this.txtTotalVentaDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTotalVentaDolares.Location = new System.Drawing.Point(1077, 18);
+            this.txtTotalVentaDolares.Name = "txtTotalVentaDolares";
+            this.txtTotalVentaDolares.Size = new System.Drawing.Size(77, 29);
+            this.txtTotalVentaDolares.TabIndex = 139;
+            this.txtTotalVentaDolares.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label8.Location = new System.Drawing.Point(762, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 17);
+            this.label8.TabIndex = 127;
+            this.label8.Text = "Cotizacion:";
+            // 
+            // txtCotizacion
+            // 
+            this.txtCotizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCotizacion.DecimalPlaces = 2;
+            this.txtCotizacion.Location = new System.Drawing.Point(765, 72);
+            this.txtCotizacion.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.txtCotizacion.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.txtCotizacion.Name = "txtCotizacion";
+            this.txtCotizacion.ReadOnly = true;
+            this.txtCotizacion.Size = new System.Drawing.Size(90, 29);
+            this.txtCotizacion.TabIndex = 126;
+            // 
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
@@ -491,15 +535,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
@@ -510,25 +554,33 @@ namespace CapaPresentacion
             this.subTotal,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 290);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(801, 187);
+            this.dgvData.Size = new System.Drawing.Size(1003, 187);
             this.dgvData.TabIndex = 55;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
@@ -559,7 +611,6 @@ namespace CapaPresentacion
             this.precioVenta.HeaderText = "PRECIO VENTA";
             this.precioVenta.Name = "precioVenta";
             this.precioVenta.ReadOnly = true;
-            this.precioVenta.Visible = false;
             this.precioVenta.Width = 150;
             // 
             // cantidad
@@ -597,18 +648,6 @@ namespace CapaPresentacion
             this.label13.TabIndex = 68;
             this.label13.Text = "Total a Pagar:";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(965, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(385, 729);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 71;
-            this.pictureBox1.TabStop = false;
-            // 
             // btnRegistrarCompra
             // 
             this.btnRegistrarCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -620,7 +659,7 @@ namespace CapaPresentacion
             this.btnRegistrarCompra.IconColor = System.Drawing.Color.White;
             this.btnRegistrarCompra.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnRegistrarCompra.IconSize = 32;
-            this.btnRegistrarCompra.Location = new System.Drawing.Point(826, 561);
+            this.btnRegistrarCompra.Location = new System.Drawing.Point(1162, 554);
             this.btnRegistrarCompra.Name = "btnRegistrarCompra";
             this.btnRegistrarCompra.Size = new System.Drawing.Size(134, 32);
             this.btnRegistrarCompra.TabIndex = 70;
@@ -640,7 +679,7 @@ namespace CapaPresentacion
             this.btnAgregarProducto.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnAgregarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnAgregarProducto.IconSize = 32;
-            this.btnAgregarProducto.Location = new System.Drawing.Point(825, 290);
+            this.btnAgregarProducto.Location = new System.Drawing.Point(1052, 290);
             this.btnAgregarProducto.Name = "btnAgregarProducto";
             this.btnAgregarProducto.Size = new System.Drawing.Size(134, 63);
             this.btnAgregarProducto.TabIndex = 56;
@@ -650,20 +689,20 @@ namespace CapaPresentacion
             this.btnAgregarProducto.UseVisualStyleBackColor = false;
             this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
             // 
-            // checkCaja
+            // checkCompraPesos
             // 
-            this.checkCaja.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkCaja.AutoSize = true;
-            this.checkCaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.checkCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkCaja.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkCaja.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkCaja.Location = new System.Drawing.Point(825, 359);
-            this.checkCaja.Name = "checkCaja";
-            this.checkCaja.Size = new System.Drawing.Size(135, 21);
-            this.checkCaja.TabIndex = 72;
-            this.checkCaja.Text = "Descontar de Caja";
-            this.checkCaja.UseVisualStyleBackColor = false;
+            this.checkCompraPesos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkCompraPesos.AutoSize = true;
+            this.checkCompraPesos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkCompraPesos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkCompraPesos.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkCompraPesos.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkCompraPesos.Location = new System.Drawing.Point(1057, 359);
+            this.checkCompraPesos.Name = "checkCompraPesos";
+            this.checkCompraPesos.Size = new System.Drawing.Size(130, 21);
+            this.checkCompraPesos.TabIndex = 72;
+            this.checkCompraPesos.Text = "Compra en Pesos";
+            this.checkCompraPesos.UseVisualStyleBackColor = false;
             // 
             // cboFormaPago4
             // 
@@ -805,39 +844,6 @@ namespace CapaPresentacion
             this.label12.TabIndex = 110;
             this.label12.Text = "Monto FP1:";
             // 
-            // txtCotizacion
-            // 
-            this.txtCotizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtCotizacion.DecimalPlaces = 2;
-            this.txtCotizacion.Location = new System.Drawing.Point(538, 72);
-            this.txtCotizacion.Maximum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            0});
-            this.txtCotizacion.Minimum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            -2147483648});
-            this.txtCotizacion.Name = "txtCotizacion";
-            this.txtCotizacion.ReadOnly = true;
-            this.txtCotizacion.Size = new System.Drawing.Size(90, 29);
-            this.txtCotizacion.TabIndex = 126;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label8.Location = new System.Drawing.Point(535, 51);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 17);
-            this.label8.TabIndex = 127;
-            this.label8.Text = "Cotizacion:";
-            // 
             // label23
             // 
             this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -880,7 +886,7 @@ namespace CapaPresentacion
             this.checkRecargo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkRecargo.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkRecargo.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkRecargo.Location = new System.Drawing.Point(825, 413);
+            this.checkRecargo.Location = new System.Drawing.Point(1052, 430);
             this.checkRecargo.Name = "checkRecargo";
             this.checkRecargo.Size = new System.Drawing.Size(120, 21);
             this.checkRecargo.TabIndex = 138;
@@ -896,7 +902,7 @@ namespace CapaPresentacion
             this.checkDescuento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkDescuento.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkDescuento.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkDescuento.Location = new System.Drawing.Point(825, 386);
+            this.checkDescuento.Location = new System.Drawing.Point(1052, 408);
             this.checkDescuento.Name = "checkDescuento";
             this.checkDescuento.Size = new System.Drawing.Size(136, 21);
             this.checkDescuento.TabIndex = 137;
@@ -911,7 +917,7 @@ namespace CapaPresentacion
             this.lblPorcentaje.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblPorcentaje.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPorcentaje.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblPorcentaje.Location = new System.Drawing.Point(888, 479);
+            this.lblPorcentaje.Location = new System.Drawing.Point(1027, 476);
             this.lblPorcentaje.Name = "lblPorcentaje";
             this.lblPorcentaje.Size = new System.Drawing.Size(19, 17);
             this.lblPorcentaje.TabIndex = 136;
@@ -925,7 +931,7 @@ namespace CapaPresentacion
             this.lblMontoDescuento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblMontoDescuento.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMontoDescuento.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblMontoDescuento.Location = new System.Drawing.Point(827, 503);
+            this.lblMontoDescuento.Location = new System.Drawing.Point(1054, 520);
             this.lblMontoDescuento.Name = "lblMontoDescuento";
             this.lblMontoDescuento.Size = new System.Drawing.Size(57, 17);
             this.lblMontoDescuento.TabIndex = 135;
@@ -939,7 +945,7 @@ namespace CapaPresentacion
             this.lblDescuento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblDescuento.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescuento.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblDescuento.Location = new System.Drawing.Point(825, 459);
+            this.lblDescuento.Location = new System.Drawing.Point(1052, 476);
             this.lblDescuento.Name = "lblDescuento";
             this.lblDescuento.Size = new System.Drawing.Size(140, 17);
             this.lblDescuento.TabIndex = 134;
@@ -949,7 +955,7 @@ namespace CapaPresentacion
             // txtMontoDescuento
             // 
             this.txtMontoDescuento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMontoDescuento.Location = new System.Drawing.Point(828, 523);
+            this.txtMontoDescuento.Location = new System.Drawing.Point(1055, 540);
             this.txtMontoDescuento.Name = "txtMontoDescuento";
             this.txtMontoDescuento.Size = new System.Drawing.Size(81, 20);
             this.txtMontoDescuento.TabIndex = 133;
@@ -960,21 +966,13 @@ namespace CapaPresentacion
             // txtDescuento
             // 
             this.txtDescuento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDescuento.Location = new System.Drawing.Point(826, 479);
+            this.txtDescuento.Location = new System.Drawing.Point(1053, 496);
             this.txtDescuento.Name = "txtDescuento";
             this.txtDescuento.Size = new System.Drawing.Size(56, 20);
             this.txtDescuento.TabIndex = 132;
             this.txtDescuento.Text = "0";
             this.txtDescuento.Visible = false;
             this.txtDescuento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDescuento_KeyDown);
-            // 
-            // txtTotalVentaDolares
-            // 
-            this.txtTotalVentaDolares.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTotalVentaDolares.Location = new System.Drawing.Point(826, 599);
-            this.txtTotalVentaDolares.Name = "txtTotalVentaDolares";
-            this.txtTotalVentaDolares.Size = new System.Drawing.Size(77, 20);
-            this.txtTotalVentaDolares.TabIndex = 139;
             // 
             // txtTotalAPagar
             // 
@@ -1078,13 +1076,13 @@ namespace CapaPresentacion
             // 
             // checkMonedaDolar
             // 
-            this.checkMonedaDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkMonedaDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkMonedaDolar.AutoSize = true;
             this.checkMonedaDolar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.checkMonedaDolar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkMonedaDolar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkMonedaDolar.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkMonedaDolar.Location = new System.Drawing.Point(825, 435);
+            this.checkMonedaDolar.Location = new System.Drawing.Point(1052, 452);
             this.checkMonedaDolar.Name = "checkMonedaDolar";
             this.checkMonedaDolar.Size = new System.Drawing.Size(112, 21);
             this.checkMonedaDolar.TabIndex = 145;
@@ -1179,12 +1177,52 @@ namespace CapaPresentacion
             this.lblRestaPagarDolares.Text = "Resta Pagar U$S:";
             this.lblRestaPagarDolares.Visible = false;
             // 
+            // checkCaja
+            // 
+            this.checkCaja.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkCaja.AutoSize = true;
+            this.checkCaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.checkCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkCaja.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkCaja.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkCaja.Location = new System.Drawing.Point(1052, 381);
+            this.checkCaja.Name = "checkCaja";
+            this.checkCaja.Size = new System.Drawing.Size(157, 21);
+            this.checkCaja.TabIndex = 151;
+            this.checkCaja.Text = "No Descontar de Caja";
+            this.checkCaja.UseVisualStyleBackColor = false;
+            // 
+            // label24
+            // 
+            this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label24.Location = new System.Drawing.Point(817, 483);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(102, 17);
+            this.label24.TabIndex = 153;
+            this.label24.Text = "Observaciones:";
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtObservaciones.Location = new System.Drawing.Point(820, 507);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(226, 85);
+            this.txtObservaciones.TabIndex = 152;
+            // 
             // frmCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.txtObservaciones);
+            this.Controls.Add(this.checkCaja);
             this.Controls.Add(this.txtTotalAPagarDolares);
             this.Controls.Add(this.lblTotalAPagarDolares);
             this.Controls.Add(this.txtRestaPagarDolares);
@@ -1196,7 +1234,6 @@ namespace CapaPresentacion
             this.Controls.Add(this.txtPagaCon2);
             this.Controls.Add(this.txtPagaCon);
             this.Controls.Add(this.txtTotalAPagar);
-            this.Controls.Add(this.txtTotalVentaDolares);
             this.Controls.Add(this.checkRecargo);
             this.Controls.Add(this.checkDescuento);
             this.Controls.Add(this.lblPorcentaje);
@@ -1219,8 +1256,7 @@ namespace CapaPresentacion
             this.Controls.Add(this.cboFormaPago);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.checkCaja);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.checkCompraPesos);
             this.Controls.Add(this.btnRegistrarCompra);
             this.Controls.Add(this.btnAgregarProducto);
             this.Controls.Add(this.label13);
@@ -1228,7 +1264,7 @@ namespace CapaPresentacion
             this.Controls.Add(this.gbInfoProducto);
             this.Controls.Add(this.gbInfoProveedor);
             this.Controls.Add(this.gbRegistrarCompra);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.label11);
             this.Name = "frmCompras";
             this.Text = "frmCompras";
@@ -1240,9 +1276,8 @@ namespace CapaPresentacion
             this.gbInfoProducto.ResumeLayout(false);
             this.gbInfoProducto.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalAPagar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon3)).EndInit();
@@ -1259,7 +1294,7 @@ namespace CapaPresentacion
         #endregion
 
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.GroupBox gbRegistrarCompra;
         private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Label label2;
@@ -1289,8 +1324,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label label13;
         private FontAwesome.Sharp.IconButton btnRegistrarCompra;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.CheckBox checkCaja;
+        private System.Windows.Forms.CheckBox checkCompraPesos;
         private System.Windows.Forms.ComboBox cboFormaPago4;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
@@ -1308,13 +1342,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtCambioCliente;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
-        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
         private System.Windows.Forms.CheckBox checkRecargo;
         private System.Windows.Forms.CheckBox checkDescuento;
         private System.Windows.Forms.Label lblPorcentaje;
@@ -1334,5 +1361,15 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label lblTotalAPagarDolares;
         private System.Windows.Forms.NumericUpDown txtRestaPagarDolares;
         private System.Windows.Forms.Label lblRestaPagarDolares;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
+        private System.Windows.Forms.CheckBox checkCaja;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }

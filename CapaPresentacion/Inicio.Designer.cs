@@ -38,8 +38,14 @@ namespace CapaPresentacion
             this.subMenuNegocio = new System.Windows.Forms.ToolStripMenuItem();
             this.cotizacionDolarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuFormaPago = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuVendedores = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStock = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuStock = new System.Windows.Forms.ToolStripMenuItem();
-            this.subMenuTraspasoMercaderia = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuTraspasoStock = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSerializacion = new FontAwesome.Sharp.IconMenuItem();
+            this.subMenuSerializarProducto = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuProductosSerializados = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuSerialVendidos = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVentas = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuRegistrarVenta = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuDetalleVenta = new FontAwesome.Sharp.IconMenuItem();
@@ -59,6 +65,7 @@ namespace CapaPresentacion
             this.menuRMA = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultas = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultaStock = new FontAwesome.Sharp.IconMenuItem();
+            this.subMenuDeudas = new FontAwesome.Sharp.IconMenuItem();
             this.menuServicioTecnico = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuIngresoService = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuCobroService = new FontAwesome.Sharp.IconMenuItem();
@@ -68,6 +75,8 @@ namespace CapaPresentacion
             this.label2 = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblCambioSucursal = new System.Windows.Forms.Label();
+            this.cboSucursal = new System.Windows.Forms.ComboBox();
             this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.lblSucursal = new System.Windows.Forms.Label();
@@ -83,6 +92,8 @@ namespace CapaPresentacion
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
@@ -96,6 +107,8 @@ namespace CapaPresentacion
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuUsuarios,
             this.menuMantenedor,
+            this.menuStock,
+            this.menuSerializacion,
             this.menuVentas,
             this.menuCompras,
             this.menuClientes,
@@ -138,8 +151,7 @@ namespace CapaPresentacion
             this.subMenuNegocio,
             this.cotizacionDolarToolStripMenuItem,
             this.subMenuFormaPago,
-            this.subMenuStock,
-            this.subMenuTraspasoMercaderia});
+            this.subMenuVendedores});
             this.menuMantenedor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuMantenedor.ForeColor = System.Drawing.Color.White;
             this.menuMantenedor.IconChar = FontAwesome.Sharp.IconChar.Toolbox;
@@ -161,7 +173,7 @@ namespace CapaPresentacion
             this.subMenuCategoria.IconColor = System.Drawing.Color.Black;
             this.subMenuCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.subMenuCategoria.Name = "subMenuCategoria";
-            this.subMenuCategoria.Size = new System.Drawing.Size(259, 26);
+            this.subMenuCategoria.Size = new System.Drawing.Size(207, 26);
             this.subMenuCategoria.Text = "Categoria";
             this.subMenuCategoria.Click += new System.EventHandler(this.subMenuCategoria_Click);
             // 
@@ -173,7 +185,7 @@ namespace CapaPresentacion
             this.subMenuProducto.IconColor = System.Drawing.Color.Black;
             this.subMenuProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.subMenuProducto.Name = "subMenuProducto";
-            this.subMenuProducto.Size = new System.Drawing.Size(259, 26);
+            this.subMenuProducto.Size = new System.Drawing.Size(207, 26);
             this.subMenuProducto.Text = "Producto";
             this.subMenuProducto.Click += new System.EventHandler(this.subMenuProducto_Click);
             // 
@@ -182,7 +194,7 @@ namespace CapaPresentacion
             this.subMenuNegocio.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuNegocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.subMenuNegocio.Name = "subMenuNegocio";
-            this.subMenuNegocio.Size = new System.Drawing.Size(259, 26);
+            this.subMenuNegocio.Size = new System.Drawing.Size(207, 26);
             this.subMenuNegocio.Text = "Negocio";
             this.subMenuNegocio.Click += new System.EventHandler(this.subMenuNegocio_Click);
             // 
@@ -191,7 +203,7 @@ namespace CapaPresentacion
             this.cotizacionDolarToolStripMenuItem.BackColor = System.Drawing.Color.ForestGreen;
             this.cotizacionDolarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.cotizacionDolarToolStripMenuItem.Name = "cotizacionDolarToolStripMenuItem";
-            this.cotizacionDolarToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
+            this.cotizacionDolarToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
             this.cotizacionDolarToolStripMenuItem.Text = "Cotizacion Dolar";
             this.cotizacionDolarToolStripMenuItem.Click += new System.EventHandler(this.cotizacionDolarToolStripMenuItem_Click);
             // 
@@ -200,9 +212,37 @@ namespace CapaPresentacion
             this.subMenuFormaPago.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuFormaPago.ForeColor = System.Drawing.Color.White;
             this.subMenuFormaPago.Name = "subMenuFormaPago";
-            this.subMenuFormaPago.Size = new System.Drawing.Size(259, 26);
+            this.subMenuFormaPago.Size = new System.Drawing.Size(207, 26);
             this.subMenuFormaPago.Text = "Formas de Pago";
             this.subMenuFormaPago.Click += new System.EventHandler(this.subMenuFormaPago_Click);
+            // 
+            // subMenuVendedores
+            // 
+            this.subMenuVendedores.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuVendedores.ForeColor = System.Drawing.Color.White;
+            this.subMenuVendedores.Name = "subMenuVendedores";
+            this.subMenuVendedores.Size = new System.Drawing.Size(207, 26);
+            this.subMenuVendedores.Text = "Vendedores";
+            this.subMenuVendedores.Click += new System.EventHandler(this.subMenuVendedores_Click);
+            // 
+            // menuStock
+            // 
+            this.menuStock.AutoSize = false;
+            this.menuStock.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subMenuStock,
+            this.subMenuTraspasoStock});
+            this.menuStock.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStock.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.menuStock.IconChar = FontAwesome.Sharp.IconChar.Clock;
+            this.menuStock.IconColor = System.Drawing.Color.Black;
+            this.menuStock.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.menuStock.IconSize = 50;
+            this.menuStock.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.menuStock.Name = "menuStock";
+            this.menuStock.Padding = new System.Windows.Forms.Padding(0);
+            this.menuStock.Size = new System.Drawing.Size(122, 75);
+            this.menuStock.Text = "Stock";
+            this.menuStock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // subMenuStock
             // 
@@ -211,16 +251,63 @@ namespace CapaPresentacion
             this.subMenuStock.Name = "subMenuStock";
             this.subMenuStock.Size = new System.Drawing.Size(259, 26);
             this.subMenuStock.Text = "Stock";
-            this.subMenuStock.Click += new System.EventHandler(this.subMenuStock_Click);
+            this.subMenuStock.Click += new System.EventHandler(this.subMenuStock2_Click);
             // 
-            // subMenuTraspasoMercaderia
+            // subMenuTraspasoStock
             // 
-            this.subMenuTraspasoMercaderia.BackColor = System.Drawing.Color.ForestGreen;
-            this.subMenuTraspasoMercaderia.ForeColor = System.Drawing.Color.White;
-            this.subMenuTraspasoMercaderia.Name = "subMenuTraspasoMercaderia";
-            this.subMenuTraspasoMercaderia.Size = new System.Drawing.Size(259, 26);
-            this.subMenuTraspasoMercaderia.Text = "Traspaso de Mercaderia";
-            this.subMenuTraspasoMercaderia.Click += new System.EventHandler(this.subMenuTraspasoMercaderia_Click);
+            this.subMenuTraspasoStock.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuTraspasoStock.ForeColor = System.Drawing.Color.White;
+            this.subMenuTraspasoStock.Name = "subMenuTraspasoStock";
+            this.subMenuTraspasoStock.Size = new System.Drawing.Size(259, 26);
+            this.subMenuTraspasoStock.Text = "Traspaso de Mercaderia";
+            this.subMenuTraspasoStock.Click += new System.EventHandler(this.subMenuTraspasoStock_Click);
+            // 
+            // menuSerializacion
+            // 
+            this.menuSerializacion.AutoSize = false;
+            this.menuSerializacion.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subMenuSerializarProducto,
+            this.subMenuProductosSerializados,
+            this.subMenuSerialVendidos});
+            this.menuSerializacion.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuSerializacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.menuSerializacion.IconChar = FontAwesome.Sharp.IconChar.Servicestack;
+            this.menuSerializacion.IconColor = System.Drawing.Color.Black;
+            this.menuSerializacion.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.menuSerializacion.IconSize = 50;
+            this.menuSerializacion.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.menuSerializacion.Name = "menuSerializacion";
+            this.menuSerializacion.Padding = new System.Windows.Forms.Padding(0);
+            this.menuSerializacion.Size = new System.Drawing.Size(122, 75);
+            this.menuSerializacion.Text = "Serializacion";
+            this.menuSerializacion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // subMenuSerializarProducto
+            // 
+            this.subMenuSerializarProducto.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuSerializarProducto.ForeColor = System.Drawing.Color.White;
+            this.subMenuSerializarProducto.Name = "subMenuSerializarProducto";
+            this.subMenuSerializarProducto.Size = new System.Drawing.Size(253, 26);
+            this.subMenuSerializarProducto.Text = "Serializar Producto";
+            this.subMenuSerializarProducto.Click += new System.EventHandler(this.subMenuSerializarProducto_Click_1);
+            // 
+            // subMenuProductosSerializados
+            // 
+            this.subMenuProductosSerializados.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuProductosSerializados.ForeColor = System.Drawing.Color.White;
+            this.subMenuProductosSerializados.Name = "subMenuProductosSerializados";
+            this.subMenuProductosSerializados.Size = new System.Drawing.Size(253, 26);
+            this.subMenuProductosSerializados.Text = "Productos Serializados";
+            this.subMenuProductosSerializados.Click += new System.EventHandler(this.subMenuProductosSerializados_Click_1);
+            // 
+            // subMenuSerialVendidos
+            // 
+            this.subMenuSerialVendidos.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuSerialVendidos.ForeColor = System.Drawing.Color.White;
+            this.subMenuSerialVendidos.Name = "subMenuSerialVendidos";
+            this.subMenuSerialVendidos.Size = new System.Drawing.Size(253, 26);
+            this.subMenuSerialVendidos.Text = "S/N Vendidos";
+            this.subMenuSerialVendidos.Click += new System.EventHandler(this.subMenuSerialVendidos_Click);
             // 
             // menuVentas
             // 
@@ -459,7 +546,10 @@ namespace CapaPresentacion
             this.menuConsultas.AutoSize = false;
             this.menuConsultas.BackColor = System.Drawing.Color.ForestGreen;
             this.menuConsultas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuConsultaStock});
+            this.menuConsultaStock,
+            this.subMenuDeudas,
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
             this.menuConsultas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuConsultas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuConsultas.IconChar = FontAwesome.Sharp.IconChar.ListUl;
@@ -481,9 +571,21 @@ namespace CapaPresentacion
             this.menuConsultaStock.IconColor = System.Drawing.Color.Black;
             this.menuConsultaStock.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.menuConsultaStock.Name = "menuConsultaStock";
-            this.menuConsultaStock.Size = new System.Drawing.Size(157, 26);
+            this.menuConsultaStock.Size = new System.Drawing.Size(220, 26);
             this.menuConsultaStock.Text = "Productos";
             this.menuConsultaStock.Click += new System.EventHandler(this.menuConsultaStock_Click);
+            // 
+            // subMenuDeudas
+            // 
+            this.subMenuDeudas.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuDeudas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.subMenuDeudas.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.subMenuDeudas.IconColor = System.Drawing.Color.Black;
+            this.subMenuDeudas.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.subMenuDeudas.Name = "subMenuDeudas";
+            this.subMenuDeudas.Size = new System.Drawing.Size(220, 26);
+            this.subMenuDeudas.Text = "Deudas de Locales";
+            this.subMenuDeudas.Click += new System.EventHandler(this.subMenuDeudas_Click);
             // 
             // menuServicioTecnico
             // 
@@ -590,6 +692,8 @@ namespace CapaPresentacion
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.ForestGreen;
+            this.panel1.Controls.Add(this.lblCambioSucursal);
+            this.panel1.Controls.Add(this.cboSucursal);
             this.panel1.Controls.Add(this.iconPictureBox2);
             this.panel1.Controls.Add(this.iconPictureBox1);
             this.panel1.Controls.Add(this.lblSucursal);
@@ -607,6 +711,33 @@ namespace CapaPresentacion
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1366, 38);
             this.panel1.TabIndex = 15;
+            // 
+            // lblCambioSucursal
+            // 
+            this.lblCambioSucursal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCambioSucursal.AutoSize = true;
+            this.lblCambioSucursal.BackColor = System.Drawing.Color.ForestGreen;
+            this.lblCambioSucursal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCambioSucursal.ForeColor = System.Drawing.Color.White;
+            this.lblCambioSucursal.Location = new System.Drawing.Point(829, 9);
+            this.lblCambioSucursal.Name = "lblCambioSucursal";
+            this.lblCambioSucursal.Size = new System.Drawing.Size(118, 17);
+            this.lblCambioSucursal.TabIndex = 28;
+            this.lblCambioSucursal.Text = "Cambiar Sucursal:";
+            this.lblCambioSucursal.Visible = false;
+            // 
+            // cboSucursal
+            // 
+            this.cboSucursal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboSucursal.BackColor = System.Drawing.Color.Black;
+            this.cboSucursal.ForeColor = System.Drawing.Color.White;
+            this.cboSucursal.FormattingEnabled = true;
+            this.cboSucursal.Location = new System.Drawing.Point(953, 9);
+            this.cboSucursal.Name = "cboSucursal";
+            this.cboSucursal.Size = new System.Drawing.Size(178, 21);
+            this.cboSucursal.TabIndex = 4;
+            this.cboSucursal.Visible = false;
+            this.cboSucursal.SelectedIndexChanged += new System.EventHandler(this.cboSucursal_SelectedIndexChanged);
             // 
             // iconPictureBox2
             // 
@@ -801,6 +932,24 @@ namespace CapaPresentacion
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
             this.btnCerrarSesion.Click += new System.EventHandler(this.iconButton1_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.BackColor = System.Drawing.Color.ForestGreen;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(253, 26);
+            this.toolStripMenuItem1.Text = "Productos Serializados";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.BackColor = System.Drawing.Color.ForestGreen;
+            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(253, 26);
+            this.toolStripMenuItem2.Text = "S/N Vendidos";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
             // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -882,14 +1031,25 @@ namespace CapaPresentacion
         private System.Windows.Forms.ToolStripMenuItem subMenuFormaPago;
         private System.Windows.Forms.Label lblSucursal;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ToolStripMenuItem subMenuStock;
-        private System.Windows.Forms.ToolStripMenuItem subMenuTraspasoMercaderia;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
         private System.Windows.Forms.ToolStripMenuItem subMenuConceptos;
         private FontAwesome.Sharp.IconMenuItem menuServicioTecnico;
         private FontAwesome.Sharp.IconMenuItem subMenuIngresoService;
         private FontAwesome.Sharp.IconMenuItem subMenuCobroService;
+        private System.Windows.Forms.ToolStripMenuItem subMenuVendedores;
+        private System.Windows.Forms.ComboBox cboSucursal;
+        private System.Windows.Forms.Label lblCambioSucursal;
+        private FontAwesome.Sharp.IconMenuItem menuStock;
+        private System.Windows.Forms.ToolStripMenuItem subMenuStock;
+        private System.Windows.Forms.ToolStripMenuItem subMenuTraspasoStock;
+        private FontAwesome.Sharp.IconMenuItem subMenuDeudas;
+        private FontAwesome.Sharp.IconMenuItem menuSerializacion;
+        private System.Windows.Forms.ToolStripMenuItem subMenuSerializarProducto;
+        private System.Windows.Forms.ToolStripMenuItem subMenuProductosSerializados;
+        private System.Windows.Forms.ToolStripMenuItem subMenuSerialVendidos;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 

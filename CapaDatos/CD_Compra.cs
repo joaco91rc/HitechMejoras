@@ -58,7 +58,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("nroDocumento", objCompra.nroDocumento);
                     cmd.Parameters.AddWithValue("montoTotal", objCompra.montoTotal);
                     cmd.Parameters.AddWithValue("detalleCompra", detalleCompra);
-
+                    cmd.Parameters.AddWithValue("observaciones", objCompra.observaciones);
                     // Nuevos campos
                     cmd.Parameters.AddWithValue("formaPago", objCompra.formaPago);
                     cmd.Parameters.AddWithValue("formaPago2", objCompra.formaPago2);
@@ -95,8 +95,7 @@ namespace CapaDatos
             return respuesta;
         }
 
-
-        public List<Compra> ObtenerComprasConDetalle()
+        public List<Compra> ObtenerComprasConDetalleEntreFechas(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
             List<Compra> listaCompras = new List<Compra>();
 
@@ -116,8 +115,85 @@ namespace CapaDatos
                     query.AppendLine("FROM COMPRA C");
                     query.AppendLine("INNER JOIN USUARIO U ON U.idUsuario = C.idUsuario");
                     query.AppendLine("INNER JOIN PROVEEDOR PR ON PR.idProveedor = C.idProveedor");
+                    query.AppendLine("WHERE C.idNegocio = @idNegocio");  // Filtro por idNegocio
+                    query.AppendLine("AND C.fechaRegistro BETWEEN @fechaInicio AND @fechaFin");  // Filtro por rango de fechas
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);  // Pasar el parámetro idNegocio
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio);  // Pasar la fecha de inicio
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin);  // Pasar la fecha de fin
+                    cmd.CommandType = CommandType.Text;
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Compra objCompra = new Compra()
+                            {
+                                idCompra = Convert.ToInt32(dr["idCompra"]),
+                                idNegocio = Convert.ToInt32(dr["idNegocio"]),
+                                oUsuario = new Usuario() { nombreCompleto = dr["nombreCompleto"].ToString() },
+                                oProveedor = new Proveedor() { documento = dr["documento"].ToString(), razonSocial = dr["razonSocial"].ToString() },
+                                tipoDocumento = dr["tipoDocumento"].ToString(),
+                                nroDocumento = dr["nroDocumento"].ToString(),
+                                montoTotal = Convert.ToDecimal(dr["montoTotal"]),
+                                fechaRegistro = dr["fechaRegistro"].ToString(),
+                                formaPago = dr["formaPago"].ToString(),
+                                formaPago2 = dr["formaPago2"].ToString(),
+                                formaPago3 = dr["formaPago3"].ToString(),
+                                formaPago4 = dr["formaPago4"].ToString(),
+                                montoFP1 = Convert.ToDecimal(dr["montoFP1"]),
+                                montoFP2 = Convert.ToDecimal(dr["montoFP2"]),
+                                montoFP3 = Convert.ToDecimal(dr["montoFP3"]),
+                                montoFP4 = Convert.ToDecimal(dr["montoFP4"]),
+                                montoPago = Convert.ToDecimal(dr["montoPago"]),
+                                montoPagoFP2 = Convert.ToDecimal(dr["montoPagoFP2"]),
+                                montoPagoFP3 = Convert.ToDecimal(dr["montoPagoFP3"]),
+                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"])
+                            };
+
+                            // Obtener los detalles de compra
+                            objCompra.oDetalleCompra = ObtenerDetalleCompra(objCompra.idCompra);
+
+                            listaCompras.Add(objCompra);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    listaCompras = new List<Compra>();
+                    // Manejo de errores (opcional)
+                }
+            }
+
+            return listaCompras;
+        }
+
+
+        public List<Compra> ObtenerComprasConDetalle(int idNegocio)
+        {
+            List<Compra> listaCompras = new List<Compra>();
+
+            using (SqlConnection conexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    conexion.Open();
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("SELECT C.idCompra,");
+                    query.AppendLine("U.nombreCompleto,");
+                    query.AppendLine("PR.documento, PR.razonSocial,");
+                    query.AppendLine("C.tipoDocumento, C.idNegocio, C.nroDocumento, C.montoTotal, CONVERT(CHAR(10), C.fechaRegistro, 103) [fechaRegistro],");
+                    query.AppendLine("C.formaPago, C.formaPago2, C.formaPago3, C.formaPago4,");
+                    query.AppendLine("C.montoFP1, C.montoFP2, C.montoFP3, C.montoFP4,");
+                    query.AppendLine("C.montoPago, C.montoPagoFP2, C.montoPagoFP3, C.montoPagoFP4");
+                    query.AppendLine("FROM COMPRA C");
+                    query.AppendLine("INNER JOIN USUARIO U ON U.idUsuario = C.idUsuario");
+                    query.AppendLine("INNER JOIN PROVEEDOR PR ON PR.idProveedor = C.idProveedor");
+                    query.AppendLine("WHERE c.idNegocio = @idNegocio");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -145,7 +221,7 @@ namespace CapaDatos
                                 montoPago = Convert.ToDecimal(dr["montoPago"].ToString()),
                                 montoPagoFP2 = Convert.ToDecimal(dr["montoPagoFP2"].ToString()),
                                 montoPagoFP3 = Convert.ToDecimal(dr["montoPagoFP3"].ToString()),
-                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString()),
+                                montoPagoFP4 = Convert.ToDecimal(dr["montoPagoFP4"].ToString())
                                 
                             };
 
@@ -250,7 +326,7 @@ namespace CapaDatos
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
 
-                    query.AppendLine("select P.nombre, DC.precioCompra,DC.cantidad,DC.montoTotal from DETALLE_COMPRA DC");
+                    query.AppendLine("select P.idProducto,P.nombre, DC.precioCompra,DC.cantidad,DC.montoTotal from DETALLE_COMPRA DC");
                     query.AppendLine("inner join PRODUCTO P ON P.idProducto=DC.idProducto");
                     query.AppendLine("WHERE DC.idCompra=@idCompra");
 
@@ -267,7 +343,7 @@ namespace CapaDatos
                             oLista.Add(new DetalleCompra()
                             {
                                 
-                                oProducto = new Producto() { nombre = dr["nombre"].ToString() },
+                                oProducto = new Producto() { idProducto = Convert.ToInt32(dr["idProducto"]), nombre = dr["nombre"].ToString() },
                                 precioCompra = Convert.ToDecimal(dr["precioCompra"].ToString()),
                                 cantidad = Convert.ToInt32(dr["cantidad"].ToString()),
                                 montoTotal = Convert.ToDecimal(dr["montoTotal"].ToString())

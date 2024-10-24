@@ -36,7 +36,7 @@ namespace CapaDatos
                             {
                                 idTransaccion = Convert.ToInt32(dr["idTransaccion"]),
                                 idCajaRegistradora = Convert.ToInt32(dr["idCajaRegistradora"]),
-                                hora = dr["hora"].ToString(),
+                                hora = Convert.ToDateTime(dr["hora"]).ToString(),
                                 tipoTransaccion = dr["tipoTransaccion"].ToString(),
                                 monto = Convert.ToDecimal(dr["monto"]),
                                 formaPago = dr["formaPago"].ToString(),
@@ -59,6 +59,59 @@ namespace CapaDatos
             return lista;
         }
 
+        public bool ObtenerSaldosCajas(int idNegocio, int idCajaRegistradora, out decimal saldoEfectivo, out decimal saldoMercadoPago, out decimal saldoDolares, out decimal saldoGalicia, out string mensaje)
+        {
+            bool resultado = false;
+            saldoEfectivo = 0;
+            saldoMercadoPago = 0;
+            saldoDolares = 0;
+            saldoGalicia = 0;
+            mensaje = string.Empty;
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    oconexion.Open(); // Asegúrate de abrir la conexión aquí
+                    using (SqlCommand cmd = new SqlCommand("SP_CALCULAR_SALDO_CAJAS", oconexion))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                        cmd.Parameters.AddWithValue("@idCajaRegistradora", idCajaRegistradora);
+
+                        // Parámetros de salida
+                        cmd.Parameters.Add("@saldoEfectivo", SqlDbType.Decimal).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@saldoMercadoPago", SqlDbType.Decimal).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@saldoDolares", SqlDbType.Decimal).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@saldoGalicia", SqlDbType.Decimal).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+
+                        // Ejecutar el comando
+                        cmd.ExecuteNonQuery();
+
+                        // Asignar los valores de salida
+                        saldoEfectivo = cmd.Parameters["@saldoEfectivo"].Value != DBNull.Value ? Convert.ToDecimal(cmd.Parameters["@saldoEfectivo"].Value) : 0;
+                        saldoMercadoPago = cmd.Parameters["@saldoMercadoPago"].Value != DBNull.Value ? Convert.ToDecimal(cmd.Parameters["@saldoMercadoPago"].Value) : 0;
+                        saldoDolares = cmd.Parameters["@saldoDolares"].Value != DBNull.Value ? Convert.ToDecimal(cmd.Parameters["@saldoDolares"].Value) : 0;
+                        saldoGalicia = cmd.Parameters["@saldoGalicia"].Value != DBNull.Value ? Convert.ToDecimal(cmd.Parameters["@saldoGalicia"].Value) : 0;
+
+                        mensaje = cmd.Parameters["@mensaje"].Value?.ToString() ?? "Sin mensaje";
+
+                        resultado = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                resultado = false;
+            }
+
+            return resultado;
+        }
+
+
         public int RegistrarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
         {
             int idTransaccionGenerado = 0;
@@ -76,7 +129,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("tipoTransaccion", objTransaccion.tipoTransaccion);
                     cmd.Parameters.AddWithValue("monto", objTransaccion.monto);
                     cmd.Parameters.AddWithValue("docAsociado", objTransaccion.docAsociado);
-                    cmd.Parameters.AddWithValue("fecha", DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("fecha", DateTime.Now);
                     cmd.Parameters.AddWithValue("usuarioTransaccion", objTransaccion.usuarioTransaccion);
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);

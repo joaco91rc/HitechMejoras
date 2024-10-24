@@ -38,9 +38,15 @@ namespace CapaNegocio
 
         }
 
+        public bool RechazarOrdenTraspaso(int id)
+        {
+            return objcd_OrdenTraspaso.RechazarOrdenTraspaso(id);
 
 
         }
+
+
+    }
 
 
 }

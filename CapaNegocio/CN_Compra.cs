@@ -27,9 +27,14 @@ namespace CapaNegocio
             
         }
 
-        public List<Compra> ObtenerComprasConDetalle()
+        public List<Compra> ObtenerComprasConDetalleEntreFechas(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
-            List<Compra> listaCompras = objcd_compra.ObtenerComprasConDetalle();
+            // Simplemente llamamos al método del DAL que ya trae todo junto
+            return objcd_compra.ObtenerComprasConDetalleEntreFechas(idNegocio, fechaInicio, fechaFin);
+        }
+        public List<Compra> ObtenerComprasConDetalle(int idNegocio)
+        {
+            List<Compra> listaCompras = objcd_compra.ObtenerComprasConDetalle(idNegocio);
 
             foreach (Compra compra in listaCompras)
             {

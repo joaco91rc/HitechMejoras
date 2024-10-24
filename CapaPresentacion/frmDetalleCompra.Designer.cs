@@ -32,7 +32,6 @@ namespace CapaPresentacion
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDetalleCompra));
             this.label1 = new System.Windows.Forms.Label();
             this.gbRegistrarCompra = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -53,7 +52,6 @@ namespace CapaPresentacion
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.txtTotalAPagar = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnDescargarPDF = new FontAwesome.Sharp.IconButton();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscarProducto = new FontAwesome.Sharp.IconButton();
@@ -89,7 +87,6 @@ namespace CapaPresentacion
             this.gbRegistrarCompra.SuspendLayout();
             this.gbInfoProveedor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -100,7 +97,7 @@ namespace CapaPresentacion
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label1.Location = new System.Drawing.Point(1, -1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(949, 730);
+            this.label1.Size = new System.Drawing.Size(1348, 730);
             this.label1.TabIndex = 0;
             // 
             // gbRegistrarCompra
@@ -360,18 +357,6 @@ namespace CapaPresentacion
             this.label13.Size = new System.Drawing.Size(94, 17);
             this.label13.TabIndex = 71;
             this.label13.Text = "Total a Pagar:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(956, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(394, 729);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 74;
-            this.pictureBox1.TabStop = false;
             // 
             // btnDescargarPDF
             // 
@@ -726,7 +711,6 @@ namespace CapaPresentacion
             this.idProducto.HeaderText = "ID PRODUCTO";
             this.idProducto.Name = "idProducto";
             this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
             // 
             // producto
             // 
@@ -783,7 +767,6 @@ namespace CapaPresentacion
             this.Controls.Add(this.lblIdCompra);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnDescargarPDF);
             this.Controls.Add(this.txtTotalAPagar);
             this.Controls.Add(this.label13);
@@ -803,7 +786,6 @@ namespace CapaPresentacion
             this.gbInfoProveedor.ResumeLayout(false);
             this.gbInfoProveedor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -834,7 +816,6 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnDescargarPDF;
         private System.Windows.Forms.TextBox txtTotalAPagar;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label14;
         private FontAwesome.Sharp.IconButton btnEliminar;
         private System.Windows.Forms.Label lblIdCompra;

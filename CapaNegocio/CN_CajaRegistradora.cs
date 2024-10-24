@@ -17,7 +17,11 @@ namespace CapaNegocio
             return objcd_CajaRegistradora.Listar(idNegocio);
         }
 
-        
+        public CajaRegistradora ObtenerUltimaCajaCerrada(int idNegocio)
+        {
+            return objcd_CajaRegistradora.ObtenerUltimaCajaCerrada(idNegocio);
+        }
+
 
         public CajaRegistradora ObtenerCajaPorFecha(string fecha, int idNegocio)
         {

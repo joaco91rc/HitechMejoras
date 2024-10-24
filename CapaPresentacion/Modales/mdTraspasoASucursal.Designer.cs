@@ -44,6 +44,8 @@ namespace CapaPresentacion.Modales
             this.txtFechaTraspaso = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.lblCantStock = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtSerialNumber = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
@@ -90,7 +92,7 @@ namespace CapaPresentacion.Modales
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.label4.Location = new System.Drawing.Point(45, 211);
+            this.label4.Location = new System.Drawing.Point(45, 242);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 17);
             this.label4.TabIndex = 93;
@@ -141,7 +143,7 @@ namespace CapaPresentacion.Modales
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.label1.Location = new System.Drawing.Point(45, 249);
+            this.label1.Location = new System.Drawing.Point(45, 280);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 103;
@@ -183,14 +185,14 @@ namespace CapaPresentacion.Modales
             this.cboSucursal.BackColor = System.Drawing.Color.White;
             this.cboSucursal.ForeColor = System.Drawing.Color.Black;
             this.cboSucursal.FormattingEnabled = true;
-            this.cboSucursal.Location = new System.Drawing.Point(230, 211);
+            this.cboSucursal.Location = new System.Drawing.Point(230, 242);
             this.cboSucursal.Name = "cboSucursal";
             this.cboSucursal.Size = new System.Drawing.Size(178, 21);
             this.cboSucursal.TabIndex = 107;
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(230, 246);
+            this.txtCantidad.Location = new System.Drawing.Point(230, 277);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(178, 20);
             this.txtCantidad.TabIndex = 108;
@@ -233,12 +235,34 @@ namespace CapaPresentacion.Modales
             this.lblCantStock.TabIndex = 111;
             this.lblCantStock.Text = "Stock:";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.label6.Location = new System.Drawing.Point(45, 210);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 17);
+            this.label6.TabIndex = 112;
+            this.label6.Text = "S/N:";
+            // 
+            // txtSerialNumber
+            // 
+            this.txtSerialNumber.Enabled = false;
+            this.txtSerialNumber.Location = new System.Drawing.Point(230, 207);
+            this.txtSerialNumber.Name = "txtSerialNumber";
+            this.txtSerialNumber.Size = new System.Drawing.Size(178, 20);
+            this.txtSerialNumber.TabIndex = 113;
+            // 
             // mdTraspasoASucursal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(502, 378);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtSerialNumber);
             this.Controls.Add(this.lblCantStock);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtFechaTraspaso);
@@ -282,5 +306,7 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DateTimePicker txtFechaTraspaso;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblCantStock;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtSerialNumber;
     }
 }

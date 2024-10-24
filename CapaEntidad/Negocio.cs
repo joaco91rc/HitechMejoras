@@ -13,6 +13,9 @@ namespace CapaEntidad
         public string nombre { get; set; }
         public string CUIT { get; set; }
         public string direccion { get; set; }
+        public string instagram { get; set; }
+        public string telefono { get; set; }
+        public string mail { get; set; }
 
 
 

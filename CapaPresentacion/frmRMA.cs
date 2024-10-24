@@ -30,6 +30,7 @@ namespace CapaPresentacion
             cboEstado.Items.Add(new OpcionCombo() { Valor = 2, Texto = "EN ESPERA DE RESOLUCION RMA" });
             cboEstado.Items.Add(new OpcionCombo() { Valor = 3, Texto = "REPARADO POR RMA" });
             cboEstado.Items.Add(new OpcionCombo() { Valor = 4, Texto = "NOTA DE CREDITO POR EL RMA" });
+            cboEstado.Items.Add(new OpcionCombo() { Valor = 5, Texto = "MERCADERIA NO A LA VENTA" });
             cboEstado.DisplayMember = "Texto";
             cboEstado.ValueMember = "Valor";
             cboEstado.SelectedIndex = 0;
@@ -48,7 +49,7 @@ namespace CapaPresentacion
 
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
-            using (var modal = new mdProducto())
+            using (var modal = new mdProducto(this))
             {
                 var result = modal.ShowDialog();
                 if (result == DialogResult.OK)
@@ -85,12 +86,12 @@ namespace CapaPresentacion
                 int idProductoRMAGenerado = new CN_ProductoRMA().RegistrarProductoXRMA(objProductoRMA, out mensaje);
                 if (idProductoRMAGenerado != 0)
                 {
-                    bool respuesta = new CN_Producto().RestarStockPorRMA(Convert.ToInt32(txtIdProducto.Text), Convert.ToInt32(txtCantidad.Value), out mensaje);
+                    bool respuesta = new CN_Producto().RestarStockPorRMA(Convert.ToInt32(txtIdProducto.Text), Convert.ToInt32(txtCantidad.Value), GlobalSettings.SucursalId, out mensaje);
                     if (respuesta)
                     {
                         MessageBox.Show("Se ha descontado el producto que esta en RMA del Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    dgvData.Rows.Add(new object[] { defaultImage,idProductoRMAGenerado,txtProducto.Text,txtCantidad.Text, cboEstado.Text,cboEstado.Text,dtpFechaIngreso.Text,dtpFechaEgreso.Text,
+                    dgvData.Rows.Add(new object[] { defaultImage,idProductoRMAGenerado,txtProducto.Text,txtCantidad.Text, cboEstado.Text,cboEstado.Text,dtpFechaIngreso.Text,null,
                         txtIdProducto.Text });
                     Limpiar();
                 }
@@ -98,30 +99,35 @@ namespace CapaPresentacion
 
             }else
             {
-                bool respuesta2 = new CN_ProductoRMA().EditarProductoXRMA(Convert.ToInt32(txtIdProductoRMA.Text),cboEstado.Text,dtpFechaEgreso.Value ,out mensaje);
-                if (respuesta2)
+                if (GlobalSettings.RolUsuario == 1)
                 {
-                    DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
-                    row.Cells["idProducto"].Value = txtIdProducto.Text;
-                    row.Cells["fechaIngreso"].Value = dtpFechaIngreso.Text;
-                    row.Cells["descripcionProductoRMA"].Value = txtProducto.Text;
-                    row.Cells["cantidad"].Value = txtCantidad.Text;
-                    row.Cells["estado"].Value = cboEstado.Text;
-                    row.Cells["fechaEgreso"].Value = dtpFechaEgreso.Text;
-                    
-                    if(objProductoRMA.estado == "PROCESO DE RMA COMPLETADO" || objProductoRMA.estado == "REPARADO POR RMA")
+                    bool respuesta2 = new CN_ProductoRMA().EditarProductoXRMA(Convert.ToInt32(txtIdProductoRMA.Text), cboEstado.Text, dtpFechaEgreso.Value, out mensaje);
+                    if (respuesta2)
                     {
-                        bool actualizarStock = new CN_Producto().SumarStockPorRMA(Convert.ToInt32(txtIdProducto.Text), Convert.ToInt32(txtCantidad.Value), out mensaje);
-                        if (actualizarStock)
-                        {
-                            MessageBox.Show("Se ha sumado el producto que esta en RMA al Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
+                        DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
+                        row.Cells["idProducto"].Value = txtIdProducto.Text;
+                        row.Cells["fechaIngreso"].Value = dtpFechaIngreso.Text;
+                        row.Cells["descripcionProductoRMA"].Value = txtProducto.Text;
+                        row.Cells["cantidad"].Value = txtCantidad.Text;
+                        row.Cells["estado"].Value = cboEstado.Text;
+                        row.Cells["fechaEgreso"].Value = dtpFechaEgreso.Text;
 
-                    Limpiar();
-                    MessageBox.Show("Datos Modificados.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (objProductoRMA.estado == "PROCESO DE RMA COMPLETADO" || objProductoRMA.estado == "REPARADO POR RMA")
+                        {
+                            bool actualizarStock = new CN_Producto().SumarStockPorRMA(Convert.ToInt32(txtIdProducto.Text), Convert.ToInt32(txtCantidad.Value), GlobalSettings.SucursalId, out mensaje);
+                            if (actualizarStock)
+                            {
+                                MessageBox.Show("Se ha sumado el producto que esta en RMA al Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+
+                        Limpiar();
+                        MessageBox.Show("Datos Modificados.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                } else
+                {
+                    MessageBox.Show("No posee permisos para modificar el Estado del Producto en RMA. Contactese con un Administrador", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                
 
             }
            

@@ -15,7 +15,7 @@ namespace CapaEntidad
         public int idProducto { get; set; }
 
         public DateTime fechaIngreso { get; set; }
-        public DateTime fechaEgreso { get; set; }
+        public DateTime? fechaEgreso { get; set; }
 
 
 

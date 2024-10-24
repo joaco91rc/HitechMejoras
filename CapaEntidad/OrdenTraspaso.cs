@@ -14,9 +14,13 @@ namespace CapaEntidad
         public int IdProducto { get; set; }
         public int Cantidad { get; set; }
         public string Confirmada { get; set; }
+        public string SerialNumber { get; set; }
         public DateTime FechaCreacion { get; set; }
+        public decimal CostoProducto { get; set; }
 
         public DateTime? FechaConfirmacion { get; set; }
+
+        
 
     }
 }

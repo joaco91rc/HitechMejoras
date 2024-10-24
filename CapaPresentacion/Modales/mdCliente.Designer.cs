@@ -33,6 +33,9 @@ namespace CapaPresentacion.Modales
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
@@ -41,9 +44,7 @@ namespace CapaPresentacion.Modales
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkClientesSucursales = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +78,7 @@ namespace CapaPresentacion.Modales
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
-            this.dgvData.Location = new System.Drawing.Point(12, 141);
+            this.dgvData.Location = new System.Drawing.Point(12, 149);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
@@ -88,9 +89,30 @@ namespace CapaPresentacion.Modales
             this.dgvData.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(652, 497);
+            this.dgvData.Size = new System.Drawing.Size(652, 489);
             this.dgvData.TabIndex = 71;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
+            // 
+            // idCliente
+            // 
+            this.idCliente.HeaderText = "ID CLIENTE";
+            this.idCliente.Name = "idCliente";
+            this.idCliente.ReadOnly = true;
+            this.idCliente.Visible = false;
+            // 
+            // documento
+            // 
+            this.documento.HeaderText = "DNI";
+            this.documento.Name = "documento";
+            this.documento.ReadOnly = true;
+            this.documento.Width = 160;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "NOMBRE COMPLETO";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            this.nombre.Width = 180;
             // 
             // iconPictureBox1
             // 
@@ -206,26 +228,20 @@ namespace CapaPresentacion.Modales
             this.label1.Size = new System.Drawing.Size(680, 36);
             this.label1.TabIndex = 79;
             // 
-            // idCliente
+            // checkClientesSucursales
             // 
-            this.idCliente.HeaderText = "ID CLIENTE";
-            this.idCliente.Name = "idCliente";
-            this.idCliente.ReadOnly = true;
-            this.idCliente.Visible = false;
-            // 
-            // documento
-            // 
-            this.documento.HeaderText = "DNI";
-            this.documento.Name = "documento";
-            this.documento.ReadOnly = true;
-            this.documento.Width = 160;
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "NOMBRE COMPLETO";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            this.nombre.Width = 180;
+            this.checkClientesSucursales.AutoSize = true;
+            this.checkClientesSucursales.BackColor = System.Drawing.Color.White;
+            this.checkClientesSucursales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkClientesSucursales.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkClientesSucursales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.checkClientesSucursales.Location = new System.Drawing.Point(18, 122);
+            this.checkClientesSucursales.Name = "checkClientesSucursales";
+            this.checkClientesSucursales.Size = new System.Drawing.Size(184, 21);
+            this.checkClientesSucursales.TabIndex = 107;
+            this.checkClientesSucursales.Text = "Mostrar Clientes del Local";
+            this.checkClientesSucursales.UseVisualStyleBackColor = false;
+            this.checkClientesSucursales.CheckedChanged += new System.EventHandler(this.checkClientesSucursales_CheckedChanged);
             // 
             // mdCliente
             // 
@@ -233,6 +249,7 @@ namespace CapaPresentacion.Modales
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(680, 641);
+            this.Controls.Add(this.checkClientesSucursales);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.iconPictureBox1);
             this.Controls.Add(this.btnLimpiar);
@@ -268,5 +285,6 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn documento;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.CheckBox checkClientesSucursales;
     }
 }

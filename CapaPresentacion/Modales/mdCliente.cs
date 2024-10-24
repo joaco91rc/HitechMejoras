@@ -21,6 +21,30 @@ namespace CapaPresentacion.Modales
             InitializeComponent();
         }
 
+        private void CargarClientesPorLocal()
+        {
+            dgvData.Rows.Clear();
+            //Mostrar Los Clientes del Local
+            List<Cliente> listaProducto = new CN_Cliente().ListarClientesPorNegocio(GlobalSettings.SucursalId);
+
+            foreach (Cliente item in listaProducto)
+            {
+                dgvData.Rows.Add(new object[] {item.idCliente, item.documento,
+                    item.nombreCompleto });
+            }
+        }
+
+        private void CargarTodosLosClientes()
+        {
+            dgvData.Rows.Clear();
+            List<Cliente> listaProducto = new CN_Cliente().Listar();
+
+            foreach (Cliente item in listaProducto)
+            {
+                dgvData.Rows.Add(new object[] {item.idCliente, item.documento,
+                    item.nombreCompleto });
+            }
+        }
         private void mdCliente_Load(object sender, EventArgs e)
         {
             txtBusqueda.Select();
@@ -40,14 +64,7 @@ namespace CapaPresentacion.Modales
             cboBusqueda.ValueMember = "Valor";
             cboBusqueda.SelectedIndex = 1;
 
-            //Mostrar todos los Clientes
-            List<Cliente> listaProducto = new CN_Cliente().Listar();
-
-            foreach (Cliente item in listaProducto)
-            {
-                dgvData.Rows.Add(new object[] {item.idCliente, item.documento,
-                    item.nombreCompleto });
-            }
+            CargarClientesPorLocal();
         }
 
         private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -123,6 +140,19 @@ namespace CapaPresentacion.Modales
                     }
 
                 }
+            }
+        }
+
+        private void checkClientesSucursales_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkClientesSucursales.Checked)
+            {
+                CargarTodosLosClientes();
+
+            } else
+            {
+                CargarClientesPorLocal();
+                
             }
         }
     }

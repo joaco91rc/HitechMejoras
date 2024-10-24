@@ -20,7 +20,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT Id, IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaCompletado");
+                    query.AppendLine("SELECT Id, IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaCompletado, CostoProducto, SerialNumber");
                     query.AppendLine("FROM ORDENTRASPASO");
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -39,7 +39,9 @@ namespace CapaDatos
                                 Cantidad = Convert.ToInt32(dr["Cantidad"]),
                                 Confirmada = dr["Confirmada"].ToString(),
                                 FechaCreacion = Convert.ToDateTime(dr["FechaCreacion"]),
-                                FechaConfirmacion = dr["FechaCompletado"] != DBNull.Value ? Convert.ToDateTime(dr["FechaCompletado"]) : (DateTime?)null
+                                FechaConfirmacion = dr["FechaCompletado"] != DBNull.Value ? Convert.ToDateTime(dr["FechaCompletado"]) : (DateTime?)null,
+                                CostoProducto = Convert.ToDecimal(dr["CostoProducto"]),
+                                SerialNumber = dr["SerialNumber"].ToString()
                             });
                         }
                     }
@@ -61,7 +63,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT Id, IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaConfirmacion");
+                    query.AppendLine("SELECT Id, IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaConfirmacion, CostoProducto, SerialNumber");
                     query.AppendLine("FROM OrdenTraspaso");
                     query.AppendLine("WHERE Id = @Id");
 
@@ -84,7 +86,9 @@ namespace CapaDatos
                                 Cantidad = Convert.ToInt32(dr["Cantidad"]),
                                 Confirmada = dr["Confirmada"].ToString(),
                                 FechaCreacion = Convert.ToDateTime(dr["FechaCreacion"]),
-                                FechaConfirmacion = dr["FechaConfirmacion"] != DBNull.Value ? Convert.ToDateTime(dr["FechaConfirmacion"]) : (DateTime?)null
+                                FechaConfirmacion = dr["FechaConfirmacion"] != DBNull.Value ? Convert.ToDateTime(dr["FechaConfirmacion"]) : (DateTime?)null,
+                                CostoProducto = Convert.ToDecimal(dr["CostoProducto"]),
+                                SerialNumber = dr["CostoProducto"].ToString()
                             };
                         }
                     }
@@ -106,8 +110,8 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("INSERT INTO ORDENTRASPASO (IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaCompletado)");
-                    query.AppendLine("VALUES (@IdSucursalOrigen, @IdSucursalDestino, @IdProducto, @Cantidad, @Confirmada, @FechaCreacion, @FechaConfirmacion)");
+                    query.AppendLine("INSERT INTO ORDENTRASPASO (IdSucursalOrigen, IdSucursalDestino, IdProducto, Cantidad, Confirmada, FechaCreacion, FechaCompletado,CostoProducto,SerialNumber)");
+                    query.AppendLine("VALUES (@IdSucursalOrigen, @IdSucursalDestino, @IdProducto, @Cantidad, @Confirmada, @FechaCreacion, @FechaConfirmacion, @CostoProducto,@SerialNumber)");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -117,6 +121,8 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("@Cantidad", ordenTraspaso.Cantidad);
                     cmd.Parameters.AddWithValue("@Confirmada", ordenTraspaso.Confirmada);
                     cmd.Parameters.AddWithValue("@FechaCreacion", ordenTraspaso.FechaCreacion);
+                    cmd.Parameters.AddWithValue("@CostoProducto", ordenTraspaso.CostoProducto);
+                    cmd.Parameters.AddWithValue("@SerialNumber", ordenTraspaso.SerialNumber);
                     if (ordenTraspaso.FechaConfirmacion == null)
                     {
                         cmd.Parameters.AddWithValue("@FechaConfirmacion", DBNull.Value);
@@ -167,5 +173,33 @@ namespace CapaDatos
             }
             return resultado;
         }
+
+        public bool RechazarOrdenTraspaso(int id)
+        {
+            bool resultado = false;
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("DELETE FROM OrdenTraspaso");
+                    query.AppendLine("WHERE Id = @Id");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    oconexion.Open();
+                    resultado = cmd.ExecuteNonQuery() > 0;
+                }
+                catch (Exception ex)
+                {
+                    resultado = false;
+                    // Opcional: registrar el error para depuración
+                }
+            }
+            return resultado;
+        }
+
     }
 }

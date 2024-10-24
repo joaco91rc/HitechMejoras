@@ -80,6 +80,11 @@ namespace CapaPresentacion
             this.txtIdVenta = new System.Windows.Forms.TextBox();
             this.cboConcepto = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
+            this.cboVendedores = new System.Windows.Forms.ComboBox();
+            this.gbInfoProveedor = new System.Windows.Forms.GroupBox();
+            this.cboSucursal = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.lblSucursal = new System.Windows.Forms.Label();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,6 +101,7 @@ namespace CapaPresentacion
             this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gbInfoProveedor.SuspendLayout();
             this.SuspendLayout();
             // 
             // label10
@@ -123,7 +129,7 @@ namespace CapaPresentacion
             // txtDocAsociado
             // 
             this.txtDocAsociado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDocAsociado.Location = new System.Drawing.Point(171, 295);
+            this.txtDocAsociado.Location = new System.Drawing.Point(174, 358);
             this.txtDocAsociado.Name = "txtDocAsociado";
             this.txtDocAsociado.Size = new System.Drawing.Size(178, 20);
             this.txtDocAsociado.TabIndex = 75;
@@ -131,7 +137,7 @@ namespace CapaPresentacion
             // txtMonto
             // 
             this.txtMonto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtMonto.Location = new System.Drawing.Point(172, 230);
+            this.txtMonto.Location = new System.Drawing.Point(175, 293);
             this.txtMonto.Name = "txtMonto";
             this.txtMonto.Size = new System.Drawing.Size(178, 20);
             this.txtMonto.TabIndex = 74;
@@ -139,7 +145,7 @@ namespace CapaPresentacion
             // txtHora
             // 
             this.txtHora.Enabled = false;
-            this.txtHora.Location = new System.Drawing.Point(172, 88);
+            this.txtHora.Location = new System.Drawing.Point(175, 183);
             this.txtHora.Name = "txtHora";
             this.txtHora.Size = new System.Drawing.Size(178, 20);
             this.txtHora.TabIndex = 72;
@@ -150,7 +156,7 @@ namespace CapaPresentacion
             this.cboTipoMovimiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoMovimiento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboTipoMovimiento.FormattingEnabled = true;
-            this.cboTipoMovimiento.Location = new System.Drawing.Point(172, 127);
+            this.cboTipoMovimiento.Location = new System.Drawing.Point(175, 222);
             this.cboTipoMovimiento.Name = "cboTipoMovimiento";
             this.cboTipoMovimiento.Size = new System.Drawing.Size(178, 21);
             this.cboTipoMovimiento.TabIndex = 71;
@@ -162,7 +168,7 @@ namespace CapaPresentacion
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label5.Location = new System.Drawing.Point(15, 295);
+            this.label5.Location = new System.Drawing.Point(18, 358);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 17);
             this.label5.TabIndex = 69;
@@ -174,7 +180,7 @@ namespace CapaPresentacion
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label4.Location = new System.Drawing.Point(12, 230);
+            this.label4.Location = new System.Drawing.Point(15, 293);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(49, 17);
             this.label4.TabIndex = 68;
@@ -186,7 +192,7 @@ namespace CapaPresentacion
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label3.Location = new System.Drawing.Point(12, 131);
+            this.label3.Location = new System.Drawing.Point(15, 226);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 17);
             this.label3.TabIndex = 67;
@@ -360,7 +366,7 @@ namespace CapaPresentacion
             this.txtIdTransaccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIdTransaccion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIdTransaccion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtIdTransaccion.Location = new System.Drawing.Point(366, 60);
+            this.txtIdTransaccion.Location = new System.Drawing.Point(385, 12);
             this.txtIdTransaccion.Name = "txtIdTransaccion";
             this.txtIdTransaccion.Size = new System.Drawing.Size(68, 18);
             this.txtIdTransaccion.TabIndex = 84;
@@ -429,7 +435,7 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(3, 357);
+            this.btnGuardar.Location = new System.Drawing.Point(6, 452);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(227, 31);
             this.btnGuardar.TabIndex = 77;
@@ -443,7 +449,7 @@ namespace CapaPresentacion
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label2.Location = new System.Drawing.Point(12, 88);
+            this.label2.Location = new System.Drawing.Point(15, 183);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 17);
             this.label2.TabIndex = 66;
@@ -644,7 +650,7 @@ namespace CapaPresentacion
             "EFECTIVO",
             "MERCADO PAGO",
             "DOLARES"});
-            this.cboCajaAsociada.Location = new System.Drawing.Point(172, 201);
+            this.cboCajaAsociada.Location = new System.Drawing.Point(175, 264);
             this.cboCajaAsociada.Name = "cboCajaAsociada";
             this.cboCajaAsociada.Size = new System.Drawing.Size(178, 21);
             this.cboCajaAsociada.TabIndex = 113;
@@ -655,7 +661,7 @@ namespace CapaPresentacion
             this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label18.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label18.Location = new System.Drawing.Point(12, 201);
+            this.label18.Location = new System.Drawing.Point(15, 264);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(93, 17);
             this.label18.TabIndex = 112;
@@ -676,7 +682,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(236, 357);
+            this.btnEliminar.Location = new System.Drawing.Point(239, 452);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(140, 31);
             this.btnEliminar.TabIndex = 114;
@@ -699,7 +705,7 @@ namespace CapaPresentacion
             this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarDatos.IconSize = 28;
             this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarDatos.Location = new System.Drawing.Point(382, 357);
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(385, 452);
             this.btnLimpiarDatos.Name = "btnLimpiarDatos";
             this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
             this.btnLimpiarDatos.TabIndex = 115;
@@ -738,7 +744,7 @@ namespace CapaPresentacion
             this.cboConcepto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboConcepto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboConcepto.FormattingEnabled = true;
-            this.cboConcepto.Location = new System.Drawing.Point(171, 262);
+            this.cboConcepto.Location = new System.Drawing.Point(174, 325);
             this.cboConcepto.Name = "cboConcepto";
             this.cboConcepto.Size = new System.Drawing.Size(178, 21);
             this.cboConcepto.TabIndex = 119;
@@ -749,11 +755,75 @@ namespace CapaPresentacion
             this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label19.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label19.Location = new System.Drawing.Point(15, 266);
+            this.label19.Location = new System.Drawing.Point(18, 329);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(66, 17);
             this.label19.TabIndex = 118;
             this.label19.Text = "Concepto";
+            // 
+            // cboVendedores
+            // 
+            this.cboVendedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVendedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboVendedores.FormattingEnabled = true;
+            this.cboVendedores.Location = new System.Drawing.Point(238, 45);
+            this.cboVendedores.Name = "cboVendedores";
+            this.cboVendedores.Size = new System.Drawing.Size(178, 29);
+            this.cboVendedores.TabIndex = 121;
+            // 
+            // gbInfoProveedor
+            // 
+            this.gbInfoProveedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.gbInfoProveedor.Controls.Add(this.cboSucursal);
+            this.gbInfoProveedor.Controls.Add(this.label21);
+            this.gbInfoProveedor.Controls.Add(this.cboVendedores);
+            this.gbInfoProveedor.Controls.Add(this.lblSucursal);
+            this.gbInfoProveedor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbInfoProveedor.ForeColor = System.Drawing.Color.ForestGreen;
+            this.gbInfoProveedor.Location = new System.Drawing.Point(18, 72);
+            this.gbInfoProveedor.Name = "gbInfoProveedor";
+            this.gbInfoProveedor.Size = new System.Drawing.Size(428, 93);
+            this.gbInfoProveedor.TabIndex = 122;
+            this.gbInfoProveedor.TabStop = false;
+            this.gbInfoProveedor.Text = "Local y Vendedor";
+            // 
+            // cboSucursal
+            // 
+            this.cboSucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSucursal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboSucursal.FormattingEnabled = true;
+            this.cboSucursal.Location = new System.Drawing.Point(9, 45);
+            this.cboSucursal.Name = "cboSucursal";
+            this.cboSucursal.Size = new System.Drawing.Size(178, 29);
+            this.cboSucursal.TabIndex = 122;
+            this.cboSucursal.Visible = false;
+            this.cboSucursal.SelectedIndexChanged += new System.EventHandler(this.cboSucursal_SelectedIndexChanged);
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label21.Location = new System.Drawing.Point(235, 22);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(72, 17);
+            this.label21.TabIndex = 49;
+            this.label21.Text = "Vendedor:";
+            // 
+            // lblSucursal
+            // 
+            this.lblSucursal.AutoSize = true;
+            this.lblSucursal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblSucursal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSucursal.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblSucursal.Location = new System.Drawing.Point(6, 22);
+            this.lblSucursal.Name = "lblSucursal";
+            this.lblSucursal.Size = new System.Drawing.Size(63, 17);
+            this.lblSucursal.TabIndex = 47;
+            this.lblSucursal.Text = "Sucursal:";
+            this.lblSucursal.Visible = false;
             // 
             // btnSeleccionar
             // 
@@ -835,7 +905,7 @@ namespace CapaPresentacion
             // usuarioTransaccion
             // 
             this.usuarioTransaccion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.usuarioTransaccion.HeaderText = "USUARIO TRANSACCION";
+            this.usuarioTransaccion.HeaderText = "VENDEDOR";
             this.usuarioTransaccion.Name = "usuarioTransaccion";
             this.usuarioTransaccion.ReadOnly = true;
             this.usuarioTransaccion.Width = 166;
@@ -845,6 +915,7 @@ namespace CapaPresentacion
             this.idCompra.HeaderText = "ID COMPRA";
             this.idCompra.Name = "idCompra";
             this.idCompra.ReadOnly = true;
+            this.idCompra.Visible = false;
             // 
             // idVenta
             // 
@@ -857,12 +928,14 @@ namespace CapaPresentacion
             this.idNegocio.HeaderText = "ID NEGOCIO";
             this.idNegocio.Name = "idNegocio";
             this.idNegocio.ReadOnly = true;
+            this.idNegocio.Visible = false;
             // 
             // frmCajaRegistradora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.gbInfoProveedor);
             this.Controls.Add(this.cboConcepto);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtIdVenta);
@@ -915,6 +988,8 @@ namespace CapaPresentacion
             this.Load += new System.EventHandler(this.frmCajaRegistradora_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.gbInfoProveedor.ResumeLayout(false);
+            this.gbInfoProveedor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -968,6 +1043,11 @@ namespace CapaPresentacion
         private System.Windows.Forms.TextBox txtIdVenta;
         private System.Windows.Forms.ComboBox cboConcepto;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cboVendedores;
+        private System.Windows.Forms.GroupBox gbInfoProveedor;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label lblSucursal;
+        private System.Windows.Forms.ComboBox cboSucursal;
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCajaRegistradora;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTransaccion;

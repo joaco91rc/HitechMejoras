@@ -14,9 +14,16 @@ namespace CapaEntidad
         public string correo { get; set; }
         public string telefono { get; set; }
 
-        
+        public string ciudad { get; set; }
+
+
+        public string direccion { get; set; }
         public bool estado { get; set; }
         public string fechaRegistro { get; set; }
+        public string hitech1 { get; set; }
+        public string hitech2 { get; set; }
+        public string appleStore { get; set; }
+        public string appleCafe { get; set; }
 
 
 

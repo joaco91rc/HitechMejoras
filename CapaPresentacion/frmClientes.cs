@@ -21,6 +21,105 @@ namespace CapaPresentacion
             InitializeComponent();
         }
 
+        
+        private void CargarClientes()
+        {
+            dgvData.Rows.Clear();
+            // Mostrar todos los Clientes
+            List<Cliente> listaCliente = new CN_Cliente().ListarClientes();
+
+            foreach (Cliente item in listaCliente)
+            {
+                dgvData.Rows.Add(new object[] {
+            defaultImage,
+            item.idCliente,
+            item.documento,
+            item.nombreCompleto,
+            item.correo,
+            item.telefono,
+            // Convertir los valores "Si" a true y "No" a false para los CheckBoxColumns
+            item.hitech1 == "Si",   // CheckBoxColumn para hitech1
+            item.hitech2 == "Si",   // CheckBoxColumn para hitech2
+            item.appleStore == "Si",// CheckBoxColumn para appleStore
+            item.appleCafe == "Si", // CheckBoxColumn para appleCafe
+            item.estado == true ? 1 : 0,
+            item.estado == true ? "Activo" : "No Activo"
+        });
+            }
+        }
+
+        private void CargarClientesConcatenados()
+        {
+            dgvData.Rows.Clear();
+            // Mostrar todos los Clientes
+            List<Cliente> listaCliente = new CN_Cliente().ListarClientes();
+
+            foreach (Cliente item in listaCliente)
+            {
+                // Concatenar nombres de locales si el valor es "Si", separados por un guion
+                List<string> localesList = new List<string>();
+                if (item.hitech1 == "Si") localesList.Add("Hitech1");
+                if (item.hitech2 == "Si") localesList.Add("Hitech2");
+                if (item.appleStore == "Si") localesList.Add("Apple Store");
+                if (item.appleCafe == "Si") localesList.Add("Apple Cafe");
+
+                // Unir la lista de locales con un guion
+                string locales = string.Join(" - ", localesList);
+
+                dgvData.Rows.Add(new object[] {
+            defaultImage,
+            item.idCliente,
+            item.documento,
+            item.nombreCompleto,
+            item.correo,
+            item.telefono,
+            // Agregar la concatenación de los locales a la nueva columna de tipo TextBox
+            locales,
+            item.estado == true ? 1 : 0,
+            item.estado == true ? "Activo" : "No Activo"
+        });
+            }
+        }
+
+
+        private void CargarClientesIconos()
+        {
+            dgvData.Rows.Clear();
+            // Cargar las imágenes de los íconos (asegúrate de que las imágenes existan en los recursos o en una ruta válida)
+            Image greenIcon = Properties.Resources.greenIcon;
+            Image redIcon = Properties.Resources.redIcon;
+
+            // Mostrar todos los Clientes
+            List<Cliente> listaCliente = new CN_Cliente().ListarClientes();
+
+            foreach (Cliente item in listaCliente)
+            {
+                // Determinar qué icono asignar para cada local
+                Image iconoHitech1 = item.hitech1 == "Si" ? greenIcon : redIcon;
+                Image iconoHitech2 = item.hitech2 == "Si" ? greenIcon : redIcon;
+                Image iconoAppleStore = item.appleStore == "Si" ? greenIcon : redIcon;
+                Image iconoAppleCafe = item.appleCafe == "Si" ? greenIcon : redIcon;
+
+                // Agregar las filas al DataGridView con los iconos correspondientes
+                dgvData.Rows.Add(new object[] {
+            defaultImage,
+            item.idCliente,
+            item.documento,
+            item.nombreCompleto,
+            item.correo,
+            item.telefono,
+            // Agregar los íconos de pertenencia a los locales en las columnas de tipo imagen
+            iconoHitech1,
+            iconoHitech2,
+            iconoAppleStore,
+            iconoAppleCafe,
+            item.estado == true ? 1 : 0,
+            item.estado == true ? "Activo" : "No Activo"
+        });
+            }
+        }
+
+
         private void frmClientes_Load(object sender, EventArgs e)
         {
 
@@ -50,22 +149,14 @@ namespace CapaPresentacion
             cboBusqueda.ValueMember = "Valor";
             cboBusqueda.SelectedIndex = 0;
 
-            //Mostrar todos los Clientes
-            List<Cliente> listaCliente = new CN_Cliente().Listar();
-
-            foreach (Cliente item in listaCliente)
-            {
-                dgvData.Rows.Add(new object[] { defaultImage,item.idCliente,item.documento,item.nombreCompleto,item.correo,item.telefono,
-
-                    item.estado==true?1:0,
-                    item.estado==true? "Activo": "No Activo"
-                    });
-            }
+            CargarClientesConcatenados();
 
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            List<int> clientesNegocio = new List<int>();
+            //AgregarClientesNegocio(clientesNegocio);
             string mensaje = string.Empty;
             Cliente objCliente = new Cliente()
             {
@@ -74,6 +165,8 @@ namespace CapaPresentacion
                 nombreCompleto = txtNombreCompleto.Text,
                 correo = txtEmail.Text,
                 telefono = txtTelefono.Text,
+                direccion = txtDireccion.Text,
+                ciudad = txtCiudad.Text,
                 
                 estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false
             };
@@ -86,12 +179,17 @@ namespace CapaPresentacion
 
                 if (idClienteGenerado != 0)
                 {
-                    dgvData.Rows.Add(new object[] { defaultImage,idClienteGenerado,txtDocumento.Text,txtNombreCompleto.Text,txtEmail.Text,txtTelefono.Text,
+                    dgvData.Rows.Add(new object[] { defaultImage,idClienteGenerado,txtDocumento.Text,txtNombreCompleto.Text,txtEmail.Text,txtDireccion.Text,txtCiudad.Text,txtTelefono.Text,
 
                 
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
             });
+                    foreach (var item in clientesNegocio)
+                    {
+                        bool asignarCientesASucursal = new CN_ClienteNegocio().AsignarClienteANegocio(idClienteGenerado, item);
+                    }
+
                     Limpiar();
                 }
                 else
@@ -113,12 +211,16 @@ namespace CapaPresentacion
                     row.Cells["documento"].Value = txtDocumento.Text;
                     row.Cells["nombreCompleto"].Value = txtNombreCompleto.Text;
                     row.Cells["correo"].Value = txtEmail.Text;
+                    row.Cells["direccion"].Value = txtDireccion.Text;
+                    row.Cells["ciudad"].Value = txtCiudad.Text;
                     row.Cells["telefono"].Value = txtTelefono.Text;
                     
                     row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
                     row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
-                    Limpiar();
+                    bool modificarClienteASucursal = new CN_ClienteNegocio().ModificarAsignacionNegocios(Convert.ToInt32(txtIdCliente.Text), clientesNegocio);
 
+                    Limpiar();
+                    CargarClientes();
                 }
                 else
                 {
@@ -141,6 +243,7 @@ namespace CapaPresentacion
             
             cboEstado.SelectedIndex = 0;
             txtDocumento.Select();
+            //DesmarcarTodosLosChecks();
         }
 
        
@@ -150,6 +253,7 @@ namespace CapaPresentacion
             if (dgvData.Columns[e.ColumnIndex].Name == "btnSeleccionar")
             {
                 int indice = e.RowIndex;
+                //DesmarcarTodosLosChecks();
 
                 if (indice >= 0)
                 {
@@ -159,6 +263,8 @@ namespace CapaPresentacion
                     txtDocumento.Text = dgvData.Rows[indice].Cells["documento"].Value.ToString();
                     txtNombreCompleto.Text = dgvData.Rows[indice].Cells["nombreCompleto"].Value.ToString();
                     txtEmail.Text = dgvData.Rows[indice].Cells["correo"].Value.ToString();
+                    txtDireccion.Text = dgvData.Rows[indice].Cells["direccion"].Value.ToString();
+                    txtCiudad.Text = dgvData.Rows[indice].Cells["ciudad"].Value.ToString();
                     txtTelefono.Text = dgvData.Rows[indice].Cells["telefono"].Value.ToString();
                     
 
@@ -177,11 +283,41 @@ namespace CapaPresentacion
 
                     }
 
+                    //var listaClientesSucursales = new CN_ClienteNegocio().ListarNegociosDeCliente(Convert.ToInt32(txtIdCliente.Text));
+                    //foreach (var item in listaClientesSucursales)
+                    //{
+                    //    switch (item)
+                    //    {
+                    //        case 1:
+                    //            checkHitech1.Checked = true;
+                    //            break;
+                    //        case 2:
+                    //            checkHitech2.Checked = true;
+                    //            break;
+                    //        case 3:
+                    //            checkApple.Checked = true;
+                    //            break;
+                    //        case 4:
+                    //            checkAppleCafe.Checked = true;
+                    //            break;
+                    //        default:
+                    //            // Si hay algún caso que no está cubierto, opcionalmente lo puedes manejar aquí
+                    //            break;
+                    //    }
+                    //}
+
                 }
 
             }
         }
 
+        //public void DesmarcarTodosLosChecks()
+        //{
+        //    checkHitech1.Checked = false;
+        //    checkHitech2.Checked = false;
+        //    checkApple.Checked = false;
+        //    checkAppleCafe.Checked = false;
+        //}
         private void btnLimpiarDatos_Click(object sender, EventArgs e)
         {
             Limpiar();
