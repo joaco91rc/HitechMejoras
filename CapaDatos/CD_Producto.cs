@@ -99,6 +99,7 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
+                                fecha = Convert.ToDateTime(dr["fecha"])
                             };
 
                             lista.Add(detalle);
@@ -150,6 +151,7 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
                                 nombre = dr["nombre"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
+                                fecha = Convert.ToDateTime(dr["fecha"])
 
                             };
 
@@ -200,7 +202,8 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true ? "EN STOCK" : "VENDIDO"
+                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true ? "EN STOCK" : "VENDIDO",
+                                fecha = Convert.ToDateTime(dr["fecha"])
                             };
 
                             // Asignar nombreLocal basado en el idNegocio
@@ -271,7 +274,8 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
                                 nombre = dr["nombre"].ToString(),
                                 estado =Convert.ToBoolean(dr["estado"]),
-                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true?"EN STOCK":"VENDIDO"
+                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true?"EN STOCK":"VENDIDO",
+                                fecha  = Convert.ToDateTime(dr["fecha"])
                             };
 
                             lista.Add(detalle);
@@ -287,7 +291,7 @@ namespace CapaDatos
             return lista;
         }
 
-        public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio)
+        public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
             List<ProductoDetalle> lista = new List<ProductoDetalle>();
 
@@ -299,9 +303,12 @@ namespace CapaDatos
                     query.AppendLine("SELECT PD.*, P.codigo, P.nombre FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
                     query.AppendLine("WHERE PD.idNegocio = @idNegocio AND PD.estado = 1"); // Filtrar por estado = 1 (disponible)
+                    query.AppendLine("AND PD.fecha >= @fechaInicio AND PD.fecha <= @fechaFin"); // Filtrar por rango de fechas
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio); // Añadir el parámetro
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio); // Añadir parámetro de fecha de inicio
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin); // Añadir parámetro de fecha de fin
 
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
@@ -319,10 +326,11 @@ namespace CapaDatos
                                 modelo = dr["modelo"].ToString(),
                                 marca = dr["marca"].ToString(),
                                 idNegocio = Convert.ToInt32(dr["idNegocio"]),
-                                codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
+                                codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true ? "EN STOCK" : "VENDIDO"
+                                estadoVendido = Convert.ToBoolean(dr["estado"]) ? "EN STOCK" : "VENDIDO",
+                                fecha = Convert.ToDateTime(dr["fecha"])
                             };
 
                             // Asignar nombreLocal basado en el idNegocio
@@ -353,10 +361,12 @@ namespace CapaDatos
                 {
                     // Manejar excepciones si es necesario
                     lista = new List<ProductoDetalle>();
+                    // Puedes registrar el error o lanzar una excepción
                 }
             }
             return lista;
         }
+
 
 
 
@@ -371,11 +381,11 @@ namespace CapaDatos
                     StringBuilder query = new StringBuilder();
                     query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
-                    query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta"); // Asegúrate de que esta relación sea correcta
-                    query.AppendLine("WHERE PD.estado = 0 AND PD.idVenta <> 0 AND PD.idNegocio = @idNegocio"); // Filtrar por estado = 0 (vendido) y idNegocio
+                    query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta");
+                    query.AppendLine("WHERE PD.estado = 0 AND PD.idVenta <> 0 AND PD.idNegocio = @idNegocio");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
-                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio); // Añadir parámetro
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
 
@@ -392,9 +402,15 @@ namespace CapaDatos
                                 modelo = dr["modelo"].ToString(),
                                 marca = dr["marca"].ToString(),
                                 idNegocio = Convert.ToInt32(dr["idNegocio"]),
-                                codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
+                                codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
-                                numeroVenta = dr["nroDocumento"].ToString() // Asegúrate de tener esta propiedad en ProductoDetalle
+                                numeroVenta = dr["nroDocumento"].ToString(),
+                                fecha = Convert.ToDateTime(dr["fecha"]),
+
+                                // Manejo de DBNull para fechaEgreso
+                                fechaEgreso = dr.IsDBNull(dr.GetOrdinal("fechaEgreso"))
+                                      ? (DateTime?)null // Asigna null si es DBNull
+                                      : Convert.ToDateTime(dr["fechaEgreso"]) // Convierte a DateTime
                             };
 
                             // Asignar nombreLocal basado en el idNegocio
@@ -413,7 +429,7 @@ namespace CapaDatos
                                     detalle.nombreLocal = "APPLE CAFÉ";
                                     break;
                                 default:
-                                    detalle.nombreLocal = ""; // Valor por defecto si no coincide con los casos
+                                    detalle.nombreLocal = "";
                                     break;
                             }
 
@@ -430,6 +446,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
         public List<ProductoDetalle> ListarProductosVendidosTodosLocales()
         {
@@ -464,7 +481,8 @@ namespace CapaDatos
                                 idNegocio = Convert.ToInt32(dr["idNegocio"]),
                                 codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
                                 nombre = dr["nombre"].ToString(),
-                                numeroVenta = dr["nroDocumento"].ToString() // Asegúrate de tener esta propiedad en ProductoDetalle
+                                numeroVenta = dr["nroDocumento"].ToString(), // Asegúrate de tener esta propiedad en ProductoDetalle,
+                                fecha = Convert.ToDateTime(dr["fecha"])
                             };
 
                             // Asignar nombreLocal basado en el idNegocio
@@ -537,7 +555,8 @@ namespace CapaDatos
                                 marca = dr["marca"].ToString(),
                                 idNegocio = Convert.ToInt32(dr["idNegocio"]),
                                 codigo = dr["codigo"].ToString(),
-                                nombre = dr["nombre"].ToString()
+                                nombre = dr["nombre"].ToString(),
+                                fecha = Convert.ToDateTime(dr["fecha"])
                             };
 
                             lista.Add(detalle);
@@ -617,6 +636,7 @@ namespace CapaDatos
                                 stock = Convert.ToInt32(dr["stock"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
                                 ventaPesos = Convert.ToDecimal(dr["ventaPesos"])
+                                
                             });
                         }
                     }
@@ -1221,12 +1241,13 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
-                    // Definir la consulta SQL para actualizar el estado y el idVenta
-                    string query = "UPDATE PRODUCTO_DETALLE SET estado = 0, idVenta = @idVenta WHERE idProductoDetalle = @idProductoDetalle";
+                    // Definir la consulta SQL para actualizar el estado, idVenta y la fecha de egreso
+                    string query = "UPDATE PRODUCTO_DETALLE SET estado = 0, idVenta = @idVenta, fechaEgreso = @fechaEgreso WHERE idProductoDetalle = @idProductoDetalle";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@idProductoDetalle", idProductoDetalle);
                     cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    cmd.Parameters.AddWithValue("@fechaEgreso", DateTime.Now);  // Establece la fecha de egreso a la fecha y hora actuales
 
                     oconexion.Open();
                     resultado = cmd.ExecuteNonQuery(); // Ejecutar la consulta
@@ -1249,6 +1270,7 @@ namespace CapaDatos
 
             return resultado;
         }
+
 
         public int ActivarProductoDetalle(int idProductoDetalle, out string mensaje)
         {

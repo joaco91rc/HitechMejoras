@@ -56,6 +56,7 @@ namespace CapaPresentacion
             this.fechaRegistro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nroDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.montoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cotizacionDoalr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.costoTotalProductos = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -333,6 +334,7 @@ namespace CapaPresentacion
             this.fechaRegistro,
             this.tipoDocumento,
             this.nroDocumento,
+            this.nombreProducto,
             this.montoTotal,
             this.cotizacionDoalr,
             this.costoTotalProductos,
@@ -385,6 +387,14 @@ namespace CapaPresentacion
             this.nroDocumento.Name = "nroDocumento";
             this.nroDocumento.ReadOnly = true;
             this.nroDocumento.Width = 150;
+            // 
+            // nombreProducto
+            // 
+            this.nombreProducto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombreProducto.HeaderText = "PRODUCTO";
+            this.nombreProducto.MinimumWidth = 150;
+            this.nombreProducto.Name = "nombreProducto";
+            this.nombreProducto.ReadOnly = true;
             // 
             // montoTotal
             // 
@@ -506,6 +516,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaRegistro;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoDocumento;
         private System.Windows.Forms.DataGridViewTextBoxColumn nroDocumento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn montoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn cotizacionDoalr;
         private System.Windows.Forms.DataGridViewTextBoxColumn costoTotalProductos;

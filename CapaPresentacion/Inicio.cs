@@ -13,6 +13,7 @@ using CapaNegocio;
 using CapaPresentacion.Modales;
 using CapaNegocio.Services;
 using CapaPresentacion.Utilidades;
+using ClosedXML.Excel;
 
 namespace CapaPresentacion
 {
@@ -190,7 +191,7 @@ namespace CapaPresentacion
 
         private void menuClientes_Click(object sender, EventArgs e)
         {
-            AbrirFormulario((IconMenuItem)sender, new frmClientes(),this);
+            
         }
 
         private void menuProveedores_Click(object sender, EventArgs e)
@@ -433,6 +434,115 @@ namespace CapaPresentacion
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             AbrirFormulario(menuSerializacion, new frmSerialesVendidos(), this);
+        }
+
+        private void subMenuClientes_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuClientes, new frmClientes(), this);
+        }
+
+        private void subMenuPagosParciales_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuClientes, new frmPagoParcial(), this);
+        }
+
+
+        private void ExportarAExcel(List<ReporteCantidadVentas> lista)
+        {
+            if (lista == null || lista.Count < 1)
+            {
+                MessageBox.Show("No hay registros para exportar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            using (var workbook = new XLWorkbook())
+            {
+                // Crear una nueva hoja de trabajo
+                var worksheet = workbook.Worksheets.Add("Reporte de Ventas por Local");
+
+                // Establecer encabezados de columna
+                worksheet.Cell(1, 1).Value = "Local";
+                worksheet.Cell(1, 2).Value = "Producto Vendido";
+                worksheet.Cell(1, 3).Value = "Cantidad";
+
+                // Formato para el encabezado (solo A a C)
+                worksheet.Range("A1:C1").Style.Fill.BackgroundColor = XLColor.FromArgb(81, 129, 191); // Color de fondo del encabezado
+                worksheet.Range("A1:C1").Style.Font.FontColor = XLColor.White; // Color del texto en el encabezado
+                worksheet.Range("A1:C1").Style.Font.Bold = true; // Negrita
+                worksheet.Range("A1:C1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center; // Alinear al centro
+
+                // Añadir bordes al encabezado
+                worksheet.Range("A1:C1").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range("A1:C1").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // Llenar datos y aplicar formato alternante
+                for (int row = 2; row <= lista.Count + 1; row++)
+                {
+                    var item = lista[row - 2];
+                    worksheet.Cell(row, 1).Value = item.nombreLocal;
+                    worksheet.Cell(row, 2).Value = item.nombreProducto;
+                    worksheet.Cell(row, 3).Value = item.cantidadVendida;
+
+                    // Aplicar formato alternante solo en A, B, C
+                    if (row % 2 == 0)
+                    {
+                        worksheet.Cell(row, 1).Style.Fill.BackgroundColor = XLColor.FromArgb(221, 230, 241); // Color para fila par en columna A
+                        worksheet.Cell(row, 2).Style.Fill.BackgroundColor = XLColor.FromArgb(221, 230, 241); // Color para fila par en columna B
+                        worksheet.Cell(row, 3).Style.Fill.BackgroundColor = XLColor.FromArgb(221, 230, 241); // Color para fila par en columna C
+                    }
+                    else
+                    {
+                        worksheet.Cell(row, 1).Style.Fill.BackgroundColor = XLColor.FromArgb(253, 254, 255); // Color para fila impar en columna A
+                        worksheet.Cell(row, 2).Style.Fill.BackgroundColor = XLColor.FromArgb(253, 254, 255); // Color para fila impar en columna B
+                        worksheet.Cell(row, 3).Style.Fill.BackgroundColor = XLColor.FromArgb(253, 254, 255); // Color para fila impar en columna C
+                    }
+
+                    // Asegurar que no se aplique formato a columnas D en adelante
+                    for (int col = 4; col <= worksheet.LastColumnUsed().ColumnNumber(); col++)
+                    {
+                        worksheet.Cell(row, col).Style.Fill.BackgroundColor = XLColor.Transparent; // Quitar formato
+                    }
+                }
+
+                // Ajustar alineación de las columnas
+                worksheet.Column(1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center; // Alinear Local al centro
+                worksheet.Column(2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left; // Alinear Producto Vendido a la izquierda
+                worksheet.Column(3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right; // Alinear Cantidad a la derecha
+
+                // Aplicar bordes a todo el rango de datos (A1:C última fila)
+                worksheet.Range("A1:C" + (lista.Count + 1)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range("A1:C" + (lista.Count + 1)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // Ajustar el tamaño de las columnas
+                worksheet.Columns("A:C").AdjustToContents(); // Ajustar solo las columnas A a C
+
+                // Aplicar filtros en los encabezados
+                worksheet.Range("A1:C" + (lista.Count + 1)).SetAutoFilter(); // Crear autofiltro en el rango de datos
+
+                // Guardar el archivo
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "Excel Files (*.xlsx)|*.xlsx";
+
+                    // Formatear el nombre del archivo con fecha y hora
+                    string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                    sfd.FileName = $"Reporte_Cantidad_Productos_Vendidos_por_Local_{timestamp}.xlsx";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        workbook.SaveAs(sfd.FileName);
+                        MessageBox.Show("El reporte se ha exportado exitosamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+
+
+        private void subMenuReporteCantidadVentasPorLocal_Click(object sender, EventArgs e)
+        {
+            List<ReporteCantidadVentas> lista = new CN_Reporte().CantidadVendidaPorLocal();
+            ExportarAExcel(lista);
         }
     }
 }

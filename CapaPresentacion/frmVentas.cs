@@ -21,6 +21,7 @@ namespace CapaPresentacion
         private bool isUpdated = false;
         private Usuario _Usuario;
         private Venta _Venta;
+        private decimal montoPagoParcialAnterior = 0;
         public List<ProductoDetalle> ListaProductoDetalles { get; set; } = new List<ProductoDetalle>();
         public int StockProducto { get; set; }
         public bool modoEdicion { get; set; }
@@ -187,6 +188,7 @@ namespace CapaPresentacion
                     txtNombreCliente.Text = modal._Cliente.nombreCompleto;
                     txtIdCliente.Text = modal._Cliente.idCliente.ToString();
                     txtCodigoProducto.Select();
+                    txtMontoPagoParcial.Value = 0;
                 }
                 else
                 {
@@ -699,6 +701,12 @@ namespace CapaPresentacion
                 return;
             }
 
+            if (cboFormaPago.SelectedIndex == -1 &&  cboFormaPago2.SelectedIndex == -1 && cboFormaPago3.SelectedIndex == -1 && cboFormaPago4.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe seleccionar al menos una forma de pago", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             //if(cboVendedores.SelectedIndex == -1)
             //{
             //    MessageBox.Show("Debe Seleccionar un Vendedor", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -835,8 +843,17 @@ namespace CapaPresentacion
                     respuesta = new CN_Venta().EditarVenta(oVenta, detalle_venta, out mensaje, out idVentaGenerado);
                     tipo = "Modificado";
                 }
-    if (respuesta)
-    {           var perteneceANegocio = new CN_ClienteNegocio().ClienteAsignadoANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
+                if (respuesta)
+                    
+    {           
+                    if(txtIdPagoParcial.Text != "0")
+                    {
+                        bool darBajaPagoParcial = new CN_PagoParcial().DarDeBajaPagoParcial(Convert.ToInt32(txtIdPagoParcial.Text));
+                        if (darBajaPagoParcial == false) {
+                            MessageBox.Show("no se pudo dar de baja el pago parcial", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    var perteneceANegocio = new CN_ClienteNegocio().ClienteAsignadoANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
                     if (!perteneceANegocio)
                     {
                         var asignarCliente = new CN_ClienteNegocio().AsignarClienteANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
@@ -903,7 +920,7 @@ namespace CapaPresentacion
                             tipoTransaccion = "ENTRADA",
                             monto = oVenta.montoPago,
                             docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
-                            usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                            usuarioTransaccion = cboVendedores.Text,
                             formaPago = cboFormaPago.Text,
                             cajaAsociada = cajaAsociadaFP1,
                             idVenta = idVentaGenerado,
@@ -931,7 +948,7 @@ namespace CapaPresentacion
                                 tipoTransaccion = "ENTRADA",
                                 monto = oVenta.montoPagoFP2,
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
-                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                usuarioTransaccion = cboVendedores.Text,
                                 formaPago = cboFormaPago2.Text,
                                 cajaAsociada = cajaAsociadaFP2,
                                 idVenta = idVentaGenerado,
@@ -957,7 +974,7 @@ namespace CapaPresentacion
                                 tipoTransaccion = "ENTRADA",
                                 monto = oVenta.montoPagoFP3,
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
-                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                usuarioTransaccion = cboVendedores.Text,
                                 formaPago = cboFormaPago3.Text,
                                 cajaAsociada = cajaAsociadaFP3,
                                 idVenta = idVentaGenerado,
@@ -983,7 +1000,7 @@ namespace CapaPresentacion
                                 tipoTransaccion = "ENTRADA",
                                 monto = oVenta.montoPagoFP4,
                                 docAsociado = "Venta Numero:" + " " + numeroDocumento + " Cliente:" + " " + nombreCliente,
-                                usuarioTransaccion = Environment.GetEnvironmentVariable("usuario"),
+                                usuarioTransaccion = cboVendedores.Text,
                                 formaPago = cboFormaPago4.Text,
                                 cajaAsociada= cajaAsociadaFP4,
                                 idVenta = idVentaGenerado,
@@ -1003,6 +1020,7 @@ namespace CapaPresentacion
 
                     var result = MessageBox.Show("Numero de Venta:\n"+ tipo + numeroDocumento +". " + mensajeSerialActualizado, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
         if (result == DialogResult.OK)
+                        
             Clipboard.SetText(numeroDocumento);
                     txtIdCliente.Text = string.Empty;
                     dgvSeriales.Rows.Clear();
@@ -1011,11 +1029,13 @@ namespace CapaPresentacion
         txtDocumentoCliente.Text = "";
         txtNombreCliente.Text = "";
         dgvData.Rows.Clear();
+                    txtIdPagoParcial.Text = "0";
         calcularTotal();
         txtPagaCon.Text = "";
         txtCambioCliente.Text = "";
         cboFormaPago.SelectedIndex = -1;
-                    txtTotalVentaDolares.Text = string.Empty;
+        txtTotalVentaDolares.Text = string.Empty;
+        cboVendedores.SelectedIndex = -1;
         cboFormaPago2.SelectedIndex = -1;
         cboFormaPago3.SelectedIndex = -1;
         cboFormaPago4.SelectedIndex = -1;
@@ -1180,7 +1200,7 @@ namespace CapaPresentacion
             }
         }
 
-
+        
 
         private void CalcularRestaAPagar()
         {
@@ -1190,16 +1210,24 @@ namespace CapaPresentacion
             decimal pagoTotal = 0;
             decimal pagoTotalDolares = 0;
 
-            // Arreglo de formas de pago y montos pagados
+            // Calcula la diferencia entre el valor actual y el valor anterior del NumericUpDown
+            decimal diferenciaPagoParcial = txtMontoPagoParcial.Value - montoPagoParcialAnterior;
+
+            // Resta solo la diferencia calculada
+            totalAPagar -= diferenciaPagoParcial;
+
+            // Actualiza el valor del monto anterior al valor actual del NumericUpDown
+            montoPagoParcialAnterior = txtMontoPagoParcial.Value;
+
+            // Continua con el cálculo de formas de pago y acumulación de montos como antes
             var formasDePago = new[]
             {
-                new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
-                new { FormaPago = cboFormaPago2.Text, Monto = txtPagaCon2.Value },
-                new { FormaPago = cboFormaPago3.Text, Monto = txtPagaCon3.Value },
-                new { FormaPago = cboFormaPago4.Text, Monto = txtPagaCon4.Value }
-            };
+        new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
+        new { FormaPago = cboFormaPago2.Text, Monto = txtPagaCon2.Value },
+        new { FormaPago = cboFormaPago3.Text, Monto = txtPagaCon3.Value },
+        new { FormaPago = cboFormaPago4.Text, Monto = txtPagaCon4.Value }
+    };
 
-            // Recorre las formas de pago y acumula los montos en dólares o en la moneda local
             foreach (var pago in formasDePago)
             {
                 if (pago.FormaPago == "DOLAR" || pago.FormaPago == "DOLAR EFECTIVO")
@@ -1230,7 +1258,7 @@ namespace CapaPresentacion
             // Manejo de recargos
             if (checkRecargo.Checked)
             {
-                decimal montoRecargo = Convert.ToDecimal(txtMontoDescuento.Text);  // Usar txtMontoRecargo en lugar de txtMontoDescuento
+                decimal montoRecargo = Convert.ToDecimal(txtMontoDescuento.Text);
 
                 if (checkMonedaDolar.Checked)
                 {
@@ -1246,7 +1274,6 @@ namespace CapaPresentacion
             decimal restoAPagar = totalAPagar - pagoTotal;
             decimal restoAPagarDolares = totalAPagarDolares - pagoTotalDolares;
 
-            // Evita restar más de lo que hay que pagar
             if (restoAPagar < 0) restoAPagar = 0;
             if (restoAPagarDolares < 0) restoAPagarDolares = 0;
 
@@ -1256,7 +1283,7 @@ namespace CapaPresentacion
             txtRestaPagar.Value = restoAPagar;
             txtRestaPagarDolares.Value = restoAPagarDolares;
 
-            // Si alguna de las "restas a pagar" es 0, ambas deben ser 0
+            // Si una de las "restas a pagar" es 0, ambas deben ser 0
             if (txtRestaPagar.Value == 0)
             {
                 txtRestaPagarDolares.Value = 0;
@@ -1266,6 +1293,7 @@ namespace CapaPresentacion
                 txtRestaPagar.Value = 0;
             }
         }
+
 
         private void txtMontoDescuento_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1482,6 +1510,54 @@ namespace CapaPresentacion
 
                 }
             }
+        }
+
+        private void btnAgregarPagoParcial_Click(object sender, EventArgs e)
+        {
+            // Verificar que se haya seleccionado un cliente y que haya al menos una fila en el DataGridView
+            if (txtIdCliente.Text != "0" && dgvData.Rows.Count > 0)
+            {
+                using (var modal = new mdAgregarPagoParcial())
+                {
+                    modal.IdCliente = int.Parse(txtIdCliente.Text); // Asigna el id del cliente al modal
+                    var result = modal.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        txtMontoPagoParcial.Value = modal._PagoParcial.monto;
+                        txtIdPagoParcial.Text = modal._PagoParcial.idPagoParcial.ToString();
+                        txtCodigoProducto.Select();
+                    }
+                    else
+                    {
+                        txtDocumentoCliente.Select();
+                    }
+                }
+            }
+            else
+            {
+                // Mostrar mensajes de error según la condición que no se cumple
+                if (txtIdCliente.Text == "0")
+                {
+                    MessageBox.Show("Debe seleccionar un Cliente para registrar un pago parcial.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (dgvData.Rows.Count == 0)
+                {
+                    MessageBox.Show("Debe tener al menos un producto en la lista para registrar un pago parcial.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+
+        private void txtMontoPagoParcial_ValueChanged(object sender, EventArgs e)
+        {
+            CalcularRestaAPagar();
+        }
+
+        private void btnEliminarPagoParcial_Click(object sender, EventArgs e)
+        {
+            txtMontoPagoParcial.Value = 0;
+            txtIdPagoParcial.Text = "0";
         }
     }
     }

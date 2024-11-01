@@ -67,7 +67,7 @@ namespace CapaPresentacion
                 DataGridViewRow newRow = new DataGridViewRow();
                 newRow.CreateCells(dgvData, new object[] {
             item.idVenta,
-            item.fechaRegistro.Date,
+            item.fechaRegistro,
             item.tipoDocumento,
             item.nroDocumento,
             item.montoTotal,

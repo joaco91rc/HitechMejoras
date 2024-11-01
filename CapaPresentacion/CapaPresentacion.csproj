@@ -320,6 +320,12 @@
     <Compile Include="Modales\ConfirmarReparacion.Designer.cs">
       <DependentUpon>ConfirmarReparacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modales\mdAgregarPagoParcial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modales\mdAgregarPagoParcial.Designer.cs">
+      <DependentUpon>mdAgregarPagoParcial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modales\mdAperturacaja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modales\ConfirmarReparacion.resx">
       <DependentUpon>ConfirmarReparacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modales\mdAgregarPagoParcial.resx">
+      <DependentUpon>mdAgregarPagoParcial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modales\mdAperturacaja.resx">
       <DependentUpon>mdAperturacaja.cs</DependentUpon>

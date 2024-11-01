@@ -45,6 +45,7 @@ namespace CapaDatos
                                 usuarioTransaccion = dr["usuarioTransaccion"].ToString(),
                                 idCompra = dr["idCompra"] != DBNull.Value ? Convert.ToInt32(dr["idCompra"]) : 0,
                                 idVenta = dr["idVenta"] != DBNull.Value ? Convert.ToInt32(dr["idVenta"]) : 0,
+                                idPagoParcial = dr["idPagoParcial"] != DBNull.Value ? Convert.ToInt32(dr["idPagoParcial"]) : 0,
                                 idNegocio = dr["idNegocio"] != DBNull.Value ? Convert.ToInt32(dr["idNegocio"]) :0,
                                 concepto = dr["concepto"].ToString()
                             });
@@ -58,6 +59,34 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        public int? ObtenerIdTransaccionPorIdPagoParcial(int idPagoParcial)
+        {
+            int? idTransaccion = null;
+
+            using (SqlConnection connection = new SqlConnection(Conexion.cadena))
+            {
+                // Modificar la consulta para filtrar por idPagoParcial
+                string query = "SELECT TOP 1 [idTransaccion] FROM TRANSACCION_CAJA WHERE [idPagoParcial] = @idPagoParcial";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idPagoParcial", idPagoParcial); // Pasar el parámetro
+
+                    connection.Open();
+
+                    // Ejecutar la consulta y obtener el resultado
+                    object result = command.ExecuteScalar();
+                    if (result != null)
+                    {
+                        idTransaccion = Convert.ToInt32(result); // Convertir el resultado a int
+                    }
+                }
+            }
+
+            return idTransaccion; // Retorna null si no se encuentra, o el idTransaccion encontrado
+        }
+
 
         public bool ObtenerSaldosCajas(int idNegocio, int idCajaRegistradora, out decimal saldoEfectivo, out decimal saldoMercadoPago, out decimal saldoDolares, out decimal saldoGalicia, out string mensaje)
         {
@@ -134,6 +163,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);
                     cmd.Parameters.AddWithValue("concepto", objTransaccion.concepto);
+                    cmd.Parameters.AddWithValue("idPagoParcial", objTransaccion.idPagoParcial);
                     // Verificar si idVenta es NULL, si lo es, enviar 0
                     cmd.Parameters.AddWithValue("idVenta", objTransaccion.idVenta.HasValue ? objTransaccion.idVenta.Value : 0);
 
@@ -180,13 +210,14 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("tipoTransaccion", objTransaccion.tipoTransaccion);
                     cmd.Parameters.AddWithValue("monto", objTransaccion.monto);
                     cmd.Parameters.AddWithValue("docAsociado", objTransaccion.docAsociado);
-                    cmd.Parameters.AddWithValue("fecha", DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("fecha", DateTime.Now);
                     cmd.Parameters.AddWithValue("usuarioTransaccion", objTransaccion.usuarioTransaccion);
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);
                     cmd.Parameters.AddWithValue("concepto", objTransaccion.concepto);
                     cmd.Parameters.AddWithValue("idVenta", objTransaccion.idVenta.HasValue ? objTransaccion.idVenta.Value : 0);
                     cmd.Parameters.AddWithValue("idCompra", objTransaccion.idCompra.HasValue ? objTransaccion.idCompra.Value : 0);
+                    cmd.Parameters.AddWithValue("idPagoParcial", objTransaccion.idPagoParcial.HasValue ? objTransaccion.idPagoParcial.Value : 0);
                     cmd.Parameters.AddWithValue("idNegocio", objTransaccion.idNegocio);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -330,6 +361,55 @@ namespace CapaDatos
                     DELETE FROM TRANSACCION_CAJA 
                     WHERE idCompra = @idCompra", oconexion, transaction);
                         cmd.Parameters.AddWithValue("@idCompra", idCompra);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            transaction.Commit();
+                            resultado = true;
+                            mensaje = "Movimiento eliminado correctamente.";
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            mensaje = "No se encontró el movimiento con el ID especificado.";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        mensaje = "Ocurrió un error al eliminar el movimiento: " + ex.Message;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Ocurrió un error al conectar con la base de datos: " + ex.Message;
+            }
+
+            return resultado;
+        }
+
+        public bool EliminarMovimientoCajaYPagoParcial(int idPagoParcial, out string mensaje)
+        {
+            mensaje = string.Empty;
+            bool resultado = false;
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    oconexion.Open();
+                    SqlTransaction transaction = oconexion.BeginTransaction();
+
+                    try
+                    {
+                        // Eliminar el movimiento de la caja registradora
+                        SqlCommand cmd = new SqlCommand(@"
+                    DELETE FROM TRANSACCION_CAJA 
+                    WHERE idPagoParcial = @idPagoParcial", oconexion, transaction);
+                        cmd.Parameters.AddWithValue("@idPagoParcial", idPagoParcial);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
 

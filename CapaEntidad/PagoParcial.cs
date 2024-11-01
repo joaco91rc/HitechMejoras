@@ -16,7 +16,8 @@ namespace CapaEntidad
         public string numeroVenta { get; set; } // Nuevo campo para el número de venta (opcional)
         public DateTime fechaRegistro { get; set; }
         public bool estado { get; set; }
-
+        public string vendedor { get; set; }
+        public string productoReservado { get; set; }
         public string formaPago { get; set; }
     }
 

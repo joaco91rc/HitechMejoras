@@ -85,9 +85,9 @@ namespace CapaPresentacion
                     // Obtener los datos del producto desde los TextBox
                     string idProducto = txtIdProducto.Text;
                     string nombreProducto = txtProducto.Text;
-
+                    DateTime fechaActual = DateTime.Now;
                     // Agregar la fila al DataGridView con cantidad = 1
-                    dgvData.Rows.Add(idProducto, nombreProducto, 1);
+                    dgvData.Rows.Add(idProducto,fechaActual, nombreProducto, 1);
                 }
                 StockProducto -=   Convert.ToInt32(txtCantidad.Value);
                 txtStock.Text = StockProducto.ToString();
@@ -136,12 +136,14 @@ namespace CapaPresentacion
                         string color = row.Cells["color"].Value.ToString();
                         string modelo = row.Cells["modelo"].Value.ToString();
                         string marca = row.Cells["marca"].Value.ToString();
+                        DateTime fecha = Convert.ToDateTime(row.Cells["fecha"].Value);
                         int idNegocio = GlobalSettings.SucursalId; // Asegúrate de que esta columna exista
 
                         // Crear un objeto de ProductoDetalle
                         var productoDetalle = new ProductoDetalle
                         {
                             idProducto = idProducto,
+                            fecha = fecha,
                             numeroSerie = numeroSerie,
                             color = color,
                             modelo = modelo,

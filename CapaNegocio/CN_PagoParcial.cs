@@ -13,7 +13,7 @@ namespace CapaNegocio
         private CD_PagoParcial objcd_PagoParcial = new CD_PagoParcial();
 
         public List<PagoParcial> Listar()
-        { return objcd_PagoParcial.Listar()}
+        { return objcd_PagoParcial.Listar(); }
 
             // Método para listar todas las señas de pagos parciales
             public List<PagoParcial> ConsultarPagosParcialesPorCliente(int idCliente)
@@ -21,8 +21,13 @@ namespace CapaNegocio
             return objcd_PagoParcial.ConsultarPagosParcialesPorCliente(idCliente);
         }
 
-        // Método para registrar un pago parcial (seña)
-        public int RegistrarPagoParcial(PagoParcial objPagoParcial, out string mensaje)
+        public bool DarDeBajaPagoParcial(int idPagoParcial)
+        {
+            return objcd_PagoParcial.DarDeBajaPagoParcial(idPagoParcial);
+        }
+
+            // Método para registrar un pago parcial (seña)
+            public int RegistrarPagoParcial(PagoParcial objPagoParcial, out string mensaje)
         {
             return objcd_PagoParcial.RegistrarPagoParcial(objPagoParcial, out mensaje);
         }

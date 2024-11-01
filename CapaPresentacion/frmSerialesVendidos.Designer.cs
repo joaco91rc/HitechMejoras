@@ -45,6 +45,8 @@ namespace CapaPresentacion
             this.checkProductosTodosLocales = new System.Windows.Forms.CheckBox();
             this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaEgreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,6 +82,8 @@ namespace CapaPresentacion
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProductoDetalle,
             this.idProducto,
+            this.fecha,
+            this.fechaEgreso,
             this.codigo,
             this.nombre,
             this.marca,
@@ -269,6 +273,18 @@ namespace CapaPresentacion
             this.idProducto.Name = "idProducto";
             this.idProducto.Visible = false;
             // 
+            // fecha
+            // 
+            this.fecha.HeaderText = "FECHA INGRESO";
+            this.fecha.Name = "fecha";
+            this.fecha.Width = 150;
+            // 
+            // fechaEgreso
+            // 
+            this.fechaEgreso.HeaderText = "FECHA EGRESO";
+            this.fechaEgreso.Name = "fechaEgreso";
+            this.fechaEgreso.Width = 150;
+            // 
             // codigo
             // 
             this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -376,6 +392,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.CheckBox checkProductosTodosLocales;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechaEgreso;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn marca;

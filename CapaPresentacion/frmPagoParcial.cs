@@ -22,6 +22,64 @@ namespace CapaPresentacion
         }
         private Image defaultImage = Properties.Resources.CHECK;
 
+        private void CargarComboBoxVendedores()
+        {
+            // Crear una instancia de la capa de negocio para vendedores
+            CN_Vendedor objCN_Vendedor = new CN_Vendedor();
+
+            // Obtener la lista de vendedores desde la base de datos
+            List<Vendedor> listaVendedores = objCN_Vendedor.ListarVendedores();
+
+            // Limpiar los items actuales del ComboBox
+            cboVendedores.Items.Clear();
+
+            // Llenar el ComboBox con los datos obtenidos
+            foreach (Vendedor vendedor in listaVendedores)
+            {
+                cboVendedores.Items.Add(new OpcionCombo() { Valor = vendedor.idVendedor, Texto = $"{vendedor.nombre} {vendedor.apellido}" });
+            }
+
+            // Establecer DisplayMember y ValueMember
+            cboVendedores.DisplayMember = "Texto";
+            cboVendedores.ValueMember = "Valor";
+
+            // Seleccionar el primer item por defecto si hay elementos en el ComboBox
+            if (cboVendedores.Items.Count > 0)
+            {
+                cboVendedores.SelectedIndex = -1; // O puedes poner `0` si deseas seleccionar el primer item
+            }
+        }
+        private void CargarComboBoxFormaPago()
+        {
+            // Crear una instancia de la capa de negocio
+            CN_FormaPago objCN_FormaPago = new CN_FormaPago();
+
+            // Obtener la lista de formas de pago desde la base de datos
+            List<FormaPago> listaFormaPago = objCN_FormaPago.ListarFormasDePago();
+
+            // Limpiar los items actuales del ComboBox
+            cboFormaPago.Items.Clear();
+            
+
+            // Llenar el ComboBox con los datos obtenidos
+            foreach (FormaPago formaPago in listaFormaPago)
+            {
+                cboFormaPago.Items.Add(new OpcionCombo() { Valor = formaPago.idFormaPago, Texto = formaPago.descripcion });
+                
+            }
+
+            // Establecer DisplayMember y ValueMember
+            cboFormaPago.DisplayMember = "Texto";
+            cboFormaPago.ValueMember = "Valor";
+            
+
+            // Seleccionar el primer item por defecto si hay elementos en el ComboBox
+            if (cboFormaPago.Items.Count > 0)
+            {
+                cboFormaPago.SelectedIndex = -1;
+                
+            }
+        }
         private void CargarPagosParciales()
         {
             dgvData.Rows.Clear();
@@ -39,10 +97,12 @@ namespace CapaPresentacion
             item.fechaRegistro,
             item.idCliente,
             item.nombreCliente,
+            item.productoReservado,
             item.formaPago,
             item.monto,
             item.idVenta,
             item.numeroVenta,
+            item.vendedor,
             item.estado == true ? 1 : 0,
             item.estado == true ? "Pendiente" : "Usada"
         });
@@ -60,6 +120,8 @@ namespace CapaPresentacion
             cboEstado.ValueMember = "Valor";
             cboEstado.SelectedIndex = 0;
             CargarPagosParciales();
+            CargarComboBoxFormaPago();
+            CargarComboBoxVendedores();
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
@@ -93,84 +155,187 @@ namespace CapaPresentacion
             dtpFecha.Value = DateTime.Now;
             cboEstado.SelectedIndex = 0;
             txtCliente.Select();
+            cboVendedores.SelectedIndex = -1;
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
-            PagoParcial objPagoParcial = new PagoParcial()
+            PagoParcial objPagoParcial = CrearPagoParcial();
+
+            decimal montoPagado = CalcularMontoPagado(objPagoParcial);
+
+            if (objPagoParcial.idPagoParcial == 0)
+            {
+                // Registro de nuevo PagoParcial
+                GuardarNuevoPagoParcial(objPagoParcial, montoPagado, out mensaje);
+            }
+            else
+            {
+                // Edición de PagoParcial existente
+                ModificarPagoParcial(objPagoParcial, out mensaje);
+            }
+        }
+
+        private PagoParcial CrearPagoParcial()
+        {
+            return new PagoParcial()
             {
                 idPagoParcial = Convert.ToInt32(txtIdPagoParcial.Text),
                 idCliente = Convert.ToInt32(txtIdCliente.Text),
                 monto = txtMonto.Value,
                 formaPago = cboFormaPago.Text,
-                estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false,
-                idVenta = null
+                estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1,
+                idVenta = null,
+                productoReservado = txtProductoReservado.Text,
+                fechaRegistro = dtpFecha.Value,
+                vendedor = cboVendedores.Text
             };
+        }
 
-            if (objPagoParcial.idPagoParcial == 0)
+        private decimal CalcularMontoPagado(PagoParcial objPagoParcial)
+        {
+            if (cboFormaPago.SelectedItem == null || txtMonto.Value == 0) return 0;
+
+            FormaPago fp1 = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago.SelectedItem).Texto);
+            return Convert.ToDecimal(txtMonto.Text) - (Convert.ToDecimal(txtMonto.Text) * fp1.porcentajeRetencion) / 100;
+        }
+
+        private void GuardarNuevoPagoParcial(PagoParcial objPagoParcial, decimal montoPagado, out string mensaje)
+        {
+            int idPagoParcialGenerado = new CN_PagoParcial().RegistrarPagoParcial(objPagoParcial, out mensaje);
+            if (idPagoParcialGenerado != 0)
             {
-
-                int idPagoParcialGenerado = new CN_PagoParcial().RegistrarPagoParcial(objPagoParcial, out mensaje);
-
-
-                if (idPagoParcialGenerado != 0)
-                {
-                    dgvData.Rows.Add(new object[] {
-                        defaultImage,
-                        idPagoParcialGenerado,
-                        dtpFecha.Value,
-                        txtIdCliente.Text,
-                        txtCliente.Text,
-                        cboFormaPago.Text,
-                        txtMonto.Value,
-                        null,
-                        "",
-                        ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
-                        ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
-            });
-
-
-                    Limpiar();
-                }
-                else
-                {
-
-                    MessageBox.Show(mensaje);
-                }
-
-
+                AgregarFilaDataGrid(idPagoParcialGenerado);
+                RealizarTransaccionCaja(montoPagado, idPagoParcialGenerado);
+                Limpiar();
             }
             else
             {
+                MessageBox.Show(mensaje);
+            }
+        }
 
-                bool resultado = new CN_PagoParcial().ModificarPagoParcial(objPagoParcial, out mensaje);
-                if (resultado)
+        private void ModificarPagoParcial(PagoParcial objPagoParcial, out string mensaje)
+        {
+            bool resultado = new CN_PagoParcial().ModificarPagoParcial(objPagoParcial, out mensaje);
+            if (resultado)
+            {
+                ActualizarFilaDataGrid();
+
+                // Crea el objeto TransaccionCaja para la edición
+                TransaccionCaja objTransaccion = CrearTransaccionCaja(objPagoParcial);
+
+                // Pasa el objeto TransaccionCaja al método EditarMovimiento
+                bool editarMovimientoCaja = new CN_Transaccion().EditarMovimiento(objTransaccion, out mensaje);
+                if (editarMovimientoCaja)
                 {
-                    DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
-                    row.Cells["idPagoParcial"].Value = txtIdPagoParcial.Text;
-                    row.Cells["idCliente"].Value = txtIdCliente.Text;
-                    row.Cells["nombreCompleto"].Value = txtCliente.Text;
-                    row.Cells["formaPago"].Value = cboFormaPago.Text;
-                    row.Cells["monto"].Value = txtMonto.Value;
-                    row.Cells["idVenta"].Value = objPagoParcial.idVenta;
-                    row.Cells["numeroVenta"].Value = objPagoParcial.numeroVenta;
-
-
-                    row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
-                    row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
-
-
-                    Limpiar();
-                    CargarPagosParciales();
+                    MessageBox.Show("Movimiento en Caja Modificado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-
-                    MessageBox.Show(mensaje);
+                    MessageBox.Show("No se pudo Modificar el movimiento en la Caja Registradora", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                Limpiar();
+                CargarPagosParciales();
+            }
+            else
+            {
+                MessageBox.Show(mensaje);
             }
         }
+
+        private TransaccionCaja CrearTransaccionCaja(PagoParcial objPagoParcial)
+        {
+            List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
+            CajaRegistradora cajaAbierta = lista.FirstOrDefault(c => c.estado == true);
+            var cajaAsociada = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).cajaAsociada;
+            int? idTransaccion = new CN_Transaccion().ObtenerIdTransaccionPorIdPagoParcial(Convert.ToInt32(txtIdPagoParcial.Text));
+            // Aquí asumo que tienes la lógica para construir el objeto TransaccionCaja
+            // según los datos de objPagoParcial o de otras variables necesarias.
+            return new TransaccionCaja()
+            {
+                // Asigna los valores necesarios a la transacción aquí
+                // Por ejemplo:
+                idTransaccion = idTransaccion.HasValue ? idTransaccion.Value : 0,
+                idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                hora = dtpFecha.Value.Hour.ToString(),
+                tipoTransaccion = "ENTRADA",
+                monto = CalcularMontoPagado(objPagoParcial), // Usa el método para calcular el monto
+                docAsociado = "Pago Parcial Numero: " + objPagoParcial.idPagoParcial + " Cliente: " + txtCliente.Text,
+                usuarioTransaccion = cboVendedores.Text,
+                formaPago = cboFormaPago.Text,
+                idVenta = null,
+                idCompra = null,
+                idPagoParcial = objPagoParcial.idPagoParcial,
+                idNegocio = GlobalSettings.SucursalId,
+                concepto = "PAGO PARCIAL",
+                cajaAsociada = cajaAsociada
+            };
+        }
+
+
+        private void AgregarFilaDataGrid(int idPagoParcialGenerado)
+        {
+            dgvData.Rows.Add(new object[] {
+        defaultImage,
+        idPagoParcialGenerado,
+        dtpFecha.Value,
+        txtIdCliente.Text,
+        txtCliente.Text,
+        txtProductoReservado.Text,
+        cboFormaPago.Text,
+        txtMonto.Value,
+        null,
+        "",
+        cboVendedores.Text,
+        ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
+        ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
+    });
+        }
+
+        private void ActualizarFilaDataGrid()
+        {
+            DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
+            row.Cells["idPagoParcial"].Value = txtIdPagoParcial.Text;
+            row.Cells["idCliente"].Value = txtIdCliente.Text;
+            row.Cells["nombreCompleto"].Value = txtCliente.Text;
+            row.Cells["formaPago"].Value = cboFormaPago.Text;
+            row.Cells["monto"].Value = txtMonto.Value;
+            row.Cells["productoReservado"].Value = txtProductoReservado.Text;
+            row.Cells["vendedor"].Value = cboVendedores.Text;
+            row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
+            row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
+        }
+
+        private void RealizarTransaccionCaja(decimal montoPagado, int idPagoParcialGenerado)
+        {
+            List<CajaRegistradora> lista = new CN_CajaRegistradora().Listar(GlobalSettings.SucursalId);
+            CajaRegistradora cajaAbierta = lista.FirstOrDefault(c => c.estado == true);
+
+            if (cajaAbierta != null && montoPagado > 0)
+            {
+                var cajaAsociadaFP1 = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).cajaAsociada;
+                TransaccionCaja objTransaccion = new TransaccionCaja()
+                {
+                    idCajaRegistradora = cajaAbierta.idCajaRegistradora,
+                    hora = dtpFecha.Value.Hour.ToString(),
+                    tipoTransaccion = "ENTRADA",
+                    monto = montoPagado,
+                    docAsociado = "Pago Parcial Numero: " + idPagoParcialGenerado + " Cliente: " + txtCliente.Text,
+                    usuarioTransaccion = cboVendedores.Text,
+                    formaPago = cboFormaPago.Text,
+                    cajaAsociada = cajaAsociadaFP1,
+                    idVenta = null,
+                    idCompra = null,
+                    idPagoParcial = idPagoParcialGenerado,
+                    idNegocio = GlobalSettings.SucursalId,
+                    concepto = "PAGO PARCIAL"
+                };
+
+                int idTransaccionGenerado = new CN_Transaccion().RegistrarMovimiento(objTransaccion, out string mensaje);
+            }
+        }
+
 
         private void btnLimpiarDatos_Click(object sender, EventArgs e)
         {
@@ -179,15 +344,16 @@ namespace CapaPresentacion
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            string mensaje = string.Empty;
             if (Convert.ToInt32(txtIdPagoParcial.Text) != 0)
             {
 
                 if (MessageBox.Show("Desea eliminar el Pago Parcial?", "Confirmar Eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    string mensaje = string.Empty;
+                    
 
                     int idPagoParcial = Convert.ToInt32(txtIdPagoParcial.Text);
-
+                    
 
 
                     bool respuesta = new CN_PagoParcial().Eliminar(idPagoParcial, out mensaje);
@@ -195,6 +361,14 @@ namespace CapaPresentacion
                     {
 
                         dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));
+                        bool eliminarTransaccion = new CN_Transaccion().EliminarMovimientoCajaYPagoParcial(idPagoParcial, out mensaje);
+                        if (eliminarTransaccion)
+                        {
+                            MessageBox.Show("Pago Parcial Eliminado y Movimiento en Caja Eliminado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        } else
+                        {
+                            MessageBox.Show(mensaje, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
                         Limpiar();
                     }
 
@@ -225,7 +399,8 @@ namespace CapaPresentacion
                     txtCliente.Text = dgvData.Rows[indice].Cells["nombreCompleto"].Value.ToString();
                     cboFormaPago.Text = dgvData.Rows[indice].Cells["formaPago"].Value.ToString();
                     txtMonto.Value = Convert.ToDecimal(dgvData.Rows[indice].Cells["monto"].Value);
-                
+                    txtProductoReservado.Text = dgvData.Rows[indice].Cells["productoReservado"].Value.ToString();
+                    cboVendedores.Text = dgvData.Rows[indice].Cells["vendedor"].Value.ToString();
 
 
 
@@ -240,6 +415,10 @@ namespace CapaPresentacion
                             break;
 
                         }
+
+                        
+                        
+
 
                     }
                 }

@@ -390,6 +390,7 @@ namespace CapaPresentacion
             this.fechaRegistro.HeaderText = "FECHA";
             this.fechaRegistro.Name = "fechaRegistro";
             this.fechaRegistro.ReadOnly = true;
+            this.fechaRegistro.Width = 120;
             // 
             // tipoDocumento
             // 

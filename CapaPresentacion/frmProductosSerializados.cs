@@ -42,16 +42,17 @@ namespace CapaPresentacion
             cboBusqueda.SelectedIndex = 1;
         }
 
-        private void CargarGrillaEnStock()
+        private void CargarGrillaEnStock(DateTime fechaInicio, DateTime fechaFin)
         {
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
-            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(GlobalSettings.SucursalId);
+            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(GlobalSettings.SucursalId,fechaInicio,fechaFin);
             foreach (ProductoDetalle item in listaProductosSerializados)
             {
                 dgvData.Rows.Add(new object[] {
             // Asignar la imagen predeterminada
             item.idProductoDetalle,
             item.idProducto, // Id del producto
+            item.fecha,
             item.codigo,
             item.nombre,
             item.marca, // Marca
@@ -69,16 +70,17 @@ namespace CapaPresentacion
             }
         }
 
-        private void CargarGrillaEnStockPorLocal(int idNegocio)
+        private void CargarGrillaEnStockPorLocal(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
-            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(idNegocio);
+            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(idNegocio,fechaInicio,fechaFin);
             foreach (ProductoDetalle item in listaProductosSerializados)
             {
                 dgvData.Rows.Add(new object[] {
             // Asignar la imagen predeterminada
             item.idProductoDetalle,
             item.idProducto, // Id del producto
+            item.fecha,
             item.codigo,
             item.nombre,
             item.marca, // Marca
@@ -105,7 +107,8 @@ namespace CapaPresentacion
                 dgvData.Rows.Add(new object[] {
             // Asignar la imagen predeterminada
             item.idProductoDetalle,
-            item.idProducto, // Id del producto
+            item.idProducto,
+            item.fecha,// Id del producto
             item.codigo,
             item.nombre,
             item.marca, // Marca
@@ -126,8 +129,10 @@ namespace CapaPresentacion
 
         private void frmProductosSerializados_Load(object sender, EventArgs e)
         {
-
-            CargarGrillaEnStock();
+            dtpfechaHasta.Value = DateTime.Now.Date;
+            dtpFechaDesde.Value = dtpfechaHasta.Value.AddDays(-15);
+            
+            CargarGrillaEnStock(dtpFechaDesde.Value,dtpfechaHasta.Value);
             CargarComboBusqueda();
         }
 
@@ -292,7 +297,7 @@ namespace CapaPresentacion
             }
             else
             {
-                CargarGrillaEnStock();
+                CargarGrillaEnStock(dtpFechaDesde.Value,dtpfechaHasta.Value);
             }
 
             loading = false; // Terminamos la carga
@@ -313,11 +318,11 @@ namespace CapaPresentacion
             // Cargar grilla en función del estado
             if (checkHitech1.Checked)
             {
-                CargarGrillaEnStockPorLocal(1);
+                CargarGrillaEnStockPorLocal(1,dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
             else
             {
-                CargarGrillaEnStock();
+                CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
 
             loading = false; // Terminamos la carga
@@ -338,11 +343,11 @@ namespace CapaPresentacion
             // Cargar grilla en función del estado
             if (checkHitech2.Checked)
             {
-                CargarGrillaEnStockPorLocal(2);
+                CargarGrillaEnStockPorLocal(2, dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
             else
             {
-                CargarGrillaEnStock();
+                CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
 
             loading = false; // Terminamos la carga
@@ -363,11 +368,11 @@ namespace CapaPresentacion
             // Cargar grilla en función del estado
             if (checkApple49.Checked)
             {
-                CargarGrillaEnStockPorLocal(3);
+                CargarGrillaEnStockPorLocal(3, dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
             else
             {
-                CargarGrillaEnStock();
+                CargarGrillaEnStock( dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
 
             loading = false; // Terminamos la carga
@@ -388,11 +393,11 @@ namespace CapaPresentacion
             // Cargar grilla en función del estado
             if (checkAppleCafe.Checked)
             {
-                CargarGrillaEnStockPorLocal(4);
+                CargarGrillaEnStockPorLocal(4, dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
             else
             {
-                CargarGrillaEnStock();
+                CargarGrillaEnStock( dtpFechaDesde.Value, dtpfechaHasta.Value);
             }
 
             loading = false; // Terminamos la carga

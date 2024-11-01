@@ -19,11 +19,13 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
-                    string query = @"SELECT p.idPagoParcial, p.idCliente, c.nombreCompleto AS nombreCliente, p.monto, p.idVenta, 
-                                    v.numeroVenta, p.fechaRegistro, p.estado, p.formaPago
+                    string query = @"SELECT p.idPagoParcial, p.idCliente, c.nombreCompleto AS nombreCliente, 
+                                    p.monto, p.idVenta, p.vendedor,
+                                    ISNULL(v.nroDocumento, '') AS numeroVenta, -- Asegura cadena vacía si no hay coincidencia en VENTA
+                                    p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
                              FROM PAGOPARCIAL p
                              INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
-                             LEFT JOIN VENTA v ON p.idVenta = v.idVenta"; // LEFT JOIN porque puede no tener una venta asociada
+                             LEFT JOIN VENTA v ON p.idVenta = v.idVenta";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -37,13 +39,15 @@ namespace CapaDatos
                             {
                                 idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
                                 idCliente = Convert.ToInt32(dr["idCliente"]),
-                                nombreCliente = dr["nombreCliente"] != DBNull.Value ? dr["nombreCliente"].ToString() : "", // Asigna cadena vacía si es null
+                                nombreCliente = dr["nombreCliente"] != DBNull.Value ? dr["nombreCliente"].ToString() : "",
                                 monto = Convert.ToDecimal(dr["monto"]),
                                 idVenta = dr["idVenta"] != DBNull.Value ? (int?)Convert.ToInt32(dr["idVenta"]) : null,
-                                numeroVenta = dr["numeroVenta"] != DBNull.Value ? dr["numeroVenta"].ToString() : "", // Asigna cadena vacía si es null
+                                numeroVenta = dr["numeroVenta"].ToString(),
                                 fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                formaPago = dr["formaPago"].ToString()
+                                formaPago = dr["formaPago"].ToString(),
+                                productoReservado = dr["productoReservado"].ToString(),
+                                vendedor = dr["vendedor"].ToString()
                             });
                         }
                     }
@@ -52,11 +56,43 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 lista = new List<PagoParcial>();
-                // Manejo de la excepción si es necesario
+                // Opcional: loggear el mensaje de error para revisión
             }
 
             return lista;
         }
+
+        public bool DarDeBajaPagoParcial(int idPagoParcial)
+        {
+            bool exito = false;
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    string query = @"UPDATE PAGOPARCIAL
+                             SET estado = 0
+                             WHERE idPagoParcial = @idPagoParcial";
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.Parameters.AddWithValue("@idPagoParcial", idPagoParcial);
+
+                    oconexion.Open();
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    // Si al menos una fila fue afectada, consideramos que la operación fue exitosa
+                    exito = filasAfectadas > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Opcional: loggear el mensaje de error para revisión
+                exito = false;
+            }
+
+            return exito;
+        }
+
 
 
 
@@ -75,7 +111,8 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("estado", objPagoParcial.estado);
                     cmd.Parameters.AddWithValue("formaPago", objPagoParcial.formaPago);
                     cmd.Parameters.AddWithValue("fecha", objPagoParcial.fechaRegistro);
-
+                    cmd.Parameters.AddWithValue("productoReservado", objPagoParcial.productoReservado);
+                    cmd.Parameters.AddWithValue("vendedor", objPagoParcial.vendedor);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
 
@@ -114,6 +151,8 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("formaPago", objPagoParcial.formaPago);
                     cmd.Parameters.AddWithValue("fecha", objPagoParcial.fechaRegistro);
                     cmd.Parameters.AddWithValue("idCliente", objPagoParcial.idCliente);
+                    cmd.Parameters.AddWithValue("productoReservado", objPagoParcial.productoReservado);
+                    cmd.Parameters.AddWithValue("vendedor", objPagoParcial.vendedor);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -187,16 +226,22 @@ namespace CapaDatos
                     {
                         while (dr.Read())
                         {
-                            listaPagosParciales.Add(new PagoParcial()
+                            bool estado = Convert.ToBoolean(dr["estado"]);
+                            if (estado) // Solo agregar si estado es true (pendiente)
                             {
-                                idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
-                                idCliente = Convert.ToInt32(dr["idCliente"]),
-                                monto = Convert.ToDecimal(dr["monto"]),
-                                fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
-                                estado = Convert.ToBoolean(dr["estado"]),
-                                nombreCliente = dr["NombreCliente"].ToString(),
-                                numeroVenta = dr["NumeroVenta"].ToString(),
-                            });
+                                listaPagosParciales.Add(new PagoParcial()
+                                {
+                                    idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
+                                    idCliente = Convert.ToInt32(dr["idCliente"]),
+                                    monto = Convert.ToDecimal(dr["monto"]),
+                                    fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
+                                    estado = estado,
+                                    nombreCliente = dr["NombreCliente"].ToString(),
+                                    numeroVenta = dr["NumeroVenta"].ToString(),
+                                    productoReservado = dr["productoReservado"].ToString(),
+                                    vendedor = dr["vendedor"].ToString()
+                                });
+                            }
                         }
                     }
                 }
@@ -208,6 +253,7 @@ namespace CapaDatos
 
             return listaPagosParciales;
         }
+
 
     }
 }

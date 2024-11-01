@@ -69,8 +69,11 @@ namespace CapaNegocio
                 return objcd_TransaccionCaja.RegistrarMovimiento(objTransaccion, out mensaje);
             }
         }
-
-        public bool EditarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
+        public int? ObtenerIdTransaccionPorIdPagoParcial(int idPagoParcial)
+        {
+            return objcd_TransaccionCaja.ObtenerIdTransaccionPorIdPagoParcial(idPagoParcial);
+        }
+            public bool EditarMovimiento(TransaccionCaja objTransaccion, out string mensaje)
         {
             mensaje = string.Empty;
 
@@ -150,5 +153,24 @@ namespace CapaNegocio
 
             return resultado;
         }
-    }
+
+        public bool EliminarMovimientoCajaYPagoParcial(int idPagoParcial, out string mensaje)
+        {
+            mensaje = string.Empty;
+            bool resultado = false;
+
+            try
+            {
+                // Llamar al método de la capa de datos para eliminar el movimiento
+                resultado = objcd_TransaccionCaja.EliminarMovimientoCajaYPagoParcial(idPagoParcial, out mensaje);
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Ocurrió un error al eliminar el movimiento: " + ex.Message;
+            }
+
+            return resultado;
+
+        }
+        }
 }

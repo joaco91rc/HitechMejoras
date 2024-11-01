@@ -29,6 +29,8 @@ namespace CapaPresentacion
             // Asignar la imagen predeterminada
             item.idProductoDetalle,
             item.idProducto, // Id del producto
+            item.fecha,
+            item.fechaEgreso,
             item.codigo,
             item.nombre,
             item.marca, // Marca
@@ -58,6 +60,8 @@ namespace CapaPresentacion
             // Asignar la imagen predeterminada
             item.idProductoDetalle,
             item.idProducto, // Id del producto
+            item.fecha,
+            item.fechaEgreso,
             item.codigo,
             item.nombre,
             item.marca, // Marca

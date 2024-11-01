@@ -148,20 +148,19 @@ namespace CapaDatos
                             lista.Add(new ReporteVenta()
                             {
                                 nombreLocal = ObtenerNombreLocal(idNegocio),
-                                fechaRegistro = dr["FechaRegistro"]?.ToString() ?? string.Empty,
+                                fechaRegistro = dr["fechaRegistro"]?.ToString() ?? string.Empty,
                                 tipoDocumento = dr["tipoDocumento"]?.ToString() ?? string.Empty,
                                 nroDocumento = dr["nroDocumento"]?.ToString() ?? string.Empty,
                                 montoTotal = dr["MontoPagoTotalEnPesos"] != DBNull.Value ? Convert.ToDecimal(dr["MontoPagoTotalEnPesos"]).ToString("0.00") : string.Empty,
                                 costoTotalProductos = dr["CostoTotalProductos"] != DBNull.Value ? Convert.ToDecimal(dr["CostoTotalProductos"]).ToString("0.00") : string.Empty,
                                 margenGananciaEnDolares = dr["MargenGananciaEnDolares"] != DBNull.Value ? Convert.ToDecimal(dr["MargenGananciaEnDolares"]).ToString("0.00") : string.Empty,
-                                porcentajeMargenGanancia = dr["PorcentajeMargenGanancia"] != DBNull.Value  ? Convert.ToDecimal(dr["PorcentajeMargenGanancia"]).ToString("0.00"): string.Empty,
+                                porcentajeMargenGanancia = dr["PorcentajeMargenGanancia"] != DBNull.Value ? Convert.ToDecimal(dr["PorcentajeMargenGanancia"]).ToString("0.00") : string.Empty,
                                 vendedor = dr["Vendedor"]?.ToString() ?? string.Empty,
                                 documentoCliente = dr["documentoCliente"]?.ToString() ?? string.Empty,
                                 nombreCliente = dr["nombreCliente"]?.ToString() ?? string.Empty,
                                 cotizacionDolar = dr["cotizacionDolar"]?.ToString() ?? string.Empty,
+                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty // Concatenación de nombres de productos
                             });
-
-
                         }
                     }
                 }
@@ -173,6 +172,41 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        public List<ReporteCantidadVentas> CantidadVendidaPorLocal()
+        {
+            List<ReporteCantidadVentas> lista = new List<ReporteCantidadVentas>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SP_REPORTE_CANTIDAD_VENDIDA_POR_LOCAL", oconexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new ReporteCantidadVentas()
+                            {
+                                nombreLocal = dr["LOCAL"]?.ToString() ?? string.Empty,      // Nombre del local
+                                nombreProducto = dr["PRODUCTO"]?.ToString() ?? string.Empty, // Nombre del producto
+                                cantidadVendida = dr["cantidad_vendida"] != DBNull.Value ? Convert.ToInt32(dr["cantidad_vendida"]) : 0 // Cantidad vendida
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<ReporteCantidadVentas>();
+                    // Agregar logging aquí si es necesario para registrar errores
+                }
+            }
+            return lista;
+        }
+
 
         // Método para obtener el nombre del local según el idNegocio
         private string ObtenerNombreLocal(int idNegocio)

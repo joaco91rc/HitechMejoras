@@ -27,5 +27,10 @@ namespace CapaNegocio
         {
             return objcd_reporte.GananciaPorVentas(fechaInicio, fechaFin, idNegocio);
         }
+
+        public List<ReporteCantidadVentas> CantidadVendidaPorLocal()
+        {
+            return objcd_reporte.CantidadVendidaPorLocal();
+        }
         }
 }

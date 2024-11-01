@@ -295,7 +295,7 @@ namespace CapaDatos
 
                     oconexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT v.idVenta,v.idNegocio,v.observaciones, v.idVendedor, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.cotizacionDolar,v.montoPago,v.montoCambio,v.montoTotal, convert(char(10), v.fechaRegistro, 103)[FechaRegistro],v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4,v.montoPagoFP2,v.montoPagoFP3,v.montoPagoFP4");
+                    query.AppendLine("SELECT v.idVenta,v.idNegocio,v.observaciones, v.idVendedor, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.cotizacionDolar,v.montoPago,v.montoCambio,v.montoTotal, v.fechaRegistro AS FechaRegistro,v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4,v.montoPagoFP2,v.montoPagoFP3,v.montoPagoFP4");
                     query.AppendLine("FROM VENTA v");
                     query.AppendLine("inner join USUARIO U ON U.idUsuario = V.idUsuario");
                      query.AppendLine("WHERE v.nroDocumento = @numero AND v.idNegocio = @idNegocio");
@@ -371,7 +371,7 @@ namespace CapaDatos
                 {
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT v.idVenta, v.idNegocio, u.nombreCompleto, v.documentoCliente, v.nombreCliente, v.tipoDocumento, v.nroDocumento,");
+                    query.AppendLine("SELECT v.idVenta, v.idNegocio, u.nombreCompleto, v.documentoCliente, v.fechaRegistro AS FechaRegistro, v.nombreCliente, v.tipoDocumento, v.nroDocumento,");
                     query.AppendLine("v.montoPago, v.montoCambio, v.montoTotal, v.formaPago, v.observaciones,");
                     query.AppendLine("v.descuento, v.montoDescuento, v.montoFP1, v.montoFP2, v.montoFP3, v.montoFP4, v.formaPago2, v.formaPago3, v.formaPago4,");
                     query.AppendLine("v.idVendedor, dv.idProducto, p.nombre AS productoNombre, dv.precioVenta, dv.cantidad, dv.subTotal,");
@@ -424,7 +424,8 @@ namespace CapaDatos
                                     idVendedor = Convert.ToInt32(dr["idVendedor"]),
                                     oDetalleVenta = new List<DetalleVenta>(),
                                     nombreVendedor = dr["nombreCompletoVendedor"].ToString(),// Asignar el nombre completo del vendedor
-                                    observaciones = dr["observaciones"].ToString()
+                                    observaciones = dr["observaciones"].ToString(),
+                                    fechaRegistro = Convert.ToDateTime(dr["FechaRegistro"])
                                 };
 
                                 listaVentas.Add(currentVenta);
@@ -520,7 +521,7 @@ namespace CapaDatos
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
                     query.AppendLine("SELECT v.idVenta, v.idNegocio, u.nombreCompleto, v.documentoCliente, v.nombreCliente, v.tipoDocumento, v.nroDocumento,v.observaciones,");
-                    query.AppendLine("v.montoPago, v.montoCambio, v.montoTotal, CONVERT(char(10), v.fechaRegistro, 103) [FechaRegistro], v.formaPago,");
+                    query.AppendLine("v.montoPago, v.montoCambio, v.montoTotal, v.fechaRegistro AS FechaRegistro, v.formaPago,");
                     query.AppendLine("v.descuento, v.montoDescuento, v.montoFP1, v.montoFP2, v.montoFP3, v.montoFP4, v.formaPago2, v.formaPago3, v.formaPago4,");
                     query.AppendLine("v.idVendedor, dv.idProducto, p.nombre AS productoNombre, dv.precioVenta, dv.cantidad, dv.subTotal,");
                     query.AppendLine("vdr.nombre + ' ' + vdr.apellido AS nombreCompletoVendedor");  // Concatenamos nombre y apellido del vendedor
@@ -622,7 +623,7 @@ namespace CapaDatos
                 {
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT v.idVenta,v.idNegocio,v.observaciones, v.idVendedor, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.montoPago,v.montoCambio,v.montoTotal, convert(char(10), v.fechaRegistro, 103)[FechaRegistro],v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4");
+                    query.AppendLine("SELECT v.idVenta,v.idNegocio,v.observaciones, v.idVendedor, u.nombreCompleto,v.documentoCliente,v.nombreCliente,v.tipoDocumento,v.nroDocumento,v.montoPago,v.montoCambio,v.montoTotal, v.fechaRegistro AS FechaRegistro,v.formaPago,v.descuento,v.montoDescuento, v.montoFP1,v.montoFP2,v.montoFP3,v.montoFP4,v.formaPago2,v.formaPago3,v.formaPago4");
                     query.AppendLine("FROM VENTA v");
                     query.AppendLine("INNER JOIN USUARIO U ON U.idUsuario = v.idUsuario");
 

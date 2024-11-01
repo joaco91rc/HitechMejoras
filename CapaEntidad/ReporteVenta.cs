@@ -16,8 +16,8 @@ namespace CapaEntidad
         public string cotizacionDolar { get; set; }
         public string documentoCliente { get; set; }
         public string nombreCliente { get; set; }
-       
 
+        public string nombreProducto { get; set; }
         public string costoTotalProductos { get; set; }
 
 

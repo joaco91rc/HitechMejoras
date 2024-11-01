@@ -38,6 +38,7 @@ namespace CapaPresentacion
         private CajaRegistradora cajaAbierta;
         private int idCompraGlobal = 0;
         private int idVentaGlobal = 0;
+        private int idPagoParcialGlobal = 0;
         private TotalesCaja totalesCaja = new TotalesCaja();
 
         public void SetInicio(Inicio formularioInicio)
@@ -254,6 +255,7 @@ namespace CapaPresentacion
                         item.usuarioTransaccion,
                         item.idCompra,
                         item.idVenta,
+                        item.idPagoParcial,
                         item.idNegocio
                              });
 
@@ -356,6 +358,7 @@ namespace CapaPresentacion
                         usuarioTransaccion = (((OpcionCombo)cboVendedores.SelectedItem).Texto).ToString(),
                         idCompra = idCompraGlobal,
                         idVenta = idVentaGlobal,
+                        idPagoParcial = idPagoParcialGlobal,
                         idNegocio = GlobalSettings.SucursalId
 
                     };
@@ -389,6 +392,7 @@ namespace CapaPresentacion
                         cboCajaAsociada.Text,
                         txtDocAsociado.Text,
                         objTransaccion.usuarioTransaccion,
+                        0,
                         0,
                         0,
                         GlobalSettings.SucursalId
@@ -521,9 +525,9 @@ namespace CapaPresentacion
             txtMonto.Select();
             txtIdTransaccion.Text = "0";
             txtIndice.Text = "-1";
-            txtIdCompra.Text = "-1";
-            txtIdCompra.Text = "-1";
-
+            txtIdCompra.Text = "0";
+            txtIdCompra.Text = "0";
+            txtIdPagoParcial.Text = "0";
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -629,8 +633,11 @@ namespace CapaPresentacion
                     txtIdVenta.Text = dgvData.Rows[indice].Cells["idVenta"].Value != DBNull.Value
                                       ? dgvData.Rows[indice].Cells["idVenta"].Value.ToString()
                                       : "0";
+                    txtIdPagoParcial.Text = dgvData.Rows[indice].Cells["idPagoParcial"].Value != DBNull.Value
+                                      ? dgvData.Rows[indice].Cells["idPagoParcial"].Value.ToString()
+                                      : "0";
 
-                    if(txtIdCompra.Text != "0")
+                    if (txtIdCompra.Text != "0")
                     {
                         this.idCompraGlobal = Convert.ToInt32(txtIdCompra.Text);
                     }
@@ -638,7 +645,10 @@ namespace CapaPresentacion
                     {
                         this.idVentaGlobal = Convert.ToInt32(txtIdVenta.Text);
                     }
-
+                    if (txtIdPagoParcial.Text != "0")
+                    {
+                        this.idPagoParcialGlobal = Convert.ToInt32(txtIdPagoParcial.Text);
+                    }
 
 
                 }

@@ -53,6 +53,8 @@ namespace CapaPresentacion
             this.subMenuRegistrarCompra = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuDetalleCompra = new FontAwesome.Sharp.IconMenuItem();
             this.menuClientes = new FontAwesome.Sharp.IconMenuItem();
+            this.subMenuClientes = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuPagosParciales = new System.Windows.Forms.ToolStripMenuItem();
             this.menuProveedores = new FontAwesome.Sharp.IconMenuItem();
             this.menuReportes = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuReporteCompras = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +68,8 @@ namespace CapaPresentacion
             this.menuConsultas = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultaStock = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuDeudas = new FontAwesome.Sharp.IconMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuServicioTecnico = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuIngresoService = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuCobroService = new FontAwesome.Sharp.IconMenuItem();
@@ -92,8 +96,7 @@ namespace CapaPresentacion
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuReporteCantidadVentasPorLocal = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
@@ -398,6 +401,9 @@ namespace CapaPresentacion
             // menuClientes
             // 
             this.menuClientes.AutoSize = false;
+            this.menuClientes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subMenuClientes,
+            this.subMenuPagosParciales});
             this.menuClientes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuClientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuClientes.IconChar = FontAwesome.Sharp.IconChar.Users;
@@ -411,6 +417,24 @@ namespace CapaPresentacion
             this.menuClientes.Text = "Clientes";
             this.menuClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.menuClientes.Click += new System.EventHandler(this.menuClientes_Click);
+            // 
+            // subMenuClientes
+            // 
+            this.subMenuClientes.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuClientes.ForeColor = System.Drawing.Color.White;
+            this.subMenuClientes.Name = "subMenuClientes";
+            this.subMenuClientes.Size = new System.Drawing.Size(198, 26);
+            this.subMenuClientes.Text = "Clientes";
+            this.subMenuClientes.Click += new System.EventHandler(this.subMenuClientes_Click);
+            // 
+            // subMenuPagosParciales
+            // 
+            this.subMenuPagosParciales.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuPagosParciales.ForeColor = System.Drawing.Color.White;
+            this.subMenuPagosParciales.Name = "subMenuPagosParciales";
+            this.subMenuPagosParciales.Size = new System.Drawing.Size(198, 26);
+            this.subMenuPagosParciales.Text = "Pagos Parciales";
+            this.subMenuPagosParciales.Click += new System.EventHandler(this.subMenuPagosParciales_Click);
             // 
             // menuProveedores
             // 
@@ -434,7 +458,8 @@ namespace CapaPresentacion
             this.menuReportes.AutoSize = false;
             this.menuReportes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.subMenuReporteCompras,
-            this.subMenuReporteVentas});
+            this.subMenuReporteVentas,
+            this.subMenuReporteCantidadVentasPorLocal});
             this.menuReportes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuReportes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuReportes.IconChar = FontAwesome.Sharp.IconChar.ChartColumn;
@@ -453,8 +478,8 @@ namespace CapaPresentacion
             this.subMenuReporteCompras.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuReporteCompras.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.subMenuReporteCompras.Name = "subMenuReporteCompras";
-            this.subMenuReporteCompras.Size = new System.Drawing.Size(211, 26);
-            this.subMenuReporteCompras.Text = "Reporte Compras";
+            this.subMenuReporteCompras.Size = new System.Drawing.Size(383, 26);
+            this.subMenuReporteCompras.Text = "Compras";
             this.subMenuReporteCompras.Click += new System.EventHandler(this.subMenuReporteCompras_Click);
             // 
             // subMenuReporteVentas
@@ -462,8 +487,8 @@ namespace CapaPresentacion
             this.subMenuReporteVentas.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuReporteVentas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.subMenuReporteVentas.Name = "subMenuReporteVentas";
-            this.subMenuReporteVentas.Size = new System.Drawing.Size(211, 26);
-            this.subMenuReporteVentas.Text = "Reporte Ventas";
+            this.subMenuReporteVentas.Size = new System.Drawing.Size(383, 26);
+            this.subMenuReporteVentas.Text = "Ventas - Margenes";
             this.subMenuReporteVentas.Click += new System.EventHandler(this.subMenuReporteVentas_Click);
             // 
             // menuCajaRegistradora
@@ -571,7 +596,7 @@ namespace CapaPresentacion
             this.menuConsultaStock.IconColor = System.Drawing.Color.Black;
             this.menuConsultaStock.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.menuConsultaStock.Name = "menuConsultaStock";
-            this.menuConsultaStock.Size = new System.Drawing.Size(220, 26);
+            this.menuConsultaStock.Size = new System.Drawing.Size(253, 26);
             this.menuConsultaStock.Text = "Productos";
             this.menuConsultaStock.Click += new System.EventHandler(this.menuConsultaStock_Click);
             // 
@@ -583,9 +608,27 @@ namespace CapaPresentacion
             this.subMenuDeudas.IconColor = System.Drawing.Color.Black;
             this.subMenuDeudas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.subMenuDeudas.Name = "subMenuDeudas";
-            this.subMenuDeudas.Size = new System.Drawing.Size(220, 26);
+            this.subMenuDeudas.Size = new System.Drawing.Size(253, 26);
             this.subMenuDeudas.Text = "Deudas de Locales";
             this.subMenuDeudas.Click += new System.EventHandler(this.subMenuDeudas_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.BackColor = System.Drawing.Color.ForestGreen;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(253, 26);
+            this.toolStripMenuItem1.Text = "Productos Serializados";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.BackColor = System.Drawing.Color.ForestGreen;
+            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(253, 26);
+            this.toolStripMenuItem2.Text = "S/N Vendidos";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // menuServicioTecnico
             // 
@@ -932,23 +975,14 @@ namespace CapaPresentacion
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
             this.btnCerrarSesion.Click += new System.EventHandler(this.iconButton1_Click);
             // 
-            // toolStripMenuItem1
+            // subMenuReporteCantidadVentasPorLocal
             // 
-            this.toolStripMenuItem1.BackColor = System.Drawing.Color.ForestGreen;
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(253, 26);
-            this.toolStripMenuItem1.Text = "Productos Serializados";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.BackColor = System.Drawing.Color.ForestGreen;
-            this.toolStripMenuItem2.ForeColor = System.Drawing.Color.White;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(253, 26);
-            this.toolStripMenuItem2.Text = "S/N Vendidos";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            this.subMenuReporteCantidadVentasPorLocal.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuReporteCantidadVentasPorLocal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.subMenuReporteCantidadVentasPorLocal.Name = "subMenuReporteCantidadVentasPorLocal";
+            this.subMenuReporteCantidadVentasPorLocal.Size = new System.Drawing.Size(383, 26);
+            this.subMenuReporteCantidadVentasPorLocal.Text = "Cantidad Productos  Vendidos por Local";
+            this.subMenuReporteCantidadVentasPorLocal.Click += new System.EventHandler(this.subMenuReporteCantidadVentasPorLocal_Click);
             // 
             // Inicio
             // 
@@ -1050,6 +1084,9 @@ namespace CapaPresentacion
         private System.Windows.Forms.ToolStripMenuItem subMenuSerialVendidos;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem subMenuClientes;
+        private System.Windows.Forms.ToolStripMenuItem subMenuPagosParciales;
+        private System.Windows.Forms.ToolStripMenuItem subMenuReporteCantidadVentasPorLocal;
     }
 }
 

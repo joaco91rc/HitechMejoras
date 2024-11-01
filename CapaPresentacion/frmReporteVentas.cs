@@ -59,6 +59,7 @@ namespace CapaPresentacion
             rv.fechaRegistro,                  // Fecha de registro
             rv.tipoDocumento,                  // Tipo de documento
             rv.nroDocumento,                   // Número de documento
+            rv.nombreProducto,
             rv.montoTotal, 
             rv.cotizacionDolar,// Monto total de la venta
             rv.costoTotalProductos,            // Costo total de los productos
@@ -122,20 +123,18 @@ namespace CapaPresentacion
 
                 foreach (DataGridViewColumn columna in dgvData.Columns)
                 {
-                    // Omite las columnas 8 y 9 (índices 8 y 9)
-                    if (columna.Index == 9 || columna.Index == 10)
+                    if (columna.Index == 9 || columna.Index == 10) // Omite columnas 9 y 10
                         continue;
 
-                    // Especifica el tipo de datos de las columnas C a F como decimal y G como porcentaje
-                    if (columna.Index >= 2 && columna.Index <= 5)
+                    if (columna.Index >= 4 && columna.Index <= 7) // Columnas E a H como decimal
                     {
                         dt.Columns.Add(columna.HeaderText, typeof(decimal));
                     }
-                    else if (columna.Index == 6) // Columna G para porcentaje
+                    else if (columna.Index == 8) // Columna I como porcentaje
                     {
                         dt.Columns.Add(columna.HeaderText, typeof(decimal));
                     }
-                    else
+                    else // Resto de columnas como texto
                     {
                         dt.Columns.Add(columna.HeaderText, typeof(string));
                     }
@@ -149,24 +148,22 @@ namespace CapaPresentacion
 
                         for (int i = 0; i < dgvData.Columns.Count; i++)
                         {
-                            // Omite las columnas 8 y 9
-                            if (i == 8 || i == 9)
+                            if (i == 9 || i == 10) // Omite columnas 9 y 10
                                 continue;
 
-                            // Formato para columnas C a F como decimal y G como porcentaje
-                            if (i >= 2 && i <= 6)
+                            if (i >= 4 && i <= 7) // Columnas E a H como decimal
                             {
                                 values.Add(row.Cells[i].Value != null && !string.IsNullOrEmpty(row.Cells[i].Value.ToString())
                                     ? Convert.ToDecimal(row.Cells[i].Value)
                                     : (object)0);
                             }
-                            else if (i == 7) // Columna G como porcentaje
+                            else if (i == 8) // Columna I como porcentaje
                             {
                                 values.Add(row.Cells[i].Value != null && !string.IsNullOrEmpty(row.Cells[i].Value.ToString())
-                                    ? Convert.ToDecimal(row.Cells[i].Value) / 100
+                                    ? Convert.ToDecimal(row.Cells[i].Value) / 100 // Dividir para aplicar como porcentaje
                                     : (object)0);
                             }
-                            else
+                            else // Resto de columnas como texto
                             {
                                 values.Add(row.Cells[i].Value?.ToString() ?? string.Empty);
                             }
@@ -186,14 +183,34 @@ namespace CapaPresentacion
                 {
                     try
                     {
-                        XLWorkbook wb = new XLWorkbook();
-                        var hoja = wb.Worksheets.Add(dt, "Informe de Ventas");
+                        using (XLWorkbook wb = new XLWorkbook())
+                        {
+                            var hoja = wb.Worksheets.Add(dt, "Informe de Ventas");
 
-                        // Formato de porcentaje para columna G
-                        hoja.Column(7).Style.NumberFormat.Format = "0.00%";
+                            // Cambiar nombres de los encabezados
+                            hoja.Cell(1, 3).Value = "NUMERO VENTA"; // Columna C
+                            hoja.Cell(1, 4).Value = "PRODUCTOS VENDIDOS"; // Columna D
+                            hoja.Cell(1, 5).Value = "MONTO RECIBIDO VENTA"; // Columna E
 
-                        hoja.ColumnsUsed().AdjustToContents();
-                        wb.SaveAs(saveFile.FileName);
+                            // Aplicar formato sin decimales para la columna C
+                            hoja.Column(3).Style.NumberFormat.Format = "@"; // Texto en columna C
+
+                            // Aplicar formato como texto para la columna D
+                            hoja.Column(4).Style.NumberFormat.Format = "@"; // Texto en columna D
+
+                            // Formato con dos decimales para columnas E a H
+                            for (int col = 5; col <= 8; col++)
+                            {
+                                hoja.Column(col).Style.NumberFormat.Format = "#,##0.00"; // Formato decimal con dos decimales
+                            }
+
+                            // Aplicar formato de porcentaje a la columna I
+                            hoja.Column(9).Style.NumberFormat.Format = "0.00%";
+
+                            hoja.ColumnsUsed().AdjustToContents(); // Ajustar ancho de las columnas
+                            wb.SaveAs(saveFile.FileName);
+                        }
+
                         MessageBox.Show("Planilla Exportada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch
@@ -203,6 +220,9 @@ namespace CapaPresentacion
                 }
             }
         }
+
+
+
 
 
 

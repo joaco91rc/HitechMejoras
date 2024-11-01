@@ -68,6 +68,7 @@
     <Compile Include="ProductoRMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedor.cs" />
+    <Compile Include="ReporteCantidadVentas.cs" />
     <Compile Include="ReporteCompra.cs" />
     <Compile Include="ReporteVenta.cs" />
     <Compile Include="Rol.cs" />

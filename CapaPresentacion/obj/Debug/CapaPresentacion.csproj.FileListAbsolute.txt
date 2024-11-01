@@ -558,3 +558,5 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacio
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmDeuda.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmSerialesVendidos.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdSeleccionProductosSerializables.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmPagoParcial.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdAgregarPagoParcial.resources

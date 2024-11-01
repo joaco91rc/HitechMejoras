@@ -32,9 +32,9 @@ namespace CapaNegocio
             return objcd_Producto.ListarSerializables(); 
         }
 
-            public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio)
+            public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio, DateTime fechaIncio, DateTime fechaFin)
         {
-            return objcd_Producto.ListarProductosConSerialNumberPorLocalDisponibles(idNegocio);
+            return objcd_Producto.ListarProductosConSerialNumberPorLocalDisponibles(idNegocio,fechaIncio,fechaFin);
         }
 
         public int ContarProductosSerializados(int idProducto, int idNegocio)

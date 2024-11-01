@@ -8,6 +8,8 @@ namespace CapaEntidad
 {
     public class ProductoDetalle
     {
+        public DateTime fecha { get; set; }
+        public DateTime? fechaEgreso { get; set; }
         public int idProductoDetalle { get; set; }
         public int idProducto { get; set; }
         public string numeroSerie { get; set; }
