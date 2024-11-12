@@ -541,8 +541,22 @@ namespace CapaPresentacion
 
         private void subMenuReporteCantidadVentasPorLocal_Click(object sender, EventArgs e)
         {
-            List<ReporteCantidadVentas> lista = new CN_Reporte().CantidadVendidaPorLocal();
-            ExportarAExcel(lista);
+            using (mdSeleccionFechas formFechas = new mdSeleccionFechas())
+            {
+                if (formFechas.ShowDialog() == DialogResult.OK)
+                {
+                    // Obtener las fechas seleccionadas
+                    DateTime fechaDesde = formFechas.FechaDesde;
+                    DateTime fechaHasta = formFechas.FechaHasta;
+
+                    // Llamar al método de reporte con las fechas seleccionadas
+                    List<ReporteCantidadVentas> lista = new CN_Reporte().CantidadVendidaPorLocal(fechaDesde, fechaHasta);
+
+                    // Exportar el resultado a Excel
+                    ExportarAExcel(lista);
+                }
+            }
+            
         }
     }
 }

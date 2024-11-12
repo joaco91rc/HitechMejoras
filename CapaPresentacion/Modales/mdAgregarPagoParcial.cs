@@ -27,7 +27,7 @@ namespace CapaPresentacion.Modales
             List<PagoParcial> listaPagosParcialesPorCliente = new CN_PagoParcial().ConsultarPagosParcialesPorCliente(IdCliente);
             foreach (PagoParcial item in listaPagosParcialesPorCliente)
             {
-                dgvData.Rows.Add(new object[] {item.idPagoParcial, item.fechaRegistro,item.productoReservado,item.monto,item.idCliente,
+                dgvData.Rows.Add(new object[] {item.idPagoParcial, item.fechaRegistro,item.productoReservado,item.monto,item.moneda,item.idCliente,
                     item.nombreCliente });
             }
         }
@@ -65,6 +65,7 @@ namespace CapaPresentacion.Modales
                     productoReservado = dgvData.Rows[iRow].Cells["productoReservado"].Value.ToString(),
                     idCliente = Convert.ToInt32(dgvData.Rows[iRow].Cells["idCliente"].Value),
                     nombreCliente = dgvData.Rows[iRow].Cells["nombreCliente"].Value.ToString(),
+                    moneda = dgvData.Rows[iRow].Cells["moneda"].Value.ToString(),
                 };
                 this.DialogResult = DialogResult.OK;
                 this.Close();

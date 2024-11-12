@@ -173,7 +173,7 @@ namespace CapaDatos
             return lista;
         }
 
-        public List<ReporteCantidadVentas> CantidadVendidaPorLocal()
+        public List<ReporteCantidadVentas> CantidadVendidaPorLocal(DateTime fechaInicio, DateTime fechaFin)
         {
             List<ReporteCantidadVentas> lista = new List<ReporteCantidadVentas>();
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
@@ -182,6 +182,10 @@ namespace CapaDatos
                 {
                     SqlCommand cmd = new SqlCommand("SP_REPORTE_CANTIDAD_VENDIDA_POR_LOCAL", oconexion);
                     cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Agregar parámetros de fecha
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio);
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin);
 
                     oconexion.Open();
 
@@ -206,6 +210,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
 
         // Método para obtener el nombre del local según el idNegocio

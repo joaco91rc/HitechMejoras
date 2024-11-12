@@ -482,6 +482,7 @@ namespace CapaPresentacion
             this.iconButton1.Size = new System.Drawing.Size(35, 26);
             this.iconButton1.TabIndex = 124;
             this.iconButton1.UseVisualStyleBackColor = false;
+            this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
             // 
             // frmProductosSerializados
             // 

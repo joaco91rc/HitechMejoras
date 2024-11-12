@@ -19,13 +19,13 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
-                    string query = @"SELECT p.idPagoParcial, p.idCliente, c.nombreCompleto AS nombreCliente, 
-                                    p.monto, p.idVenta, p.vendedor,
-                                    ISNULL(v.nroDocumento, '') AS numeroVenta, -- Asegura cadena vacía si no hay coincidencia en VENTA
-                                    p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
-                             FROM PAGOPARCIAL p
-                             INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
-                             LEFT JOIN VENTA v ON p.idVenta = v.idVenta";
+                    string query = @"SELECT p.idPagoParcial, p.idCliente, p.moneda, c.nombreCompleto AS nombreCliente, 
+                            p.monto, p.idVenta, p.vendedor, p.idNegocio,
+                            ISNULL(v.nroDocumento, '') AS numeroVenta,
+                            p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
+                     FROM PAGOPARCIAL p
+                     INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
+                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -35,6 +35,20 @@ namespace CapaDatos
                     {
                         while (dr.Read())
                         {
+                            int idNegocio = Convert.ToInt32(dr["idNegocio"]);
+                            string nombreLocal;
+
+                            if (idNegocio == 1)
+                                nombreLocal = "HITECH 1";
+                            else if (idNegocio == 2)
+                                nombreLocal = "HITECH 2";
+                            else if (idNegocio == 3)
+                                nombreLocal = "APPLE 49";
+                            else if (idNegocio == 4)
+                                nombreLocal = "APPLE CAFE";
+                            else
+                                nombreLocal = "";
+
                             lista.Add(new PagoParcial()
                             {
                                 idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
@@ -47,7 +61,10 @@ namespace CapaDatos
                                 estado = Convert.ToBoolean(dr["estado"]),
                                 formaPago = dr["formaPago"].ToString(),
                                 productoReservado = dr["productoReservado"].ToString(),
-                                vendedor = dr["vendedor"].ToString()
+                                vendedor = dr["vendedor"].ToString(),
+                                idNegocio = idNegocio,
+                                nombreLocal = nombreLocal,
+                                moneda = dr["moneda"].ToString()
                             });
                         }
                     }
@@ -61,6 +78,81 @@ namespace CapaDatos
 
             return lista;
         }
+
+
+
+        public List<PagoParcial> ListarPagosParcialesPorLocal(int idNegocio)
+        {
+            List<PagoParcial> lista = new List<PagoParcial>();
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    // Agrega el filtro de idNegocio en el WHERE
+                    string query = @"SELECT p.idPagoParcial, p.moneda, p.idCliente, c.nombreCompleto AS nombreCliente, 
+                            p.monto, p.idVenta, p.vendedor, p.idNegocio,
+                            ISNULL(v.nroDocumento, '') AS numeroVenta, 
+                            p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
+                     FROM PAGOPARCIAL p
+                     INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
+                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta
+                     WHERE p.idNegocio = @idNegocio";
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio); // Parámetro para filtrar por idNegocio
+
+                    oconexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string nombreLocal;
+
+                            // Asignación de nombre de local basado en idNegocio
+                            if (idNegocio == 1)
+                                nombreLocal = "HITECH 1";
+                            else if (idNegocio == 2)
+                                nombreLocal = "HITECH 2";
+                            else if (idNegocio == 3)
+                                nombreLocal = "APPLE 49";
+                            else if (idNegocio == 4)
+                                nombreLocal = "APPLE CAFE";
+                            else
+                                nombreLocal = "Desconocido";
+
+                            lista.Add(new PagoParcial()
+                            {
+                                idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
+                                idCliente = Convert.ToInt32(dr["idCliente"]),
+                                nombreCliente = dr["nombreCliente"] != DBNull.Value ? dr["nombreCliente"].ToString() : "",
+                                monto = Convert.ToDecimal(dr["monto"]),
+                                idVenta = dr["idVenta"] != DBNull.Value ? (int?)Convert.ToInt32(dr["idVenta"]) : null,
+                                numeroVenta = dr["numeroVenta"].ToString(),
+                                fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
+                                estado = Convert.ToBoolean(dr["estado"]),
+                                formaPago = dr["formaPago"].ToString(),
+                                productoReservado = dr["productoReservado"].ToString(),
+                                vendedor = dr["vendedor"].ToString(),
+                                idNegocio = idNegocio,
+                                nombreLocal = nombreLocal, // Asigna el nombre del local
+                                moneda = dr["moneda"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lista = new List<PagoParcial>();
+                // Opcional: loggear el mensaje de error para revisión
+            }
+
+            return lista;
+        }
+
+
 
         public bool DarDeBajaPagoParcial(int idPagoParcial)
         {
@@ -108,9 +200,11 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARPAGOPARCIAL", oconexion);
                     cmd.Parameters.AddWithValue("idCliente", objPagoParcial.idCliente);
                     cmd.Parameters.AddWithValue("monto", objPagoParcial.monto);
+                    cmd.Parameters.AddWithValue("moneda", objPagoParcial.moneda);
                     cmd.Parameters.AddWithValue("estado", objPagoParcial.estado);
                     cmd.Parameters.AddWithValue("formaPago", objPagoParcial.formaPago);
                     cmd.Parameters.AddWithValue("fecha", objPagoParcial.fechaRegistro);
+                    cmd.Parameters.AddWithValue("idNegocio", objPagoParcial.idNegocio);
                     cmd.Parameters.AddWithValue("productoReservado", objPagoParcial.productoReservado);
                     cmd.Parameters.AddWithValue("vendedor", objPagoParcial.vendedor);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -147,8 +241,10 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("SP_MODIFICARPAGOPARCIAL", oconexion);
                     cmd.Parameters.AddWithValue("idPagoParcial", objPagoParcial.idPagoParcial);
                     cmd.Parameters.AddWithValue("monto", objPagoParcial.monto);
+                    cmd.Parameters.AddWithValue("moneda", objPagoParcial.moneda);
                     cmd.Parameters.AddWithValue("estado", objPagoParcial.estado);
                     cmd.Parameters.AddWithValue("formaPago", objPagoParcial.formaPago);
+                    cmd.Parameters.AddWithValue("formaPago", objPagoParcial.idNegocio);
                     cmd.Parameters.AddWithValue("fecha", objPagoParcial.fechaRegistro);
                     cmd.Parameters.AddWithValue("idCliente", objPagoParcial.idCliente);
                     cmd.Parameters.AddWithValue("productoReservado", objPagoParcial.productoReservado);
@@ -239,7 +335,8 @@ namespace CapaDatos
                                     nombreCliente = dr["NombreCliente"].ToString(),
                                     numeroVenta = dr["NumeroVenta"].ToString(),
                                     productoReservado = dr["productoReservado"].ToString(),
-                                    vendedor = dr["vendedor"].ToString()
+                                    vendedor = dr["vendedor"].ToString(),
+                                    moneda = dr["moneda"].ToString()
                                 });
                             }
                         }

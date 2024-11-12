@@ -163,7 +163,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("formaPago", objTransaccion.formaPago);
                     cmd.Parameters.AddWithValue("cajaAsociada", objTransaccion.cajaAsociada);
                     cmd.Parameters.AddWithValue("concepto", objTransaccion.concepto);
-                    cmd.Parameters.AddWithValue("idPagoParcial", objTransaccion.idPagoParcial);
+                    cmd.Parameters.AddWithValue("idPagoParcial", objTransaccion.idPagoParcial.HasValue ? objTransaccion.idPagoParcial.Value : 0);
                     // Verificar si idVenta es NULL, si lo es, enviar 0
                     cmd.Parameters.AddWithValue("idVenta", objTransaccion.idVenta.HasValue ? objTransaccion.idVenta.Value : 0);
 

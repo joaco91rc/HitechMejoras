@@ -22,6 +22,12 @@ namespace CapaPresentacion
         private Usuario _Usuario;
         private Venta _Venta;
         private decimal montoPagoParcialAnterior = 0;
+        private PagoParcial _pagoParcialGlobal;
+        private bool pagoParcialDolaresContado = false;
+        private bool pagoParcialDolaresDescontado = false;
+
+        
+
         public List<ProductoDetalle> ListaProductoDetalles { get; set; } = new List<ProductoDetalle>();
         public int StockProducto { get; set; }
         public bool modoEdicion { get; set; }
@@ -265,6 +271,7 @@ namespace CapaPresentacion
         {
             if (e.KeyData == Keys.Enter)
             {
+                
                 Producto oProducto = new CN_Producto().Listar(GlobalSettings.SucursalId).Where(p => p.codigo == txtCodigoProducto.Text && p.estado == true).FirstOrDefault();
                 int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(oProducto.idProducto, GlobalSettings.SucursalId);
                 if (oProducto != null)
@@ -275,6 +282,7 @@ namespace CapaPresentacion
                     txtPrecio.Text = oProducto.precioVenta.ToString("0.00");
                     txtStock.Text = stockProducto.ToString();
                     txtCantidad.Select();
+                    txtSerializable.Text = oProducto.prodSerializable.ToString();
                 }
                 else
                 {
@@ -302,6 +310,13 @@ namespace CapaPresentacion
                 MessageBox.Show("Debe Seleccionar un Producto", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+
+            if (esSerializable && txtCantidad.Value > 1)
+            {
+                MessageBox.Show("Solo se puede agregar un producto serializable a la vez.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
 
             if (!decimal.TryParse(txtPrecio.Text, out precio))
             {
@@ -343,7 +358,11 @@ namespace CapaPresentacion
                             // Solo si hay seriales válidos, proceder a agregar el producto a dgvData
                             if (modal.ListaProductoDetalles != null && modal.ListaProductoDetalles.Count > 0)
                             {
-                                decimal precioLista30 = Math.Round((precio * txtCotizacion.Value) / 500) * 500 * 1.30m;
+                                decimal precioLista30 = Math.Round(((Math.Round((precio * txtCotizacion.Value) / 1000) * 1000 - 100) * 1.30m) / 1000, 0) * 1000 - 100;
+
+
+
+
 
                                 // Agregar el producto a dgvData
                                 dgvData.Rows.Add(new object[]{
@@ -376,7 +395,8 @@ namespace CapaPresentacion
                 }
                 else // Si es un producto no serializable
                 {
-                    decimal precioLista30 = Math.Round((precio * txtCotizacion.Value) / 500) * 500 * 1.30m;
+                    decimal precioLista30 = Math.Round(((Math.Round((precio * txtCotizacion.Value) / 1000) * 1000 - 100) * 1.30m) / 1000, 0) * 1000 - 100;
+
 
                     // Agregar el producto a dgvData directamente
                     dgvData.Rows.Add(new object[]{
@@ -412,8 +432,9 @@ namespace CapaPresentacion
                 {
                     total += Convert.ToDecimal(row.Cells["SubTotal"].Value.ToString());
                 }
+
                 decimal totalCotizado = total * txtCotizacion.Value;
-                decimal totalProductos = 0;
+                decimal totalProductos;
 
                 // Verifica el estado de la variable cotizacionCambio
                 if (cotizacionCambio)
@@ -422,17 +443,23 @@ namespace CapaPresentacion
                 }
                 else
                 {
-                    totalProductos = Math.Round(totalCotizado / 500) * 500; // Redondea si no cambió
+                    totalProductos = Math.Round(totalCotizado / 1000, 0) * 1000 - 100;
                 }
 
                 txtTotalAPagar.Value = totalProductos;
                 txtTotalAPagarDolares.Value = total;
-                txtRestaPagar.Value = txtTotalAPagar.Value;
-                txtRestaPagarDolares.Value = txtTotalAPagarDolares.Value;
+
+                // Solo asigna RestaPagar si es la primera vez
+                if (txtRestaPagar.Value == 0 && txtRestaPagarDolares.Value == 0)
+                {
+                    txtRestaPagar.Value = txtTotalAPagar.Value;
+                    txtRestaPagarDolares.Value = total;
+                }
             }
         }
 
-        
+
+
 
         private void limpiarProducto()
         {
@@ -631,44 +658,30 @@ namespace CapaPresentacion
             
         }
 
-       
+
 
         private void txtPagaCon_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyData == Keys.Enter)
-            //{
-            //    CalcularCambio();
-            //}
-
             if (e.KeyData == Keys.Enter)
             {
-                //if (txtPagaCon.Text != string.Empty) {
-                //    if(cboFormaPago.Text =="DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                //    {
+                CalcularRestaAPagar(); // Llamada para calcular el resto a pagar inicialmente
+                CalcularCambio(); // Calcula el cambio
 
-
-                //       calcularTotalConDolares();
-                //        txtRestaPagarDolares.Value = (txtTotalAPagarDolares.Value -txtPagaCon.Value);
-                //    }
-                //    else { 
-                //    txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
-
-
-                //    CalcularCambio();
-                //    }
-                //}
-                CalcularRestaAPagar();
-                CalcularCambio();
-                if(cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+                // Si el pago es en DÓLAR o DÓLAR EFECTIVO, actualiza el total a pagar en función de la cotización
+                if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                 {
+                    // Solo se debe actualizar el total a pagar en Dólares en este caso
                     txtTotalAPagar.Value = txtRestaPagarDolares.Value * txtCotizacion.Value;
-                    CalcularRestaAPagar();
+                    
+                    if(_pagoParcialGlobal.moneda == "DOLARES")
+                    {
+                        txtRestaPagarDolares.Value -= _pagoParcialGlobal.monto;
+                    }
+                    
                 }
-
-                
-
             }
         }
+
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
@@ -926,7 +939,8 @@ namespace CapaPresentacion
                             idVenta = idVentaGenerado,
                             idCompra = null,
                             idNegocio = GlobalSettings.SucursalId,
-                            concepto = "VENTA"
+                            concepto = "VENTA",
+                            idPagoParcial = null
 
                             };
 
@@ -954,7 +968,8 @@ namespace CapaPresentacion
                                 idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
-                                concepto = "VENTA"
+                                concepto = "VENTA",
+                                idPagoParcial = null
                             };
 
 
@@ -980,7 +995,8 @@ namespace CapaPresentacion
                                 idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
-                                concepto = "VENTA"
+                                concepto = "VENTA",
+                                idPagoParcial = null
                             };
 
 
@@ -1006,7 +1022,8 @@ namespace CapaPresentacion
                                 idVenta = idVentaGenerado,
                                 idCompra = null,
                                 idNegocio = GlobalSettings.SucursalId,
-                                concepto = "VENTA"
+                                concepto = "VENTA",
+                                idPagoParcial = null
                             };
 
 
@@ -1200,13 +1217,13 @@ namespace CapaPresentacion
             }
         }
 
-        
+
 
         private void CalcularRestaAPagar()
         {
             decimal cotizacionDolar = txtCotizacion.Value;
             decimal totalAPagar = txtTotalAPagar.Value;
-            decimal totalAPagarDolares = txtTotalAPagarDolares.Value;
+            decimal totalAPagarDolares = txtTotalAPagarDolares.Value;  // Mantener el valor original de Dólares
             decimal pagoTotal = 0;
             decimal pagoTotalDolares = 0;
 
@@ -1219,7 +1236,14 @@ namespace CapaPresentacion
             // Actualiza el valor del monto anterior al valor actual del NumericUpDown
             montoPagoParcialAnterior = txtMontoPagoParcial.Value;
 
-            // Continua con el cálculo de formas de pago y acumulación de montos como antes
+            // Si el pago parcial es en dólares y aún no se ha descontado, descuéntalo y marca como descontado
+            if (_pagoParcialGlobal != null && _pagoParcialGlobal.moneda == "DOLARES" && !pagoParcialDolaresDescontado)
+            {
+                totalAPagarDolares -= _pagoParcialGlobal.monto;
+                pagoParcialDolaresDescontado = true;  // Marca que el pago parcial en dólares ya fue descontado
+            }
+
+            // Calcula el monto pagado por cada forma de pago
             var formasDePago = new[]
             {
         new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
@@ -1230,9 +1254,18 @@ namespace CapaPresentacion
 
             foreach (var pago in formasDePago)
             {
+                // Verifica si el pago es en "DOLAR" o "DOLAR EFECTIVO"
                 if (pago.FormaPago == "DOLAR" || pago.FormaPago == "DOLAR EFECTIVO")
                 {
-                    pagoTotalDolares += pago.Monto;
+                    if (pago.FormaPago != "DOLAR EFECTIVO")  // Solo descuento de totalAPagarDolares cuando no es "DOLAR EFECTIVO"
+                    {
+                        pagoTotalDolares += pago.Monto;
+                        totalAPagarDolares -= pago.Monto;  // Descuenta solo en el caso de pago en Dólares
+                    }
+                    else
+                    {
+                        pagoTotalDolares += pago.Monto; // No afecta el totalAPagarDolares, solo suma al pago
+                    }
                 }
                 else
                 {
@@ -1274,16 +1307,25 @@ namespace CapaPresentacion
             decimal restoAPagar = totalAPagar - pagoTotal;
             decimal restoAPagarDolares = totalAPagarDolares - pagoTotalDolares;
 
+            
             if (restoAPagar < 0) restoAPagar = 0;
             if (restoAPagarDolares < 0) restoAPagarDolares = 0;
 
-            // Actualiza los valores en los controles
+            // Si no hay pago parcial en Dólares, solo actualiza el valor de totalAPagar
+            if (totalAPagarDolares == txtTotalAPagarDolares.Value)
+            {
+                // Solo actualiza si no se ha hecho un pago parcial en dólares
+                txtTotalAPagarDolares.Value = totalAPagarDolares;
+            }
+
+            // Actualiza el total a pagar en la moneda local
             txtTotalAPagar.Value = totalAPagar;
-            txtTotalAPagarDolares.Value = totalAPagarDolares;
+
+            // Actualiza los valores de RestaPagar y RestaPagarDolares
             txtRestaPagar.Value = restoAPagar;
             txtRestaPagarDolares.Value = restoAPagarDolares;
 
-            // Si una de las "restas a pagar" es 0, ambas deben ser 0
+            // Si alguna de las "restas a pagar" es 0, ambas deben ser 0
             if (txtRestaPagar.Value == 0)
             {
                 txtRestaPagarDolares.Value = 0;
@@ -1293,6 +1335,7 @@ namespace CapaPresentacion
                 txtRestaPagar.Value = 0;
             }
         }
+
 
 
         private void txtMontoDescuento_KeyDown(object sender, KeyEventArgs e)
@@ -1432,34 +1475,27 @@ namespace CapaPresentacion
             }
         }
 
-        
-        
+
+
         private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Recalcula el total original sin recargos ni descuentos
             calcularTotal();
-            if(cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-            {
-                lblTotalAPagarDolares.Visible = true;
-                lblRestaPagarDolares.Visible = true;
-                txtTotalAPagarDolares.Visible = true;
-                txtRestaPagarDolares.Visible = true;
-            }
-            // Obtén el recargo y descuento según la forma de pago seleccionada
-            if(cboFormaPago.SelectedIndex != -1) { 
-            decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeRecargo;
-            decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeDescuento;
-            
-            // Convierte el total original a un valor decimal
-            decimal totalOriginal = Convert.ToDecimal(txtTotalAPagar.Text);
 
-            // Aplica el recargo y descuento al total original
-            decimal totalConRecargo = (totalOriginal + (totalOriginal * porcentajeRecargo)) ;
-            decimal totalConRecargoYDescuento = totalConRecargo - (totalConRecargo * porcentajeDescuento);
-                
-                // Actualiza el TextBox con el nuevo total
+            // Obtén el recargo y descuento según la forma de pago seleccionada
+            if (cboFormaPago.SelectedIndex != -1)
+            {
+                decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeRecargo;
+                decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago.Text).porcentajeDescuento;
+
+                decimal totalOriginal = Convert.ToDecimal(txtTotalAPagar.Text);
+                decimal totalConRecargo = Math.Round((totalOriginal + (totalOriginal * porcentajeRecargo)) / 1000, 0) * 1000 - 100;
+                decimal totalConRecargoYDescuento = totalConRecargo - (totalConRecargo * porcentajeDescuento);
+
                 txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");
             }
+
+            // Reinicia los valores de descuento y recargo visibles
             checkDescuento.Checked = false;
             checkRecargo.Checked = false;
             txtMontoDescuento.Text = "0";
@@ -1473,6 +1509,15 @@ namespace CapaPresentacion
             txtPagaCon.Value = 0;
             CalcularRestaAPagar();
 
+            // Muestra campos adicionales si la forma de pago es en dólares
+            if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
+            {
+                lblTotalAPagarDolares.Visible = true;
+                lblRestaPagarDolares.Visible = true;
+                txtTotalAPagarDolares.Visible = true;
+                txtRestaPagarDolares.Visible = true;
+                
+            }
         }
 
         private void cboFormaPago2_SelectedIndexChanged(object sender, EventArgs e)
@@ -1523,8 +1568,11 @@ namespace CapaPresentacion
                     var result = modal.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        txtMontoPagoParcial.Value = modal._PagoParcial.monto;
-                        txtIdPagoParcial.Text = modal._PagoParcial.idPagoParcial.ToString();
+                        // Asignar el objeto PagoParcial del modal a la variable global
+                        _pagoParcialGlobal = modal._PagoParcial;
+
+                        txtMontoPagoParcial.Value = _pagoParcialGlobal.monto;
+                        txtIdPagoParcial.Text = _pagoParcialGlobal.idPagoParcial.ToString();
                         txtCodigoProducto.Select();
                     }
                     else
@@ -1549,10 +1597,26 @@ namespace CapaPresentacion
 
 
 
+
         private void txtMontoPagoParcial_ValueChanged(object sender, EventArgs e)
         {
-            CalcularRestaAPagar();
+            // Verifica si la moneda del pago parcial es pesos antes de llamar a CalcularRestaAPagar
+            if (_pagoParcialGlobal != null && _pagoParcialGlobal.moneda == "PESOS")
+            {
+                CalcularRestaAPagar();
+            }
+            else if (_pagoParcialGlobal != null && _pagoParcialGlobal.moneda == "DOLARES" && !pagoParcialDolaresContado)
+            {
+                // Solo suma a totalAPagarDolares la primera vez si es en dólares
+                txtRestaPagarDolares.Value -= _pagoParcialGlobal.monto;
+                pagoParcialDolaresContado = true;
+                lblTotalAPagarDolares.Visible = true;
+                lblRestaPagarDolares.Visible = true;
+                txtTotalAPagarDolares.Visible = true;
+                txtRestaPagarDolares.Visible = true;
+            }
         }
+
 
         private void btnEliminarPagoParcial_Click(object sender, EventArgs e)
         {

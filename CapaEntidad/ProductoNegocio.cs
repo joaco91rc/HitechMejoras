@@ -14,7 +14,7 @@ namespace CapaEntidad
         public int idNegocio { get; set; }
         public int stock { get; set; }
         
-
+        public DateTime? fechaUltimaVenta { get; set; }
         public Producto oProducto { get; set; }
         public Negocio oNegocio { get; set; }
     }

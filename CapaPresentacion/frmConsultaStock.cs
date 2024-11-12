@@ -46,9 +46,10 @@ namespace CapaPresentacion
 
             foreach (Producto item in listaProducto)
             {
-                decimal precioVentaCotizado = Math.Round((item.precioVenta * cotizacionActiva) / 500, 0) * 500;
+                decimal precioVentaCotizado = Math.Round((item.precioVenta * cotizacionActiva) / 1000, 0) * 1000 - 100;
 
-                decimal precioConIncremento = (precioVentaCotizado + (precioVentaCotizado * 0.30m));
+                decimal precioConIncremento = Math.Round((precioVentaCotizado * 1.30m) / 1000, 0) * 1000 - 100;
+
 
                 dgvData.Rows.Add(new object[] {
         item.idProducto,
@@ -68,7 +69,9 @@ namespace CapaPresentacion
         (precioConIncremento/3).ToString("0.00"),
         (precioConIncremento/6).ToString("0.00"),
         item.estado == true ? 1 : 0,
-        item.estado == true ? "Activo" : "No Activo"
+        item.estado == true ? "Activo" : "No Activo",
+        item.fechaUltimaVenta,
+        item.diasSinVenta
     });
             }
         }
@@ -197,10 +200,117 @@ namespace CapaPresentacion
             }
         }
 
+        private void ExportarExcel(int idLocal)
+        {
+            if (dgvData.Rows.Count < 1)
+            {
+                MessageBox.Show("No hay registros para exportar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            DataTable dt = new DataTable();
+
+            // Agregar columnas específicas al DataTable
+            dt.Columns.Add("Codigo", typeof(string));
+            dt.Columns.Add("Nombre", typeof(string));
+            dt.Columns.Add("Categoria", typeof(string));
+            dt.Columns.Add("Stock", typeof(int)); // Solo una columna de stock
+
+            // Determinar la columna de stock según el idLocal
+            string stockColumn;
+            if (idLocal == 1)
+                stockColumn = "StockH1";   // Hitech 1
+            else if (idLocal == 2)
+                stockColumn = "StockH2";   // Hitech 2
+            else if (idLocal == 3)
+                stockColumn = "StockAS";   // Apple 49
+            else if (idLocal == 4)
+                stockColumn = "StockAC";   // Apple Cafe
+            else
+                throw new Exception("ID de local no válido");
+
+            // Agregar las filas filtradas al DataTable
+            foreach (DataGridViewRow row in dgvData.Rows)
+            {
+                if (row.Visible && row.Cells[stockColumn].Value != null && Convert.ToInt32(row.Cells[stockColumn].Value) > 0)
+                {
+                    DataRow fila = dt.NewRow();
+                    fila["Codigo"] = row.Cells["Codigo"].Value?.ToString();
+                    fila["Nombre"] = row.Cells["Nombre"].Value?.ToString();
+                    fila["Categoria"] = row.Cells["Categoria"].Value?.ToString();
+                    fila["Stock"] = Convert.ToInt32(row.Cells[stockColumn].Value); // Solo la columna de stock correspondiente al local
+
+                    dt.Rows.Add(fila);
+                }
+            }
+
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.FileName = string.Format("Exportacion_Productos_{0}_Local_{1}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss"),stockColumn);
+            saveFile.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        var hoja = wb.Worksheets.Add(dt, "Productos");
+
+                        // Ajustar el ancho de las columnas
+                        hoja.ColumnsUsed().AdjustToContents();
+
+                        // Guardar el archivo Excel
+                        wb.SaveAs(saveFile.FileName);
+                        MessageBox.Show("Archivo Excel exportado correctamente.", "Exportación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al exportar a Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
 
         private void btnExportarExcel_Click(object sender, EventArgs e)
         {
             ExportarExcel();
         }
+
+        private void btnBajarReporteStock_Click(object sender, EventArgs e)
+        {
+            int idLocal = 0;
+            if (GlobalSettings.RolUsuario == 1) { 
+            
+
+            switch (cboStockLocal.Text)
+            {
+                case "HITECH 1":
+                    idLocal = 1;
+                    break;
+                case "HITECH 2":
+                    idLocal = 2;
+                    break;
+                case "APPLE 49":
+                    idLocal = 3;
+                    break;
+                case "APPLE CAFE":
+                    idLocal = 4;
+                    break;
+                default:
+                    idLocal = GlobalSettings.SucursalId; // Valor predeterminado si no coincide con ninguna opción
+                    break;
+            }
+            
+            } else
+            {
+                idLocal = GlobalSettings.SucursalId;
+                MessageBox.Show("Sin permisos para consultar Stock de otro local al cual no pertenecce. EN su lugar se descargara el stock de su Local");
+            }
+
+            ExportarExcel(idLocal);
+        }
+
     }
 }

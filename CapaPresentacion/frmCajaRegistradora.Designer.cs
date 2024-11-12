@@ -85,6 +85,7 @@ namespace CapaPresentacion
             this.cboSucursal = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.lblSucursal = new System.Windows.Forms.Label();
+            this.txtIdPagoParcial = new System.Windows.Forms.TextBox();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idCajaRegistradora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idTransaccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,7 +101,6 @@ namespace CapaPresentacion
             this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idPagoParcial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtIdPagoParcial = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gbInfoProveedor.SuspendLayout();
@@ -828,6 +828,19 @@ namespace CapaPresentacion
             this.lblSucursal.Text = "Sucursal:";
             this.lblSucursal.Visible = false;
             // 
+            // txtIdPagoParcial
+            // 
+            this.txtIdPagoParcial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtIdPagoParcial.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtIdPagoParcial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIdPagoParcial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
+            this.txtIdPagoParcial.Location = new System.Drawing.Point(429, 12);
+            this.txtIdPagoParcial.Name = "txtIdPagoParcial";
+            this.txtIdPagoParcial.Size = new System.Drawing.Size(36, 18);
+            this.txtIdPagoParcial.TabIndex = 123;
+            this.txtIdPagoParcial.Text = "0";
+            this.txtIdPagoParcial.Visible = false;
+            // 
             // btnSeleccionar
             // 
             this.btnSeleccionar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -902,6 +915,7 @@ namespace CapaPresentacion
             // 
             this.docAsociado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.docAsociado.HeaderText = "DETALLE";
+            this.docAsociado.MinimumWidth = 120;
             this.docAsociado.Name = "docAsociado";
             this.docAsociado.ReadOnly = true;
             // 
@@ -925,12 +939,15 @@ namespace CapaPresentacion
             this.idVenta.HeaderText = "ID VENTA";
             this.idVenta.Name = "idVenta";
             this.idVenta.ReadOnly = true;
+            this.idVenta.Visible = false;
             // 
             // idPagoParcial
             // 
+            this.idPagoParcial.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.idPagoParcial.HeaderText = "ID PAGO PARCIAL";
             this.idPagoParcial.Name = "idPagoParcial";
             this.idPagoParcial.ReadOnly = true;
+            this.idPagoParcial.Visible = false;
             // 
             // idNegocio
             // 
@@ -938,19 +955,6 @@ namespace CapaPresentacion
             this.idNegocio.Name = "idNegocio";
             this.idNegocio.ReadOnly = true;
             this.idNegocio.Visible = false;
-            // 
-            // txtIdPagoParcial
-            // 
-            this.txtIdPagoParcial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.txtIdPagoParcial.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtIdPagoParcial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIdPagoParcial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(212)))), ((int)(((byte)(216)))));
-            this.txtIdPagoParcial.Location = new System.Drawing.Point(429, 12);
-            this.txtIdPagoParcial.Name = "txtIdPagoParcial";
-            this.txtIdPagoParcial.Size = new System.Drawing.Size(36, 18);
-            this.txtIdPagoParcial.TabIndex = 123;
-            this.txtIdPagoParcial.Text = "0";
-            this.txtIdPagoParcial.Visible = false;
             // 
             // frmCajaRegistradora
             // 
@@ -1071,6 +1075,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label lblSucursal;
         private System.Windows.Forms.ComboBox cboSucursal;
+        private System.Windows.Forms.TextBox txtIdPagoParcial;
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCajaRegistradora;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTransaccion;
@@ -1086,6 +1091,5 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn idPagoParcial;
         private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
-        private System.Windows.Forms.TextBox txtIdPagoParcial;
     }
 }

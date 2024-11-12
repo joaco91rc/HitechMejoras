@@ -45,7 +45,8 @@ namespace CapaPresentacion
         private void CargarGrillaEnStock(DateTime fechaInicio, DateTime fechaFin)
         {
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
-            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(GlobalSettings.SucursalId,fechaInicio,fechaFin);
+            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(GlobalSettings.SucursalId,fechaInicio,fechaFin
+                );
             foreach (ProductoDetalle item in listaProductosSerializados)
             {
                 dgvData.Rows.Add(new object[] {
@@ -129,7 +130,7 @@ namespace CapaPresentacion
 
         private void frmProductosSerializados_Load(object sender, EventArgs e)
         {
-            dtpfechaHasta.Value = DateTime.Now.Date;
+            dtpfechaHasta.Value = DateTime.Now.Date.AddDays(+2);
             dtpFechaDesde.Value = dtpfechaHasta.Value.AddDays(-15);
             
             CargarGrillaEnStock(dtpFechaDesde.Value,dtpfechaHasta.Value);
@@ -149,7 +150,8 @@ namespace CapaPresentacion
                 color = dgvData.Rows[indice].Cells["color"].Value.ToString(),
                 modelo = dgvData.Rows[indice].Cells["modelo"].Value.ToString(),
                 marca = dgvData.Rows[indice].Cells["marca"].Value.ToString(),
-                idNegocio = Convert.ToInt32(dgvData.Rows[indice].Cells["idNegocio"].Value) // Asegúrate de tener esta celda
+                idNegocio = Convert.ToInt32(dgvData.Rows[indice].Cells["idNegocio"].Value), // Asegúrate de tener esta celda
+                fecha = Convert.ToDateTime(dgvData.Rows[indice].Cells["fecha"].Value)
             };
             if (dgvData.Columns[e.ColumnIndex].Name == "btnEditar")
             {
@@ -206,7 +208,9 @@ namespace CapaPresentacion
 
                     if (eliminar)
                     {
+                        dgvData.Rows.RemoveAt(indice);
                         MessageBox.Show("Productos Serializado Eliminado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     }
                 }else
                 {
@@ -403,5 +407,9 @@ namespace CapaPresentacion
             loading = false; // Terminamos la carga
         }
 
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value.AddDays(+1));
+        }
     }
 }

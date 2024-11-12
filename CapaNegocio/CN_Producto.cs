@@ -2,6 +2,7 @@
 using CapaEntidad;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,12 @@ namespace CapaNegocio
 
         private CD_Producto objcd_Producto = new CD_Producto();
 
-        public List<Producto> Listar(int idNegocio)
+        public DataTable ListarProductos(int idNegocio)
+        {
+            return objcd_Producto.ListarProductos(idNegocio);
+        }
+
+            public List<Producto> Listar(int idNegocio)
         {
             return objcd_Producto.Listar(idNegocio);
         }
@@ -22,7 +28,11 @@ namespace CapaNegocio
             return objcd_Producto.ListarPorNegocio(idNegocio);
         }
 
-        public List<Producto> ListarSerializablesPorNegocio(int idNegocio)
+        public DataTable ListarProductosPorNegocio(int idNegocio)
+        {
+            return objcd_Producto.ListarProductosPorNegocio(idNegocio);
+        }
+            public List<Producto> ListarSerializablesPorNegocio(int idNegocio)
         {
             return objcd_Producto.ListarSerializablesPorNegocio(idNegocio);
         }

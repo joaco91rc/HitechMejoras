@@ -100,11 +100,49 @@ namespace CapaPresentacion
             item.productoReservado,
             item.formaPago,
             item.monto,
+            item.moneda,
             item.idVenta,
             item.numeroVenta,
             item.vendedor,
             item.estado == true ? 1 : 0,
-            item.estado == true ? "Pendiente" : "Usada"
+            item.estado == true ? "Pendiente" : "Usada",
+            item.nombreLocal,
+            item.idNegocio
+        });
+            }
+
+
+
+        }
+
+        private void CargarPagosParcialesPorLocal()
+        {
+            dgvData.Rows.Clear();
+            // Mostrar todos los Clientes
+            List<PagoParcial> listaPagoParciales = new CN_PagoParcial().ListarPagosParcialesPorLocal(GlobalSettings.SucursalId);
+
+            foreach (PagoParcial item in listaPagoParciales)
+            {
+
+
+
+                dgvData.Rows.Add(new object[] {
+            defaultImage,
+            item.idPagoParcial,
+            item.fechaRegistro,
+            item.idCliente,
+            item.nombreCliente,
+            item.productoReservado,
+            item.formaPago,
+            item.monto,
+            item.moneda,
+            item.idVenta,
+            item.numeroVenta,
+            item.vendedor,
+            item.estado == true ? 1 : 0,
+            item.estado == true ? "Pendiente" : "Usada",
+            item.nombreLocal,
+            item.idNegocio
         });
             }
 
@@ -119,7 +157,7 @@ namespace CapaPresentacion
             cboEstado.DisplayMember = "Texto";
             cboEstado.ValueMember = "Valor";
             cboEstado.SelectedIndex = 0;
-            CargarPagosParciales();
+            CargarPagosParcialesPorLocal();
             CargarComboBoxFormaPago();
             CargarComboBoxVendedores();
         }
@@ -160,6 +198,7 @@ namespace CapaPresentacion
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
+            
             PagoParcial objPagoParcial = CrearPagoParcial();
 
             decimal montoPagado = CalcularMontoPagado(objPagoParcial);
@@ -188,7 +227,9 @@ namespace CapaPresentacion
                 idVenta = null,
                 productoReservado = txtProductoReservado.Text,
                 fechaRegistro = dtpFecha.Value,
-                vendedor = cboVendedores.Text
+                vendedor = cboVendedores.Text,
+                idNegocio = GlobalSettings.SucursalId,
+                moneda =checkDolares.Checked?"DOLARES":"PESOS" 
             };
         }
 
@@ -276,6 +317,21 @@ namespace CapaPresentacion
 
         private void AgregarFilaDataGrid(int idPagoParcialGenerado)
         {
+            int idNegocio = GlobalSettings.SucursalId;
+            string nombreLocal;
+
+            // Asigna el nombre del local en función de idNegocio
+            if (idNegocio == 1)
+                nombreLocal = "HITECH 1";
+            else if (idNegocio == 2)
+                nombreLocal = "HITECH 2";
+            else if (idNegocio == 3)
+                nombreLocal = "APPLE 49";
+            else if (idNegocio == 4)
+                nombreLocal = "APPLE CAFE";
+            else
+                nombreLocal = "";
+
             dgvData.Rows.Add(new object[] {
         defaultImage,
         idPagoParcialGenerado,
@@ -285,16 +341,36 @@ namespace CapaPresentacion
         txtProductoReservado.Text,
         cboFormaPago.Text,
         txtMonto.Value,
-        null,
+        checkDolares.Checked?"DOLARES":"PESOS",
+        "",
         "",
         cboVendedores.Text,
         ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
-        ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
+        ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString(),
+         nombreLocal,
+        idNegocio        
+       
     });
         }
 
+
         private void ActualizarFilaDataGrid()
         {
+            int idNegocio = GlobalSettings.SucursalId;
+            string nombreLocal;
+
+            // Asigna el nombre del local en función de idNegocio
+            if (idNegocio == 1)
+                nombreLocal = "HITECH 1";
+            else if (idNegocio == 2)
+                nombreLocal = "HITECH 2";
+            else if (idNegocio == 3)
+                nombreLocal = "APPLE 49";
+            else if (idNegocio == 4)
+                nombreLocal = "APPLE CAFE";
+            else
+                nombreLocal = "";
+
             DataGridViewRow row = dgvData.Rows[Convert.ToInt32(txtIndice.Text)];
             row.Cells["idPagoParcial"].Value = txtIdPagoParcial.Text;
             row.Cells["idCliente"].Value = txtIdCliente.Text;
@@ -302,9 +378,14 @@ namespace CapaPresentacion
             row.Cells["formaPago"].Value = cboFormaPago.Text;
             row.Cells["monto"].Value = txtMonto.Value;
             row.Cells["productoReservado"].Value = txtProductoReservado.Text;
+            row.Cells["idVenta"].Value = "";
+            row.Cells["numeroVenta"].Value = "";
             row.Cells["vendedor"].Value = cboVendedores.Text;
             row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
             row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
+            row.Cells["nombreLocal"].Value = nombreLocal;
+            row.Cells["idNegocio"].Value = idNegocio;
+            row.Cells["moneda"].Value = checkDolares.Checked?"DOLARES":"PESOS";
         }
 
         private void RealizarTransaccionCaja(decimal montoPagado, int idPagoParcialGenerado)
@@ -422,6 +503,35 @@ namespace CapaPresentacion
 
                     }
                 }
+            }
+        }
+
+        private void checkMostrarTodosPagosParciales_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkMostrarTodosPagosParciales.Checked) { CargarPagosParciales();  } else { CargarPagosParcialesPorLocal(); }
+        }
+
+        private void checkPesos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkPesos.Checked)
+            {
+                checkDolares.Checked = false;
+            }
+        }
+
+        private void checkDolares_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkDolares.Checked)
+            {
+                checkPesos.Checked = false;
+            }
+        }
+
+        private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboFormaPago.Text=="DOLAR EFECTIVO")
+            {
+                checkDolares.Checked = true;
             }
         }
     }

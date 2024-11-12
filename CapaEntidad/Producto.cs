@@ -13,7 +13,8 @@ namespace CapaEntidad
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public Categoria oCategoria { get; set; }
-
+        public DateTime? fechaUltimaVenta {get;set;}
+        public int? diasSinVenta { get; set; }
         public decimal costoPesos { get; set; }
 
         public decimal ventaPesos { get; set; }

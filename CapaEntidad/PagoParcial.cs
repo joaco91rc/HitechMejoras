@@ -10,6 +10,7 @@ namespace CapaEntidad
     {
         public int idPagoParcial { get; set; }
         public int idCliente { get; set; }
+        public int idNegocio { get; set; }
         public string nombreCliente { get; set; } // Nuevo campo para el nombre del cliente
         public decimal monto { get; set; }
         public int? idVenta { get; set; } // Es opcional porque no siempre puede estar asociado a una venta
@@ -17,8 +18,10 @@ namespace CapaEntidad
         public DateTime fechaRegistro { get; set; }
         public bool estado { get; set; }
         public string vendedor { get; set; }
+        public string nombreLocal { get; set; }
         public string productoReservado { get; set; }
         public string formaPago { get; set; }
+        public string moneda { get; set; }
     }
 
 
