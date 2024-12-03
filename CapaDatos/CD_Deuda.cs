@@ -19,7 +19,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT d.idDeuda, d.fecha, d.costo, d.estado, d.idTraspasoMercaderia, d.idSucursalOrigen, d.idSucursalDestino, ");
+                    query.AppendLine("SELECT d.idDeuda, d.fecha, d.costo, d.estado,d.simboloMoneda, d.idTraspasoMercaderia, d.idSucursalOrigen, d.idSucursalDestino, ");
                     query.AppendLine("nOrigen.nombre AS nombreSucursalOrigen, nDestino.nombre AS nombreSucursalDestino, ");
                     query.AppendLine("ot.idProducto, p.nombre AS nombreProducto "); // Añadir idProducto y nombre del producto
                     query.AppendLine("FROM Deuda d ");
@@ -48,7 +48,8 @@ namespace CapaDatos
                                 idTraspasoMercaderia = dr["idTraspasoMercaderia"] != DBNull.Value ? (int?)Convert.ToInt32(dr["idTraspasoMercaderia"]) : null,
                                 idSucursalOrigen = Convert.ToInt32(dr["idSucursalOrigen"]),
                                 idSucursalDestino = Convert.ToInt32(dr["idSucursalDestino"]),
-                                nombreProducto = dr["nombreProducto"].ToString() // Asumiendo que añadiste esta propiedad a Deuda
+                                nombreProducto = dr["nombreProducto"].ToString(), // Asumiendo que añadiste esta propiedad a Deuda
+                                simboloMoneda = dr["simboloMoneda"].ToString()
                             });
                         }
                     }
@@ -72,8 +73,8 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("INSERT INTO Deuda (fecha, costo, idSucursalOrigen, idSucursalDestino, estado, idTraspasoMercaderia)");
-                    query.AppendLine("VALUES (@fecha, @costo, @idSucursalOrigen, @idSucursalDestino, @estado, @idTraspasoMercaderia)");
+                    query.AppendLine("INSERT INTO Deuda (fecha, costo, idSucursalOrigen, idSucursalDestino, estado, idTraspasoMercaderia, simboloMoneda)");
+                    query.AppendLine("VALUES (@fecha, @costo, @idSucursalOrigen, @idSucursalDestino, @estado, @idTraspasoMercaderia,@simboloMoneda)");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -83,6 +84,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("@idSucursalOrigen", deuda.idSucursalOrigen);
                     cmd.Parameters.AddWithValue("@idSucursalDestino", deuda.idSucursalDestino);
                     cmd.Parameters.AddWithValue("@estado", deuda.estado);
+                    cmd.Parameters.AddWithValue("@simboloMoneda", deuda.simboloMoneda);
                     cmd.Parameters.AddWithValue("@idTraspasoMercaderia", deuda.idTraspasoMercaderia.HasValue ? (object)deuda.idTraspasoMercaderia.Value : DBNull.Value);
 
                     
@@ -128,15 +130,20 @@ namespace CapaDatos
         }
 
 
-        public Dictionary<int, decimal> CalcularDeudaTotalPorSucursal()
+        public Dictionary<int, Dictionary<string, decimal>> CalcularDeudaTotalPorSucursalYMoneda(int idSucursalDeudora)
         {
-            var deudasPorSucursal = new Dictionary<int, decimal>(); // Diccionario para almacenar las deudas por sucursal
+            var deudasPorSucursal = new Dictionary<int, Dictionary<string, decimal>>(); // Diccionario para almacenar deudas por sucursal y moneda
             var sucursales = new[] { 1, 2, 3, 4 }; // IDs de las sucursales específicas
+            var monedas = new[] { "ARS", "USD" }; // Tipos de monedas
 
-            // Inicializar el diccionario con cero para las sucursales
+            // Inicializar el diccionario con cero para todas las sucursales y monedas
             foreach (var sucursal in sucursales)
             {
-                deudasPorSucursal[sucursal] = 0;
+                deudasPorSucursal[sucursal] = new Dictionary<string, decimal>();
+                foreach (var moneda in monedas)
+                {
+                    deudasPorSucursal[sucursal][moneda] = 0;
+                }
             }
 
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
@@ -144,13 +151,14 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT idSucursalOrigen, ISNULL(SUM(costo), 0) AS TotalDeuda "); // Usar ISNULL para manejar nulos
+                    query.AppendLine("SELECT idSucursalOrigen, simboloMoneda, ISNULL(SUM(costo), 0) AS TotalDeuda ");
                     query.AppendLine("FROM Deuda ");
-                    query.AppendLine("WHERE estado = 'NO PAGO' "); // Filtrar por estado
-                    query.AppendLine("AND idSucursalOrigen IN (1, 2, 3, 4) "); // Filtrar por sucursales específicas
-                    query.AppendLine("GROUP BY idSucursalOrigen"); // Agrupar por idSucursalOrigen
+                    query.AppendLine("WHERE estado = 'NO PAGO' ");
+                    query.AppendLine("AND idSucursalDestino = @idSucursalDeudora "); // Filtrar por la sucursal deudora
+                    query.AppendLine("GROUP BY idSucursalOrigen, simboloMoneda"); // Agrupar por sucursal y moneda
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idSucursalDeudora", idSucursalDeudora); // Pasar el parámetro de la sucursal deudora
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
 
@@ -159,18 +167,55 @@ namespace CapaDatos
                         while (dr.Read())
                         {
                             int idSucursal = Convert.ToInt32(dr["idSucursalOrigen"]);
-                            decimal totalDeuda = Convert.ToDecimal(dr["TotalDeuda"]); // Obtener la suma de la deuda
-                            deudasPorSucursal[idSucursal] = totalDeuda; // Almacenar en el diccionario
+                            string moneda = dr["simboloMoneda"].ToString();
+                            decimal totalDeuda = Convert.ToDecimal(dr["TotalDeuda"]);
+
+                            // Almacenar en el diccionario por sucursal y moneda
+                            if (deudasPorSucursal.ContainsKey(idSucursal) && deudasPorSucursal[idSucursal].ContainsKey(moneda))
+                            {
+                                deudasPorSucursal[idSucursal][moneda] = totalDeuda;
+                            }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     // Manejar la excepción, opcionalmente registrar el error
+                    // Console.WriteLine(ex.Message); // Para depuración
                 }
             }
-            return deudasPorSucursal; // Devolver el diccionario de deudas por sucursal
+            return deudasPorSucursal; // Devolver el diccionario de deudas por sucursal y moneda
         }
+
+
+
+        public Dictionary<int, Dictionary<string, decimal>> CalcularDeudaPorSucursalRestante(int idSucursalDeudora)
+        {
+            var deudasRestantesPorSucursal = new Dictionary<int, Dictionary<string, decimal>>(); // Diccionario para almacenar deudas por sucursal y moneda
+            var sucursales = new[] { 1, 2, 3, 4 }; // IDs de las sucursales específicas
+            var monedas = new[] { "ARS", "USD" }; // Tipos de monedas
+
+            // Inicializar el diccionario con cero para todas las sucursales y monedas
+            foreach (var sucursal in sucursales)
+            {
+                if (sucursal != idSucursalDeudora) // Solo inicializamos para las sucursales que no son la deudora
+                {
+                    deudasRestantesPorSucursal[sucursal] = new Dictionary<string, decimal>();
+                    foreach (var moneda in monedas)
+                    {
+                        deudasRestantesPorSucursal[sucursal][moneda] = 0;
+                    }
+                }
+            }
+
+            // Obtener las deudas totales por sucursal y moneda (ya hecho previamente en otro método)
+            var deudasTotales = CalcularDeudaTotalPorSucursalYMoneda(idSucursalDeudora);
+
+           
+
+            return deudasTotales; // Devolver el diccionario con las deudas restantes por sucursal
+        }
+
 
 
 

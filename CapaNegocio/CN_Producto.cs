@@ -42,9 +42,9 @@ namespace CapaNegocio
             return objcd_Producto.ListarSerializables(); 
         }
 
-            public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio, DateTime fechaIncio, DateTime fechaFin)
+            public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio)
         {
-            return objcd_Producto.ListarProductosConSerialNumberPorLocalDisponibles(idNegocio,fechaIncio,fechaFin);
+            return objcd_Producto.ListarProductosConSerialNumberPorLocalDisponibles(idNegocio);
         }
 
         public int ContarProductosSerializados(int idProducto, int idNegocio)
@@ -61,7 +61,7 @@ namespace CapaNegocio
 
         }
 
-        public int Registrar(Producto objProducto, out string mensaje)
+        public int Registrar(Producto objProducto,out string mensaje)
         {
             mensaje = string.Empty;
             if (objProducto.nombre == "")
@@ -236,7 +236,11 @@ namespace CapaNegocio
             return objcd_Producto.ListarProductosVendidos(idNegocio);
         }
 
-        public List<ProductoDetalle> ListarProductosVendidosTodosLocales()
+        public List<ProductoDetalle> ListarProductosVendidosPorFecha(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
+        {
+            return objcd_Producto.ListarProductosVendidosPorFecha(idNegocio, fechaInicio, fechaFin);
+        }
+            public List<ProductoDetalle> ListarProductosVendidosTodosLocales()
         {
             return objcd_Producto.ListarProductosVendidosTodosLocales();
         }

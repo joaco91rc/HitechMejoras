@@ -15,6 +15,7 @@ namespace CapaEntidad
         public int idSucursalDestino { get; set; }
         public string estado { get; set; }
         public int? idTraspasoMercaderia { get; set; }
+        public string simboloMoneda { get; set; }
 
         // Nuevas propiedades para los nombres de las sucursales
         public string nombreSucursalOrigen { get; set; }

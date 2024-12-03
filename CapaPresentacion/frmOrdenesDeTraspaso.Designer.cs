@@ -45,6 +45,8 @@ namespace CapaPresentacion
             this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Confirmada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdOrdenTraspaso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.localOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.localDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaConfirmacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -91,6 +93,8 @@ namespace CapaPresentacion
             this.Cantidad,
             this.Confirmada,
             this.IdOrdenTraspaso,
+            this.localOrigen,
+            this.localDestino,
             this.idSucursalOrigen,
             this.idSucursalDestino,
             this.FechaConfirmacion,
@@ -219,13 +223,29 @@ namespace CapaPresentacion
             this.IdOrdenTraspaso.HeaderText = "ID ORDEN TRASPASO";
             this.IdOrdenTraspaso.Name = "IdOrdenTraspaso";
             this.IdOrdenTraspaso.ReadOnly = true;
+            this.IdOrdenTraspaso.Visible = false;
             this.IdOrdenTraspaso.Width = 140;
+            // 
+            // localOrigen
+            // 
+            this.localOrigen.HeaderText = "LOCAL ORIGEN";
+            this.localOrigen.Name = "localOrigen";
+            this.localOrigen.ReadOnly = true;
+            this.localOrigen.Width = 130;
+            // 
+            // localDestino
+            // 
+            this.localDestino.HeaderText = "LOCAL DESTINO";
+            this.localDestino.Name = "localDestino";
+            this.localDestino.ReadOnly = true;
+            this.localDestino.Width = 135;
             // 
             // idSucursalOrigen
             // 
             this.idSucursalOrigen.HeaderText = "ID SUCURSAL ORIGEN";
             this.idSucursalOrigen.Name = "idSucursalOrigen";
             this.idSucursalOrigen.ReadOnly = true;
+            this.idSucursalOrigen.Visible = false;
             this.idSucursalOrigen.Width = 140;
             // 
             // idSucursalDestino
@@ -233,6 +253,7 @@ namespace CapaPresentacion
             this.idSucursalDestino.HeaderText = "ID SUCURSAL DESTINO";
             this.idSucursalDestino.Name = "idSucursalDestino";
             this.idSucursalDestino.ReadOnly = true;
+            this.idSucursalDestino.Visible = false;
             this.idSucursalDestino.Width = 150;
             // 
             // FechaConfirmacion
@@ -305,6 +326,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn Confirmada;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdOrdenTraspaso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn localOrigen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn localDestino;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalOrigen;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSucursalDestino;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaConfirmacion;

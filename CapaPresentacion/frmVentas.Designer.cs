@@ -29,12 +29,12 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -125,11 +125,12 @@ namespace CapaPresentacion
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtIdPagoParcial = new System.Windows.Forms.TextBox();
+            this.btnEliminarPagoParcial = new FontAwesome.Sharp.IconButton();
+            this.txtMontoPagoParcial = new System.Windows.Forms.NumericUpDown();
             this.btnAgregarPagoParcial = new FontAwesome.Sharp.IconButton();
             this.label26 = new System.Windows.Forms.Label();
-            this.txtMontoPagoParcial = new System.Windows.Forms.NumericUpDown();
-            this.btnEliminarPagoParcial = new FontAwesome.Sharp.IconButton();
-            this.txtIdPagoParcial = new System.Windows.Forms.TextBox();
+            this.txtPrecioLista = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
             this.gbRegistrarCompra.SuspendLayout();
@@ -215,15 +216,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
@@ -235,21 +236,21 @@ namespace CapaPresentacion
             this.prodSerializable,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(20, 211);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -660,6 +661,7 @@ namespace CapaPresentacion
             this.gbInfoProducto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbInfoProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.gbInfoProducto.Controls.Add(this.txtPrecioLista);
             this.gbInfoProducto.Controls.Add(this.checkNoRedondeo);
             this.gbInfoProducto.Controls.Add(this.label10);
             this.gbInfoProducto.Controls.Add(this.label9);
@@ -1220,15 +1222,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSeriales.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvSeriales.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSeriales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSeriales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvSeriales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSeriales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProductoDetalle,
@@ -1239,21 +1241,21 @@ namespace CapaPresentacion
             this.color,
             this.serialNumber});
             this.dgvSeriales.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSeriales.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSeriales.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvSeriales.GridColor = System.Drawing.Color.White;
             this.dgvSeriales.Location = new System.Drawing.Point(743, 211);
             this.dgvSeriales.MultiSelect = false;
             this.dgvSeriales.Name = "dgvSeriales";
             this.dgvSeriales.ReadOnly = true;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvSeriales.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvSeriales.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvSeriales.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvSeriales.RowTemplate.Height = 28;
             this.dgvSeriales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1359,6 +1361,58 @@ namespace CapaPresentacion
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar Pago Parcial";
             // 
+            // txtIdPagoParcial
+            // 
+            this.txtIdPagoParcial.Location = new System.Drawing.Point(246, 14);
+            this.txtIdPagoParcial.Name = "txtIdPagoParcial";
+            this.txtIdPagoParcial.Size = new System.Drawing.Size(30, 29);
+            this.txtIdPagoParcial.TabIndex = 117;
+            this.txtIdPagoParcial.Text = "0";
+            // 
+            // btnEliminarPagoParcial
+            // 
+            this.btnEliminarPagoParcial.BackColor = System.Drawing.Color.White;
+            this.btnEliminarPagoParcial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEliminarPagoParcial.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEliminarPagoParcial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnEliminarPagoParcial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
+            this.btnEliminarPagoParcial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarPagoParcial.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarPagoParcial.ForeColor = System.Drawing.Color.White;
+            this.btnEliminarPagoParcial.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+            this.btnEliminarPagoParcial.IconColor = System.Drawing.Color.Red;
+            this.btnEliminarPagoParcial.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnEliminarPagoParcial.IconSize = 28;
+            this.btnEliminarPagoParcial.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEliminarPagoParcial.Location = new System.Drawing.Point(229, 49);
+            this.btnEliminarPagoParcial.Name = "btnEliminarPagoParcial";
+            this.btnEliminarPagoParcial.Size = new System.Drawing.Size(35, 29);
+            this.btnEliminarPagoParcial.TabIndex = 116;
+            this.btnEliminarPagoParcial.UseVisualStyleBackColor = false;
+            this.btnEliminarPagoParcial.Click += new System.EventHandler(this.btnEliminarPagoParcial_Click);
+            // 
+            // txtMontoPagoParcial
+            // 
+            this.txtMontoPagoParcial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtMontoPagoParcial.DecimalPlaces = 2;
+            this.txtMontoPagoParcial.Location = new System.Drawing.Point(9, 47);
+            this.txtMontoPagoParcial.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.txtMontoPagoParcial.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.txtMontoPagoParcial.Name = "txtMontoPagoParcial";
+            this.txtMontoPagoParcial.ReadOnly = true;
+            this.txtMontoPagoParcial.Size = new System.Drawing.Size(173, 29);
+            this.txtMontoPagoParcial.TabIndex = 115;
+            this.txtMontoPagoParcial.ThousandsSeparator = true;
+            this.txtMontoPagoParcial.ValueChanged += new System.EventHandler(this.txtMontoPagoParcial_ValueChanged);
+            // 
             // btnAgregarPagoParcial
             // 
             this.btnAgregarPagoParcial.BackColor = System.Drawing.Color.White;
@@ -1393,57 +1447,13 @@ namespace CapaPresentacion
             this.label26.TabIndex = 47;
             this.label26.Text = "Monto:";
             // 
-            // txtMontoPagoParcial
+            // txtPrecioLista
             // 
-            this.txtMontoPagoParcial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtMontoPagoParcial.DecimalPlaces = 2;
-            this.txtMontoPagoParcial.Location = new System.Drawing.Point(9, 47);
-            this.txtMontoPagoParcial.Maximum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            0});
-            this.txtMontoPagoParcial.Minimum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            -2147483648});
-            this.txtMontoPagoParcial.Name = "txtMontoPagoParcial";
-            this.txtMontoPagoParcial.ReadOnly = true;
-            this.txtMontoPagoParcial.Size = new System.Drawing.Size(173, 29);
-            this.txtMontoPagoParcial.TabIndex = 115;
-            this.txtMontoPagoParcial.ThousandsSeparator = true;
-            this.txtMontoPagoParcial.ValueChanged += new System.EventHandler(this.txtMontoPagoParcial_ValueChanged);
-            // 
-            // btnEliminarPagoParcial
-            // 
-            this.btnEliminarPagoParcial.BackColor = System.Drawing.Color.White;
-            this.btnEliminarPagoParcial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEliminarPagoParcial.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnEliminarPagoParcial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.btnEliminarPagoParcial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
-            this.btnEliminarPagoParcial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEliminarPagoParcial.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarPagoParcial.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarPagoParcial.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
-            this.btnEliminarPagoParcial.IconColor = System.Drawing.Color.Red;
-            this.btnEliminarPagoParcial.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEliminarPagoParcial.IconSize = 28;
-            this.btnEliminarPagoParcial.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminarPagoParcial.Location = new System.Drawing.Point(229, 49);
-            this.btnEliminarPagoParcial.Name = "btnEliminarPagoParcial";
-            this.btnEliminarPagoParcial.Size = new System.Drawing.Size(35, 29);
-            this.btnEliminarPagoParcial.TabIndex = 116;
-            this.btnEliminarPagoParcial.UseVisualStyleBackColor = false;
-            this.btnEliminarPagoParcial.Click += new System.EventHandler(this.btnEliminarPagoParcial_Click);
-            // 
-            // txtIdPagoParcial
-            // 
-            this.txtIdPagoParcial.Location = new System.Drawing.Point(246, 14);
-            this.txtIdPagoParcial.Name = "txtIdPagoParcial";
-            this.txtIdPagoParcial.Size = new System.Drawing.Size(30, 29);
-            this.txtIdPagoParcial.TabIndex = 117;
-            this.txtIdPagoParcial.Text = "0";
+            this.txtPrecioLista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPrecioLista.Location = new System.Drawing.Point(1036, 16);
+            this.txtPrecioLista.Name = "txtPrecioLista";
+            this.txtPrecioLista.Size = new System.Drawing.Size(91, 29);
+            this.txtPrecioLista.TabIndex = 125;
             // 
             // frmVentas
             // 
@@ -1625,5 +1635,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label26;
         private FontAwesome.Sharp.IconButton btnEliminarPagoParcial;
         private System.Windows.Forms.TextBox txtIdPagoParcial;
+        private System.Windows.Forms.TextBox txtPrecioLista;
     }
 }

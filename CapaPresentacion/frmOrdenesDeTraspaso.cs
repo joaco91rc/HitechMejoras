@@ -16,6 +16,7 @@ namespace CapaPresentacion
     {
         private Image defaultImage = Properties.Resources.CHECK;
         private Image defaultImage2 = Properties.Resources.trash;
+        private decimal cotizacionActiva;
         public frmOrdenesDeTraspaso()
         {
             InitializeComponent();
@@ -37,6 +38,8 @@ namespace CapaPresentacion
                     item.Cantidad,
                     item.Confirmada,
                     item.IdOrdenTraspaso,
+                    item.LocalOrigen,
+                    item.LocalDestino,
                     item.IdSucursalOrigen,
                     item.IdSucursalDestino,
                     item.FechaConfirmacion,
@@ -49,6 +52,7 @@ namespace CapaPresentacion
         }
         private void frmOrdenesDeTraspaso_Load(object sender, EventArgs e)
         {
+            cotizacionActiva = new CN_Cotizacion().CotizacionActiva().importe;
             CargarGrilla();
         }
 
@@ -74,7 +78,7 @@ namespace CapaPresentacion
                     int idSucursalDestino = Convert.ToInt32(selectedRow.Cells["IdSucursalDestino"].Value);
                     int idTraspasoMercaderia = Convert.ToInt32(selectedRow.Cells["IdOrdenTraspaso"].Value);
                     string serialNumber = selectedRow.Cells["SerialNumber"].Value.ToString();
-
+                    var simboloMoneda = new CN_Producto().ObtenerProductoPorId(idProducto).productoDolar;
                     var ConfirmarOrden = new CN_OrdenTraspaso().ConfirmarOrdenTraspaso(idOrdenTraspaso);
 
                 if (ConfirmarOrden)
@@ -91,9 +95,14 @@ namespace CapaPresentacion
                         deuda.idSucursalDestino = idSucursalDestino;
                         deuda.costo = costoProducto;
                         deuda.fecha = DateTime.Now.Date;
+                        deuda.simboloMoneda = simboloMoneda ? "USD" : "ARS";
                         deuda.idTraspasoMercaderia = idTraspasoMercaderia;
                         deuda.estado = "NO PAGO";
 
+                        if (!simboloMoneda)
+                        {
+                            deuda.costo = costoProducto * cotizacionActiva;
+                        }
                         var insertarDeuda = new CN_Deuda().InsertarDeuda(deuda);
                         string mensajeDeuda = string.Empty;
                         if (insertarDeuda)

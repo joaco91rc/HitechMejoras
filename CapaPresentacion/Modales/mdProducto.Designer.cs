@@ -34,14 +34,6 @@ namespace CapaPresentacion.Modales
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.cboBusqueda = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -77,6 +69,15 @@ namespace CapaPresentacion.Modales
             this.checkProductosLocales = new System.Windows.Forms.CheckBox();
             this.txtVentaPesos = new System.Windows.Forms.TextBox();
             this.lblVentaPesos = new System.Windows.Forms.Label();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -104,7 +105,8 @@ namespace CapaPresentacion.Modales
             this.stock,
             this.prodSerializable,
             this.precioCompra,
-            this.precioVenta});
+            this.precioVenta,
+            this.precioLista});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -135,66 +137,6 @@ namespace CapaPresentacion.Modales
             this.dgvData.Size = new System.Drawing.Size(944, 467);
             this.dgvData.TabIndex = 60;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
-            // codigo
-            // 
-            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.codigo.HeaderText = "CODIGO";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 80;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombre.HeaderText = "NOMBRE";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // categoria
-            // 
-            this.categoria.HeaderText = "CATEGORIA";
-            this.categoria.Name = "categoria";
-            this.categoria.ReadOnly = true;
-            this.categoria.Width = 140;
-            // 
-            // stock
-            // 
-            this.stock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stock.HeaderText = "STOCK";
-            this.stock.Name = "stock";
-            this.stock.ReadOnly = true;
-            this.stock.Width = 70;
-            // 
-            // prodSerializable
-            // 
-            this.prodSerializable.HeaderText = "ESSERIALIZABLE";
-            this.prodSerializable.Name = "prodSerializable";
-            this.prodSerializable.ReadOnly = true;
-            this.prodSerializable.Visible = false;
-            // 
-            // precioCompra
-            // 
-            this.precioCompra.HeaderText = "PRECIO COMPRA";
-            this.precioCompra.Name = "precioCompra";
-            this.precioCompra.ReadOnly = true;
-            this.precioCompra.Visible = false;
-            this.precioCompra.Width = 140;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.HeaderText = "PRECIO VENTA";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.ReadOnly = true;
-            this.precioVenta.Visible = false;
-            this.precioVenta.Width = 140;
             // 
             // txtBusqueda
             // 
@@ -653,6 +595,73 @@ namespace CapaPresentacion.Modales
             this.lblVentaPesos.Text = "Venta Pesos";
             this.lblVentaPesos.Visible = false;
             // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // codigo
+            // 
+            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.codigo.HeaderText = "CODIGO";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            this.codigo.Width = 80;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.HeaderText = "NOMBRE";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // categoria
+            // 
+            this.categoria.HeaderText = "CATEGORIA";
+            this.categoria.Name = "categoria";
+            this.categoria.ReadOnly = true;
+            this.categoria.Width = 140;
+            // 
+            // stock
+            // 
+            this.stock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stock.HeaderText = "STOCK";
+            this.stock.Name = "stock";
+            this.stock.ReadOnly = true;
+            this.stock.Width = 70;
+            // 
+            // prodSerializable
+            // 
+            this.prodSerializable.HeaderText = "ESSERIALIZABLE";
+            this.prodSerializable.Name = "prodSerializable";
+            this.prodSerializable.ReadOnly = true;
+            this.prodSerializable.Visible = false;
+            // 
+            // precioCompra
+            // 
+            this.precioCompra.HeaderText = "PRECIO COMPRA";
+            this.precioCompra.Name = "precioCompra";
+            this.precioCompra.ReadOnly = true;
+            this.precioCompra.Visible = false;
+            this.precioCompra.Width = 140;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.HeaderText = "PRECIO VENTA";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.ReadOnly = true;
+            this.precioVenta.Visible = false;
+            this.precioVenta.Width = 140;
+            // 
+            // precioLista
+            // 
+            this.precioLista.HeaderText = "PRECIO LISTA";
+            this.precioLista.Name = "precioLista";
+            this.precioLista.ReadOnly = true;
+            this.precioLista.Width = 130;
+            // 
             // mdProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -743,6 +752,8 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.TextBox txtCategoria;
         private System.Windows.Forms.TextBox txtIdCategoria;
         private System.Windows.Forms.CheckBox checkProductosLocales;
+        private System.Windows.Forms.TextBox txtVentaPesos;
+        private System.Windows.Forms.Label lblVentaPesos;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
@@ -751,7 +762,6 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.TextBox txtVentaPesos;
-        private System.Windows.Forms.Label lblVentaPesos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
     }
 }

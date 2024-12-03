@@ -57,11 +57,13 @@
     <Compile Include="FormaPago.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="HistorialST.cs" />
+    <Compile Include="Moneda.cs" />
     <Compile Include="Negocio.cs" />
     <Compile Include="NetworkHelper.cs" />
     <Compile Include="OrdenTraspaso.cs" />
     <Compile Include="PagoParcial.cs" />
     <Compile Include="Permiso.cs" />
+    <Compile Include="PrecioProducto.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoDetalle.cs" />
     <Compile Include="ProductoNegocio.cs" />

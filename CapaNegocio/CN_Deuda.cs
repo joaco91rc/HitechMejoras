@@ -22,13 +22,18 @@ namespace CapaNegocio
             return obj_cdDeuda.ListarDeudas();
         }
 
-        public Dictionary<int, decimal> CalcularDeudaTotalPorSucursal()
+        public Dictionary<int, Dictionary<string, decimal>> CalcularDeudaTotalPorSucursalYMoneda(int idSucursalDeudora)
         {
 
-            return obj_cdDeuda.CalcularDeudaTotalPorSucursal();
+            return obj_cdDeuda.CalcularDeudaTotalPorSucursalYMoneda(idSucursalDeudora);
         }
 
-        public bool ActualizarEstadoDeuda(int idDeuda)
+        public Dictionary<int, Dictionary<string, decimal>> CalcularDeudaPorSucursalRestante(int idSucursalDeudora)
+        {
+
+            return obj_cdDeuda.CalcularDeudaPorSucursalRestante(GlobalSettings.SucursalId);
+        }
+            public bool ActualizarEstadoDeuda(int idDeuda)
         {
             return obj_cdDeuda.ActualizarEstadoDeuda(idDeuda);
         }

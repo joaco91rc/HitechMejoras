@@ -41,7 +41,10 @@ namespace CapaDatos
                                 FechaCreacion = Convert.ToDateTime(dr["FechaCreacion"]),
                                 FechaConfirmacion = dr["FechaCompletado"] != DBNull.Value ? Convert.ToDateTime(dr["FechaCompletado"]) : (DateTime?)null,
                                 CostoProducto = Convert.ToDecimal(dr["CostoProducto"]),
-                                SerialNumber = dr["SerialNumber"].ToString()
+                                SerialNumber = dr["SerialNumber"].ToString(),
+                                // Agregar las columnas con los nombres de las sucursales
+                                LocalOrigen = ObtenerNombreSucursal(Convert.ToInt32(dr["IdSucursalOrigen"])),
+                                LocalDestino = ObtenerNombreSucursal(Convert.ToInt32(dr["IdSucursalDestino"]))
                             });
                         }
                     }
@@ -54,6 +57,25 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        // Función para obtener el nombre de la sucursal en función del ID
+        private string ObtenerNombreSucursal(int idSucursal)
+        {
+            switch (idSucursal)
+            {
+                case 1:
+                    return "HITECH 1";
+                case 2:
+                    return "HITECH 2";
+                case 3:
+                    return "APPLE 49";
+                case 4:
+                    return "APPLE CAFE";
+                default:
+                    return "Sucursal Desconocida"; // En caso de un ID no esperado
+            }
+        }
+
 
         public OrdenTraspaso ObtenerOrdenTraspasoPorId(int id)
         {

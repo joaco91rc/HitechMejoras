@@ -48,7 +48,8 @@ namespace CapaPresentacion
             {
                 decimal precioVentaCotizado = Math.Round((item.precioVenta * cotizacionActiva) / 1000, 0) * 1000 - 100;
 
-                decimal precioConIncremento = Math.Round((precioVentaCotizado * 1.30m) / 1000, 0) * 1000 - 100;
+                decimal precioEfectivo = Math.Round(item.precioLista * 0.85m, 2);
+
 
 
                 dgvData.Rows.Add(new object[] {
@@ -62,16 +63,18 @@ namespace CapaPresentacion
         item.stockH2,
         item.stockAS,
         item.stockAC,
-        item.precioCompra,
-        item.precioVenta,
-        precioVentaCotizado.ToString("0.00"),
-        precioConIncremento.ToString("0.00"),
-        (precioConIncremento/3).ToString("0.00"),
-        (precioConIncremento/6).ToString("0.00"),
+        string.Format("{0 } {1}","ARS", item.precioLista),
+        string.Format("{0 } {1}","ARS",precioEfectivo),
+        string.Format("{0 } {1}","USD",item.precioVenta),
+        string.Format("{0 } {1}","ARS",item.costoPesos),
+        string.Format("{0 } {1}","USD",item.precioCompra),
+
+
+        string.Format("{0 } {1}","ARS",(item.precioLista/3).ToString("0.00")),
+        string.Format("{0 } {1}","ARS",(item.precioLista/6).ToString("0.00")),
         item.estado == true ? 1 : 0,
         item.estado == true ? "Activo" : "No Activo",
-        item.fechaUltimaVenta,
-        item.diasSinVenta
+        
     });
             }
         }

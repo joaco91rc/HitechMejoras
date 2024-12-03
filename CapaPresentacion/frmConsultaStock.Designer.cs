@@ -29,31 +29,11 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnExportarExcel = new FontAwesome.Sharp.IconButton();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockH1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockH2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stockAC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tresCuotas = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SEIScUOTAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaUltimaVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.diasSinVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -64,8 +44,27 @@ namespace CapaPresentacion
             this.label13 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnBajarReporteStock = new FontAwesome.Sharp.IconButton();
             this.cboStockLocal = new System.Windows.Forms.ComboBox();
+            this.btnBajarReporteStock = new FontAwesome.Sharp.IconButton();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockH1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockH2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stockAC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.costoPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tresCuotas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SEIScUOTAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -103,15 +102,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
@@ -124,183 +123,35 @@ namespace CapaPresentacion
             this.stockH2,
             this.stockAS,
             this.stockAC,
-            this.precioCompra,
-            this.precioVenta,
-            this.precioPesos,
             this.precioLista,
+            this.precioPesos,
+            this.precioVenta,
+            this.costoPesos,
+            this.precioCompra,
             this.tresCuotas,
             this.SEIScUOTAS,
             this.estadoValor,
-            this.estado,
-            this.fechaUltimaVenta,
-            this.diasSinVenta});
+            this.estado});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 151);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(1320, 546);
             this.dgvData.TabIndex = 92;
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
-            // codigo
-            // 
-            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.codigo.HeaderText = "CODIGO";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 80;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombre.HeaderText = "NOMBRE";
-            this.nombre.MinimumWidth = 250;
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // idCategoria
-            // 
-            this.idCategoria.HeaderText = "ID CATEGORIA";
-            this.idCategoria.Name = "idCategoria";
-            this.idCategoria.ReadOnly = true;
-            this.idCategoria.Visible = false;
-            // 
-            // categoria
-            // 
-            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.categoria.HeaderText = "CATEGORIA";
-            this.categoria.Name = "categoria";
-            this.categoria.ReadOnly = true;
-            this.categoria.Width = 150;
-            // 
-            // stockTotal
-            // 
-            this.stockTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockTotal.HeaderText = "STOCK TOTAL";
-            this.stockTotal.Name = "stockTotal";
-            this.stockTotal.ReadOnly = true;
-            this.stockTotal.Width = 120;
-            // 
-            // stockH1
-            // 
-            this.stockH1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockH1.HeaderText = "STOCK H1";
-            this.stockH1.Name = "stockH1";
-            this.stockH1.ReadOnly = true;
-            // 
-            // stockH2
-            // 
-            this.stockH2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stockH2.HeaderText = "STOCK H2";
-            this.stockH2.Name = "stockH2";
-            this.stockH2.ReadOnly = true;
-            // 
-            // stockAS
-            // 
-            this.stockAS.HeaderText = "STOCK AS";
-            this.stockAS.Name = "stockAS";
-            this.stockAS.ReadOnly = true;
-            // 
-            // stockAC
-            // 
-            this.stockAC.HeaderText = "STOCK AC";
-            this.stockAC.Name = "stockAC";
-            this.stockAC.ReadOnly = true;
-            // 
-            // precioCompra
-            // 
-            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioCompra.HeaderText = "PRECIO COMPRA";
-            this.precioCompra.Name = "precioCompra";
-            this.precioCompra.ReadOnly = true;
-            this.precioCompra.Visible = false;
-            this.precioCompra.Width = 140;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioVenta.HeaderText = "PRECIO VENTA";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.ReadOnly = true;
-            this.precioVenta.Width = 130;
-            // 
-            // precioPesos
-            // 
-            this.precioPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioPesos.HeaderText = "PRECIO EN PESOS";
-            this.precioPesos.Name = "precioPesos";
-            this.precioPesos.ReadOnly = true;
-            this.precioPesos.Width = 200;
-            // 
-            // precioLista
-            // 
-            this.precioLista.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioLista.HeaderText = "PRECIO LISTA";
-            this.precioLista.Name = "precioLista";
-            this.precioLista.ReadOnly = true;
-            this.precioLista.Width = 200;
-            // 
-            // tresCuotas
-            // 
-            this.tresCuotas.HeaderText = "3 SIN INTERES";
-            this.tresCuotas.Name = "tresCuotas";
-            this.tresCuotas.ReadOnly = true;
-            // 
-            // SEIScUOTAS
-            // 
-            this.SEIScUOTAS.HeaderText = "6 SIN INTERES";
-            this.SEIScUOTAS.Name = "SEIScUOTAS";
-            this.SEIScUOTAS.ReadOnly = true;
-            // 
-            // estadoValor
-            // 
-            this.estadoValor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.estadoValor.HeaderText = "ESTADO VALOR";
-            this.estadoValor.Name = "estadoValor";
-            this.estadoValor.ReadOnly = true;
-            this.estadoValor.Visible = false;
-            // 
-            // estado
-            // 
-            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.estado.HeaderText = "ESTADO";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            this.estado.Visible = false;
-            // 
-            // fechaUltimaVenta
-            // 
-            this.fechaUltimaVenta.HeaderText = "FECHA ACT. STOCK";
-            this.fechaUltimaVenta.Name = "fechaUltimaVenta";
-            this.fechaUltimaVenta.ReadOnly = true;
-            this.fechaUltimaVenta.Width = 160;
-            // 
-            // diasSinVenta
-            // 
-            this.diasSinVenta.HeaderText = "DIAS SIN ACT. STOCK";
-            this.diasSinVenta.Name = "diasSinVenta";
-            this.diasSinVenta.ReadOnly = true;
-            this.diasSinVenta.Width = 160;
             // 
             // btnLimpiar
             // 
@@ -438,6 +289,21 @@ namespace CapaPresentacion
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reporte de Stock Por Local";
             // 
+            // cboStockLocal
+            // 
+            this.cboStockLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStockLocal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboStockLocal.FormattingEnabled = true;
+            this.cboStockLocal.Items.AddRange(new object[] {
+            "HITECH 1",
+            "HITECH 2",
+            "APPLE 49",
+            "APPLE CAFE"});
+            this.cboStockLocal.Location = new System.Drawing.Point(6, 46);
+            this.cboStockLocal.Name = "cboStockLocal";
+            this.cboStockLocal.Size = new System.Drawing.Size(229, 29);
+            this.cboStockLocal.TabIndex = 97;
+            // 
             // btnBajarReporteStock
             // 
             this.btnBajarReporteStock.BackColor = System.Drawing.Color.White;
@@ -460,20 +326,145 @@ namespace CapaPresentacion
             this.btnBajarReporteStock.UseVisualStyleBackColor = false;
             this.btnBajarReporteStock.Click += new System.EventHandler(this.btnBajarReporteStock_Click);
             // 
-            // cboStockLocal
+            // idProducto
             // 
-            this.cboStockLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboStockLocal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboStockLocal.FormattingEnabled = true;
-            this.cboStockLocal.Items.AddRange(new object[] {
-            "HITECH 1",
-            "HITECH 2",
-            "APPLE 49",
-            "APPLE CAFE"});
-            this.cboStockLocal.Location = new System.Drawing.Point(6, 46);
-            this.cboStockLocal.Name = "cboStockLocal";
-            this.cboStockLocal.Size = new System.Drawing.Size(229, 29);
-            this.cboStockLocal.TabIndex = 97;
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // codigo
+            // 
+            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.codigo.HeaderText = "CODIGO";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            this.codigo.Width = 80;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.HeaderText = "NOMBRE";
+            this.nombre.MinimumWidth = 250;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // idCategoria
+            // 
+            this.idCategoria.HeaderText = "ID CATEGORIA";
+            this.idCategoria.Name = "idCategoria";
+            this.idCategoria.ReadOnly = true;
+            this.idCategoria.Visible = false;
+            // 
+            // categoria
+            // 
+            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.categoria.HeaderText = "CATEGORIA";
+            this.categoria.Name = "categoria";
+            this.categoria.ReadOnly = true;
+            this.categoria.Width = 150;
+            // 
+            // stockTotal
+            // 
+            this.stockTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockTotal.HeaderText = "STOCK TOTAL";
+            this.stockTotal.Name = "stockTotal";
+            this.stockTotal.ReadOnly = true;
+            this.stockTotal.Width = 120;
+            // 
+            // stockH1
+            // 
+            this.stockH1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockH1.HeaderText = "STOCK H1";
+            this.stockH1.Name = "stockH1";
+            this.stockH1.ReadOnly = true;
+            // 
+            // stockH2
+            // 
+            this.stockH2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stockH2.HeaderText = "STOCK H2";
+            this.stockH2.Name = "stockH2";
+            this.stockH2.ReadOnly = true;
+            // 
+            // stockAS
+            // 
+            this.stockAS.HeaderText = "STOCK AS";
+            this.stockAS.Name = "stockAS";
+            this.stockAS.ReadOnly = true;
+            // 
+            // stockAC
+            // 
+            this.stockAC.HeaderText = "STOCK AC";
+            this.stockAC.Name = "stockAC";
+            this.stockAC.ReadOnly = true;
+            // 
+            // precioLista
+            // 
+            this.precioLista.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioLista.HeaderText = "PRECIO LISTA";
+            this.precioLista.Name = "precioLista";
+            this.precioLista.ReadOnly = true;
+            this.precioLista.Width = 120;
+            // 
+            // precioPesos
+            // 
+            this.precioPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioPesos.HeaderText = "PRECIO EFECTIVO ARS";
+            this.precioPesos.Name = "precioPesos";
+            this.precioPesos.ReadOnly = true;
+            this.precioPesos.Width = 200;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioVenta.HeaderText = "PRECIO VENTA USD";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.ReadOnly = true;
+            this.precioVenta.Width = 130;
+            // 
+            // costoPesos
+            // 
+            this.costoPesos.HeaderText = "COSTO ARS";
+            this.costoPesos.Name = "costoPesos";
+            this.costoPesos.ReadOnly = true;
+            this.costoPesos.Visible = false;
+            // 
+            // precioCompra
+            // 
+            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioCompra.HeaderText = "COSTO USD";
+            this.precioCompra.Name = "precioCompra";
+            this.precioCompra.ReadOnly = true;
+            this.precioCompra.Visible = false;
+            this.precioCompra.Width = 140;
+            // 
+            // tresCuotas
+            // 
+            this.tresCuotas.HeaderText = "3 SIN INTERES";
+            this.tresCuotas.Name = "tresCuotas";
+            this.tresCuotas.ReadOnly = true;
+            // 
+            // SEIScUOTAS
+            // 
+            this.SEIScUOTAS.HeaderText = "6 SIN INTERES";
+            this.SEIScUOTAS.Name = "SEIScUOTAS";
+            this.SEIScUOTAS.ReadOnly = true;
+            // 
+            // estadoValor
+            // 
+            this.estadoValor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.estadoValor.HeaderText = "ESTADO VALOR";
+            this.estadoValor.Name = "estadoValor";
+            this.estadoValor.ReadOnly = true;
+            this.estadoValor.Visible = false;
+            // 
+            // estado
+            // 
+            this.estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.estado.HeaderText = "ESTADO";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            this.estado.Visible = false;
             // 
             // frmConsultaStock
             // 
@@ -515,6 +506,9 @@ namespace CapaPresentacion
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cboStockLocal;
+        private FontAwesome.Sharp.IconButton btnBajarReporteStock;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
@@ -525,18 +519,14 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn stockH2;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockAS;
         private System.Windows.Forms.DataGridViewTextBoxColumn stockAC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioPesos;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioPesos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn costoPesos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn tresCuotas;
         private System.Windows.Forms.DataGridViewTextBoxColumn SEIScUOTAS;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoValor;
         private System.Windows.Forms.DataGridViewTextBoxColumn estado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaUltimaVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn diasSinVenta;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cboStockLocal;
-        private FontAwesome.Sharp.IconButton btnBajarReporteStock;
     }
 }

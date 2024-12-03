@@ -29,9 +29,9 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -57,15 +57,8 @@ namespace CapaPresentacion
             this.btnEditar = new System.Windows.Forms.DataGridViewImageColumn();
             this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
             this.checkProductosTodosLocales = new System.Windows.Forms.CheckBox();
-            this.checkHitech1 = new System.Windows.Forms.CheckBox();
-            this.checkHitech2 = new System.Windows.Forms.CheckBox();
-            this.checkApple49 = new System.Windows.Forms.CheckBox();
-            this.checkAppleCafe = new System.Windows.Forms.CheckBox();
-            this.dtpFechaDesde = new System.Windows.Forms.DateTimePicker();
-            this.dtpfechaHasta = new System.Windows.Forms.DateTimePicker();
+            this.cboLocales = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.iconButton1 = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
@@ -209,15 +202,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProductoDetalle,
@@ -235,20 +228,20 @@ namespace CapaPresentacion
             this.btnEditar,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 168);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(1320, 529);
@@ -354,7 +347,7 @@ namespace CapaPresentacion
             this.checkProductosTodosLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkProductosTodosLocales.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkProductosTodosLocales.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkProductosTodosLocales.Location = new System.Drawing.Point(22, 141);
+            this.checkProductosTodosLocales.Location = new System.Drawing.Point(1043, 86);
             this.checkProductosTodosLocales.Name = "checkProductosTodosLocales";
             this.checkProductosTodosLocales.Size = new System.Drawing.Size(248, 21);
             this.checkProductosTodosLocales.TabIndex = 115;
@@ -362,81 +355,16 @@ namespace CapaPresentacion
             this.checkProductosTodosLocales.UseVisualStyleBackColor = false;
             this.checkProductosTodosLocales.CheckedChanged += new System.EventHandler(this.checkProductosEnStock_CheckedChanged);
             // 
-            // checkHitech1
+            // cboLocales
             // 
-            this.checkHitech1.AutoSize = true;
-            this.checkHitech1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.checkHitech1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkHitech1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkHitech1.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkHitech1.Location = new System.Drawing.Point(302, 141);
-            this.checkHitech1.Name = "checkHitech1";
-            this.checkHitech1.Size = new System.Drawing.Size(171, 21);
-            this.checkHitech1.TabIndex = 116;
-            this.checkHitech1.Text = "Serializados de Hitech 1";
-            this.checkHitech1.UseVisualStyleBackColor = false;
-            this.checkHitech1.CheckedChanged += new System.EventHandler(this.checkHitech1_CheckedChanged);
-            // 
-            // checkHitech2
-            // 
-            this.checkHitech2.AutoSize = true;
-            this.checkHitech2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.checkHitech2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkHitech2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkHitech2.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkHitech2.Location = new System.Drawing.Point(546, 141);
-            this.checkHitech2.Name = "checkHitech2";
-            this.checkHitech2.Size = new System.Drawing.Size(171, 21);
-            this.checkHitech2.TabIndex = 117;
-            this.checkHitech2.Text = "Serializados de Hitech 2";
-            this.checkHitech2.UseVisualStyleBackColor = false;
-            this.checkHitech2.CheckedChanged += new System.EventHandler(this.checkHitech2_CheckedChanged);
-            // 
-            // checkApple49
-            // 
-            this.checkApple49.AutoSize = true;
-            this.checkApple49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.checkApple49.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkApple49.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkApple49.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkApple49.Location = new System.Drawing.Point(766, 141);
-            this.checkApple49.Name = "checkApple49";
-            this.checkApple49.Size = new System.Drawing.Size(174, 21);
-            this.checkApple49.TabIndex = 118;
-            this.checkApple49.Text = "Serializados de Apple 49\r\n";
-            this.checkApple49.UseVisualStyleBackColor = false;
-            this.checkApple49.CheckedChanged += new System.EventHandler(this.checkApple49_CheckedChanged);
-            // 
-            // checkAppleCafe
-            // 
-            this.checkAppleCafe.AutoSize = true;
-            this.checkAppleCafe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.checkAppleCafe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkAppleCafe.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkAppleCafe.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkAppleCafe.Location = new System.Drawing.Point(974, 141);
-            this.checkAppleCafe.Name = "checkAppleCafe";
-            this.checkAppleCafe.Size = new System.Drawing.Size(187, 21);
-            this.checkAppleCafe.TabIndex = 119;
-            this.checkAppleCafe.Text = "Serializados de Apple Café";
-            this.checkAppleCafe.UseVisualStyleBackColor = false;
-            this.checkAppleCafe.CheckedChanged += new System.EventHandler(this.checkAppleCafe_CheckedChanged);
-            // 
-            // dtpFechaDesde
-            // 
-            this.dtpFechaDesde.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpFechaDesde.Location = new System.Drawing.Point(682, 84);
-            this.dtpFechaDesde.Name = "dtpFechaDesde";
-            this.dtpFechaDesde.Size = new System.Drawing.Size(248, 25);
-            this.dtpFechaDesde.TabIndex = 120;
-            // 
-            // dtpfechaHasta
-            // 
-            this.dtpfechaHasta.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpfechaHasta.Location = new System.Drawing.Point(936, 84);
-            this.dtpfechaHasta.Name = "dtpfechaHasta";
-            this.dtpfechaHasta.Size = new System.Drawing.Size(248, 25);
-            this.dtpfechaHasta.TabIndex = 121;
+            this.cboLocales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboLocales.FormattingEnabled = true;
+            this.cboLocales.Location = new System.Drawing.Point(864, 87);
+            this.cboLocales.Name = "cboLocales";
+            this.cboLocales.Size = new System.Drawing.Size(157, 21);
+            this.cboLocales.TabIndex = 120;
+            this.cboLocales.SelectedIndexChanged += new System.EventHandler(this.cboLocales_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -444,60 +372,19 @@ namespace CapaPresentacion
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label1.Location = new System.Drawing.Point(679, 54);
+            this.label1.Location = new System.Drawing.Point(744, 87);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 17);
-            this.label1.TabIndex = 122;
-            this.label1.Text = "Fecha Desde:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label2.Location = new System.Drawing.Point(933, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 17);
-            this.label2.TabIndex = 123;
-            this.label2.Text = "Fecha Hasta:";
-            // 
-            // iconButton1
-            // 
-            this.iconButton1.BackColor = System.Drawing.Color.White;
-            this.iconButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconButton1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.iconButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.iconButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
-            this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton1.ForeColor = System.Drawing.Color.White;
-            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
-            this.iconButton1.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton1.IconSize = 28;
-            this.iconButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton1.Location = new System.Drawing.Point(1198, 84);
-            this.iconButton1.Name = "iconButton1";
-            this.iconButton1.Size = new System.Drawing.Size(35, 26);
-            this.iconButton1.TabIndex = 124;
-            this.iconButton1.UseVisualStyleBackColor = false;
-            this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
+            this.label1.Size = new System.Drawing.Size(114, 17);
+            this.label1.TabIndex = 121;
+            this.label1.Text = "Filtrar  por Local:";
             // 
             // frmProductosSerializados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
-            this.Controls.Add(this.iconButton1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dtpfechaHasta);
-            this.Controls.Add(this.dtpFechaDesde);
-            this.Controls.Add(this.checkAppleCafe);
-            this.Controls.Add(this.checkApple49);
-            this.Controls.Add(this.checkHitech2);
-            this.Controls.Add(this.checkHitech1);
+            this.Controls.Add(this.cboLocales);
             this.Controls.Add(this.checkProductosTodosLocales);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.btnLimpiar);
@@ -532,10 +419,6 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnExportarExcel;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.CheckBox checkProductosTodosLocales;
-        private System.Windows.Forms.CheckBox checkHitech1;
-        private System.Windows.Forms.CheckBox checkHitech2;
-        private System.Windows.Forms.CheckBox checkApple49;
-        private System.Windows.Forms.CheckBox checkAppleCafe;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
@@ -550,10 +433,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
         private System.Windows.Forms.DataGridViewImageColumn btnEditar;
         private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
-        private System.Windows.Forms.DateTimePicker dtpFechaDesde;
-        private System.Windows.Forms.DateTimePicker dtpfechaHasta;
+        private System.Windows.Forms.ComboBox cboLocales;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private FontAwesome.Sharp.IconButton iconButton1;
     }
 }

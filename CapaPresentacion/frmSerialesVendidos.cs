@@ -172,5 +172,59 @@ namespace CapaPresentacion
 
             }
         }
+
+        private void btnFiltrarFechas_Click(object sender, EventArgs e)
+        {
+            // Validar que el rango de fechas sea correcto
+            if (dtpInicio.Value > dtpFin.Value)
+            {
+                MessageBox.Show("La fecha de inicio no puede ser mayor a la fecha de fin.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DateTime fechaInicio = dtpInicio.Value.Date;
+            DateTime fechaFin = dtpFin.Value.Date;
+
+            // Verificar si el DataGridView tiene filas
+            if (dgvData.Rows.Count > 0)
+            {
+                foreach (DataGridViewRow row in dgvData.Rows)
+                {
+                    // Validar si la columna fechaEgreso contiene un valor válido
+                    if (row.Cells["fechaEgreso"].Value != null && DateTime.TryParse(row.Cells["fechaEgreso"].Value.ToString(), out DateTime fechaEgreso))
+                    {
+                        // Filtrar las filas que están dentro del rango de fechas
+                        row.Visible = fechaEgreso.Date >= fechaInicio && fechaEgreso.Date <= fechaFin;
+                    }
+                    else
+                    {
+                        // Ocultar filas si la fecha es inválida o nula
+                        row.Visible = false;
+                    }
+                }
+            }
+        }
+
+        private void btnLimpiarRangoFechas_Click(object sender, EventArgs e)
+        {
+            // Restablecer los valores de los DateTimePicker
+            dtpInicio.Value = DateTime.Now.Date;
+            dtpFin.Value = DateTime.Now.Date;
+
+            // Verificar si el DataGridView tiene filas
+            if (dgvData.Rows.Count > 0)
+            {
+                // Hacer visibles todas las filas
+                foreach (DataGridViewRow row in dgvData.Rows)
+                {
+                    row.Visible = true;
+                }
+            }
+
+            // Opcional: Restablecer el foco en algún control o mostrar un mensaje
+            txtBusqueda.Clear();
+            txtBusqueda.Focus();
+        }
+
     }
 }

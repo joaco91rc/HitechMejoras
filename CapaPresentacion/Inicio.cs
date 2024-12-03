@@ -411,6 +411,11 @@ namespace CapaPresentacion
             AbrirFormulario(menuMantenedor, new frmDeuda(), this);
         }
 
+        private void subMenuMoneda_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuMantenedor, new frmMoneda(), this);
+        }
+
         private void subMenuProductosSerializados_Click_1(object sender, EventArgs e)
         {
             AbrirFormulario(menuSerializacion, new frmProductosSerializados(), this);
@@ -558,5 +563,7 @@ namespace CapaPresentacion
             }
             
         }
+
+        
     }
 }

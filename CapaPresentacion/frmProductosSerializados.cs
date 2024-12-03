@@ -42,11 +42,33 @@ namespace CapaPresentacion
             cboBusqueda.SelectedIndex = 1;
         }
 
-        private void CargarGrillaEnStock(DateTime fechaInicio, DateTime fechaFin)
+
+        private void CargarComboLocales()
+        {
+            var listaLocales = new CN_Negocio().ListarNegocios();
+            
+            
+            foreach (var item in listaLocales)
+            {
+
+               
+                    cboLocales.Items.Add(new OpcionCombo() { Valor = item.idNegocio, Texto =item.nombre });
+
+                
+
+
+            }
+
+            cboLocales.DisplayMember = "Texto";
+            cboLocales.ValueMember = "Valor";
+            cboLocales.SelectedIndex = -1;
+        }
+
+
+        private void CargarGrillaEnStockPorLocal(int idLocal)
         {
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
-            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(GlobalSettings.SucursalId,fechaInicio,fechaFin
-                );
+            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(idLocal);
             foreach (ProductoDetalle item in listaProductosSerializados)
             {
                 dgvData.Rows.Add(new object[] {
@@ -71,33 +93,7 @@ namespace CapaPresentacion
             }
         }
 
-        private void CargarGrillaEnStockPorLocal(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
-        {
-            dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
-            var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(idNegocio,fechaInicio,fechaFin);
-            foreach (ProductoDetalle item in listaProductosSerializados)
-            {
-                dgvData.Rows.Add(new object[] {
-            // Asignar la imagen predeterminada
-            item.idProductoDetalle,
-            item.idProducto, // Id del producto
-            item.fecha,
-            item.codigo,
-            item.nombre,
-            item.marca, // Marca
-            item.modelo, // Modelo
-            item.color, // Color
-            item.numeroSerie, // Número de serie
-            item.nombreLocal,
-            item.estadoVendido,
-
-            item.idNegocio, // Id del negocio,
-            defaultImage,
-            defaultImage2
-
-        });
-            }
-        }
+        
 
         private void CargarGrilla()
         {
@@ -130,10 +126,9 @@ namespace CapaPresentacion
 
         private void frmProductosSerializados_Load(object sender, EventArgs e)
         {
-            dtpfechaHasta.Value = DateTime.Now.Date.AddDays(+2);
-            dtpFechaDesde.Value = dtpfechaHasta.Value.AddDays(-15);
+            CargarComboLocales();
             
-            CargarGrillaEnStock(dtpFechaDesde.Value,dtpfechaHasta.Value);
+            CargarGrillaEnStockPorLocal(GlobalSettings.SucursalId);
             CargarComboBusqueda();
         }
 
@@ -288,11 +283,7 @@ namespace CapaPresentacion
 
             loading = true; // Iniciamos la carga
 
-            // Desmarcar los otros checkboxes
-            checkHitech1.Checked = false;
-            checkAppleCafe.Checked = false;
-            checkHitech2.Checked = false;
-            checkApple49.Checked = false;
+           
 
             // Cargar grilla en función del estado
             if (checkProductosTodosLocales.Checked)
@@ -301,115 +292,65 @@ namespace CapaPresentacion
             }
             else
             {
-                CargarGrillaEnStock(dtpFechaDesde.Value,dtpfechaHasta.Value);
+                CargarGrillaEnStockPorLocal(GlobalSettings.SucursalId);
             }
 
             loading = false; // Terminamos la carga
         }
 
-        private void checkHitech1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (loading) return; // Si estamos cargando, salimos del método
-
-            loading = true; // Iniciamos la carga
-
-            // Desmarcar los otros checkboxes
-            checkProductosTodosLocales.Checked = false;
-            checkAppleCafe.Checked = false;
-            checkHitech2.Checked = false;
-            checkApple49.Checked = false;
-
-            // Cargar grilla en función del estado
-            if (checkHitech1.Checked)
-            {
-                CargarGrillaEnStockPorLocal(1,dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-            else
-            {
-                CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-
-            loading = false; // Terminamos la carga
-        }
-
-        private void checkHitech2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (loading) return; // Si estamos cargando, salimos del método
-
-            loading = true; // Iniciamos la carga
-
-            // Desmarcar los otros checkboxes
-            checkProductosTodosLocales.Checked = false;
-            checkHitech1.Checked = false;
-            checkAppleCafe.Checked = false;
-            checkApple49.Checked = false;
-
-            // Cargar grilla en función del estado
-            if (checkHitech2.Checked)
-            {
-                CargarGrillaEnStockPorLocal(2, dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-            else
-            {
-                CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-
-            loading = false; // Terminamos la carga
-        }
-
-        private void checkApple49_CheckedChanged(object sender, EventArgs e)
-        {
-            if (loading) return; // Si estamos cargando, salimos del método
-
-            loading = true; // Iniciamos la carga
-
-            // Desmarcar los otros checkboxes
-            checkProductosTodosLocales.Checked = false;
-            checkHitech1.Checked = false;
-            checkHitech2.Checked = false;
-            checkAppleCafe.Checked = false;
-
-            // Cargar grilla en función del estado
-            if (checkApple49.Checked)
-            {
-                CargarGrillaEnStockPorLocal(3, dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-            else
-            {
-                CargarGrillaEnStock( dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-
-            loading = false; // Terminamos la carga
-        }
-
-        private void checkAppleCafe_CheckedChanged(object sender, EventArgs e)
-        {
-            if (loading) return; // Si estamos cargando, salimos del método
-
-            loading = true; // Iniciamos la carga
-
-            // Desmarcar los otros checkboxes
-            checkProductosTodosLocales.Checked = false;
-            checkHitech1.Checked = false;
-            checkHitech2.Checked = false;
-            checkApple49.Checked = false;
-
-            // Cargar grilla en función del estado
-            if (checkAppleCafe.Checked)
-            {
-                CargarGrillaEnStockPorLocal(4, dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-            else
-            {
-                CargarGrillaEnStock( dtpFechaDesde.Value, dtpfechaHasta.Value);
-            }
-
-            loading = false; // Terminamos la carga
-        }
+       
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            CargarGrillaEnStock(dtpFechaDesde.Value, dtpfechaHasta.Value.AddDays(+1));
+            CargarGrillaEnStockPorLocal(GlobalSettings.SucursalId);
         }
+
+        private void cboLocales_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (loading) return; // Salir si estamos en un estado de carga
+
+            loading = true; // Indicar que la carga ha iniciado
+
+            if (cboLocales.SelectedIndex >= 0) // Verificar que hay un ítem seleccionado
+            {
+                // Obtener el valor del item seleccionado
+                var opcionSeleccionada = (OpcionCombo)cboLocales.SelectedItem;
+                int idLocalSeleccionado = Convert.ToInt32(opcionSeleccionada.Valor);
+
+                // Ejecutar la acción correspondiente al idLocal
+                switch (idLocalSeleccionado)
+                {
+                    case 1: // Hitech 1
+                        CargarGrillaEnStockPorLocal(1);
+                        break;
+
+                    case 2: // Hitech 2
+                        CargarGrillaEnStockPorLocal(2);
+                        break;
+
+                    case 3: // Apple 49
+                        CargarGrillaEnStockPorLocal(3);
+                        break;
+
+                    case 4: // Apple Café
+                        CargarGrillaEnStockPorLocal(4);
+                        break;
+
+                    default: // Mostrar todos los productos
+                        CargarGrillaEnStockPorLocal(GlobalSettings.SucursalId);
+                        break;
+                }
+            }
+            else
+            {
+                // Si no hay selección, cargar todos los productos
+                CargarGrillaEnStockPorLocal(GlobalSettings.SucursalId);
+            }
+
+            loading = false; // Indicar que la carga ha finalizado
+        }
+
+
+
     }
 }

@@ -39,14 +39,18 @@ namespace CapaDatos
                     dtReordenado.Columns.Add("idCategoria");
                     dtReordenado.Columns.Add("DescripcionCategoria");
                     dtReordenado.Columns.Add("stock");
-                    dtReordenado.Columns.Add("costoPesos");
-                    dtReordenado.Columns.Add("ventaPesos");
-                    dtReordenado.Columns.Add("precioCompra");
-                    dtReordenado.Columns.Add("precioVenta");
+
+                    // Orden deseado para los precios
+                    dtReordenado.Columns.Add("precioVentaPesos"); // Precio Venta ARS
+                    dtReordenado.Columns.Add("precioListaPesos"); // Precio Lista ARS
+                    dtReordenado.Columns.Add("precioEfectivoPesos"); // Precio Efectivo ARS
+                    dtReordenado.Columns.Add("precioCompraPesos"); // Costo ARS
+                    dtReordenado.Columns.Add("precioCompraDolar"); // Costo USD
+                    dtReordenado.Columns.Add("precioVentaDolar"); // Precio Venta USD
+
                     dtReordenado.Columns.Add("estado");
                     dtReordenado.Columns.Add("prodSerializable");
-                    dtReordenado.Columns.Add("fechaUltimaVenta");
-                    dtReordenado.Columns.Add("diasSinVenta");
+                    dtReordenado.Columns.Add("productoDolar");
 
                     // Llenar el nuevo DataTable con los datos en el orden deseado
                     foreach (DataRow row in dt.Rows)
@@ -59,19 +63,22 @@ namespace CapaDatos
                         newRow["idCategoria"] = row["idCategoria"];
                         newRow["DescripcionCategoria"] = row["DescripcionCategoria"];
                         newRow["stock"] = row["stock"];
-                        newRow["costoPesos"] = row["costoPesos"];
-                        newRow["ventaPesos"] = row["ventaPesos"];
-                        newRow["precioCompra"] = row["precioCompra"];
-                        newRow["precioVenta"] = row["precioVenta"];
+
+                        // Ordenar los precios como solicitado
+                        newRow["precioVentaPesos"] = row["precioVentaPesos"];
+                        newRow["precioListaPesos"] = row["precioListaPesos"];
+                        newRow["precioEfectivoPesos"] = row["precioEfectivoPesos"];
+                        newRow["precioCompraPesos"] = row["precioCompraPesos"];
+                        newRow["precioCompraDolar"] = row["precioCompraDolar"];
+                        newRow["precioVentaDolar"] = row["precioVentaDolar"];
 
                         // Convertir el estado de True/False a "Activo"/"Inactivo"
                         newRow["estado"] = (bool)row["estado"] ? "Activo" : "No Activo";
 
                         // Convertir prodSerializable de True/False a "Sí"/"No"
                         newRow["prodSerializable"] = (bool)row["prodSerializable"] ? "SI" : "NO";
+                        newRow["productoDolar"] = (bool)row["productoDolar"] ? "SI" : "NO";
 
-                        newRow["fechaUltimaVenta"] = row["fechaUltimaVenta"];
-                        newRow["diasSinVenta"] = row["diasSinVenta"];
                         dtReordenado.Rows.Add(newRow);
                     }
 
@@ -84,6 +91,7 @@ namespace CapaDatos
                 }
             }
         }
+
 
 
 
@@ -170,19 +178,34 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion AS DescripcionCategoria,");
-                    query.AppendLine("p.ventaPesos, ISNULL(pn.stock, 0) AS stock, p.precioCompra, p.precioVenta, p.estado, p.costoPesos,");
-                    query.AppendLine("p.prodSerializable, pn.fechaUltimaVenta AS FechaUltimaVenta,");
-                    query.AppendLine("DATEDIFF(DAY, COALESCE(pn.fechaUltimaVenta, MAX(comp.fechaRegistro)), GETDATE()) AS diasSinVenta");
+                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("c.idCategoria, c.descripcion AS DescripcionCategoria,");
+                    query.AppendLine("ISNULL(pn.stock, 0) AS stock,");
+                    query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
+                    query.AppendLine("ISNULL(ppDolar.precioVenta, 0) AS precioVenta,");
+                    query.AppendLine("ISNULL(ppPesos.precioVenta, 0) AS ventaPesos,");
+                    query.AppendLine("ISNULL(ppPesos.precioLista, 0) AS precioLista,");
+                    query.AppendLine("ISNULL(ppPesos.precioCompra, 0) AS costoPesos,");
+                    query.AppendLine("p.prodSerializable");
                     query.AppendLine("FROM Producto p");
                     query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
                     query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto AND pn.idNegocio = @idNegocio");
-                    query.AppendLine("LEFT JOIN DETALLE_COMPRA dc ON dc.idProducto = p.idProducto");
-                    query.AppendLine("LEFT JOIN COMPRA comp ON comp.idCompra = dc.idCompra");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 2");
+                    query.AppendLine(") ppDolar ON ppDolar.idProducto = p.idProducto");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioVenta, precioLista, precioCompra");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 1");
+                    query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
                     query.AppendLine("WHERE p.estado = 1");
-                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion,");
-                    query.AppendLine("p.ventaPesos, pn.stock, p.precioCompra, p.precioVenta, p.estado, p.costoPesos,");
-                    query.AppendLine("p.prodSerializable, pn.fechaUltimaVenta");
+                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("c.idCategoria, c.descripcion, pn.stock,");
+                    query.AppendLine("ppDolar.precioCompra, ppDolar.precioVenta,");
+                    query.AppendLine("ppPesos.precioVenta, ppPesos.precioLista, ppPesos.precioCompra,");
+                    query.AppendLine("p.prodSerializable");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
@@ -199,16 +222,19 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 descripcion = dr["descripcion"].ToString(),
-                                oCategoria = new Categoria() { idCategoria = Convert.ToInt32(dr["idCategoria"]), descripcion = dr["DescripcionCategoria"].ToString() },
-                                costoPesos = Convert.ToDecimal(dr["costoPesos"]),
-                                precioCompra = Convert.ToDecimal(dr["precioCompra"]),
-                                precioVenta = Convert.ToDecimal(dr["precioVenta"]),
-                                estado = Convert.ToBoolean(dr["estado"]),
+                                oCategoria = new Categoria()
+                                {
+                                    idCategoria = Convert.ToInt32(dr["idCategoria"]),
+                                    descripcion = dr["DescripcionCategoria"].ToString()
+                                },
+                                costoPesos = dr["costoPesos"] != DBNull.Value ? Convert.ToDecimal(dr["costoPesos"]) : 0,
+                                precioCompra = dr["precioCompra"] != DBNull.Value ? Convert.ToDecimal(dr["precioCompra"]) : 0,
+                                precioVenta = dr["precioVenta"] != DBNull.Value ? Convert.ToDecimal(dr["precioVenta"]) : 0,
+                                estado = true, // Siempre estado 1 en la consulta
                                 stock = Convert.ToInt32(dr["stock"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = Convert.ToDecimal(dr["ventaPesos"]),
-                                fechaUltimaVenta = dr["FechaUltimaVenta"] != DBNull.Value ? Convert.ToDateTime(dr["FechaUltimaVenta"]) : (DateTime?)null,
-                                diasSinVenta = dr["diasSinVenta"] != DBNull.Value ? Convert.ToInt32(dr["diasSinVenta"]) : (int?)null // Manejo de DBNull
+                                precioLista = dr["precioLista"] != DBNull.Value ? Convert.ToDecimal(dr["precioLista"]) : 0,
+                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0
                             });
                         }
                     }
@@ -221,6 +247,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
 
 
@@ -456,7 +483,7 @@ namespace CapaDatos
             return lista;
         }
 
-        public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
+        public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio)
         {
             List<ProductoDetalle> lista = new List<ProductoDetalle>();
 
@@ -468,12 +495,11 @@ namespace CapaDatos
                     query.AppendLine("SELECT PD.*, P.codigo, P.nombre FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
                     query.AppendLine("WHERE PD.idNegocio = @idNegocio AND PD.estado = 1"); // Filtrar por estado = 1 (disponible)
-                    query.AppendLine("AND PD.fecha >= @fechaInicio AND PD.fecha <= @fechaFin"); // Filtrar por rango de fechas
+                   
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio); // Añadir el parámetro
-                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio); // Añadir parámetro de fecha de inicio
-                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin); // Añadir parámetro de fecha de fin
+                    
 
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
@@ -609,6 +635,87 @@ namespace CapaDatos
                     // Puedes registrar el error o lanzar una excepción
                 }
             }
+            return lista;
+        }
+
+        public List<ProductoDetalle> ListarProductosVendidosPorFecha(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
+        {
+            List<ProductoDetalle> lista = new List<ProductoDetalle>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento FROM PRODUCTO_DETALLE PD");
+                    query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
+                    query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta");
+                    query.AppendLine("WHERE PD.estado = 0 AND PD.idVenta <> 0 AND PD.idNegocio = @idNegocio");
+                    query.AppendLine("AND PD.fechaEgreso BETWEEN @fechaInicio AND @fechaFin");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio);
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin);
+                    cmd.CommandType = CommandType.Text;
+
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            ProductoDetalle detalle = new ProductoDetalle()
+                            {
+                                idProductoDetalle = Convert.ToInt32(dr["idProductoDetalle"]),
+                                idProducto = Convert.ToInt32(dr["idProducto"]),
+                                numeroSerie = dr["numeroSerie"].ToString(),
+                                color = dr["color"].ToString(),
+                                modelo = dr["modelo"].ToString(),
+                                marca = dr["marca"].ToString(),
+                                idNegocio = Convert.ToInt32(dr["idNegocio"]),
+                                codigo = dr["codigo"].ToString(),
+                                nombre = dr["nombre"].ToString(),
+                                numeroVenta = dr["nroDocumento"].ToString(),
+                                fecha = Convert.ToDateTime(dr["fecha"]),
+
+                                // Manejo de DBNull para fechaEgreso
+                                fechaEgreso = dr.IsDBNull(dr.GetOrdinal("fechaEgreso"))
+                                    ? (DateTime?)null
+                                    : Convert.ToDateTime(dr["fechaEgreso"])
+                            };
+
+                            // Asignar nombreLocal basado en el idNegocio
+                            switch (detalle.idNegocio)
+                            {
+                                case 1:
+                                    detalle.nombreLocal = "HITECH 1";
+                                    break;
+                                case 2:
+                                    detalle.nombreLocal = "HITECH 2";
+                                    break;
+                                case 3:
+                                    detalle.nombreLocal = "APPLE 49";
+                                    break;
+                                case 4:
+                                    detalle.nombreLocal = "APPLE CAFÉ";
+                                    break;
+                                default:
+                                    detalle.nombreLocal = "";
+                                    break;
+                            }
+
+                            lista.Add(detalle);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<ProductoDetalle>();
+                    // Puedes registrar el error o lanzar una excepción
+                }
+            }
+
             return lista;
         }
 
@@ -896,12 +1003,30 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion[DescripcionCategoria],p.ventaPesos,");
-                    query.AppendLine("ISNULL(pn.stock, 0) as stock, p.precioCompra, p.precioVenta, p.estado, p.costoPesos, p.prodSerializable");
-                    query.AppendLine("from Producto p");
-                    query.AppendLine("inner join CATEGORIA c on c.idCategoria = p.idCategoria");
-                    query.AppendLine("left join PRODUCTONEGOCIO pn on pn.idProducto = p.idProducto");
-                    query.AppendLine("where p.estado = 1 and pn.idNegocio = @idNegocio");
+                    query.AppendLine("SELECT p.idProducto, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("c.idCategoria, c.descripcion AS DescripcionCategoria,");
+                    query.AppendLine("ISNULL(pn.stock, 0) AS stock,");
+                    query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
+                    query.AppendLine("ISNULL(ppDolar.precioVenta, 0) AS precioVenta,");
+                    query.AppendLine("ISNULL(ppPesos.precioVenta, 0) AS ventaPesos,");
+                    query.AppendLine("ISNULL(ppPesos.precioLista, 0) AS precioLista,");
+                    query.AppendLine("ISNULL(ppPesos.precioCompra, 0) AS costoPesos,");
+                    query.AppendLine("p.prodSerializable, p.estado");
+                    query.AppendLine("FROM Producto p");
+                    query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
+                    query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto AND pn.idNegocio = @idNegocio");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 2");
+                    query.AppendLine(") ppDolar ON ppDolar.idProducto = p.idProducto");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioVenta, precioLista, precioCompra");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 1");
+                    query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
+                    query.AppendLine("WHERE p.estado = 1");
+
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
                     cmd.CommandType = CommandType.Text;
@@ -917,16 +1042,19 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 descripcion = dr["descripcion"].ToString(),
-                                oCategoria = new Categoria() { idCategoria = Convert.ToInt32(dr["idCategoria"]), descripcion = dr["DescripcionCategoria"].ToString() },
+                                oCategoria = new Categoria()
+                                {
+                                    idCategoria = Convert.ToInt32(dr["idCategoria"]),
+                                    descripcion = dr["DescripcionCategoria"].ToString()
+                                },
                                 costoPesos = Convert.ToDecimal(dr["costoPesos"]),
                                 precioCompra = Convert.ToDecimal(dr["precioCompra"]),
                                 precioVenta = Convert.ToDecimal(dr["precioVenta"]),
                                 estado = Convert.ToBoolean(dr["estado"]),
                                 stock = Convert.ToInt32(dr["stock"]),
-                                
+                                precioLista = dr["precioLista"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["precioLista"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = Convert.ToDecimal(dr["ventaPesos"])
-
+                                ventaPesos = dr["ventaPesos"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ventaPesos"])
                             });
                         }
                     }
@@ -934,10 +1062,13 @@ namespace CapaDatos
                 catch (Exception ex)
                 {
                     lista = new List<Producto>();
+                    // Manejar el error aquí si es necesario, como logging
                 }
             }
             return lista;
         }
+
+
 
 
         public List<Producto> Listar()
@@ -948,22 +1079,38 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion AS DescripcionCategoria, p.prodSerializable, p.ventaPesos,");
-                    query.AppendLine("ISNULL((SELECT SUM(pn.stock) FROM PRODUCTONEGOCIO pn WHERE pn.idNegocio = 1 AND pn.idProducto = p.idProducto), 0) AS stockH1,");
-                    query.AppendLine("ISNULL((SELECT SUM(pn.stock) FROM PRODUCTONEGOCIO pn WHERE pn.idNegocio = 2 AND pn.idProducto = p.idProducto), 0) AS stockH2,");
-                    query.AppendLine("ISNULL((SELECT SUM(pn.stock) FROM PRODUCTONEGOCIO pn WHERE pn.idNegocio = 3 AND pn.idProducto = p.idProducto), 0) AS stockAS,");
-                    query.AppendLine("ISNULL((SELECT SUM(pn.stock) FROM PRODUCTONEGOCIO pn WHERE pn.idNegocio = 4 AND pn.idProducto = p.idProducto), 0) AS stockAC,");
-                    query.AppendLine("p.precioCompra, p.precioVenta, p.estado, p.costoPesos,");
-                    query.AppendLine("pn.fechaUltimaVenta AS FechaUltimaVenta,");
-                    query.AppendLine("DATEDIFF(DAY, COALESCE(pn.fechaUltimaVenta, MAX(comp.fechaRegistro)), GETDATE()) AS diasSinVender");
+                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("c.idCategoria, c.descripcion AS DescripcionCategoria,");
+                    query.AppendLine("ISNULL(SUM(pn.stock), 0) AS stock,");
+                    query.AppendLine("ISNULL(SUM(CASE WHEN pn.idNegocio = 1 THEN pn.stock ELSE 0 END), 0) AS stockH1,");
+                    query.AppendLine("ISNULL(SUM(CASE WHEN pn.idNegocio = 2 THEN pn.stock ELSE 0 END), 0) AS stockH2,");
+                    query.AppendLine("ISNULL(SUM(CASE WHEN pn.idNegocio = 3 THEN pn.stock ELSE 0 END), 0) AS stockAS,");
+                    query.AppendLine("ISNULL(SUM(CASE WHEN pn.idNegocio = 4 THEN pn.stock ELSE 0 END), 0) AS stockAC,");
+                    query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
+                    query.AppendLine("ISNULL(ppDolar.precioVenta, 0) AS precioVenta,");
+                    query.AppendLine("ISNULL(ppPesos.precioVenta, 0) AS ventaPesos,");
+                    query.AppendLine("ISNULL(ppPesos.precioLista, 0) AS precioLista,");
+                    query.AppendLine("ISNULL(ppPesos.precioCompra, 0) AS costoPesos,");
+                    query.AppendLine("p.prodSerializable");
                     query.AppendLine("FROM Producto p");
                     query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
                     query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto");
-                    query.AppendLine("LEFT JOIN DETALLE_COMPRA dc ON dc.idProducto = p.idProducto");
-                    query.AppendLine("LEFT JOIN COMPRA comp ON comp.idCompra = dc.idCompra");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 2");
+                    query.AppendLine(") ppDolar ON ppDolar.idProducto = p.idProducto");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioVenta, precioLista, precioCompra");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 1");
+                    query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
                     query.AppendLine("WHERE p.estado = 1");
-                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion, p.precioCompra, p.precioVenta, p.estado, p.costoPesos, p.prodSerializable, p.ventaPesos, pn.fechaUltimaVenta");
-                    query.AppendLine("ORDER BY p.idProducto, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion");
+                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("c.idCategoria, c.descripcion,");
+                    query.AppendLine("ppDolar.precioCompra, ppDolar.precioVenta,");
+                    query.AppendLine("ppPesos.precioVenta, ppPesos.precioLista, ppPesos.precioCompra,");
+                    query.AppendLine("p.prodSerializable");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -975,34 +1122,42 @@ namespace CapaDatos
                         {
                             lista.Add(new Producto()
                             {
-                                idProducto = Convert.ToInt32(dr["idProducto"]),
+                                idProducto = Convert.ToInt32(dr["ProductoId"]),
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 descripcion = dr["descripcion"].ToString(),
-                                oCategoria = new Categoria() { idCategoria = Convert.ToInt32(dr["idCategoria"]), descripcion = dr["DescripcionCategoria"].ToString() },
-                                costoPesos = Convert.ToDecimal(dr["costoPesos"]),
-                                precioCompra = Convert.ToDecimal(dr["precioCompra"]),
-                                precioVenta = Convert.ToDecimal(dr["precioVenta"]),
-                                estado = Convert.ToBoolean(dr["estado"]),
+                                oCategoria = new Categoria()
+                                {
+                                    idCategoria = Convert.ToInt32(dr["idCategoria"]),
+                                    descripcion = dr["DescripcionCategoria"].ToString()
+                                },
+                                costoPesos = dr["costoPesos"] != DBNull.Value ? Convert.ToDecimal(dr["costoPesos"]) : 0,
+                                precioCompra = dr["precioCompra"] != DBNull.Value ? Convert.ToDecimal(dr["precioCompra"]) : 0,
+                                precioVenta = dr["precioVenta"] != DBNull.Value ? Convert.ToDecimal(dr["precioVenta"]) : 0,
+                                estado = true, // Siempre estado 1 en la consulta
+                                stock = Convert.ToInt32(dr["stock"]),
                                 stockH1 = Convert.ToInt32(dr["stockH1"]),
                                 stockH2 = Convert.ToInt32(dr["stockH2"]),
                                 stockAS = Convert.ToInt32(dr["stockAS"]),
                                 stockAC = Convert.ToInt32(dr["stockAC"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = Convert.ToDecimal(dr["ventaPesos"]),
-                                fechaUltimaVenta = dr["FechaUltimaVenta"] != DBNull.Value ? Convert.ToDateTime(dr["FechaUltimaVenta"]) : (DateTime?)null,
-                                diasSinVenta = dr["diasSinVender"] != DBNull.Value ? Convert.ToInt32(dr["diasSinVender"]) : 0
+                                precioLista = dr["precioLista"] != DBNull.Value ? Convert.ToDecimal(dr["precioLista"]) : 0,
+                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0
                             });
                         }
                     }
+
                 }
                 catch (Exception ex)
                 {
-                    lista = new List<Producto>(); // Si hay un error, la lista se inicializa vacía.
+                    Console.WriteLine(ex.Message);
+                    lista = new List<Producto>();
                 }
             }
             return lista;
         }
+
+
 
 
 
@@ -1057,53 +1212,50 @@ namespace CapaDatos
         }
 
 
-        public int Registrar(Producto objProducto, out string mensaje)
+        public int Registrar(Producto objProducto,  out string mensaje)
         {
             int idProductoGenerado = 0;
             mensaje = string.Empty;
 
             try
             {
-
-
-
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARPRODUCTO", oconexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Parámetros del producto
                     cmd.Parameters.AddWithValue("codigo", objProducto.codigo);
                     cmd.Parameters.AddWithValue("nombre", objProducto.nombre);
                     cmd.Parameters.AddWithValue("descripcion", objProducto.descripcion);
                     cmd.Parameters.AddWithValue("idCategoria", objProducto.oCategoria.idCategoria);
                     cmd.Parameters.AddWithValue("prodSerializable", objProducto.prodSerializable);
-                    
+                    cmd.Parameters.AddWithValue("productoDolar", objProducto.productoDolar);
                     cmd.Parameters.AddWithValue("estado", objProducto.estado);
-                    cmd.Parameters.AddWithValue("costoPesos", objProducto.costoPesos);
-                    cmd.Parameters.AddWithValue("precioCompra", objProducto.precioCompra);
-                    cmd.Parameters.AddWithValue("precioVenta", objProducto.precioVenta);
-                    cmd.Parameters.AddWithValue("ventaPesos", objProducto.ventaPesos);
+                    
+
+                    
+
+                    // Parámetros de salida
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
-                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Ejecutar SP
                     oconexion.Open();
                     cmd.ExecuteNonQuery();
+
+                    // Recuperar valores de salida
                     idProductoGenerado = Convert.ToInt32(cmd.Parameters["resultado"].Value);
                     mensaje = cmd.Parameters["mensaje"].Value.ToString();
-
-
                 }
-
             }
-
             catch (Exception ex)
             {
                 idProductoGenerado = 0;
-                mensaje = ex.Message;
-
+                mensaje = $"Error: {ex.Message}";
             }
 
-
             return idProductoGenerado;
-
         }
 
 
@@ -1194,6 +1346,7 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("SP_EDITARPRODUCTO", oconexion);
                     cmd.Parameters.AddWithValue("idProducto", objProducto.idProducto);
                     cmd.Parameters.AddWithValue("codigo", objProducto.codigo);
+                    cmd.Parameters.AddWithValue("precioLista", objProducto.precioLista);
                     cmd.Parameters.AddWithValue("nombre", objProducto.nombre);
                     cmd.Parameters.AddWithValue("descripcion", objProducto.descripcion);
                     cmd.Parameters.AddWithValue("idCategoria", objProducto.oCategoria.idCategoria);
@@ -1203,7 +1356,8 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("precioVenta", objProducto.precioVenta);
                     cmd.Parameters.AddWithValue("ventaPesos", objProducto.ventaPesos);
                     cmd.Parameters.AddWithValue("prodSerializable", objProducto.prodSerializable);
-                    
+                    cmd.Parameters.AddWithValue("productoDolar", objProducto.productoDolar);
+
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -1379,6 +1533,8 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
                     SqlCommand cmd = new SqlCommand("SP_REGISTRARSERIALNUMBER", oconexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
                     cmd.Parameters.AddWithValue("idProducto", productoDetalle.idProducto);
                     cmd.Parameters.AddWithValue("numeroSerie", productoDetalle.numeroSerie);
                     cmd.Parameters.AddWithValue("color", productoDetalle.color);
@@ -1387,12 +1543,14 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("idNegocio", productoDetalle.idNegocio);
                     cmd.Parameters.AddWithValue("idVenta", productoDetalle.idVenta);
                     cmd.Parameters.AddWithValue("fecha", productoDetalle.fecha);
+                    cmd.Parameters.AddWithValue("fechaEgreso", productoDetalle.fechaEgreso ?? (object)DBNull.Value); // Manejo de NULL
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
-                    cmd.CommandType = CommandType.StoredProcedure;
+
                     oconexion.Open();
                     cmd.ExecuteNonQuery();
+
                     resultado = Convert.ToInt32(cmd.Parameters["resultado"].Value);
                     mensaje = cmd.Parameters["mensaje"].Value.ToString();
                 }
@@ -1403,8 +1561,9 @@ namespace CapaDatos
                 mensaje = ex.Message;
             }
 
-            return resultado; // Devuelve el resultado de la inserción
+            return resultado;
         }
+
 
         public int DesactivarProductoDetalle(int idProductoDetalle, int idVenta, out string mensaje)
         {

@@ -148,7 +148,8 @@ namespace CapaPresentacion
                             color = color,
                             modelo = modelo,
                             marca = marca,
-                            idNegocio = idNegocio
+                            idNegocio = idNegocio,
+                            fechaEgreso = null
                         };
 
                         // Llamar al método de la capa de negocio para registrar el número de serie
@@ -160,11 +161,15 @@ namespace CapaPresentacion
                             // Mostrar mensaje de error si no se pudo registrar
                             MessageBox.Show($"Error al registrar el número de serie: {mensaje}");
                         }
+                        else
+                        {
+                            // Si todo salió bien, puedes mostrar un mensaje de éxito
+                            MessageBox.Show("Números de serie registrados exitosamente.");
+                        }
                     }
                 }
 
-                // Si todo salió bien, puedes mostrar un mensaje de éxito
-                MessageBox.Show("Números de serie registrados exitosamente.");
+                
                 dgvData.Rows.Clear();
                 txtIdProducto.Text = "0";
                 txtCodigoProducto.Text = string.Empty;

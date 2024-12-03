@@ -20,10 +20,14 @@ namespace CapaEntidad
         public decimal ventaPesos { get; set; }
 
         public decimal precioCompra { get; set; }
+        public decimal precioLista { get; set; }
         public decimal precioVenta { get; set; }
+        
+        
        
         public bool estado { get; set; }
         public bool prodSerializable { get; set; }
+        public bool productoDolar { get; set; }
         public string fechaRegistro { get; set; }
 
         public int stock { get; set; }

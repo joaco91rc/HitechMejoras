@@ -54,9 +54,11 @@
     <Compile Include="CN_DetalleCaja.cs" />
     <Compile Include="CN_Deuda.cs" />
     <Compile Include="CN_FormaPago.cs" />
+    <Compile Include="CN_Moneda.cs" />
     <Compile Include="CN_Negocio.cs" />
     <Compile Include="CN_OrdenTraspaso.cs" />
     <Compile Include="CN_PagoParcial.cs" />
+    <Compile Include="CN_PrecioProducto.cs" />
     <Compile Include="CN_Producto.cs" />
     <Compile Include="CN-ROL.cs" />
     <Compile Include="CN-Usuario.cs" />

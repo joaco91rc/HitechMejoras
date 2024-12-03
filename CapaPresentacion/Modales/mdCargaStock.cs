@@ -69,10 +69,11 @@ namespace CapaPresentacion.Modales
                     item.nombre,
                     item.oCategoria.descripcion,
                     item.stock,
+                    item.precioLista,
                     item.costoPesos,
                     item.precioCompra,
                     item.precioVenta,
-
+                    false
                     });
                 
             }
@@ -93,9 +94,11 @@ namespace CapaPresentacion.Modales
                     item.nombre,
                     item.oCategoria.descripcion,
                     item.stock,
+                    item.precioLista,
                     item.costoPesos,
                     item.precioCompra,
                     item.precioVenta,
+                    false,
 
                     });
 
@@ -136,49 +139,132 @@ namespace CapaPresentacion.Modales
 
         private void btnActualizarStock_Click(object sender, EventArgs e)
         {
-            string mensaje = string.Empty;
-            bool editarPrecios = false;
-
-            // Iterar sobre las filas del DataGridView
-            foreach (DataGridViewRow row in dgvData.Rows)
+            if (GlobalSettings.RolUsuario != 1)
             {
-                // Verificar si la fila está marcada como modificada
-                if (row.Tag != null && (bool)row.Tag == true)
+               
+            MessageBox.Show("No posee Permisos para Modificar Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+                string mensaje = string.Empty;
+                bool editarPrecios = false;
+
+                // Iterar sobre las filas del DataGridView
+                foreach (DataGridViewRow row in dgvData.Rows)
                 {
-                    // Obtener el idProducto, idNegocio y el nuevo valor de stock
-                    int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value); // Ajusta el nombre de la columna según tu DataGridView
-                    int idNegocio = GlobalSettings.SucursalId; // Ajusta el nombre de la columna según tu DataGridView
-                    int nuevoStock = Convert.ToInt32(row.Cells["stock"].Value);      // Ajusta el nombre de la columna según tu DataGridView
-                    decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
-                    decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
-                    decimal costoPesos = Convert.ToDecimal(row.Cells["costoPesos"].Value);
-                    // Llamar al método para cargar o actualizar el stock del producto
-                    new CN_ProductoNegocio().SobrescribirStock(idProducto, idNegocio, nuevoStock);
-                    var producto = new CN_Producto().ObtenerProductoPorId(idProducto);
-                    producto.precioCompra = precioCompra;
-                    producto.precioVenta = precioVenta;
-                    if (costoPesos != 0)
+                    // Verificar si la fila está marcada como modificada
+                    if (row.Tag != null && (bool)row.Tag == true)
                     {
-                        producto.costoPesos = costoPesos;
-                        producto.precioCompra = costoPesos / cotizacionActiva; 
+                        // Obtener el idProducto, idNegocio y el nuevo valor de stock
+                        int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value); // Ajusta el nombre de la columna según tu DataGridView
+                        int idNegocio = GlobalSettings.SucursalId; // Ajusta el nombre de la columna según tu DataGridView
+                        int nuevoStock = Convert.ToInt32(row.Cells["stock"].Value);      // Ajusta el nombre de la columna según tu DataGridView
+                        decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
+                        decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
+                        decimal costoPesos = Convert.ToDecimal(row.Cells["costoPesos"].Value);
+                        decimal precioLista = Convert.ToDecimal(row.Cells["precioLista"].Value);
+                        bool checkProductoDolares = Convert.ToBoolean(row.Cells["checkProductoDolares"].Value);
+                        // Llamar al método para cargar o actualizar el stock del producto
+                        new CN_ProductoNegocio().SobrescribirStock(idProducto, idNegocio, nuevoStock);
+                        //var producto = new CN_Producto().ObtenerProductoPorId(idProducto);
+                        PrecioProducto precioPesos = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 1);
+                        PrecioProducto precioDolar = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 2);
+                        //producto.precioCompra = precioCompra;
+                        //producto.precioVenta = precioVenta;
+                        //if (costoPesos != 0)
+                        //{
+                        //    producto.costoPesos = costoPesos;
+                        //    producto.precioCompra = costoPesos / cotizacionActiva; 
+                        //}
+                        if (checkProductoDolares)
+                        {
+                            PrecioProducto objPrecioProductoDolares = new PrecioProducto()
+                            {
+                                IdPrecioProducto = precioDolar.IdPrecioProducto,
+                                IdProducto = idProducto,
+                                PrecioCompra = precioCompra,
+                                PrecioVenta = precioVenta,
+                                PrecioLista = precioVenta * cotizacionActiva * 1.35m,
+                                PrecioEfectivo = precioVenta,
+                                IdMoneda = 2
+
+
+
+                            };
+
+                            bool editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
+                            PrecioProducto objPrecioproductoPesos = new PrecioProducto()
+                            {
+                                IdPrecioProducto = precioPesos.IdPrecioProducto,
+                                IdProducto = idProducto,
+                                PrecioCompra = precioCompra * cotizacionActiva,
+                                PrecioVenta = precioVenta * cotizacionActiva,
+                                PrecioLista = precioVenta * cotizacionActiva * 1.35m,
+                                PrecioEfectivo = precioVenta * cotizacionActiva * 1.35m * 0.85m,
+                                IdMoneda = 1
+
+
+
+                            };
+
+                            //editarPrecios = new CN_Producto().Editar(producto, out mensaje);
+                            bool editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioproductoPesos, out mensaje);
+
+                        }
+                        else
+                        {
+                            PrecioProducto objPrecioProductoDolares = new PrecioProducto()
+                            {
+                                IdPrecioProducto = precioDolar.IdPrecioProducto,
+                                IdProducto = idProducto,
+                                PrecioCompra = Math.Round(costoPesos / cotizacionActiva, 2),
+                                PrecioVenta = Math.Round(precioLista / cotizacionActiva, 2),
+                                PrecioLista = precioLista,
+                                PrecioEfectivo = Math.Round(precioLista / cotizacionActiva, 2),
+                                IdMoneda = 2
+
+
+
+                            };
+
+                            bool editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
+                            PrecioProducto objPrecioproductoPesos = new PrecioProducto()
+                            {
+                                IdPrecioProducto = precioPesos.IdPrecioProducto,
+                                IdProducto = idProducto,
+                                PrecioCompra = costoPesos,
+                                PrecioVenta = precioLista,
+                                PrecioLista = precioLista,
+                                PrecioEfectivo = precioLista * 0.85m,
+                                IdMoneda = 1
+
+
+
+                            };
+
+                            //editarPrecios = new CN_Producto().Editar(producto, out mensaje);
+                            bool editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioproductoPesos, out mensaje);
+
+                        }
+
+
+
+
+
+                        // Resetear la marca de modificación de la fila
+                        row.Tag = null;
                     }
-                    
-                    editarPrecios = new CN_Producto().Editar(producto, out mensaje);
-
-                    // Resetear la marca de modificación de la fila
-                    row.Tag = null;
                 }
-            }
 
-            if (editarPrecios)
-            {
-                MessageBox.Show("Se ha actualizado el Stock y los precios.");
-            }
-            else
-            {
-                MessageBox.Show("El stock ha sido actualizado correctamente.");
-            }
-            this.Close();
+                if (editarPrecios)
+                {
+                    MessageBox.Show("Se ha actualizado el Stock y los precios.");
+                }
+                else
+                {
+                    MessageBox.Show("El stock no ha sido actualizado correctamente.");
+                }
+                this.Close();
+            
         }
 
         private void btnTraspasarStock_Click(object sender, EventArgs e)

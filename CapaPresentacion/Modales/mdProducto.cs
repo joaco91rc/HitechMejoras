@@ -77,7 +77,8 @@ namespace CapaPresentacion.Modales
                 
                 item.prodSerializable,
                 item.precioCompra,
-                item.precioVenta
+                item.precioVenta,
+                item.precioLista
             });
                 
             }
@@ -102,7 +103,8 @@ namespace CapaPresentacion.Modales
                 
                 item.prodSerializable,
                 item.precioCompra,
-                item.precioVenta
+                item.precioVenta,
+                item.precioLista
 
             });
 
@@ -171,6 +173,7 @@ namespace CapaPresentacion.Modales
                     precioCompra = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioCompra"].Value.ToString()),
                     precioVenta = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString()),
                     prodSerializable = Convert.ToBoolean(dgvData.Rows[iRow].Cells["prodSerializable"].Value.ToString()),
+                    precioLista = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioLista"].Value.ToString())
                 };
 
                 int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(_Producto.idProducto, GlobalSettings.SucursalId);

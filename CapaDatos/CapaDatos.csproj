@@ -57,10 +57,12 @@
     <Compile Include="CD_EquipoST.cs" />
     <Compile Include="CD_FormaPago.cs" />
     <Compile Include="CD_HistorialST.cs" />
+    <Compile Include="CD_Moneda.cs" />
     <Compile Include="CD_Negocio.cs" />
     <Compile Include="CD_OrdenTraspaso.cs" />
     <Compile Include="CD_PagoParcial.cs" />
     <Compile Include="CD_Permiso.cs" />
+    <Compile Include="CD_PrecioProducto.cs" />
     <Compile Include="CD_Producto.cs" />
     <Compile Include="CD_ProductoNegocio.cs" />
     <Compile Include="CD_ProductoRMA.cs" />

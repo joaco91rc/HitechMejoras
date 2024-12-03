@@ -28,36 +28,8 @@ namespace CapaPresentacion
         }
 
 
-
-
-        private void frmProducto_Load(object sender, EventArgs e)
+        private void CargarCombos()
         {
-            
-
-            if (usuarioActual.oRol.idRol == 1 || usuarioActual.oRol.idRol == 3)
-            {
-
-                txtPrecioCompra.Visible = true;
-                txtPrecioVenta.Visible = true;
-                lblPrecioCompra.Visible = true;
-                lblPrecioVenta.Visible = true;
-            }
-            else
-            {
-                txtPrecioCompra.Visible = true;
-                txtPrecioVenta.Visible = true;
-                lblPrecioCompra.Visible = true;
-                lblPrecioVenta.Visible = true;
-                txtPrecioCompra.Text = "0";
-                txtPrecioVenta.Text = "0";
-
-            }
-            cboEstado.Items.Add(new OpcionCombo() { Valor = 1, Texto = "Activo" });
-            cboEstado.Items.Add(new OpcionCombo() { Valor = 0, Texto = "No Activo" });
-            cboEstado.DisplayMember = "Texto";
-            cboEstado.ValueMember = "Valor";
-            cboEstado.SelectedIndex = 0;
-
             List<Categoria> listaCategoria = new CN_Categoria().Listar();
 
             foreach (Categoria item in listaCategoria)
@@ -68,9 +40,32 @@ namespace CapaPresentacion
             cboCategoria.ValueMember = "Valor";
             cboCategoria.SelectedIndex = 0;
 
-            
+            List<Moneda> listaMonedas = new CN_Moneda().ListarMonedas();
 
+            foreach (Moneda item in listaMonedas)
+            {
+                cboMonedas.Items.Add(new OpcionCombo() { Valor = item.IdMoneda, Texto = item.Simbolo });
+            }
+            cboMonedas.DisplayMember = "Texto";
+            cboMonedas.ValueMember = "Valor";
+            cboMonedas.SelectedIndex = 0;
+
+            cboEstado.Items.Add(new OpcionCombo() { Valor = 1, Texto = "Activo" });
+            cboEstado.Items.Add(new OpcionCombo() { Valor = 0, Texto = "No Activo" });
+            cboEstado.DisplayMember = "Texto";
+            cboEstado.ValueMember = "Valor";
+            cboEstado.SelectedIndex = 0;
+        }
+
+        
+
+        private void frmProducto_Load(object sender, EventArgs e)
+        {
+                               
             
+            CargarCombos();
+
+                      
 
             //CargarGrilla();
             dtProductos = new CN_Producto().ListarProductos(GlobalSettings.SucursalId);
@@ -121,6 +116,12 @@ namespace CapaPresentacion
                 return;
             }
 
+            if (txtPrecioLista.Value<= 0 && cboMonedas.Text == "ARS")
+            {
+                MessageBox.Show("Debe establecer el precio de Lista.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Crear el objeto Producto
             Producto objProducto = new Producto()
             {
@@ -130,43 +131,37 @@ namespace CapaPresentacion
                 descripcion = txtDescripcion.Text,
                 oCategoria = new Categoria { idCategoria = Convert.ToInt32(((OpcionCombo)cboCategoria.SelectedItem).Valor) },
                 estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false,
-                prodSerializable = checkSerializable.Checked
+                prodSerializable = checkSerializable.Checked,
+                productoDolar = checkProductoEnDolares.Checked,
+                precioLista = txtPrecioLista.Value,
+                precioVenta = Math.Round((txtPrecioLista.Value / cotizacionActiva), 2),
+                precioCompra = Math.Round((txtCosto.Value / cotizacionActiva), 2),
+                ventaPesos = Math.Round(txtPrecioLista.Value * 0.85m, 2),
+                costoPesos = txtCosto.Value
             };
 
-            // Lógica de precios y costos
-            decimal precioCompra = txtPrecioCompra.Value;
-            decimal precioVenta = txtPrecioVenta.Value;
-            decimal costoPesos = txtCostoPesos.Value;
-            decimal ventaPesos = txtVentaPesos.Value;
-            decimal cotizacionActiva = 1.0m; // Asumiendo un valor predeterminado
+            if (checkCostoDolares.Checked)
+            {
+                lblPrecioVenta.Visible = true;
+                txtPrecioVenta.Visible  =true;
+                lblPrecioVenta.Visible = true;
+                txtPrecioVenta.Visible = true;
+                objProducto.precioCompra = txtPrecioVenta.Value;
+                objProducto.precioVenta = txtPrecioVenta.Value;
 
-            if (precioCompra > 0 && precioVenta > 0)
+            } else
             {
-                txtCostoPesos.Value = (Math.Round(precioCompra * cotizacionActiva, 2) / 500) * 500;
-                txtVentaPesos.Value = (Math.Round(precioVenta * cotizacionActiva, 2) / 500) * 500;
-            }
-            else if (costoPesos > 0 && precioVenta > 0)
-            {
-                txtPrecioCompra.Value = costoPesos / cotizacionActiva;
-                txtVentaPesos.Value = (Math.Round(precioVenta * cotizacionActiva, 2) / 500) * 500;
-            }
-            else if (costoPesos > 0 && ventaPesos > 0)
-            {
-                txtPrecioCompra.Value = costoPesos / cotizacionActiva;
-                txtPrecioVenta.Value = ventaPesos / cotizacionActiva;
-            }
-            else
-            {
-                MessageBox.Show("Por favor, complete los campos requeridos correctamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                lblPrecioVenta.Visible = false;
+                txtPrecioVenta.Visible = false;
+                lblPrecioVenta.Visible = false;
+                txtPrecioVenta.Visible = false;
+                objProducto.precioCompra = Math.Round((txtCosto.Value / cotizacionActiva), 2);
+                objProducto.precioVenta = Math.Round((txtPrecioLista.Value / cotizacionActiva), 2);
             }
 
-            // Asignar precios y costos
-            objProducto.precioCompra = txtPrecioCompra.Value;
-            objProducto.precioVenta = txtPrecioVenta.Value;
-            objProducto.costoPesos = txtCostoPesos.Value;
-            objProducto.ventaPesos = txtVentaPesos.Value;
-
+            
+            string simboloMoneda = ((OpcionCombo)cboMonedas.SelectedItem).Texto;
+           // string simboloMonedaObjeto = new CN_Moneda().ObtenerMonedaPorId(objPrecioProducto.IdMoneda).Simbolo;
             // Guardar o actualizar en base de datos
             if (objProducto.idProducto == 0) // Nuevo producto
             {
@@ -174,6 +169,58 @@ namespace CapaPresentacion
                 if (idProductoGenerado != 0)
                 {
                     objProducto.idProducto = idProductoGenerado;
+                    
+                    if(simboloMoneda == "ARS")
+                    {
+                        PrecioProducto objPrecioProductoPesos = new PrecioProducto()
+                        {
+                            IdProducto = idProductoGenerado,
+                            IdMoneda = 1,
+                            PrecioCompra = Math.Round(txtCosto.Value,2),
+                            PrecioVenta = Math.Round(txtPrecioLista.Value,2),
+                            PrecioLista = Math.Round(txtPrecioLista.Value,2),
+                            PrecioEfectivo = Math.Round(txtPrecioLista.Value * 0.85m, 2),
+                            FechaRegistro = DateTime.Now
+                        };
+                        int idPrecioPesos = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                        PrecioProducto objPrecioProductoDolar = new PrecioProducto()
+                        {
+                            IdProducto= idProductoGenerado,
+                            IdMoneda = 2,
+                            PrecioCompra = Math.Round((txtCosto.Value / cotizacionActiva), 2),
+                            PrecioVenta = Math.Round((txtPrecioLista.Value / cotizacionActiva), 2),
+                            FechaRegistro = DateTime.Now,
+                            PrecioEfectivo = Math.Round(txtPrecioLista.Value * 0.85m, 2),
+                            PrecioLista = Math.Round(txtPrecioLista.Value, 2)
+                        };
+                        int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
+                    }else if (simboloMoneda == "USD")
+                    {
+
+                        PrecioProducto objPrecioProductoPesos = new PrecioProducto()
+                        {
+                            IdProducto = idProductoGenerado,
+                            IdMoneda = 1,
+                            PrecioCompra = Math.Round((txtCosto.Value * cotizacionActiva), 2),
+                            PrecioVenta = Math.Round((txtPrecioVenta.Value*cotizacionActiva),2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2),
+                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.35m) * 0.85m, 2),
+                            FechaRegistro = DateTime.Now
+                        };
+                        int idPrecioPesos = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                        PrecioProducto objPrecioProductoDolar = new PrecioProducto()
+                        {
+                            IdProducto = idProductoGenerado,
+                            IdMoneda = 2,
+                            PrecioCompra = Math.Round(txtCosto.Value, 2),
+                            PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
+                            FechaRegistro = DateTime.Now,
+                            PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2)
+                        };
+                        int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
+
+                    }
                     AgregarProductoAlDataTable(objProducto);
                     Limpiar();
                 }
@@ -187,6 +234,69 @@ namespace CapaPresentacion
                 bool resultado = new CN_Producto().Editar(objProducto, out mensaje);
                 if (resultado)
                 {
+                    PrecioProducto precioPesos = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(objProducto.idProducto, 1);
+                    PrecioProducto precioDolar = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(objProducto.idProducto, 2);
+                    if (simboloMoneda == "ARS")
+                    {
+                        PrecioProducto objPrecioProductoPesos = new PrecioProducto()
+                        {
+                            IdProducto = objProducto.idProducto,
+                            IdPrecioProducto = precioPesos.IdPrecioProducto,
+                            IdMoneda = 1,
+                            PrecioCompra = Math.Round(txtCosto.Value, 2),
+                            PrecioVenta = Math.Round(txtPrecioLista.Value, 2),
+                            PrecioLista = Math.Round(txtPrecioLista.Value, 2),
+                            PrecioEfectivo = Math.Round(txtPrecioLista.Value * 0.85m, 2),
+                            FechaRegistro = DateTime.Now
+                        };
+                        bool editarPrecioPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                        
+                        PrecioProducto objPrecioProductoDolar = new PrecioProducto()
+                        {
+                            IdProducto = objProducto.idProducto,
+                            IdPrecioProducto = precioDolar.IdPrecioProducto,
+                            IdMoneda = 2,
+                            PrecioCompra = Math.Round((txtCosto.Value / cotizacionActiva), 2),
+                            PrecioVenta = Math.Round((txtPrecioLista.Value / cotizacionActiva), 2),
+                            FechaRegistro = DateTime.Now,
+                            PrecioEfectivo = Math.Round(txtPrecioLista.Value * 0.85m, 2),
+                            PrecioLista = Math.Round(txtPrecioLista.Value, 2)
+                        };
+                        bool editarPrecioDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolar, out mensaje);
+                        
+
+                    }
+                    else if (simboloMoneda == "USD")
+                    {
+
+                        PrecioProducto objPrecioProductoPesos = new PrecioProducto()
+                        {
+                            IdProducto = objProducto.idProducto,
+                            IdPrecioProducto = precioPesos.IdPrecioProducto,
+                            IdMoneda = 1,
+                            PrecioCompra = Math.Round((txtCosto.Value * cotizacionActiva), 2),
+                            PrecioVenta = Math.Round((txtPrecioVenta.Value * cotizacionActiva), 2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2),
+                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.35m) * 0.85m, 2),
+                            FechaRegistro = DateTime.Now
+                        };
+                        bool editarPrecioPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                        
+                        PrecioProducto objPrecioProductoDolar = new PrecioProducto()
+                        {
+                            IdProducto = objProducto.idProducto,
+                            IdPrecioProducto = precioDolar.IdPrecioProducto,
+                            IdMoneda = 2,
+                            PrecioCompra = Math.Round(txtCosto.Value, 2),
+                            PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
+                            FechaRegistro = DateTime.Now,
+                            PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2)
+                        };
+                        bool editarPrecioDolar = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolar, out mensaje);
+                        
+                        
+                    }
                     ActualizarProductoEnDataTable(objProducto);
                     Limpiar();
                 }
@@ -200,55 +310,92 @@ namespace CapaPresentacion
         private void AgregarProductoAlDataTable(Producto producto)
         {
             DataRow newRow = dtProductos.NewRow();
+
             newRow["ProductoId"] = producto.idProducto;
             newRow["codigo"] = producto.codigo;
             newRow["nombre"] = producto.nombre;
             newRow["descripcion"] = producto.descripcion;
             newRow["idCategoria"] = producto.oCategoria.idCategoria;
             newRow["DescripcionCategoria"] = ((OpcionCombo)cboCategoria.SelectedItem).Texto;
+
+            // Obtener el stock basado en la sucursal seleccionada
             newRow["stock"] = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(producto.idProducto, GlobalSettings.SucursalId);
-            newRow["precioCompra"] = producto.precioCompra.ToString("0.00");
-            newRow["costoPesos"] = producto.costoPesos.ToString("0.00");
-            newRow["ventaPesos"] = producto.ventaPesos.ToString("0.00");
-            newRow["precioVenta"] = producto.precioVenta.ToString("0.00");
 
-            // Establecer prodSerializable como "SI" o "NO" según el valor booleano
-            newRow["prodSerializable"] = producto.prodSerializable ? "SI" : "NO";
+            // Obtener los precios desde la tabla precio_producto
+            PrecioProducto preciosPesos = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(producto.idProducto, 1);
+            PrecioProducto preciosDolares = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(producto.idProducto, 2);
 
-            // Establecer estado como "Activo" o "Inactivo" según la selección en el ComboBox
+            // Precios en Pesos (idMoneda = 1) con símbolo
+            newRow["precioCompraPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioCompra);
+            newRow["precioVentaPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioVenta);
+            newRow["precioListaPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioLista);
+            newRow["precioEfectivoPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioEfectivo);
+
+            // Precios en Dólares (idMoneda = 2) con símbolo
+            newRow["precioCompraDolar"] = string.Format("{0} {1:0.00}", preciosDolares.SimboloMoneda, preciosDolares.PrecioCompra);
+            newRow["precioVentaDolar"] = string.Format("{0} {1:0.00}", preciosDolares.SimboloMoneda, preciosDolares.PrecioVenta);
+
+            // Estado (Activo/Inactivo)
             newRow["estado"] = ((OpcionCombo)cboEstado.SelectedItem).Texto;
+
+            // prodSerializable ("SI"/"NO")
+            newRow["prodSerializable"] = producto.prodSerializable ? "SI" : "NO";
+            newRow["productoDolar"] = producto.productoDolar ? "SI" : "NO";
+
+            // Otros campos
+            // newRow["fechaUltimaVenta"] = producto.fechaUltimaVenta.HasValue ? producto.fechaUltimaVenta.Value.ToString("yyyy-MM-dd") : DBNull.Value;
+            // newRow["diasSinVenta"] = producto.diasSinVenta;
 
             dtProductos.Rows.Add(newRow);
         }
+
+
 
         private void ActualizarProductoEnDataTable(Producto producto)
         {
             foreach (DataRow row in dtProductos.Rows)
             {
-                // Convertir ProductoId de la fila usando Convert.ToInt32 para evitar el error de conversión
+                // Verifica si el ID del producto coincide con el ProductoId en el DataTable
                 if (Convert.ToInt32(row["ProductoId"]) == producto.idProducto)
                 {
                     row["codigo"] = producto.codigo;
                     row["nombre"] = producto.nombre;
                     row["descripcion"] = producto.descripcion;
+
+                    // Actualización de la categoría
                     row["idCategoria"] = producto.oCategoria.idCategoria;
                     row["DescripcionCategoria"] = ((OpcionCombo)cboCategoria.SelectedItem).Texto;
+
+                    // Stock actualizado
                     row["stock"] = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(producto.idProducto, GlobalSettings.SucursalId);
-                    row["precioCompra"] = producto.precioCompra.ToString("0.00");
-                    row["costoPesos"] = producto.costoPesos.ToString("0.00");
-                    row["ventaPesos"] = producto.ventaPesos.ToString("0.00");
-                    row["precioVenta"] = producto.precioVenta.ToString("0.00");
 
-                    // Establecer prodSerializable como "SI" o "NO" según el valor booleano
+                    // Obtener los precios desde la tabla precio_producto
+                    PrecioProducto preciosPesos = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(producto.idProducto, 1);
+                    PrecioProducto preciosDolares = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(producto.idProducto, 2);
+
+                    // Precios en pesos (idMoneda = 1) con símbolo
+                    row["precioCompraPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioCompra);
+                    row["precioVentaPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioVenta);
+                    row["precioListaPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioLista);
+                    row["precioEfectivoPesos"] = string.Format("{0} {1:0.00}", preciosPesos.SimboloMoneda, preciosPesos.PrecioEfectivo);
+
+                    // Precios en dólares (idMoneda = 2) con símbolo
+                    row["precioCompraDolar"] = string.Format("{0} {1:0.00}", preciosDolares.SimboloMoneda, preciosDolares.PrecioCompra);
+                    row["precioVentaDolar"] = string.Format("{0} {1:0.00}", preciosDolares.SimboloMoneda, preciosDolares.PrecioVenta);
+
+                    // Estado: Activo o Inactivo
+                    row["estado"] = producto.estado ? "Activo" : "No Activo";
+
+                    // Serialización del producto: Sí o No
                     row["prodSerializable"] = producto.prodSerializable ? "SI" : "NO";
-
-                    // Establecer estado como "Activo" o "Inactivo" según la selección en el ComboBox
-                    row["estado"] = ((OpcionCombo)cboEstado.SelectedItem).Texto;
-
-                    break;
+                    row["productoDolar"] = producto.productoDolar ? "SI" : "NO";
+                    break; // Termina el bucle una vez encontrado el producto
                 }
             }
         }
+
+
+
 
 
 
@@ -260,18 +407,20 @@ namespace CapaPresentacion
             txtCodigo.Text = "";
             txtNombre.Text = "";
             txtDescripcion.Text = "";
-            txtCostoPesos.Visible = false;
-            checkCostoPesos.Checked = false;
-            txtPrecioCompra.Visible = true;
-            txtPrecioCompra.Text = "";
-            txtPrecioVenta.Text = "";
-            txtVentaPesos.Text = string.Empty;
+            txtCosto.Visible = true;
+            
+            checkCostoDolares.Checked = false;
+            txtPrecioVenta.Visible = false;
+            txtPrecioVenta.Value = 0;
+            
             cboCategoria.SelectedIndex = 0;
             cboEstado.SelectedIndex = 0;
             txtCodigo.Select();
             txtProductoSeleccionado.Text = "Ninguno";
-            txtCostoPesos.Text = string.Empty;
+            txtCosto.Value = 0;
+            txtPrecioLista.Value = 0;
             checkSerializable.Checked = false;
+            
         }
 
 
@@ -291,13 +440,44 @@ namespace CapaPresentacion
                     txtCodigo.Text = dgvData.Rows[indice].Cells["codigo"].Value.ToString();
                     txtNombre.Text = dgvData.Rows[indice].Cells["nombre"].Value.ToString();
                     txtDescripcion.Text = dgvData.Rows[indice].Cells["descripcion"].Value.ToString();
-                    txtVentaPesos.Text = dgvData.Rows[indice].Cells["ventaPesos"].Value.ToString();
-                    txtPrecioCompra.Text = dgvData.Rows[indice].Cells["precioCompra"].Value.ToString();
-                    txtPrecioVenta.Text = dgvData.Rows[indice].Cells["precioVenta"].Value.ToString();
-                    txtCostoPesos.Text = dgvData.Rows[indice].Cells["costoPesos"].Value.ToString();
 
+                    // Eliminar símbolo de moneda y convertir a número para el NumericUpDown
+                    decimal precioLista = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioListaPesos"].Value.ToString()));
+                    decimal precioVenta = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioVentaPesos"].Value.ToString()));
+                    decimal costo = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioCompraPesos"].Value.ToString()));
+                    decimal costoDolar = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioCompraDolar"].Value.ToString()));
+                    decimal precioVentaDolar = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioVentaDolar"].Value.ToString()));
                     // Verificar si prodSerializable es "Sí" o "No" y marcar el CheckBox en consecuencia
                     checkSerializable.Checked = dgvData.Rows[indice].Cells["prodSerializable"].Value.ToString() == "SI";
+                    checkProductoEnDolares.Checked = dgvData.Rows[indice].Cells["productoDolar"].Value.ToString() == "SI";
+
+                    if (checkProductoEnDolares.Checked)
+                    {
+                        txtPrecioVenta.Visible = true;
+                        lblPrecioVenta.Visible = true;
+                        lblPrecioLista.Visible = false;
+                        txtPrecioLista.Visible = false;
+                        // Asignar a los controles
+                        txtPrecioLista.Text = precioLista.ToString("N2");
+                        txtPrecioVenta.Text = precioVentaDolar.ToString("N2");
+                    
+                        txtCosto.Text = costoDolar.ToString("N2");
+                        cboMonedas.SelectedIndex = 1;
+                          
+                    } else
+                    {
+                        txtPrecioVenta.Visible = false;
+                        lblPrecioVenta.Visible = false;
+                        lblPrecioLista.Visible = true;
+                        txtPrecioLista.Visible = true;
+                        // Asignar a los controles
+                        txtPrecioLista.Text = precioLista.ToString("N2");
+                        txtPrecioVenta.Text = precioVenta.ToString("N2");
+
+                        txtCosto.Text = costo.ToString("N2");
+                        cboMonedas.SelectedIndex = 0;
+
+                    }
 
                     // Seleccionar la categoría en el ComboBox
                     foreach (OpcionCombo oc in cboCategoria.Items)
@@ -323,6 +503,16 @@ namespace CapaPresentacion
                 }
             }
         }
+
+        private string RemoverSimboloMoneda(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return "0";
+
+            // Remueve los primeros caracteres (ej. "ARS " o "$ ") y devuelve el resto
+            return valor.Trim().Substring(4); // Ajusta según el formato de tu dato
+        }
+
 
 
 
@@ -489,29 +679,23 @@ namespace CapaPresentacion
 
         private void checkCostoPesos_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkCostoPesos.Checked)
+            if (checkCostoDolares.Checked)
             {
-                lblVentaPesos.Visible = true;
-                lblCostoPesos.Visible = true;
-                txtCostoPesos.Visible = true;
-                txtVentaPesos.Visible = true;
-                lblPrecioCompra.Visible = false;
-                txtPrecioCompra.Visible = false;
-                if (txtIdProducto.Text == "0")
-                {
-                    txtPrecioCompra.Text = "0";
-                }
-                txtCostoPesos.Select();
+                
+                lblPrecioVenta.Visible = true;
+                txtPrecioVenta.Visible = true;
+                lblPrecioVenta.Visible = true;
+                txtPrecioVenta.Visible = true;
+
             }
             else
             {
-                lblVentaPesos.Visible = false;
-                txtVentaPesos.Visible = false;
-                lblCostoPesos.Visible = false;
-                txtCostoPesos.Visible = false;
-                lblPrecioCompra.Visible = true;
-                txtPrecioCompra.Visible = true;
-                txtPrecioCompra.Select();
+                
+                lblPrecioVenta.Visible = false;
+                txtPrecioVenta.Visible = false;
+                lblPrecioVenta.Visible = false;
+                txtPrecioVenta.Visible = false;
+                txtPrecioLista.Select();
 
             }
         }
@@ -541,17 +725,18 @@ namespace CapaPresentacion
             dgvData.Columns["descripcion"].HeaderText = "Descripción";
             dgvData.Columns["DescripcionCategoria"].HeaderText = "Categoría";
             dgvData.Columns["stock"].HeaderText = "Stock";
-            dgvData.Columns["costoPesos"].HeaderText = "Costo $";
-            dgvData.Columns["ventaPesos"].HeaderText = "Precio $";
-            dgvData.Columns["precioCompra"].HeaderText = "Costo US$";
-            dgvData.Columns["precioVenta"].HeaderText = "Precio US$";
+            dgvData.Columns["precioCompraPesos"].HeaderText = "Costo ARS";
+            dgvData.Columns["precioVentaPesos"].HeaderText = "Precio Venta ARS";
+            dgvData.Columns["precioListaPesos"].HeaderText = "Precio Lista ARS";
+            dgvData.Columns["precioEfectivoPesos"].HeaderText = "Precio Efectivo ARS";
+            dgvData.Columns["precioCompraDolar"].HeaderText = "Costo USD";
+            dgvData.Columns["precioVentaDolar"].HeaderText = "Precio Venta USD";
             dgvData.Columns["prodSerializable"].HeaderText = "Es Serializable?";
-            dgvData.Columns["fechaUltimaVenta"].HeaderText = "Fecha Act. Stock";
-            dgvData.Columns["diasSinVenta"].HeaderText = "Días Sin Act. Stock";
-
+            dgvData.Columns["productoDolar"].HeaderText = "Es Dolarizado?";
             // Ocultar columnas que no deseas mostrar
             dgvData.Columns["idCategoria"].Visible = false;
             dgvData.Columns["ProductoId"].Visible = false;
+            dgvData.Columns["estado"].Visible = false;
 
             // Ajustes de tamaño para las columnas
             dgvData.Columns["nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -561,13 +746,14 @@ namespace CapaPresentacion
             dgvData.Columns["descripcion"].Width = 150;
             dgvData.Columns["DescripcionCategoria"].Width = 150;
             dgvData.Columns["stock"].Width = 80;
-            dgvData.Columns["costoPesos"].Width = 100;
-            dgvData.Columns["ventaPesos"].Width = 130;
-            dgvData.Columns["precioCompra"].Width = 130;
-            dgvData.Columns["precioVenta"].Width = 130;
+            dgvData.Columns["precioCompraPesos"].Width = 100;
+            dgvData.Columns["precioVentaPesos"].Width = 130;
+            dgvData.Columns["precioListaPesos"].Width = 130;
+            dgvData.Columns["precioEfectivoPesos"].Width = 130;
+            dgvData.Columns["precioCompraDolar"].Width = 130;
+            dgvData.Columns["precioVentaDolar"].Width = 130;
             dgvData.Columns["prodSerializable"].Width = 130;
-            dgvData.Columns["fechaUltimaVenta"].Width = 150;
-            dgvData.Columns["diasSinVenta"].Width = 150;
+            dgvData.Columns["productoDolar"].Width = 130;
 
             // Establecer el orden de las columnas usando DisplayIndex
             dgvData.Columns["btnSeleccionar"].DisplayIndex = 0; // Columna de imagen en primer lugar
@@ -575,15 +761,19 @@ namespace CapaPresentacion
             dgvData.Columns["nombre"].DisplayIndex = 2;
             dgvData.Columns["descripcion"].DisplayIndex = 3;
             dgvData.Columns["DescripcionCategoria"].DisplayIndex = 4;
-            dgvData.Columns["stock"].DisplayIndex = 5;
-            dgvData.Columns["costoPesos"].DisplayIndex = 6;
-            dgvData.Columns["ventaPesos"].DisplayIndex = 7;
-            dgvData.Columns["precioCompra"].DisplayIndex = 8;
-            dgvData.Columns["precioVenta"].DisplayIndex = 9;
-            dgvData.Columns["prodSerializable"].DisplayIndex = 10;
-            dgvData.Columns["fechaUltimaVenta"].DisplayIndex = 11;
-            dgvData.Columns["diasSinVenta"].DisplayIndex = 12;
+            dgvData.Columns["stock"].DisplayIndex = 5;            
+            dgvData.Columns["precioVentaPesos"].DisplayIndex = 6;
+            dgvData.Columns["precioListaPesos"].DisplayIndex = 7;
+            dgvData.Columns["precioEfectivoPesos"].DisplayIndex = 8;
+            dgvData.Columns["precioCompraPesos"].DisplayIndex = 9;
+            dgvData.Columns["precioCompraDolar"].DisplayIndex = 10;
+            dgvData.Columns["precioVentaDolar"].DisplayIndex = 11;
+            dgvData.Columns["prodSerializable"].DisplayIndex = 12;
+            dgvData.Columns["productoDolar"].DisplayIndex = 13;
         }
+
+
+
 
 
 
@@ -676,13 +866,29 @@ namespace CapaPresentacion
 
         private void btnSetearPrecios_Click(object sender, EventArgs e)
         {
-            txtPrecioCompra.Value = 0;
             txtPrecioVenta.Value = 0;
-            txtCostoPesos.Value = 0;
-            txtVentaPesos.Value = 0;
+            
+            txtCosto.Value = 0;
+           
 
         }
 
-       
+        private void cboMonedas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string simboloMoneda = ((OpcionCombo)cboMonedas.SelectedItem).Texto;
+            if (simboloMoneda == "ARS")
+            {
+                lblPrecioLista.Visible = true;
+                txtPrecioLista.Visible = true;
+                txtPrecioVenta.Visible = false;
+                lblPrecioVenta.Visible = false;
+            }else
+            {
+                lblPrecioLista.Visible = false;
+                txtPrecioLista.Visible = false;
+                txtPrecioVenta.Visible = true;
+                lblPrecioVenta.Visible = true;
+            }
+        }
     }
 }
