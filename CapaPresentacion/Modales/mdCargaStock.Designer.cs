@@ -33,6 +33,16 @@ namespace CapaPresentacion.Modales
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.costoPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkProductoDolares = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
@@ -44,16 +54,6 @@ namespace CapaPresentacion.Modales
             this.btnActualizarStock = new FontAwesome.Sharp.IconButton();
             this.btnTraspasarStock = new FontAwesome.Sharp.IconButton();
             this.checkProductosLocal = new System.Windows.Forms.CheckBox();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costoPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkProductoDolares = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -106,6 +106,80 @@ namespace CapaPresentacion.Modales
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvData.Size = new System.Drawing.Size(1126, 448);
             this.dgvData.TabIndex = 73;
+            this.dgvData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellValueChanged_1);
+            this.dgvData.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvData_CurrentCellDirtyStateChanged);
+            // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.Visible = false;
+            // 
+            // codigo
+            // 
+            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.codigo.HeaderText = "CODIGO";
+            this.codigo.MinimumWidth = 80;
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            this.codigo.Width = 80;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.FillWeight = 178.7234F;
+            this.nombre.HeaderText = "NOMBRE";
+            this.nombre.MinimumWidth = 170;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // categoria
+            // 
+            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.categoria.FillWeight = 21.2766F;
+            this.categoria.HeaderText = "CATEGORIA";
+            this.categoria.MinimumWidth = 120;
+            this.categoria.Name = "categoria";
+            this.categoria.ReadOnly = true;
+            // 
+            // stock
+            // 
+            this.stock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.stock.HeaderText = "STOCK";
+            this.stock.Name = "stock";
+            this.stock.Width = 70;
+            // 
+            // precioLista
+            // 
+            this.precioLista.HeaderText = "PRECIO LISTA";
+            this.precioLista.Name = "precioLista";
+            this.precioLista.Width = 120;
+            // 
+            // costoPesos
+            // 
+            this.costoPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.costoPesos.HeaderText = "COSTO PESOS";
+            this.costoPesos.Name = "costoPesos";
+            this.costoPesos.Width = 120;
+            // 
+            // precioCompra
+            // 
+            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioCompra.HeaderText = "COSTO COMPRA";
+            this.precioCompra.Name = "precioCompra";
+            this.precioCompra.Width = 140;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.precioVenta.HeaderText = "PRECIO VENTA";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.Width = 140;
+            // 
+            // checkProductoDolares
+            // 
+            this.checkProductoDolares.HeaderText = "producto en Dolares?";
+            this.checkProductoDolares.Name = "checkProductoDolares";
             // 
             // iconPictureBox1
             // 
@@ -282,78 +356,6 @@ namespace CapaPresentacion.Modales
             this.checkProductosLocal.Text = "Mostrar Productos en Local";
             this.checkProductosLocal.UseVisualStyleBackColor = false;
             this.checkProductosLocal.CheckedChanged += new System.EventHandler(this.checkProductosLocal_CheckedChanged);
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.Visible = false;
-            // 
-            // codigo
-            // 
-            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.codigo.HeaderText = "CODIGO";
-            this.codigo.MinimumWidth = 80;
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 80;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombre.FillWeight = 178.7234F;
-            this.nombre.HeaderText = "NOMBRE";
-            this.nombre.MinimumWidth = 170;
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // categoria
-            // 
-            this.categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.categoria.FillWeight = 21.2766F;
-            this.categoria.HeaderText = "CATEGORIA";
-            this.categoria.MinimumWidth = 120;
-            this.categoria.Name = "categoria";
-            this.categoria.ReadOnly = true;
-            // 
-            // stock
-            // 
-            this.stock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.stock.HeaderText = "STOCK";
-            this.stock.Name = "stock";
-            this.stock.Width = 70;
-            // 
-            // precioLista
-            // 
-            this.precioLista.HeaderText = "PRECIO LISTA";
-            this.precioLista.Name = "precioLista";
-            this.precioLista.Width = 120;
-            // 
-            // costoPesos
-            // 
-            this.costoPesos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.costoPesos.HeaderText = "COSTO PESOS";
-            this.costoPesos.Name = "costoPesos";
-            this.costoPesos.Width = 120;
-            // 
-            // precioCompra
-            // 
-            this.precioCompra.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioCompra.HeaderText = "COSTO COMPRA";
-            this.precioCompra.Name = "precioCompra";
-            this.precioCompra.Width = 140;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.precioVenta.HeaderText = "PRECIO VENTA";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.Width = 140;
-            // 
-            // checkProductoDolares
-            // 
-            this.checkProductoDolares.HeaderText = "producto en Dolares?";
-            this.checkProductoDolares.Name = "checkProductoDolares";
             // 
             // mdCargaStock
             // 

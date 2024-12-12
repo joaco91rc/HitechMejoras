@@ -17,6 +17,8 @@ namespace CapaEntidad
         public string modelo { get; set; }
         public string marca { get; set; }
         public int idNegocio { get; set; }
+        public int idProveedor { get; set; }
+        public string NombreProveedor { get; set; }
         public  string codigo {get;set;}
         public string nombre { get; set; }
         public bool estado { get; set; }

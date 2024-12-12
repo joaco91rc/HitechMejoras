@@ -163,6 +163,42 @@ namespace CapaDatos
             return formaPago;
         }
 
+        public bool Eliminar(int idFormaPago, out string mensaje)
+        {
+            bool respuesta = false;
+            mensaje = string.Empty;
 
+            try
+            {
+
+
+
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_ELIMINARFORMAPAGO", oconexion);
+                    cmd.Parameters.AddWithValue("idFormaPago", idFormaPago);
+                    cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    oconexion.Open();
+                    cmd.ExecuteNonQuery();
+                    respuesta = Convert.ToBoolean(cmd.Parameters["resultado"].Value);
+                    mensaje = cmd.Parameters["mensaje"].Value.ToString();
+
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                respuesta = false;
+                mensaje = ex.Message;
+
+            }
+            return respuesta;
+
+        }
     }
+    
 }

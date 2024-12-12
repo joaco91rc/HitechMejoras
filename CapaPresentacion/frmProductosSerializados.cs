@@ -135,8 +135,14 @@ namespace CapaPresentacion
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Verificar que el clic no sea en el encabezado
+            if (e.RowIndex < 0)
+                return;
+
             string mensaje = string.Empty;
             int indice = e.RowIndex;
+
+            // Obtener los datos de la fila seleccionada
             var productoDetalle = new ProductoDetalle
             {
                 idProductoDetalle = Convert.ToInt32(dgvData.Rows[indice].Cells["idProductoDetalle"].Value),
@@ -145,78 +151,69 @@ namespace CapaPresentacion
                 color = dgvData.Rows[indice].Cells["color"].Value.ToString(),
                 modelo = dgvData.Rows[indice].Cells["modelo"].Value.ToString(),
                 marca = dgvData.Rows[indice].Cells["marca"].Value.ToString(),
-                idNegocio = Convert.ToInt32(dgvData.Rows[indice].Cells["idNegocio"].Value), // Asegúrate de tener esta celda
+                idNegocio = Convert.ToInt32(dgvData.Rows[indice].Cells["idNegocio"].Value),
                 fecha = Convert.ToDateTime(dgvData.Rows[indice].Cells["fecha"].Value)
             };
+
+            // Acción si se hace clic en el botón "Editar"
             if (dgvData.Columns[e.ColumnIndex].Name == "btnEditar")
             {
-                
-
-                if (indice >= 0) // Asegurarse de que el índice sea válido
+                if (dgvData.Rows[indice].Cells["estado"].Value.ToString() == "EN STOCK")
                 {
-                    // Obtener los datos de la fila seleccionada
-                    
-
-                    if (dgvData.Rows[indice].Cells["estado"].Value.ToString() == "EN STOCK")
+                    if (GlobalSettings.RolUsuario == 1)
                     {
-                        // Llamar al método para editar el serial number
-                        if (GlobalSettings.RolUsuario == 1)
+                        var editar = new CN_Producto().EditarSerialNumber(productoDetalle, out mensaje);
+                        if (editar)
                         {
-                            var editar = new CN_Producto().EditarSerialNumber(productoDetalle, out mensaje);
-                            if (editar)
-                            {
-                                // Actualizar la fila en el DataGridView con los nuevos datos
-                                dgvData.Rows[indice].Cells["serialNumber"].Value = productoDetalle.numeroSerie;
-                                dgvData.Rows[indice].Cells["color"].Value = productoDetalle.color;
-                                dgvData.Rows[indice].Cells["modelo"].Value = productoDetalle.modelo;
-                                dgvData.Rows[indice].Cells["marca"].Value = productoDetalle.marca;
+                            dgvData.Rows[indice].Cells["serialNumber"].Value = productoDetalle.numeroSerie;
+                            dgvData.Rows[indice].Cells["color"].Value = productoDetalle.color;
+                            dgvData.Rows[indice].Cells["modelo"].Value = productoDetalle.modelo;
+                            dgvData.Rows[indice].Cells["marca"].Value = productoDetalle.marca;
 
-                                // Cambiar el color de fondo de la fila a verde
-                                foreach (DataGridViewCell cell in dgvData.Rows[indice].Cells)
-                                {
-                                    cell.Style.BackColor = Color.ForestGreen; // Cambia a verde claro o el color que prefieras
-                                }
-
-                                MessageBox.Show("Producto Serializado actualizado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
+                            foreach (DataGridViewCell cell in dgvData.Rows[indice].Cells)
                             {
-                                MessageBox.Show($"Error al actualizar: {mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                cell.Style.BackColor = Color.ForestGreen;
                             }
-                        } else
+
+                            MessageBox.Show("Producto Serializado actualizado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
                         {
-                            MessageBox.Show("No tiene permisos para editar el Producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Error al actualizar: {mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Error al actualizar:No se puede actualizar un Producto Vendido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("No tiene permisos para editar el Producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Error al actualizar: No se puede actualizar un Producto Vendido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
+            // Acción si se hace clic en el botón "Eliminar"
             if (dgvData.Columns[e.ColumnIndex].Name == "btnEliminar")
             {
                 if (GlobalSettings.RolUsuario == 1)
                 {
                     var eliminar = new CN_Producto().EliminarSerialNumber(productoDetalle, out mensaje);
-
                     if (eliminar)
                     {
                         dgvData.Rows.RemoveAt(indice);
-                        MessageBox.Show("Productos Serializado Eliminado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        MessageBox.Show("Producto Serializado Eliminado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }else
+                }
+                else
                 {
                     MessageBox.Show("No tiene permisos para eliminar el Producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
+        }
 
-            }
 
-       
+
 
         private void txtBusqueda_KeyDown(object sender, KeyEventArgs e)
         {

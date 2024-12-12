@@ -44,7 +44,7 @@ namespace CapaPresentacion.Modales
         private void CargarListadoProductosSerializables()
         {
             dgvData.Rows.Clear();
-            List<Producto> listaProducto = new CN_Producto().ListarSerializables();
+            List<Producto> listaProducto = new CN_Producto().ListarSerializables(GlobalSettings.SucursalId);
 
             foreach (Producto item in listaProducto)
             {

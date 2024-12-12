@@ -295,6 +295,7 @@ namespace CapaPresentacion
                     txtStock.Text = stockProducto.ToString();
                     txtCantidad.Select();
                     txtSerializable.Text = oProducto.prodSerializable.ToString();
+                    txtPrecioLista.Text = oProducto.precioLista.ToString();
                 }
                 else
                 {
@@ -372,16 +373,16 @@ namespace CapaPresentacion
                             {
                                 //decimal precioLista30 = Math.Round(((Math.Round((precio * txtCotizacion.Value) / 1000) * 1000 - 100) * 1.30m) / 1000, 0) * 1000 - 100;
 
-                                
+
 
 
 
                                 // Agregar el producto a dgvData
-                                dgvData.Rows.Add(new object[]{
+                                 dgvData.Rows.Add(new object[]{
                             txtIdProducto.Text,
                             txtProducto.Text,
                             precio.ToString("0.00"),
-                            txtPrecioLista.Text,
+                            txtPrecioLista.Text=="0.00"? (precio * cotizacionOriginal).ToString("0.00"):txtPrecioLista.Text,
                             txtCantidad.Value.ToString(),
                             (txtCantidad.Value * precio).ToString("0.00"),
                             txtSerializable.Text,
@@ -395,9 +396,10 @@ namespace CapaPresentacion
                                 }
 
                                 calcularTotal();
+                                CalcularRestaAPagar();
                                 limpiarProducto();
                                 txtCodigoProducto.Select();
-                                txtTotalAPagar.Value = Convert.ToDecimal(txtPrecioLista.Text);
+                                
                             }
                             else
                             {
@@ -416,7 +418,7 @@ namespace CapaPresentacion
                 txtIdProducto.Text,
                 txtProducto.Text,
                 precio.ToString("0.00"),
-                txtPrecioLista.Text,
+                txtPrecioLista.Text=="0.00"? (precio * cotizacionOriginal).ToString("0.00"):txtPrecioLista.Text,
                 txtCantidad.Value.ToString(),
                 (txtCantidad.Value * precio).ToString("0.00"),
                 txtSerializable.Text,
@@ -424,9 +426,10 @@ namespace CapaPresentacion
             });
 
                     calcularTotal();
+                    CalcularRestaAPagar();
                     limpiarProducto();
                     txtCodigoProducto.Select();
-                    txtTotalAPagar.Value = Convert.ToDecimal(txtPrecioLista.Text);
+                    
                 }
             }
             else
@@ -476,33 +479,32 @@ namespace CapaPresentacion
         {
             decimal totalPesos = 0;
             decimal totalDolares = 0;
+
+            // Verificamos si el DataGridView tiene filas
             if (dgvData.Rows.Count > 0)
             {
-                // Calculamos el total basado en los subtotales de cada fila
+                // Recorremos las filas y sumamos los totales
                 foreach (DataGridViewRow row in dgvData.Rows)
                 {
-                    totalPesos += Convert.ToDecimal(row.Cells["precioLista"].Value.ToString());
+                    // Validamos que las celdas no sean nulas antes de convertir
+                    if (row.Cells["precioLista"].Value != null && row.Cells["subTotal"].Value != null)
+                    {
+                        totalPesos += Convert.ToDecimal(row.Cells["precioLista"].Value);
+                        totalDolares += Convert.ToDecimal(row.Cells["subTotal"].Value);
+                    }
                 }
 
-                foreach (DataGridViewRow row in dgvData.Rows)
-                {
-                    totalDolares += Convert.ToDecimal(row.Cells["subTotal"].Value.ToString());
-                }
-
-                
-
-                // Verifica si la cotización ha cambiado y realiza el ajuste necesario
+                // Ajustamos el total si la cotización ha cambiado
                 if (cotizacionCambio)
                 {
-                    totalPesos = Math.Round(totalDolares*txtCotizacion.Value,2); // Usa el valor exacto si la cotización cambió
+                    totalPesos = Math.Round(totalDolares * txtCotizacion.Value, 2);
                 }
-                
 
-                // Asigna el valor calculado al campo correspondiente
+                // Actualizamos los TextBox correspondientes
                 txtTotalAPagar.Value = totalPesos;
                 txtTotalAPagarDolares.Value = totalDolares;
 
-                // Solo asigna RestaPagar si es la primera vez
+                // Solo asignamos RestaPagar si es la primera vez
                 if (txtRestaPagar.Value == 0 && txtRestaPagarDolares.Value == 0)
                 {
                     txtRestaPagar.Value = totalPesos;
@@ -510,7 +512,7 @@ namespace CapaPresentacion
                 }
             }
 
-            // Retorna el total calculado
+            // Retornamos el total en pesos
             return txtTotalAPagar.Value;
         }
 
@@ -1872,31 +1874,12 @@ namespace CapaPresentacion
         private void CalcularRestaAPagar()
         {
             decimal cotizacionDolar = txtCotizacion.Value;
-            decimal totalAPagar = txtRestaPagar.Value;
-            decimal totalAPagarDolares = txtRestaPagarDolares.Value;
+            decimal totalAPagar = txtTotalAPagar.Value;
+            decimal totalAPagarDolares = txtTotalAPagarDolares.Value;
             decimal pagoTotal = 0;
             decimal pagoTotalDolares = 0;
 
-            decimal diferenciaPagoParcial = txtMontoPagoParcial.Value - montoPagoParcialAnterior;
-            
-            montoPagoParcialAnterior = txtMontoPagoParcial.Value;
-
-            // Ajusta el total a pagar en moneda local en función del monto parcial
-            //if (_pagoParcialGlobal.moneda == "DOLARES")
-            //{
-            //    totalAPagar -= Math.Round(diferenciaPagoParcial*cotizacionDolar,2);
-            //}
-            
-
-            //// Si el pago parcial es en dólares y aún no se ha descontado
-            //if (_pagoParcialGlobal != null && _pagoParcialGlobal.moneda == "DOLARES" && !pagoParcialDolaresDescontado)
-            //{
-            //    totalAPagarDolares -= _pagoParcialGlobal.monto;
-            //    totalAPagar -= Math.Round(_pagoParcialGlobal.monto * cotizacionDolar, 2);
-            //    pagoParcialDolaresDescontado = true;
-            //}
-
-            // Calcular el monto pagado por cada forma de pago
+            // Lista de formas de pago y montos
             var formasDePago = new[]
             {
         new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
@@ -1910,10 +1893,9 @@ namespace CapaPresentacion
                 if (pago.FormaPago == "DOLAR" || pago.FormaPago == "DOLAR EFECTIVO")
                 {
                     pagoTotalDolares += pago.Monto;
-                    if (pago.FormaPago != "DOLAR EFECTIVO")
-                    {
-                        totalAPagarDolares -= pago.Monto;
-                    }
+
+                    // Ajustamos solo el total en pesos con la conversión de dólares
+                    totalAPagar -= Math.Round(pago.Monto * cotizacionDolar, 2);
                 }
                 else
                 {
@@ -1921,32 +1903,36 @@ namespace CapaPresentacion
                 }
             }
 
-            // Aplicar descuentos y recargos en función de la moneda seleccionada
+            // Aplicar descuentos y recargos
             decimal montoAjuste = Convert.ToDecimal(txtMontoDescuento.Text);
             if (checkDescuento.Checked)
             {
                 if (checkMonedaDolar.Checked)
+                {
                     totalAPagarDolares -= montoAjuste;
+                }
                 else
+                {
                     totalAPagar -= montoAjuste;
+                }
             }
             if (checkRecargo.Checked)
             {
                 if (checkMonedaDolar.Checked)
+                {
                     totalAPagarDolares += montoAjuste;
+                }
                 else
+                {
                     totalAPagar += montoAjuste;
+                }
             }
 
-            // Calcula el monto restante a pagar en cada moneda
+            // Calcular el monto restante a pagar en cada moneda
             decimal restoAPagar = Math.Max(0, totalAPagar - pagoTotal);
             decimal restoAPagarDolares = Math.Max(0, totalAPagarDolares - pagoTotalDolares);
 
-            // Actualizar el total a pagar en cada campo
-            //txtTotalAPagar.Value = totalAPagar;
-            //txtTotalAPagarDolares.Value = totalAPagarDolares;
-
-            // Actualizar el valor de RestaPagar y RestaPagarDolares
+            // Actualizar los valores en los campos de resta
             txtRestaPagar.Value = restoAPagar;
             txtRestaPagarDolares.Value = restoAPagarDolares;
 
@@ -1956,9 +1942,11 @@ namespace CapaPresentacion
                 txtRestaPagar.Value = 0;
                 txtRestaPagarDolares.Value = 0;
             }
-            
+
+            // Calcular el cambio
             CalcularCambio();
         }
+
 
 
 
@@ -2155,7 +2143,14 @@ namespace CapaPresentacion
         private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Recalcula el total original sin recargos ni descuentos
-            txtTotalAPagar.Value = Convert.ToDecimal(txtPrecioLista.Text);
+            if(cboFormaPago.Text == "DOLAR EFECTIVO")
+            {
+                txtTotalAPagarDolares.Visible = true;
+                lblTotalAPagarDolares.Visible = true;
+                lblRestaPagarDolares.Visible = true;
+                txtRestaPagarDolares.Visible = true;
+                
+            }
 
             if (cboFormaPago.SelectedIndex != -1)
             {
@@ -2201,8 +2196,10 @@ namespace CapaPresentacion
                 
                     txtRestaPagarDolares.Value = totalConRecargoYDescuentoDolares;
                     txtRestaPagar.Value = totalConRecargoYDescuentoPesos;
-                
-                
+                    txtTotalAPagar.Value = totalConRecargoYDescuentoPesos;
+                    txtTotalAPagarDolares.Value = totalConRecargoYDescuentoDolares;
+
+
             }
         }
 
@@ -2214,14 +2211,14 @@ namespace CapaPresentacion
             {
                 decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago2.Text).porcentajeRecargo;
                 decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago2.Text).porcentajeDescuento;
-                decimal totalRestoAPagar = txtRestaPagarDolares.Value * txtCotizacion.Value;
+                decimal totalRestoAPagar = txtRestaPagar.Value;
 
                 if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
                 {
 
 
 
-                    decimal totalConRecargoYDescuento = (totalRestoAPagar + (totalRestoAPagar * porcentajeRecargo)) - (totalRestoAPagar * porcentajeDescuento);
+                    decimal totalConRecargoYDescuento = (totalRestoAPagar + (totalRestoAPagar * porcentajeRecargo)) - ((totalRestoAPagar + (totalRestoAPagar * porcentajeRecargo)) * porcentajeDescuento);
 
                     // Actualiza el TextBox con el nuevo total
                     txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");

@@ -136,6 +136,7 @@ namespace CapaDatos
 
 
         public bool EditarPrecioProducto(PrecioProducto objPrecioProducto, out string mensaje)
+        
         {
             bool resultado = false;
             mensaje = string.Empty;

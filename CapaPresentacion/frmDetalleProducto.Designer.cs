@@ -48,7 +48,6 @@ namespace CapaPresentacion
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnGuardar = new FontAwesome.Sharp.IconButton();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +57,7 @@ namespace CapaPresentacion
             this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnGuardar = new FontAwesome.Sharp.IconButton();
             this.gbInfoProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -69,7 +69,7 @@ namespace CapaPresentacion
             this.txtIndice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.txtIndice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIndice.ForeColor = System.Drawing.Color.ForestGreen;
-            this.txtIndice.Location = new System.Drawing.Point(500, 9);
+            this.txtIndice.Location = new System.Drawing.Point(433, 20);
             this.txtIndice.Name = "txtIndice";
             this.txtIndice.Size = new System.Drawing.Size(20, 17);
             this.txtIndice.TabIndex = 107;
@@ -107,6 +107,7 @@ namespace CapaPresentacion
             this.gbInfoProducto.Controls.Add(this.txtIdProducto);
             this.gbInfoProducto.Controls.Add(this.btnAgregarProducto);
             this.gbInfoProducto.Controls.Add(this.label10);
+            this.gbInfoProducto.Controls.Add(this.txtIndice);
             this.gbInfoProducto.Controls.Add(this.label9);
             this.gbInfoProducto.Controls.Add(this.txtCantidad);
             this.gbInfoProducto.Controls.Add(this.txtStock);
@@ -119,7 +120,7 @@ namespace CapaPresentacion
             this.gbInfoProducto.ForeColor = System.Drawing.Color.ForestGreen;
             this.gbInfoProducto.Location = new System.Drawing.Point(27, 59);
             this.gbInfoProducto.Name = "gbInfoProducto";
-            this.gbInfoProducto.Size = new System.Drawing.Size(1083, 83);
+            this.gbInfoProducto.Size = new System.Drawing.Size(1311, 83);
             this.gbInfoProducto.TabIndex = 108;
             this.gbInfoProducto.TabStop = false;
             this.gbInfoProducto.Text = "Informacion Producto";
@@ -143,7 +144,7 @@ namespace CapaPresentacion
             this.btnAgregarProducto.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnAgregarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnAgregarProducto.IconSize = 32;
-            this.btnAgregarProducto.Location = new System.Drawing.Point(865, 34);
+            this.btnAgregarProducto.Location = new System.Drawing.Point(1261, 33);
             this.btnAgregarProducto.Name = "btnAgregarProducto";
             this.btnAgregarProducto.Size = new System.Drawing.Size(44, 41);
             this.btnAgregarProducto.TabIndex = 109;
@@ -158,7 +159,7 @@ namespace CapaPresentacion
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label10.Location = new System.Drawing.Point(767, 20);
+            this.label10.Location = new System.Drawing.Point(756, 20);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(67, 17);
             this.label10.TabIndex = 50;
@@ -171,7 +172,7 @@ namespace CapaPresentacion
             this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label9.Location = new System.Drawing.Point(659, 25);
+            this.label9.Location = new System.Drawing.Point(648, 25);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(46, 17);
             this.label9.TabIndex = 67;
@@ -180,7 +181,7 @@ namespace CapaPresentacion
             // txtCantidad
             // 
             this.txtCantidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCantidad.Location = new System.Drawing.Point(757, 45);
+            this.txtCantidad.Location = new System.Drawing.Point(746, 45);
             this.txtCantidad.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -199,7 +200,7 @@ namespace CapaPresentacion
             // 
             this.txtStock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtStock.Enabled = false;
-            this.txtStock.Location = new System.Drawing.Point(657, 46);
+            this.txtStock.Location = new System.Drawing.Point(646, 46);
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(85, 29);
             this.txtStock.TabIndex = 66;
@@ -210,7 +211,7 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProducto.Location = new System.Drawing.Point(216, 46);
             this.txtProducto.Name = "txtProducto";
-            this.txtProducto.Size = new System.Drawing.Size(435, 29);
+            this.txtProducto.Size = new System.Drawing.Size(424, 29);
             this.txtProducto.TabIndex = 64;
             // 
             // btnBuscarProducto
@@ -314,33 +315,9 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvData.Size = new System.Drawing.Size(1083, 260);
+            this.dgvData.Size = new System.Drawing.Size(1311, 260);
             this.dgvData.TabIndex = 110;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            // 
-            // btnGuardar
-            // 
-            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGuardar.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
-            this.btnGuardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.btnGuardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
-            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuardar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.IconChar = FontAwesome.Sharp.IconChar.FileShield;
-            this.btnGuardar.IconColor = System.Drawing.Color.White;
-            this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnGuardar.IconSize = 28;
-            this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(1126, 386);
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(140, 31);
-            this.btnGuardar.TabIndex = 111;
-            this.btnGuardar.Text = "Guardar";
-            this.btnGuardar.UseVisualStyleBackColor = false;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // idProducto
             // 
@@ -402,6 +379,30 @@ namespace CapaPresentacion
             this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnEliminar.Width = 25;
             // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuardar.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
+            this.btnGuardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnGuardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(216)))), ((int)(((byte)(212)))));
+            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardar.ForeColor = System.Drawing.Color.White;
+            this.btnGuardar.IconChar = FontAwesome.Sharp.IconChar.FileShield;
+            this.btnGuardar.IconColor = System.Drawing.Color.White;
+            this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnGuardar.IconSize = 28;
+            this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGuardar.Location = new System.Drawing.Point(1198, 431);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(140, 31);
+            this.btnGuardar.TabIndex = 111;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
             // frmDetalleProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,7 +411,6 @@ namespace CapaPresentacion
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.gbInfoProducto);
-            this.Controls.Add(this.txtIndice);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Name = "frmDetalleProducto";

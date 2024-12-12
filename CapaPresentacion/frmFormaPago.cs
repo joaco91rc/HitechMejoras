@@ -143,6 +143,27 @@ namespace CapaPresentacion
             
         }
 
-        
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(txtIdFormaPago.Text) != 0)
+            {
+                if (MessageBox.Show("Desea eliminar la Forma de Pago?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    string mensaje = string.Empty;
+                    int idProducto = Convert.ToInt32(txtIdFormaPago.Text);
+
+                    bool respuesta = new CN_FormaPago().Eliminar(idProducto, out mensaje);
+                    if (respuesta)
+                    {
+                        dgvData.Rows.RemoveAt(Convert.ToInt32(txtIndice.Text));  // Eliminar la fila de la grilla
+                        MessageBox.Show("Forma de Pago  Eliminada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(mensaje, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+            }
+        }
     }
 }

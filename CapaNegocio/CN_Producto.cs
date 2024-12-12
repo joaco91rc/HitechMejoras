@@ -37,9 +37,9 @@ namespace CapaNegocio
             return objcd_Producto.ListarSerializablesPorNegocio(idNegocio);
         }
 
-        public List<Producto> ListarSerializables()
+        public List<Producto> ListarSerializables(int idNegocio)
         { 
-            return objcd_Producto.ListarSerializables(); 
+            return objcd_Producto.ListarSerializables(idNegocio); 
         }
 
             public List<ProductoDetalle> ListarProductosConSerialNumberPorLocalDisponibles(int idNegocio)
@@ -116,7 +116,12 @@ namespace CapaNegocio
 
         }
 
-        public decimal ObtenerCostoProducto(int idProducto)
+        public bool ActualizarProductoDolar(int idProducto, bool productoDolar)
+        {
+            return objcd_Producto.ActualizarProductoDolar(idProducto, productoDolar);
+        }
+
+            public decimal ObtenerCostoProducto(int idProducto)
         {
             return objcd_Producto.ObtenerCostoProducto(idProducto);
         }

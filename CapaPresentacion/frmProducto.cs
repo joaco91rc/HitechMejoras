@@ -733,10 +733,13 @@ namespace CapaPresentacion
             dgvData.Columns["precioVentaDolar"].HeaderText = "Precio Venta USD";
             dgvData.Columns["prodSerializable"].HeaderText = "Es Serializable?";
             dgvData.Columns["productoDolar"].HeaderText = "Es Dolarizado?";
+
             // Ocultar columnas que no deseas mostrar
             dgvData.Columns["idCategoria"].Visible = false;
             dgvData.Columns["ProductoId"].Visible = false;
             dgvData.Columns["estado"].Visible = false;
+            dgvData.Columns["precioVentaPesos"].Visible = false;
+            dgvData.Columns["descripcion"].Visible = false;
 
             // Ajustes de tamaño para las columnas
             dgvData.Columns["nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -744,14 +747,14 @@ namespace CapaPresentacion
             dgvData.Columns["btnSeleccionar"].Width = 30;
             dgvData.Columns["codigo"].Width = 80;
             dgvData.Columns["descripcion"].Width = 150;
-            dgvData.Columns["DescripcionCategoria"].Width = 150;
+            dgvData.Columns["DescripcionCategoria"].Width = 140;
             dgvData.Columns["stock"].Width = 80;
             dgvData.Columns["precioCompraPesos"].Width = 100;
+            dgvData.Columns["precioCompraDolar"].Width = 100;
             dgvData.Columns["precioVentaPesos"].Width = 130;
             dgvData.Columns["precioListaPesos"].Width = 130;
-            dgvData.Columns["precioEfectivoPesos"].Width = 130;
-            dgvData.Columns["precioCompraDolar"].Width = 130;
-            dgvData.Columns["precioVentaDolar"].Width = 130;
+            dgvData.Columns["precioEfectivoPesos"].Width = 150;
+            dgvData.Columns["precioVentaDolar"].Width = 140;
             dgvData.Columns["prodSerializable"].Width = 130;
             dgvData.Columns["productoDolar"].Width = 130;
 
@@ -759,17 +762,17 @@ namespace CapaPresentacion
             dgvData.Columns["btnSeleccionar"].DisplayIndex = 0; // Columna de imagen en primer lugar
             dgvData.Columns["codigo"].DisplayIndex = 1;
             dgvData.Columns["nombre"].DisplayIndex = 2;
-            dgvData.Columns["descripcion"].DisplayIndex = 3;
-            dgvData.Columns["DescripcionCategoria"].DisplayIndex = 4;
-            dgvData.Columns["stock"].DisplayIndex = 5;            
-            dgvData.Columns["precioVentaPesos"].DisplayIndex = 6;
-            dgvData.Columns["precioListaPesos"].DisplayIndex = 7;
-            dgvData.Columns["precioEfectivoPesos"].DisplayIndex = 8;
-            dgvData.Columns["precioCompraPesos"].DisplayIndex = 9;
-            dgvData.Columns["precioCompraDolar"].DisplayIndex = 10;
-            dgvData.Columns["precioVentaDolar"].DisplayIndex = 11;
-            dgvData.Columns["prodSerializable"].DisplayIndex = 12;
-            dgvData.Columns["productoDolar"].DisplayIndex = 13;
+            //dgvData.Columns["descripcion"].DisplayIndex = 3;
+            dgvData.Columns["DescripcionCategoria"].DisplayIndex = 3;
+            dgvData.Columns["stock"].DisplayIndex = 4;
+            //dgvData.Columns["precioVentaPesos"].DisplayIndex = 6;
+            dgvData.Columns["precioListaPesos"].DisplayIndex = 5;
+            dgvData.Columns["precioEfectivoPesos"].DisplayIndex = 6;
+            dgvData.Columns["precioVentaDolar"].DisplayIndex = 7;
+            dgvData.Columns["precioCompraPesos"].DisplayIndex = 8;
+            dgvData.Columns["precioCompraDolar"].DisplayIndex = 9;
+            dgvData.Columns["prodSerializable"].DisplayIndex = 10;
+            dgvData.Columns["productoDolar"].DisplayIndex = 11;
         }
 
 

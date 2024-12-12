@@ -15,6 +15,7 @@ namespace CapaPresentacion.Modales
 {
     public partial class mdCargaStock : Form
     {
+        private bool checkProductoDolarActualizado = false;
         public decimal cotizacionActiva { get; set; } = new CN_Cotizacion().CotizacionActiva().importe;
         public mdCargaStock()
         {
@@ -73,7 +74,7 @@ namespace CapaPresentacion.Modales
                     item.costoPesos,
                     item.precioCompra,
                     item.precioVenta,
-                    false
+                    item.productoDolar?true:false
                     });
                 
             }
@@ -98,7 +99,7 @@ namespace CapaPresentacion.Modales
                     item.costoPesos,
                     item.precioCompra,
                     item.precioVenta,
-                    false,
+                    item.productoDolar?true:false,
 
                     });
 
@@ -141,131 +142,154 @@ namespace CapaPresentacion.Modales
         {
             if (GlobalSettings.RolUsuario != 1)
             {
-               
-            MessageBox.Show("No posee Permisos para Modificar Stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No posee permisos para modificar stock", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-                string mensaje = string.Empty;
-                bool editarPrecios = false;
 
-                // Iterar sobre las filas del DataGridView
-                foreach (DataGridViewRow row in dgvData.Rows)
+            string mensaje = string.Empty;
+            bool actualizarStock = false;
+            bool editarPrecioProductosPesos = false;
+            bool editarPrecioProductoDolares = false;
+            bool checkProductoDolarActualizado = false;
+            string actualizacionStock = string.Empty;
+            string actualizacionPreciosPesos = string.Empty;
+            string actualizacionPreciosDolares = string.Empty;
+            string actualizacionProductoDolar = string.Empty;
+
+            foreach (DataGridViewRow row in dgvData.Rows)
+            {
+                if (row.Tag != null && (bool)row.Tag == true)
                 {
-                    // Verificar si la fila está marcada como modificada
-                    if (row.Tag != null && (bool)row.Tag == true)
+                    int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
+                    int idNegocio = GlobalSettings.SucursalId;
+                    int nuevoStock = Convert.ToInt32(row.Cells["stock"].Value);
+                    decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
+                    decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
+                    decimal costoPesos = Convert.ToDecimal(row.Cells["costoPesos"].Value);
+                    decimal precioLista = Convert.ToDecimal(row.Cells["precioLista"].Value);
+                    bool checkProductoDolares = Convert.ToBoolean(row.Cells["checkProductoDolares"].Value);
+
+                    try
                     {
-                        // Obtener el idProducto, idNegocio y el nuevo valor de stock
-                        int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value); // Ajusta el nombre de la columna según tu DataGridView
-                        int idNegocio = GlobalSettings.SucursalId; // Ajusta el nombre de la columna según tu DataGridView
-                        int nuevoStock = Convert.ToInt32(row.Cells["stock"].Value);      // Ajusta el nombre de la columna según tu DataGridView
-                        decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
-                        decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
-                        decimal costoPesos = Convert.ToDecimal(row.Cells["costoPesos"].Value);
-                        decimal precioLista = Convert.ToDecimal(row.Cells["precioLista"].Value);
-                        bool checkProductoDolares = Convert.ToBoolean(row.Cells["checkProductoDolares"].Value);
-                        // Llamar al método para cargar o actualizar el stock del producto
-                        new CN_ProductoNegocio().SobrescribirStock(idProducto, idNegocio, nuevoStock);
-                        //var producto = new CN_Producto().ObtenerProductoPorId(idProducto);
-                        PrecioProducto precioPesos = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 1);
-                        PrecioProducto precioDolar = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 2);
-                        //producto.precioCompra = precioCompra;
-                        //producto.precioVenta = precioVenta;
-                        //if (costoPesos != 0)
-                        //{
-                        //    producto.costoPesos = costoPesos;
-                        //    producto.precioCompra = costoPesos / cotizacionActiva; 
-                        //}
-                        if (checkProductoDolares)
+                        // Obtener el stock actual del producto
+                        int stockActual = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(idProducto, idNegocio);
+
+                        // Verificar si el stock ha cambiado
+                        if (nuevoStock != stockActual)
                         {
-                            PrecioProducto objPrecioProductoDolares = new PrecioProducto()
+                            new CN_ProductoNegocio().SobrescribirStock(idProducto, idNegocio, nuevoStock);
+                            actualizarStock = true;
+                        }
+
+                        // Obtener precios actuales
+                        PrecioProducto precioPesosActual = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 1);
+                        PrecioProducto precioDolarActual = new CN_PrecioProducto().ObtenerPreciosPorProductoYMoneda(idProducto, 2);
+
+                        // Si el producto no está marcado en dólares
+                        if (!checkProductoDolares)
+                        {
+                            // Verificar cambios en precios en pesos
+                            if (costoPesos != precioPesosActual.PrecioCompra || precioLista != precioPesosActual.PrecioLista)
                             {
-                                IdPrecioProducto = precioDolar.IdPrecioProducto,
-                                IdProducto = idProducto,
-                                PrecioCompra = precioCompra,
-                                PrecioVenta = precioVenta,
-                                PrecioLista = precioVenta * cotizacionActiva * 1.35m,
-                                PrecioEfectivo = precioVenta,
-                                IdMoneda = 2
+                                // Actualizar precios en pesos
+                                PrecioProducto objPrecioProductoPesos = new PrecioProducto
+                                {
+                                    IdPrecioProducto = precioPesosActual.IdPrecioProducto,
+                                    IdProducto = idProducto,
+                                    PrecioCompra = costoPesos,
+                                    PrecioVenta = precioLista,
+                                    PrecioLista = precioLista,
+                                    PrecioEfectivo = precioLista * 0.85m,
+                                    IdMoneda = 1
+                                };
+                                editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
 
+                                // Calcular precios en dólares con la cotización activa
+                                decimal precioDolarCompra = Math.Round(costoPesos / cotizacionActiva, 2);
+                                decimal precioDolarVenta = Math.Round(precioLista / cotizacionActiva, 2);
 
-
-                            };
-
-                            bool editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
-                            PrecioProducto objPrecioproductoPesos = new PrecioProducto()
-                            {
-                                IdPrecioProducto = precioPesos.IdPrecioProducto,
-                                IdProducto = idProducto,
-                                PrecioCompra = precioCompra * cotizacionActiva,
-                                PrecioVenta = precioVenta * cotizacionActiva,
-                                PrecioLista = precioVenta * cotizacionActiva * 1.35m,
-                                PrecioEfectivo = precioVenta * cotizacionActiva * 1.35m * 0.85m,
-                                IdMoneda = 1
-
-
-
-                            };
-
-                            //editarPrecios = new CN_Producto().Editar(producto, out mensaje);
-                            bool editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioproductoPesos, out mensaje);
-
+                                // Actualizar precios en dólares
+                                PrecioProducto objPrecioProductoDolares = new PrecioProducto
+                                {
+                                    IdPrecioProducto = precioDolarActual.IdPrecioProducto,
+                                    IdProducto = idProducto,
+                                    PrecioCompra = precioDolarCompra,
+                                    PrecioVenta = precioDolarVenta,
+                                    PrecioLista = precioDolarVenta * cotizacionActiva * 1.35m,
+                                    PrecioEfectivo = precioDolarVenta,
+                                    IdMoneda = 2
+                                };
+                                editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
+                            }
                         }
                         else
                         {
-                            PrecioProducto objPrecioProductoDolares = new PrecioProducto()
+                            // Verificar cambios en precios en dólares
+                            if (precioCompra != precioDolarActual.PrecioCompra || precioVenta != precioDolarActual.PrecioVenta)
                             {
-                                IdPrecioProducto = precioDolar.IdPrecioProducto,
-                                IdProducto = idProducto,
-                                PrecioCompra = Math.Round(costoPesos / cotizacionActiva, 2),
-                                PrecioVenta = Math.Round(precioLista / cotizacionActiva, 2),
-                                PrecioLista = precioLista,
-                                PrecioEfectivo = Math.Round(precioLista / cotizacionActiva, 2),
-                                IdMoneda = 2
+                                // Actualizar precios en dólares
+                                PrecioProducto objPrecioProductoDolares = new PrecioProducto
+                                {
+                                    IdPrecioProducto = precioDolarActual.IdPrecioProducto,
+                                    IdProducto = idProducto,
+                                    PrecioCompra = precioCompra,
+                                    PrecioVenta = precioVenta,
+                                    PrecioLista = precioVenta * cotizacionActiva * 1.35m,
+                                    PrecioEfectivo = precioVenta,
+                                    IdMoneda = 2
+                                };
+                                editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
 
+                                // Calcular precios en pesos con la cotización activa
+                                decimal precioPesosCompra = Math.Round(precioCompra * cotizacionActiva, 2);
+                                decimal precioPesosVenta = Math.Round(precioVenta * cotizacionActiva, 2);
 
-
-                            };
-
-                            bool editarPrecioProductoDolares = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolares, out mensaje);
-                            PrecioProducto objPrecioproductoPesos = new PrecioProducto()
-                            {
-                                IdPrecioProducto = precioPesos.IdPrecioProducto,
-                                IdProducto = idProducto,
-                                PrecioCompra = costoPesos,
-                                PrecioVenta = precioLista,
-                                PrecioLista = precioLista,
-                                PrecioEfectivo = precioLista * 0.85m,
-                                IdMoneda = 1
-
-
-
-                            };
-
-                            //editarPrecios = new CN_Producto().Editar(producto, out mensaje);
-                            bool editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioproductoPesos, out mensaje);
-
+                                // Actualizar precios en pesos
+                                PrecioProducto objPrecioProductoPesos = new PrecioProducto
+                                {
+                                    IdPrecioProducto = precioPesosActual.IdPrecioProducto,
+                                    IdProducto = idProducto,
+                                    PrecioCompra = precioPesosCompra,
+                                    PrecioVenta = precioPesosVenta,
+                                    PrecioLista = precioPesosVenta * 1.35m,
+                                    PrecioEfectivo = precioPesosVenta * 0.85m,
+                                    IdMoneda = 1
+                                };
+                                editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                            }
+                            // Cambiar el estado de checkProductoDolares
+                            checkProductoDolarActualizado = true;
                         }
 
+                        // Registrar mensajes para cada cambio
+                        if (actualizarStock || editarPrecioProductosPesos || editarPrecioProductoDolares || checkProductoDolarActualizado)
+                        {
+                            actualizacionPreciosPesos = editarPrecioProductosPesos ? "Se ha actualizado el precio en pesos." : "";
+                            actualizacionPreciosDolares = editarPrecioProductoDolares ? "Se ha actualizado el precio en dólares." : "";
+                            actualizacionStock = actualizarStock ? "Stock actualizado." : "";
+                            actualizacionProductoDolar = checkProductoDolarActualizado ? "Se ha modificado el Producto." : "";
+                        }
 
-
-
-
-                        // Resetear la marca de modificación de la fila
                         row.Tag = null;
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al actualizar: {ex.Message}");
+                        actualizarStock = false;
+                    }
                 }
+            }
 
-                if (editarPrecios)
-                {
-                    MessageBox.Show("Se ha actualizado el Stock y los precios.");
-                }
-                else
-                {
-                    MessageBox.Show("El stock no ha sido actualizado correctamente.");
-                }
-                this.Close();
-            
+            if (actualizarStock || editarPrecioProductosPesos || editarPrecioProductoDolares || checkProductoDolarActualizado)
+            {
+                MessageBox.Show($"{actualizacionStock} {actualizacionPreciosPesos} {actualizacionPreciosDolares} {actualizacionProductoDolar}".Trim());
+            }
+
+            this.Close();
         }
+
+
+
 
         private void btnTraspasarStock_Click(object sender, EventArgs e)
         {
@@ -314,5 +338,36 @@ namespace CapaPresentacion.Modales
                 CargarGrilla();
             }
         }
+
+        private void dgvData_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dgvData.IsCurrentCellDirty)
+            {
+                dgvData.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dgvData_CellValueChanged_1(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verifica que sea la columna "checkProductoDolares"
+            if (e.RowIndex >= 0 && dgvData.Columns[e.ColumnIndex].Name == "checkProductoDolares")
+            {
+                int idProducto = Convert.ToInt32(dgvData.Rows[e.RowIndex].Cells["idProducto"].Value);
+
+                // Obtén el estado actual del CheckBox
+                bool productoDolar = Convert.ToBoolean(dgvData.Rows[e.RowIndex].Cells["checkProductoDolares"].Value);
+
+                // Actualiza en la base de datos
+                var actualizarProducto = new CN_Producto().ActualizarProductoDolar(idProducto, productoDolar);
+                if (actualizarProducto)
+                {
+                    checkProductoDolarActualizado = true;
+                }
+
+                
+            }
+        }
+
+        
     }
 }

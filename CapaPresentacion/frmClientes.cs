@@ -36,6 +36,8 @@ namespace CapaPresentacion
             item.documento,
             item.nombreCompleto,
             item.correo,
+            item.direccion,
+            item.ciudad,
             item.telefono,
             // Convertir los valores "Si" a true y "No" a false para los CheckBoxColumns
             item.hitech1 == "Si",   // CheckBoxColumn para hitech1
@@ -72,6 +74,8 @@ namespace CapaPresentacion
             item.documento,
             item.nombreCompleto,
             item.correo,
+            item.direccion,
+            item.ciudad,
             item.telefono,
             // Agregar la concatenación de los locales a la nueva columna de tipo TextBox
             locales,

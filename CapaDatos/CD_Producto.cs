@@ -19,6 +19,7 @@ namespace CapaDatos
             {
                 try
                 {
+                    // Ejecutar el stored procedure
                     using (SqlCommand cmd = new SqlCommand("SP_LISTARPRODUCTOS", oconexion))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -30,7 +31,7 @@ namespace CapaDatos
                         }
                     }
 
-                    // Reordenar las columnas aquí
+                    // Crear un nuevo DataTable con el orden correcto de las columnas
                     DataTable dtReordenado = new DataTable();
                     dtReordenado.Columns.Add("ProductoId");
                     dtReordenado.Columns.Add("codigo");
@@ -39,20 +40,17 @@ namespace CapaDatos
                     dtReordenado.Columns.Add("idCategoria");
                     dtReordenado.Columns.Add("DescripcionCategoria");
                     dtReordenado.Columns.Add("stock");
-
-                    // Orden deseado para los precios
-                    dtReordenado.Columns.Add("precioVentaPesos"); // Precio Venta ARS
-                    dtReordenado.Columns.Add("precioListaPesos"); // Precio Lista ARS
-                    dtReordenado.Columns.Add("precioEfectivoPesos"); // Precio Efectivo ARS
-                    dtReordenado.Columns.Add("precioCompraPesos"); // Costo ARS
-                    dtReordenado.Columns.Add("precioCompraDolar"); // Costo USD
-                    dtReordenado.Columns.Add("precioVentaDolar"); // Precio Venta USD
-
+                    dtReordenado.Columns.Add("precioVentaPesos");
+                    dtReordenado.Columns.Add("precioListaPesos");
+                    dtReordenado.Columns.Add("precioEfectivoPesos");
+                    dtReordenado.Columns.Add("precioVentaDolar");
+                    dtReordenado.Columns.Add("precioCompraPesos");
+                    dtReordenado.Columns.Add("precioCompraDolar");
                     dtReordenado.Columns.Add("estado");
                     dtReordenado.Columns.Add("prodSerializable");
                     dtReordenado.Columns.Add("productoDolar");
 
-                    // Llenar el nuevo DataTable con los datos en el orden deseado
+                    // Llenar el DataTable reordenado según el orden correcto
                     foreach (DataRow row in dt.Rows)
                     {
                         DataRow newRow = dtReordenado.NewRow();
@@ -63,19 +61,13 @@ namespace CapaDatos
                         newRow["idCategoria"] = row["idCategoria"];
                         newRow["DescripcionCategoria"] = row["DescripcionCategoria"];
                         newRow["stock"] = row["stock"];
-
-                        // Ordenar los precios como solicitado
                         newRow["precioVentaPesos"] = row["precioVentaPesos"];
                         newRow["precioListaPesos"] = row["precioListaPesos"];
                         newRow["precioEfectivoPesos"] = row["precioEfectivoPesos"];
+                        newRow["precioVentaDolar"] = row["precioVentaDolar"];
                         newRow["precioCompraPesos"] = row["precioCompraPesos"];
                         newRow["precioCompraDolar"] = row["precioCompraDolar"];
-                        newRow["precioVentaDolar"] = row["precioVentaDolar"];
-
-                        // Convertir el estado de True/False a "Activo"/"Inactivo"
                         newRow["estado"] = (bool)row["estado"] ? "Activo" : "No Activo";
-
-                        // Convertir prodSerializable de True/False a "Sí"/"No"
                         newRow["prodSerializable"] = (bool)row["prodSerializable"] ? "SI" : "NO";
                         newRow["productoDolar"] = (bool)row["productoDolar"] ? "SI" : "NO";
 
@@ -143,8 +135,9 @@ namespace CapaDatos
                         newRow["DescripcionCategoria"] = row["DescripcionCategoria"];
                         newRow["stock"] = row["stock"];
                         newRow["costoPesos"] = row["costoPesos"];
-                        newRow["ventaPesos"] = row["ventaPesos"];
                         newRow["precioCompra"] = row["precioCompra"];
+                        newRow["ventaPesos"] = row["ventaPesos"];
+                        
                         newRow["precioVenta"] = row["precioVenta"];
                         // Convertir el estado de True/False a "Activo"/"Inactivo"
                         newRow["estado"] = (bool)row["estado"] ? "Activo" : "No Activo";
@@ -178,7 +171,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion,p.productoDolar,");
                     query.AppendLine("c.idCategoria, c.descripcion AS DescripcionCategoria,");
                     query.AppendLine("ISNULL(pn.stock, 0) AS stock,");
                     query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
@@ -201,7 +194,7 @@ namespace CapaDatos
                     query.AppendLine("    WHERE idMoneda = 1");
                     query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
                     query.AppendLine("WHERE p.estado = 1");
-                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion,");
+                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion,p.productoDolar,");
                     query.AppendLine("c.idCategoria, c.descripcion, pn.stock,");
                     query.AppendLine("ppDolar.precioCompra, ppDolar.precioVenta,");
                     query.AppendLine("ppPesos.precioVenta, ppPesos.precioLista, ppPesos.precioCompra,");
@@ -234,7 +227,8 @@ namespace CapaDatos
                                 stock = Convert.ToInt32(dr["stock"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
                                 precioLista = dr["precioLista"] != DBNull.Value ? Convert.ToDecimal(dr["precioLista"]) : 0,
-                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0
+                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0,
+                                productoDolar = Convert.ToBoolean(dr["productoDolar"])
                             });
                         }
                     }
@@ -921,7 +915,7 @@ namespace CapaDatos
             return lista;
         }
 
-        public List<Producto> ListarSerializables()
+        public List<Producto> ListarSerializables(int idLocal)
         {
             List<Producto> lista = new List<Producto>();
             using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
@@ -936,8 +930,10 @@ namespace CapaDatos
                     query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
                     query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto");
                     query.AppendLine("WHERE p.estado = 1 AND p.prodSerializable = 1");
+                    query.AppendLine("AND pn.idNegocio = @idLocal AND ISNULL(pn.stock, 0) > 0");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idLocal", idLocal);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
 
@@ -989,6 +985,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
 
 
@@ -1382,6 +1379,22 @@ namespace CapaDatos
             return respuesta;
 
         }
+
+        public bool ActualizarProductoDolar(int idProducto, bool productoDolar)
+        {
+            string query = "UPDATE PRODUCTO SET productoDolar = @productoDolar WHERE idProducto = @idProducto";
+            using (SqlConnection conn = new SqlConnection(Conexion.cadena))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@productoDolar", productoDolar);
+                cmd.Parameters.AddWithValue("@idProducto", idProducto);
+
+                conn.Open();
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0; // Retorna true si al menos una fila fue afectada
+            }
+        }
+
 
         public bool EditarPrecios(Producto objProducto, out string mensaje)
         {

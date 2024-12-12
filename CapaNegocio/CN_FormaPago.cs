@@ -98,5 +98,9 @@ namespace CapaNegocio
         }
 
 
+        public bool Eliminar(int idFormaPago, out string mensaje)
+        {
+            return objcd_FormaPago.Eliminar(idFormaPago, out mensaje);
+        }
     }
 }
