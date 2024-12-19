@@ -39,6 +39,7 @@ namespace CapaPresentacion
             this.cotizacionDolarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuFormaPago = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuVendedores = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuMoneda = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStock = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuStock = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuTraspasoStock = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +69,6 @@ namespace CapaPresentacion
             this.menuRMA = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultas = new FontAwesome.Sharp.IconMenuItem();
             this.menuConsultaStock = new FontAwesome.Sharp.IconMenuItem();
-            this.subMenuDeudas = new FontAwesome.Sharp.IconMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuServicioTecnico = new FontAwesome.Sharp.IconMenuItem();
@@ -97,7 +97,6 @@ namespace CapaPresentacion
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
-            this.subMenuMoneda = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
@@ -229,6 +228,15 @@ namespace CapaPresentacion
             this.subMenuVendedores.Size = new System.Drawing.Size(207, 26);
             this.subMenuVendedores.Text = "Vendedores";
             this.subMenuVendedores.Click += new System.EventHandler(this.subMenuVendedores_Click);
+            // 
+            // subMenuMoneda
+            // 
+            this.subMenuMoneda.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuMoneda.ForeColor = System.Drawing.Color.White;
+            this.subMenuMoneda.Name = "subMenuMoneda";
+            this.subMenuMoneda.Size = new System.Drawing.Size(207, 26);
+            this.subMenuMoneda.Text = "Monedas";
+            this.subMenuMoneda.Click += new System.EventHandler(this.subMenuMoneda_Click);
             // 
             // menuStock
             // 
@@ -583,7 +591,6 @@ namespace CapaPresentacion
             this.menuConsultas.BackColor = System.Drawing.Color.ForestGreen;
             this.menuConsultas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuConsultaStock,
-            this.subMenuDeudas,
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuConsultas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -610,18 +617,6 @@ namespace CapaPresentacion
             this.menuConsultaStock.Size = new System.Drawing.Size(253, 26);
             this.menuConsultaStock.Text = "Productos";
             this.menuConsultaStock.Click += new System.EventHandler(this.menuConsultaStock_Click);
-            // 
-            // subMenuDeudas
-            // 
-            this.subMenuDeudas.BackColor = System.Drawing.Color.ForestGreen;
-            this.subMenuDeudas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.subMenuDeudas.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.subMenuDeudas.IconColor = System.Drawing.Color.Black;
-            this.subMenuDeudas.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.subMenuDeudas.Name = "subMenuDeudas";
-            this.subMenuDeudas.Size = new System.Drawing.Size(253, 26);
-            this.subMenuDeudas.Text = "Deudas de Locales";
-            this.subMenuDeudas.Click += new System.EventHandler(this.subMenuDeudas_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -986,15 +981,6 @@ namespace CapaPresentacion
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
             this.btnCerrarSesion.Click += new System.EventHandler(this.iconButton1_Click);
             // 
-            // subMenuMoneda
-            // 
-            this.subMenuMoneda.BackColor = System.Drawing.Color.ForestGreen;
-            this.subMenuMoneda.ForeColor = System.Drawing.Color.White;
-            this.subMenuMoneda.Name = "subMenuMoneda";
-            this.subMenuMoneda.Size = new System.Drawing.Size(207, 26);
-            this.subMenuMoneda.Text = "Monedas";
-            this.subMenuMoneda.Click += new System.EventHandler(this.subMenuMoneda_Click);
-            // 
             // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1088,7 +1074,6 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconMenuItem menuStock;
         private System.Windows.Forms.ToolStripMenuItem subMenuStock;
         private System.Windows.Forms.ToolStripMenuItem subMenuTraspasoStock;
-        private FontAwesome.Sharp.IconMenuItem subMenuDeudas;
         private FontAwesome.Sharp.IconMenuItem menuSerializacion;
         private System.Windows.Forms.ToolStripMenuItem subMenuSerializarProducto;
         private System.Windows.Forms.ToolStripMenuItem subMenuProductosSerializados;

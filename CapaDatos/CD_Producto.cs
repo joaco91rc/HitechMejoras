@@ -363,13 +363,15 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre FROM PRODUCTO_DETALLE PD");
+                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, PR.idProveedor, PR.razonSocial AS nombreProveedor");
+                    query.AppendLine("FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
+                    query.AppendLine("INNER JOIN PROVEEDOR PR ON PD.idProveedor = PR.idProveedor");
                     query.AppendLine("WHERE PD.estado = 1"); // Filtrar solo productos con estado = 1
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
-
                     cmd.CommandType = CommandType.Text;
+
                     oconexion.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -391,6 +393,11 @@ namespace CapaDatos
                                 estadoVendido = Convert.ToBoolean(dr["estado"]) == true ? "EN STOCK" : "VENDIDO",
                                 fecha = Convert.ToDateTime(dr["fecha"])
                             };
+
+                            // Validar si el idProveedor o nombreProveedor son NULL
+                            detalle.idProveedor = dr["idProveedor"] != DBNull.Value ? Convert.ToInt32(dr["idProveedor"]) : 0; // Si es NULL, asignar 0
+                            detalle.NombreProveedor = dr["nombreProveedor"] != DBNull.Value ? dr["nombreProveedor"].ToString() : string.Empty; // Si es NULL, asignar cadena vacía
+
 
                             // Asignar nombreLocal basado en el idNegocio
                             switch (detalle.idNegocio)
@@ -424,6 +431,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
 
         public List<ProductoDetalle> ListarProductosConSerialNumber()
@@ -486,10 +494,13 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre FROM PRODUCTO_DETALLE PD");
+                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, PR.razonSocial AS nombreProveedor");
+                    query.AppendLine("FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
+                    query.AppendLine("INNER JOIN PROVEEDOR PR ON PD.idProveedor = PR.idProveedor");
                     query.AppendLine("WHERE PD.idNegocio = @idNegocio AND PD.estado = 1"); // Filtrar por estado = 1 (disponible)
-                   
+
+
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio); // Añadir el parámetro
@@ -514,9 +525,14 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                estadoVendido = Convert.ToBoolean(dr["estado"]) ? "EN STOCK" : "VENDIDO",
+                                estadoVendido = Convert.ToBoolean(dr["estado"]) == true ? "EN STOCK" : "VENDIDO",
                                 fecha = Convert.ToDateTime(dr["fecha"])
                             };
+
+                            // Validar si el idProveedor o nombreProveedor son NULL
+                            detalle.idProveedor = dr["idProveedor"] != DBNull.Value ? Convert.ToInt32(dr["idProveedor"]) : 0; // Si es NULL, asignar 0
+                            detalle.NombreProveedor = dr["nombreProveedor"] != DBNull.Value ? dr["nombreProveedor"].ToString() : string.Empty; // Si es NULL, asignar cadena vacía
+
 
                             // Asignar nombreLocal basado en el idNegocio
                             switch (detalle.idNegocio)
@@ -564,9 +580,10 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento FROM PRODUCTO_DETALLE PD");
+                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento, PR.idProveedor, PR.razonSocial AS nombreProveedor FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
                     query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta");
+                    query.AppendLine("INNER JOIN PROVEEDOR PR ON PD.idProveedor = PR.idProveedor"); // Añadido JOIN con PROVEEDOR
                     query.AppendLine("WHERE PD.estado = 0 AND PD.idVenta <> 0 AND PD.idNegocio = @idNegocio");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
@@ -594,9 +611,14 @@ namespace CapaDatos
 
                                 // Manejo de DBNull para fechaEgreso
                                 fechaEgreso = dr.IsDBNull(dr.GetOrdinal("fechaEgreso"))
-                                      ? (DateTime?)null // Asigna null si es DBNull
-                                      : Convert.ToDateTime(dr["fechaEgreso"]) // Convierte a DateTime
+                                              ? (DateTime?)null // Asigna null si es DBNull
+                                              : Convert.ToDateTime(dr["fechaEgreso"]) // Convierte a DateTime
+
                             };
+
+                            // Manejo de DBNull para idProveedor y nombreProveedor
+                            detalle.idProveedor = dr["idProveedor"] != DBNull.Value ? Convert.ToInt32(dr["idProveedor"]) : 0; // Si es NULL, asignar 0
+                            detalle.NombreProveedor = dr["nombreProveedor"] != DBNull.Value ? dr["nombreProveedor"].ToString() : string.Empty; // Si es NULL, asignar cadena vacía
 
                             // Asignar nombreLocal basado en el idNegocio
                             switch (detalle.idNegocio)
@@ -631,6 +653,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
         public List<ProductoDetalle> ListarProductosVendidosPorFecha(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
@@ -723,9 +746,10 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento FROM PRODUCTO_DETALLE PD");
+                    query.AppendLine("SELECT PD.*, P.codigo, P.nombre, V.nroDocumento, PR.idProveedor, PR.razonSocial AS nombreProveedor FROM PRODUCTO_DETALLE PD");
                     query.AppendLine("INNER JOIN PRODUCTO P ON PD.idProducto = P.idProducto");
-                    query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta"); // Asegúrate de que esta relación sea correcta
+                    query.AppendLine("INNER JOIN VENTA V ON PD.idVenta = V.idVenta");
+                    query.AppendLine("INNER JOIN PROVEEDOR PR ON PD.idProveedor = PR.idProveedor"); // Añadido JOIN con PROVEEDOR
                     query.AppendLine("WHERE PD.estado = 0 AND PD.idVenta <> 0"); // Filtrar por estado = 0 (vendido)
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
@@ -745,11 +769,20 @@ namespace CapaDatos
                                 modelo = dr["modelo"].ToString(),
                                 marca = dr["marca"].ToString(),
                                 idNegocio = Convert.ToInt32(dr["idNegocio"]),
-                                codigo = dr["codigo"].ToString(), // Asegúrate de que exista esta propiedad en ProductoDetalle
+                                codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
-                                numeroVenta = dr["nroDocumento"].ToString(), // Asegúrate de tener esta propiedad en ProductoDetalle,
-                                fecha = Convert.ToDateTime(dr["fecha"])
+                                numeroVenta = dr["nroDocumento"].ToString(),
+                                fecha = Convert.ToDateTime(dr["fecha"]),
+
+                                // Manejo de DBNull para fechaEgreso
+                                fechaEgreso = dr.IsDBNull(dr.GetOrdinal("fechaEgreso"))
+                                              ? (DateTime?)null // Asigna null si es DBNull
+                                              : Convert.ToDateTime(dr["fechaEgreso"]) // Convierte a DateTime
                             };
+
+                            // Manejo de DBNull para idProveedor y nombreProveedor
+                            detalle.idProveedor = dr["idProveedor"] != DBNull.Value ? Convert.ToInt32(dr["idProveedor"]) : 0; // Si es NULL, asignar 0
+                            detalle.NombreProveedor = dr["nombreProveedor"] != DBNull.Value ? dr["nombreProveedor"].ToString() : string.Empty; // Si es NULL, asignar cadena vacía
 
                             // Asignar nombreLocal basado en el idNegocio
                             switch (detalle.idNegocio)
@@ -767,7 +800,7 @@ namespace CapaDatos
                                     detalle.nombreLocal = "APPLE CAFÉ";
                                     break;
                                 default:
-                                    detalle.nombreLocal = ""; // Valor por defecto si no coincide con los casos
+                                    detalle.nombreLocal = "";
                                     break;
                             }
 
@@ -784,6 +817,7 @@ namespace CapaDatos
             }
             return lista;
         }
+
 
 
 
@@ -952,13 +986,13 @@ namespace CapaDatos
                                     idCategoria = Convert.ToInt32(dr["idCategoria"]),
                                     descripcion = dr["DescripcionCategoria"].ToString()
                                 },
-                                costoPesos = Convert.ToDecimal(dr["costoPesos"]),
-                                precioCompra = Convert.ToDecimal(dr["precioCompra"]),
-                                precioVenta = Convert.ToDecimal(dr["precioVenta"]),
+                                costoPesos = dr["costoPesos"] != DBNull.Value ? Convert.ToDecimal(dr["costoPesos"]) : 0,
+                                precioCompra = dr["precioCompra"] != DBNull.Value ? Convert.ToDecimal(dr["precioCompra"]) : 0,
+                                precioVenta = dr["precioVenta"] != DBNull.Value ? Convert.ToDecimal(dr["precioVenta"]) : 0,
                                 estado = Convert.ToBoolean(dr["estado"]),
                                 stock = Convert.ToInt32(dr["stock"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = Convert.ToDecimal(dr["ventaPesos"])
+                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0
                             };
 
                             // Asignación de nombreLocal basado en idNegocio usando if-else
@@ -1446,20 +1480,30 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT precioCompra FROM Producto WHERE idProducto = @IdProducto");
+                    query.AppendLine("SELECT precioCompra");
+                    query.AppendLine("FROM PRECIO_PRODUCTO");
+                    query.AppendLine("WHERE idProducto = @IdProducto AND idMoneda = 2");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@IdProducto", idProducto);
+
                     oconexion.Open();
-                    costo = (decimal)cmd.ExecuteScalar();
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        costo = Convert.ToDecimal(result);
+                    }
                 }
                 catch (Exception ex)
                 {
                     // Opcional: registrar el error para depuración
+                    Console.WriteLine($"Error al obtener el costo del producto: {ex.Message}");
                 }
             }
             return costo;
         }
+
 
         public bool Eliminar(Producto objProducto, out string mensaje)
         {
@@ -1557,7 +1601,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("idVenta", productoDetalle.idVenta);
                     cmd.Parameters.AddWithValue("fecha", productoDetalle.fecha);
                     cmd.Parameters.AddWithValue("fechaEgreso", productoDetalle.fechaEgreso ?? (object)DBNull.Value); // Manejo de NULL
-
+                    cmd.Parameters.AddWithValue("idProveedor", productoDetalle.idProveedor);
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
 
@@ -1675,6 +1719,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("marca", productoDetalle.marca);
                     cmd.Parameters.AddWithValue("idNegocio", productoDetalle.idNegocio);
                     cmd.Parameters.AddWithValue("fecha", productoDetalle.fecha);
+                    cmd.Parameters.AddWithValue("idProveedor", productoDetalle.idProveedor);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

@@ -28,7 +28,8 @@ namespace CapaPresentacion
         private decimal cotizacionOriginal;
         private int _idVentaGenerada;
         private bool _pagoParcialAplicado = false;
-
+        private int contadorFormasPago = 0;
+        private bool recargoAplicado = false;
 
         public List<ProductoDetalle> ListaProductoDetalles { get; set; } = new List<ProductoDetalle>();
         public int StockProducto { get; set; }
@@ -42,6 +43,8 @@ namespace CapaPresentacion
 
             if (_Venta != null)
             {
+                CargarComboBoxVendedores();
+                CargarComboBoxFormaPago();
                 CargarDatosVenta();
                 modoEdicion = true;
             }
@@ -78,37 +81,75 @@ namespace CapaPresentacion
             txtStock.Text = StockProducto.ToString();
         }
         private void CargarDatosVenta()
-           
         {
             int idCliente = new CN_Cliente().ObtenerIdClientePorDocumentoYNombre(_Venta.documentoCliente, _Venta.nombreCliente);
             CargarComboBoxVendedores();
             lblTitulo.Text = String.Format("EDITAR VENTA NUMERO {0}", _Venta.nroDocumento);
+
             // Aquí puedes cargar los datos de la venta en los controles del formulario
             cboTipoDocumento.Text = _Venta.tipoDocumento;
-            txtNombreCliente.Text = _Venta.nombreCliente;           
+            txtNombreCliente.Text = _Venta.nombreCliente;
             txtDocumentoCliente.Text = _Venta.documentoCliente;
             txtIdCliente.Text = idCliente.ToString();
-             txtObservaciones.Text = _Venta.observaciones;
-            foreach(var item in _Venta.oDetalleVenta)
+            txtObservaciones.Text = _Venta.observaciones;
+            txtCotizacion.Value = _Venta.cotizacionDolar;
+            // Cargar los productos en el DataGridView
+            foreach (var item in _Venta.oDetalleVenta)
             {
-                dgvData.Rows.Add(item.oProducto.idProducto,item.oProducto.nombre, item.precioVenta,item.precioVenta*1.30m, item.cantidad, item.subTotal,item.oProducto.prodSerializable);
+                dgvData.Rows.Add(item.oProducto.idProducto, item.oProducto.nombre, item.precioVenta, item.precioVenta * 1.30m, item.cantidad, item.subTotal, item.oProducto.prodSerializable);
             }
-            cboFormaPago.Text = _Venta.formaPago;
-            cboFormaPago2.Text = _Venta.formaPago2;
-            cboFormaPago3.Text = _Venta.formaPago3;
-            cboFormaPago4.Text = _Venta.formaPago4;
-            txtPagaCon.Text = _Venta.montoFP1.ToString("0.00");
-            txtPagaCon2.Text = _Venta.montoFP2.ToString();
-            txtPagaCon3.Text = _Venta.montoFP3.ToString();
-            txtPagaCon4.Text = _Venta.montoFP4.ToString();
-            txtTotalAPagar.Text = _Venta.montoTotal.ToString();
+            // Obtener la lista de formas de pago cargadas en el ComboBox
+            List<OpcionCombo> listaFormasPago = cboFormaPago.Items.Cast<OpcionCombo>().ToList();
 
+            
+            // Cargar las formas de pago en el DataGridView dgvDataFormasPago
+            // Suponiendo que la forma de pago y los montos están definidos en las propiedades de _Venta
+            if (!string.IsNullOrEmpty(_Venta.formaPago))
+            {
+                int idFormaPago = ObtenerIdFormaPago(_Venta.formaPago);
+                dgvDataFormasPago.Rows.Add(idFormaPago, _Venta.formaPago, _Venta.montoFP1, _Venta.montoPago);
+            }
+
+            if (!string.IsNullOrEmpty(_Venta.formaPago2))
+            {
+                int idFormaPago2 = ObtenerIdFormaPago(_Venta.formaPago2);
+                dgvDataFormasPago.Rows.Add(idFormaPago2, _Venta.formaPago2, _Venta.montoFP2, _Venta.montoPagoFP2);
+            }
+
+            if (!string.IsNullOrEmpty(_Venta.formaPago3))
+            {
+                int idFormaPago3 = ObtenerIdFormaPago(_Venta.formaPago3);
+                dgvDataFormasPago.Rows.Add(idFormaPago3, _Venta.formaPago3, _Venta.montoFP3, _Venta.montoPagoFP3);
+            }
+
+            if (!string.IsNullOrEmpty(_Venta.formaPago4))
+            {
+                int idFormaPago4 = ObtenerIdFormaPago(_Venta.formaPago4);
+                dgvDataFormasPago.Rows.Add(idFormaPago4, _Venta.formaPago4, _Venta.montoFP4, _Venta.montoPagoFP4);
+            }
+
+            // Mostrar el total a pagar en el TextBox correspondiente
+            txtTotalAPagar.Text = _Venta.montoTotal.ToString("0.00");
+
+            // Cargar el vendedor seleccionado
             OpcionCombo vendedorSeleccionado = cboVendedores.Items.Cast<OpcionCombo>()
-                                    .FirstOrDefault(x => Convert.ToInt32(x.Valor) == _Venta.idVendedor);
+                                            .FirstOrDefault(x => Convert.ToInt32(x.Valor) == _Venta.idVendedor);
             if (vendedorSeleccionado != null)
             {
                 cboVendedores.SelectedItem = vendedorSeleccionado; // Establecer el item seleccionado
             }
+        }
+
+
+        private int ObtenerIdFormaPago(string nombreFormaPago)
+        {
+            // Buscar en los ítems del ComboBox donde el texto coincide con el nombre de la forma de pago
+            var formaPago = cboFormaPago.Items
+                                        .Cast<OpcionCombo>()
+                                        .FirstOrDefault(x => x.Texto == nombreFormaPago);
+
+            // Si encuentra la forma de pago, devuelve su id; si no, devuelve 0
+            return formaPago != null ? Convert.ToInt32(formaPago.Valor) : 0;
         }
 
         private void CargarComboBoxFormaPago()
@@ -121,36 +162,25 @@ namespace CapaPresentacion
 
             // Limpiar los items actuales del ComboBox
             cboFormaPago.Items.Clear();
-            cboFormaPago2.Items.Clear();
-            cboFormaPago3.Items.Clear();
-            cboFormaPago4.Items.Clear();
+            
 
             // Llenar el ComboBox con los datos obtenidos
             foreach (FormaPago formaPago in listaFormaPago)
             {
                 cboFormaPago.Items.Add(new OpcionCombo() { Valor = formaPago.idFormaPago, Texto = formaPago.descripcion });
-                cboFormaPago2.Items.Add(new OpcionCombo() { Valor = formaPago.idFormaPago, Texto = formaPago.descripcion });
-                cboFormaPago3.Items.Add(new OpcionCombo() { Valor = formaPago.idFormaPago, Texto = formaPago.descripcion });
-                cboFormaPago4.Items.Add(new OpcionCombo() { Valor = formaPago.idFormaPago, Texto = formaPago.descripcion });
+                
             }
 
             // Establecer DisplayMember y ValueMember
             cboFormaPago.DisplayMember = "Texto";
             cboFormaPago.ValueMember = "Valor";
-            cboFormaPago2.DisplayMember = "Texto";
-            cboFormaPago2.ValueMember = "Valor";
-            cboFormaPago3.DisplayMember = "Texto";
-            cboFormaPago3.ValueMember = "Valor";
-            cboFormaPago4.DisplayMember = "Texto";
-            cboFormaPago4.ValueMember = "Valor";
+            
 
             // Seleccionar el primer item por defecto si hay elementos en el ComboBox
             if (cboFormaPago.Items.Count > 0)
             {
                 cboFormaPago.SelectedIndex = -1;
-                cboFormaPago2.SelectedIndex = -1;
-                cboFormaPago3.SelectedIndex = -1;
-                cboFormaPago4.SelectedIndex = -1;
+               
             }
         }
 
@@ -562,13 +592,7 @@ namespace CapaPresentacion
                         txtRestaPagar.Value = 0;
                         txtRestaPagarDolares.Value = 0;
                         cboFormaPago.SelectedIndex = -1;
-                        cboFormaPago2.SelectedIndex = -1;
-                        cboFormaPago3.SelectedIndex = -1;
-                        cboFormaPago4.SelectedIndex = -1;
-                        txtPagaCon.Value = 0;
-                        txtPagaCon2.Value = 0;
-                        txtPagaCon3.Value = 0;
-                        txtPagaCon4.Value = 0;
+                       
 
                         calcularTotal();
                     
@@ -719,50 +743,45 @@ namespace CapaPresentacion
 
         private void CalcularCambio()
         {
-            // Verifica que haya productos en la venta antes de calcular el cambio
-            if (string.IsNullOrWhiteSpace(txtTotalAPagar.Text))
+            // Verifica que haya valores en los campos de resta antes de calcular el cambio
+            decimal restoAPagar = txtRestaPagar.Value;
+            decimal restoAPagarDolares = txtRestaPagarDolares.Value;
+
+            // Asegura que haya valores válidos en los campos de resta
+            if (restoAPagar == 0 && restoAPagarDolares == 0)
             {
-                MessageBox.Show("No existen productos en la venta", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //MessageBox.Show("El monto restante a pagar es cero", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            decimal pagacon = 0;
+            decimal pagoTotal = 0;
+            decimal pagoTotalDolares = 0;
 
-            // Lista de campos de pago (formas de pago) a considerar
-            var pagaConFields = new[] { txtPagaCon, txtPagaCon2, txtPagaCon3, txtPagaCon4 };
-
-            // Suma los montos ingresados en cada campo de pago
-            foreach (var field in pagaConFields)
+            // Recorre las filas del DataGridView para sumar los pagos
+            foreach (DataGridViewRow fila in dgvDataFormasPago.Rows)
             {
-                if (!string.IsNullOrWhiteSpace(field.Text) && decimal.TryParse(field.Text, out decimal pago))
+                string formaPago = fila.Cells["FormaPago"].Value.ToString();
+                decimal montoPago = Convert.ToDecimal(fila.Cells["importeFP"].Value);
+
+                if (formaPago == "DOLAR" || formaPago == "DOLAR EFECTIVO")
                 {
-                    pagacon += pago;
+                    pagoTotalDolares += montoPago;
+                }
+                else
+                {
+                    pagoTotal += montoPago;
                 }
             }
 
-            // Si el pago es en "DOLAR" o "DOLAR EFECTIVO", restar el monto de txtPagaCon
-            if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-            {
-                pagacon -= Convert.ToDecimal(txtPagaCon.Text);
-            }
+            // Si el total de pago en pesos cubre el total a pagar en pesos
+            decimal cambioPesos = pagoTotal >= restoAPagar ? (pagoTotal - restoAPagar) : 0;
+            // Si el total de pago en dólares cubre el total a pagar en dólares
+            decimal cambioDolares = pagoTotalDolares >= restoAPagarDolares ? (pagoTotalDolares - restoAPagarDolares) : 0;
 
-            // Calcula el total después de los ajustes por descuentos o recargos
-            decimal total = Convert.ToDecimal(txtTotalAPagar.Text);
-
-            // Si se ha aplicado descuento o recargo, ajustar el total
-            if (checkDescuento.Checked)
-            {
-                total -= Convert.ToDecimal(txtMontoDescuento.Text);
-            }
-            if (checkRecargo.Checked)
-            {
-                total += Convert.ToDecimal(txtMontoDescuento.Text);
-            }
-
-            // Calcula el cambio según el total pagado y el total a pagar
-            decimal cambio = pagacon >= total ? (pagacon - total) : 0;
-            txtCambioCliente.Text = cambio.ToString("0.00");
+            // Mostrar el cambio en pesos y dólares
+            txtCambioCliente.Text = (cambioPesos + cambioDolares).ToString("0.00");
         }
+
 
 
 
@@ -772,23 +791,67 @@ namespace CapaPresentacion
         {
             if (e.KeyData == Keys.Enter)
             {
-                //CalcularRestaAPagar(); // Llamada para calcular el resto a pagar inicialmente
-                //CalcularCambio(); // Calcula el cambio
+                if (dgvData.Rows.Count <= 0)
+                {
+                    MessageBox.Show("No hay Productos para aplicar le Pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (contadorFormasPago >= 4)
+                {
+                    MessageBox.Show("Solo se pueden agregar hasta 4 formas de pago.", "Límite alcanzado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                //// Si el pago es en DÓLAR o DÓLAR EFECTIVO, actualiza el total a pagar en función de la cotización
-                //if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                //{
-                //    // Solo se debe actualizar el total a pagar en Dólares en este caso
-                //    txtTotalAPagar.Value = txtRestaPagarDolares.Value * txtCotizacion.Value;
+                if (cboFormaPago.SelectedIndex == -1 || string.IsNullOrWhiteSpace(txtPagaCon.Text))
+                {
+                    MessageBox.Show("Seleccione una forma de pago e ingrese un monto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                //    if(_pagoParcialGlobal.moneda == "DOLARES")
-                //    {
-                //        txtRestaPagarDolares.Value -= _pagoParcialGlobal.monto;
-                //    }
+                if (!decimal.TryParse(txtPagaCon.Text, out decimal montoPago) || montoPago <= 0)
+                {
+                    MessageBox.Show("Ingrese un monto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                //}
+                // Obtener el elemento seleccionado como objeto OpcionCombo
+                var formaPagoSeleccionada = (OpcionCombo)cboFormaPago.SelectedItem;
 
-                CalcularRestaAPagar();
+                if (formaPagoSeleccionada == null)
+                {
+                    MessageBox.Show("Forma de pago seleccionada no válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int idFormaPago = (int)formaPagoSeleccionada.Valor;
+                string formaPago = formaPagoSeleccionada.Texto;
+
+
+
+
+                FormaPago formaPagoADescontarRetencion = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago.SelectedItem).Texto);
+                decimal montoMenosRetencion = Math.Round(montoPago - (montoPago * formaPagoADescontarRetencion.porcentajeRetencion) / 100,2);
+
+
+
+                // Agregar al DataGridView con idFormaPago, formaPago y montoPago
+                dgvDataFormasPago.Rows.Add(idFormaPago, formaPago, montoPago, montoMenosRetencion, defaultImage);
+
+                // Incrementar el contador
+                contadorFormasPago++;
+
+                
+
+                // Limpiar campos
+                cboFormaPago.SelectedIndex = -1;
+                
+                txtPagaCon.ResetText();
+
+                // Mensaje si se alcanzó el límite
+                if (contadorFormasPago == 4)
+                {
+                    MessageBox.Show("Se han agregado las 4 formas de pago permitidas.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
@@ -1208,6 +1271,13 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = true;
                 txtMontoDescuento.Text = "0";
                 txtDescuento.Text = "0";
+                lblFormaPago.Visible = false;
+                lblImporte.Visible = false;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago.Visible = false;
+                txtPagaCon.ResetText();
+                txtPagaCon.Visible = false;
+                btnAgregarPago.Visible = false;
 
                 // Ocultar controles relacionados con el recargo
                 checkRecargo.Visible = false;
@@ -1228,12 +1298,17 @@ namespace CapaPresentacion
 
                 // Limpiar opciones de forma de pago
                 cboFormaPago.SelectedIndex = -1;
-                cboFormaPago2.SelectedIndex = -1;
-                cboFormaPago3.SelectedIndex = -1;
-                cboFormaPago4.SelectedIndex = -1;
+               
 
                 // Ocultar moneda en dólares
                 checkMonedaDolar.Visible = false;
+                lblFormaPago.Visible = true;
+                lblImporte.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago.Visible = true;
+                txtPagaCon.ResetText();
+                txtPagaCon.Visible = true;
+                btnAgregarPago.Visible = true;
 
                 // Recalcular el total después de desmarcar el descuento
                 calcularTotal();
@@ -1312,6 +1387,7 @@ namespace CapaPresentacion
             
             txtIdCliente.Text = string.Empty;
             dgvSeriales.Rows.Clear();
+            dgvDataFormasPago.Rows.Clear();
             dgvSeriales.Visible = false;
             txtObservaciones.Text = string.Empty;
             txtDocumentoCliente.Text = "";
@@ -1324,14 +1400,10 @@ namespace CapaPresentacion
             cboFormaPago.SelectedIndex = -1;
             txtTotalVentaDolares.Text = string.Empty;
             cboVendedores.SelectedIndex = -1;
-            cboFormaPago2.SelectedIndex = -1;
-            cboFormaPago3.SelectedIndex = -1;
-            cboFormaPago4.SelectedIndex = -1;
+           
             txtTotalAPagar.Text = string.Empty;
             txtPagaCon.Text = string.Empty;
-            txtPagaCon2.Text = string.Empty;
-            txtPagaCon3.Text = string.Empty;
-            txtPagaCon4.Text = string.Empty;
+           
             txtRestaPagar.Text = string.Empty;
             isUpdated = false;
             lblTotalAPagarDolares.Visible = false;
@@ -1421,19 +1493,28 @@ namespace CapaPresentacion
 
         private bool ValidarFormulario()
         {
-            if (string.IsNullOrWhiteSpace(txtDocumentoCliente.Text)) return MostrarMensajeError("Debe ingresar el documento del cliente");
-            if (string.IsNullOrWhiteSpace(txtNombreCliente.Text)) return MostrarMensajeError("Debe ingresar el nombre del cliente");
-            if (dgvData.Rows.Count < 1) return MostrarMensajeError("Debe ingresar productos en la venta");
-            if (checkDescuento.Checked && string.IsNullOrWhiteSpace(txtDescuento.Text)) return MostrarMensajeError("Debe ingresar un porcentaje de descuento");
-            if (txtPagaCon.Value == 0 && txtPagaCon2.Value == 0 && txtPagaCon3.Value == 0 && txtPagaCon4.Value == 0)
-                return MostrarMensajeError("No ha establecido ningún monto para la venta");
-            if (cboFormaPago.SelectedIndex == -1 && cboFormaPago2.SelectedIndex == -1 && cboFormaPago3.SelectedIndex == -1 && cboFormaPago4.SelectedIndex == -1)
-                return MostrarMensajeError("Debe seleccionar al menos una forma de pago");
-            if (cboVendedores.SelectedIndex == -1 )
-                return MostrarMensajeError("Debe seleccionar el Vendedor ");
+            if (string.IsNullOrWhiteSpace(txtDocumentoCliente.Text))
+                return MostrarMensajeError("Debe ingresar el documento del cliente");
+
+            if (string.IsNullOrWhiteSpace(txtNombreCliente.Text))
+                return MostrarMensajeError("Debe ingresar el nombre del cliente");
+
+            if (dgvData.Rows.Count < 1)
+                return MostrarMensajeError("Debe ingresar productos en la venta");
+
+            if (checkDescuento.Checked && string.IsNullOrWhiteSpace(txtDescuento.Text))
+                return MostrarMensajeError("Debe ingresar un porcentaje de descuento");
+
+            // Verificar si el DataGridView de formas de pago tiene filas
+            if (dgvDataFormasPago.Rows.Count < 1)
+                return MostrarMensajeError("Debe agregar al menos una forma de pago al detalle de la venta");
+
+            if (cboVendedores.SelectedIndex == -1)
+                return MostrarMensajeError("Debe seleccionar el Vendedor");
 
             return true;
         }
+
 
         private bool MostrarMensajeError(string mensaje)
         {
@@ -1463,12 +1544,53 @@ namespace CapaPresentacion
 
         private Venta CrearVenta(DataTable detalleVenta)
         {
-            // Llama a calcular el monto total
-            
-            decimal montoPagoFP1 = CalcularMontoFormaPago(cboFormaPago, txtPagaCon);
-            decimal montoPagoFP2 = CalcularMontoFormaPago(cboFormaPago2, txtPagaCon2);
-            decimal montoPagoFP3 = CalcularMontoFormaPago(cboFormaPago3, txtPagaCon3);
-            decimal montoPagoFP4 = CalcularMontoFormaPago(cboFormaPago4, txtPagaCon4);
+            // Inicializar las variables para los montos de pago
+            decimal montoPagoFP1 = 0, montoPagoFP2 = 0, montoPagoFP3 = 0, montoPagoFP4 = 0;
+            string formaPagoFP1 = "", formaPagoFP2 = "", formaPagoFP3 = "", formaPagoFP4 = "";
+            decimal montoRecibidoPagoFP1 = 0, montoRecibidoPagoFP2 = 0, montoRecibidoPagoFP3 = 0, montoRecibidoPagoFP4 = 0;
+
+            // Recorrer el DataGridView de formas de pago para obtener los valores
+            for (int i = 0; i < dgvDataFormasPago.Rows.Count; i++)
+            {
+                var fila = dgvDataFormasPago.Rows[i];
+                int idFormaPago = Convert.ToInt32(fila.Cells["idFormaPago"].Value);
+
+                // Saltar filas con idFormaPago igual a 9999
+                if (idFormaPago == 9999)
+                    continue;
+
+                string formaPago = fila.Cells["formaPago"].Value.ToString();
+                decimal montoPago = Convert.ToDecimal(fila.Cells["importeFP"].Value);
+                decimal montoRecibido = Convert.ToDecimal(fila.Cells["montoRecibido"].Value);
+
+                // Asignar valores a las formas de pago y los montos correspondientes
+                if (i == 0)
+                {
+                    formaPagoFP1 = formaPago;
+                    montoPagoFP1 = montoPago;
+                    montoRecibidoPagoFP1 = montoRecibido;
+                }
+                else if (i == 1)
+                {
+                    formaPagoFP2 = formaPago;
+                    montoPagoFP2 = montoPago;
+                    montoRecibidoPagoFP2 = montoRecibido;
+                }
+                else if (i == 2)
+                {
+                    formaPagoFP3 = formaPago;
+                    montoPagoFP3 = montoPago;
+                    montoRecibidoPagoFP3 = montoRecibido;
+                }
+                else if (i == 3)
+                {
+                    formaPagoFP4 = formaPago;
+                    montoPagoFP4 = montoPago;
+                    montoRecibidoPagoFP4 = montoRecibido;
+                }
+            }
+
+
             int idCorrelativo = new CN_Venta().ObtenerCorrelativo();
             string numeroDocumento = string.Format("{0:00000}", idCorrelativo);
 
@@ -1481,60 +1603,34 @@ namespace CapaPresentacion
                 nroDocumento = numeroDocumento,
                 documentoCliente = txtDocumentoCliente.Text,
                 nombreCliente = txtNombreCliente.Text,
-                
                 idVendedor = (OpcionCombo)cboVendedores.SelectedItem == null ? _Venta.idVendedor : Convert.ToInt32(((OpcionCombo)cboVendedores.SelectedItem).Valor),
                 montoCambio = Convert.ToDecimal(txtCambioCliente.Text),
-                montoTotal = Convert.ToDecimal(txtTotalAPagar.Text) == 0 ? Convert.ToDecimal(txtTotalAPagarDolares.Text) : Convert.ToDecimal(txtTotalAPagar.Text),
-                formaPago = cboFormaPago.SelectedItem != null ? ((OpcionCombo)cboFormaPago.SelectedItem).Texto : "",
-                formaPago2 = cboFormaPago2.SelectedItem != null ? ((OpcionCombo)cboFormaPago2.SelectedItem).Texto : "",
-                formaPago3 = cboFormaPago3.SelectedItem != null ? ((OpcionCombo)cboFormaPago3.SelectedItem).Texto : "",
-                formaPago4 = cboFormaPago4.SelectedItem != null ? ((OpcionCombo)cboFormaPago4.SelectedItem).Texto : "",
+                montoTotal = montoPagoFP1+montoPagoFP2+montoPagoFP3+montoPagoFP4,
+                formaPago = formaPagoFP1,
+                formaPago2 = formaPagoFP2,
+                formaPago3 = formaPagoFP3,
+                formaPago4 = formaPagoFP4,
                 descuento = Convert.ToDecimal(txtDescuento.Text),
                 montoDescuento = Convert.ToDecimal(txtMontoDescuento.Text),
                 cotizacionDolar = txtCotizacion.Value,
-                montoFP1 = txtPagaCon.Text != string.Empty ? Convert.ToDecimal(txtPagaCon.Text) : 0,
-                montoFP2 = txtPagaCon2.Text != string.Empty ? Convert.ToDecimal(txtPagaCon2.Text) : 0,
-                montoFP3 = txtPagaCon3.Text != string.Empty ? Convert.ToDecimal(txtPagaCon3.Text) : 0,
-                montoFP4 = txtPagaCon4.Text != string.Empty ? Convert.ToDecimal(txtPagaCon4.Text) : 0,
-                montoPago = montoPagoFP1,
-                montoPagoFP2 = montoPagoFP2,
-                montoPagoFP3 = montoPagoFP3,
-                montoPagoFP4 = montoPagoFP4,
+                montoFP1 = montoPagoFP1,
+                montoFP2 = montoPagoFP2,
+                montoFP3 = montoPagoFP3,
+                montoFP4 = montoPagoFP4,
+                montoPago = montoRecibidoPagoFP1, // Sumar los montos de pago
+                montoPagoFP2 = montoRecibidoPagoFP2,
+                montoPagoFP3 = montoRecibidoPagoFP3,
+                montoPagoFP4 = montoRecibidoPagoFP4,
+                
                 observaciones = txtObservaciones.Text,
-                
-                
-                
-                
-               
             };
-
-       
-
         }
 
 
-        private decimal CalcularMontoPago()
-        {
-            decimal montoPago = 0;
 
-            montoPago += CalcularMontoFormaPago(cboFormaPago, txtPagaCon);
-            montoPago += CalcularMontoFormaPago(cboFormaPago2, txtPagaCon2);
-            montoPago += CalcularMontoFormaPago(cboFormaPago3, txtPagaCon3);
-            montoPago += CalcularMontoFormaPago(cboFormaPago4, txtPagaCon4);
+        
 
-            return montoPago;
-        }
-
-        private decimal CalcularMontoFormaPago(ComboBox cboFormaPago, NumericUpDown txtPagaCon)
-        {
-            if (cboFormaPago.SelectedItem != null && txtPagaCon.Value > 0)
-            {
-                FormaPago formaPago = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago.SelectedItem).Texto);
-                decimal monto = txtPagaCon.Value;
-                return monto - (monto * formaPago.porcentajeRetencion) / 100;
-            }
-            return 0;
-        }
+        
 
         private bool ProcesarVenta(Venta oVenta, DataTable detalleVenta, out string mensaje, out int idVentaGenerado)
         {
@@ -1655,51 +1751,53 @@ namespace CapaPresentacion
                 // Si todo está bien, calculamos el monto de descuento
                 txtMontoDescuento.Visible = true;
                 txtMontoDescuento.Enabled = false;
-                decimal montoDescuentoRecargo = (txtRestaPagar.Value * descuento) / 100;
+                decimal montoDescuentoRecargo = (txtTotalAPagar.Value * descuento) / 100;
                 txtMontoDescuento.Text = montoDescuentoRecargo.ToString("0.00");
 
-                // Lógica común para descuento y recargo
-                decimal totalAPagar = Convert.ToDecimal(txtTotalAPagar.Text);
-                decimal restaPagar = txtRestaPagar.Value;
+                // Determinar si es descuento o recargo
+                string tipoFormaPago = checkDescuento.Checked ? "DESCUENTO" : checkRecargo.Checked ? "RECARGO" : null;
 
-                // Aplicar descuento o recargo según el checkbox correspondiente
-                if (checkDescuento.Checked)
+                if (tipoFormaPago == null)
                 {
-                    totalAPagar -= montoDescuentoRecargo;
-                    if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                    {
-                        restaPagar -= montoDescuentoRecargo;
-                    }
-                    else
-                    {
-                        CalcularRestaAPagar();
-                    }
-                }
-                else if (checkRecargo.Checked)
-                {
-                    totalAPagar += montoDescuentoRecargo;
-                    if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                    {
-                        restaPagar += montoDescuentoRecargo;
-                    }
-                    else
-                    {
-                        CalcularRestaAPagar();
-                    }
+                    MessageBox.Show("Seleccione Descuento o Recargo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
-                // Asignamos los nuevos valores
-                txtTotalAPagar.Text = totalAPagar.ToString("0.00");
-                txtRestaPagar.Value = restaPagar;
+                // Agregar al DataGridView
+                dgvDataFormasPago.Rows.Add(null, tipoFormaPago, montoDescuentoRecargo, montoDescuentoRecargo, defaultImage);
 
-                // Desactivamos el descuento y mostramos el label
+                // Mensaje de confirmación
+                //MessageBox.Show($"{tipoFormaPago} agregado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar campos
                 txtDescuento.Enabled = false;
                 lblDescuento.Visible = true;
+
+                lblFormaPago.Visible = true;
+                lblImporte.Visible = true;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago.Visible = true;
+                txtPagaCon.ResetText();
+                txtPagaCon.Visible = true;
+                btnAgregarPago.Visible = true;
+                txtDescuento.Text = string.Empty;
+                txtMontoDescuento.Text = string.Empty;
+                txtDescuento.Visible = false;
+                txtMontoDescuento.Visible = false;
+                
+                lblPorcentaje.Visible = false;
+                lblDescuento.Visible = false;
+                checkDescuento.Visible = true;
+                checkRecargo.Visible = true;
+                checkDescuento.Checked = false;
+                checkRecargo.Checked = false;
+
 
                 // Recalcular el cambio
                 CalcularCambio();
             }
         }
+
 
 
         private void checkRecargo_CheckedChanged(object sender, EventArgs e)
@@ -1716,6 +1814,13 @@ namespace CapaPresentacion
                 txtMontoDescuento.Text = "0";
                 checkDescuento.Visible = false;
                 checkMonedaDolar.Visible = true;
+                lblFormaPago.Visible = false;
+                lblImporte.Visible = false;
+                cboFormaPago.SelectedIndex = -1;
+                cboFormaPago.Visible = false;
+                txtPagaCon.ResetText();
+                txtPagaCon.Visible = false;
+                btnAgregarPago.Visible = false;
             }
             else
             {
@@ -1727,12 +1832,15 @@ namespace CapaPresentacion
                 lblPorcentaje.Visible = false;
                 lblDescuento.Visible = false;
                 checkDescuento.Visible = true;
-
-                // Limpiar las opciones de forma de pago
+                lblFormaPago.Visible = true;
+                lblImporte.Visible = true;
                 cboFormaPago.SelectedIndex = -1;
-                cboFormaPago2.SelectedIndex = -1;
-                cboFormaPago3.SelectedIndex = -1;
-                cboFormaPago4.SelectedIndex = -1;
+                cboFormaPago.Visible = true;
+                txtPagaCon.ResetText();
+                txtPagaCon.Visible = true;
+                btnAgregarPago.Visible = true;
+
+
 
                 // Ocultar el control de moneda en dólares
                 checkMonedaDolar.Visible = false;
@@ -1879,54 +1987,52 @@ namespace CapaPresentacion
             decimal pagoTotal = 0;
             decimal pagoTotalDolares = 0;
 
-            // Lista de formas de pago y montos
-            var formasDePago = new[]
+            // Lista de formas de pago y montos extraídos del DataGridView
+            foreach (DataGridViewRow fila in dgvDataFormasPago.Rows)
             {
-        new { FormaPago = cboFormaPago.Text, Monto = txtPagaCon.Value },
-        new { FormaPago = cboFormaPago2.Text, Monto = txtPagaCon2.Value },
-        new { FormaPago = cboFormaPago3.Text, Monto = txtPagaCon3.Value },
-        new { FormaPago = cboFormaPago4.Text, Monto = txtPagaCon4.Value }
-    };
+                string formaPago = fila.Cells["formaPago"].Value.ToString();
+                decimal monto = Convert.ToDecimal(fila.Cells["importeFP"].Value);
 
-            foreach (var pago in formasDePago)
-            {
-                if (pago.FormaPago == "DOLAR" || pago.FormaPago == "DOLAR EFECTIVO")
+                if (formaPago == "DOLAR" || formaPago == "DOLAR EFECTIVO")
                 {
-                    pagoTotalDolares += pago.Monto;
-
-                    // Ajustamos solo el total en pesos con la conversión de dólares
-                    totalAPagar -= Math.Round(pago.Monto * cotizacionDolar, 2);
+                    pagoTotalDolares += monto;
+                    totalAPagar -= Math.Round(monto * cotizacionDolar, 2);
+                }
+                else if (formaPago == "RECARGO")
+                {
+                    if (checkMonedaDolar.Checked)
+                    {
+                        // Recargo en dólares
+                        totalAPagarDolares += monto;
+                        totalAPagar += Math.Round(monto * cotizacionDolar, 2);
+                    }
+                    else
+                    {
+                        // Recargo en pesos
+                        totalAPagar += monto;
+                        totalAPagarDolares += Math.Round(monto / cotizacionDolar, 2);
+                    }
                 }
                 else
                 {
-                    pagoTotal += pago.Monto;
+                    pagoTotal += monto;
+                    pagoTotalDolares += Math.Round(monto / cotizacionDolar, 2);
                 }
             }
 
-            // Aplicar descuentos y recargos
-            decimal montoAjuste = Convert.ToDecimal(txtMontoDescuento.Text);
-            if (checkDescuento.Checked)
-            {
-                if (checkMonedaDolar.Checked)
-                {
-                    totalAPagarDolares -= montoAjuste;
-                }
-                else
-                {
-                    totalAPagar -= montoAjuste;
-                }
-            }
-            if (checkRecargo.Checked)
-            {
-                if (checkMonedaDolar.Checked)
-                {
-                    totalAPagarDolares += montoAjuste;
-                }
-                else
-                {
-                    totalAPagar += montoAjuste;
-                }
-            }
+            // Aplicar descuentos
+            //decimal montoAjuste = Convert.ToDecimal(txtMontoDescuento.Text);
+            //if (checkDescuento.Checked)
+            //{
+            //    if (checkMonedaDolar.Checked)
+            //    {
+            //        totalAPagarDolares -= montoAjuste;
+            //    }
+            //    else
+            //    {
+            //        totalAPagar -= montoAjuste;
+            //    }
+            //}
 
             // Calcular el monto restante a pagar en cada moneda
             decimal restoAPagar = Math.Max(0, totalAPagar - pagoTotal);
@@ -1946,6 +2052,8 @@ namespace CapaPresentacion
             // Calcular el cambio
             CalcularCambio();
         }
+
+
 
 
 
@@ -2038,87 +2146,7 @@ namespace CapaPresentacion
             }
         }
 
-        private void txtPagaCon2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-            {
-                if (txtPagaCon2.Text != string.Empty) {
-
-                    //if (cboFormaPago2.Text == "DOLAR" || cboFormaPago2.Text == "DOLAR EFECTIVO")
-                    //{
-
-
-                    //    calcularTotalConDolares();
-                    //    txtRestaPagarDolares.Value = (txtRestaPagarDolares.Value - txtPagaCon2.Value);
-                    //}
-                    //else
-                    //{
-                    //    txtRestaPagar.Text = (Convert.ToDecimal(txtTotalAPagar.Text) - Convert.ToDecimal(txtPagaCon.Text)).ToString();
-
-
-                    //    CalcularCambio();
-                    //}
-
-                    CalcularRestaAPagar();
-                }
-               
-                
-            }
-
-            
-
-
-        }
-
-        private void txtPagaCon3_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (e.KeyData == Keys.Enter)
-            {
-                //if (txtPagaCon3.Text != string.Empty)
-                //{
-                //    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon3.Value).ToString("0.00");
-
-
-                //    CalcularCambio();
-
-                //}
-                //CalcularRestaAPagar();
-                //CalcularCambio();
-                //if (txtRestaPagar.Value == 0)
-                //{
-                //    txtRestaPagarDolares.Value = 0;
-                //}
-                CalcularRestaAPagar();
-            }
-
-            
-        }
-
-        private void txtPagaCon4_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (e.KeyData == Keys.Enter)
-            {
-                //if (txtPagaCon4.Text != string.Empty)
-                //{
-                //    txtRestaPagar.Text = (Convert.ToDecimal(txtRestaPagar.Text) - txtPagaCon4.Value).ToString("0.00");
-
-
-                //    CalcularCambio();
-
-                //}
-                //CalcularRestaAPagar();
-                //CalcularCambio();
-                //if (txtRestaPagar.Value == 0)
-                //{
-                //    txtRestaPagarDolares.Value = 0;
-                //}
-                CalcularRestaAPagar();
-            }
-
-            
-        }
+       
 
         private void txtRestaPagar_TextChanged(object sender, EventArgs e)
         {
@@ -2138,109 +2166,79 @@ namespace CapaPresentacion
 
 
         // Bandera para controlar si el pago parcial ya fue descontado
-        
+
+
+        private bool _recargoAplicado = false; // Bandera para controlar si ya se aplicó el recargo
 
         private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Recalcula el total original sin recargos ni descuentos
-            if(cboFormaPago.Text == "DOLAR EFECTIVO")
+            if (cboFormaPago.Text == "DOLAR EFECTIVO")
             {
                 txtTotalAPagarDolares.Visible = true;
                 lblTotalAPagarDolares.Visible = true;
                 lblRestaPagarDolares.Visible = true;
                 txtRestaPagarDolares.Visible = true;
-                
             }
 
-            if (cboFormaPago.SelectedIndex != -1)
+            if (cboFormaPago.SelectedIndex != -1 && !_recargoAplicado)
             {
                 string formaPago = cboFormaPago.Text;
                 decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(formaPago).porcentajeRecargo;
                 decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(formaPago).porcentajeDescuento;
 
                 decimal totalOriginalPesos = Convert.ToDecimal(txtTotalAPagar.Text);
-                decimal totalConRecargoPesos;
-
                 decimal totalOriginalDolares = Convert.ToDecimal(txtTotalAPagarDolares.Text);
-                decimal totalConDescuentoRecargoDolares = totalOriginalDolares;
+
+                decimal totalConRecargoPesos;
+                decimal totalConRecargoDolares;
 
                 decimal cotizacionActual;
                 if (decimal.TryParse(txtCotizacion.Text, out cotizacionActual) && cotizacionActual != cotizacionOriginal)
                 {
                     totalConRecargoPesos = totalOriginalPesos + (totalOriginalPesos * porcentajeRecargo);
-                    totalConDescuentoRecargoDolares = totalOriginalDolares + (totalOriginalDolares * porcentajeRecargo);
+                    totalConRecargoDolares = totalOriginalDolares + (totalOriginalDolares * porcentajeRecargo);
                 }
                 else
                 {
-                    totalConRecargoPesos = Math.Round(totalOriginalPesos + (totalOriginalPesos * porcentajeRecargo),2);
-                    totalConDescuentoRecargoDolares = totalOriginalDolares + (totalOriginalDolares * porcentajeRecargo);
+                    totalConRecargoPesos = Math.Round(totalOriginalPesos + (totalOriginalPesos * porcentajeRecargo), 2);
+                    totalConRecargoDolares = totalOriginalDolares + (totalOriginalDolares * porcentajeRecargo);
                 }
 
-                // Aplicar el pago parcial solo si no se ha descontado previamente
+                // Aplicar el pago parcial si existe y no se ha aplicado previamente
                 if (_pagoParcialGlobal != null && _pagoParcialGlobal.monto > 0 && !_pagoParcialAplicado)
                 {
-                   
-                        totalConDescuentoRecargoDolares -= _pagoParcialGlobal.monto;
-                   
-                        totalConRecargoPesos -= Math.Round(_pagoParcialGlobal.monto*cotizacionActual,2);
+                    if(_pagoParcialGlobal.moneda == "PESOS")
+                    {
+                        totalConRecargoDolares -= Math.Round(_pagoParcialGlobal.monto /cotizacionActual,2);
+                        totalConRecargoPesos -= _pagoParcialGlobal.monto;
+
+                    } else if(_pagoParcialGlobal.moneda == "DOLARES")
+                    {
+                        totalConRecargoDolares -= _pagoParcialGlobal.monto;
+                        totalConRecargoPesos -= Math.Round(_pagoParcialGlobal.monto * cotizacionActual, 2);
+                    }
                     
 
-                    // Marcar como aplicado
                     _pagoParcialAplicado = true;
                 }
 
-                decimal totalConRecargoYDescuentoPesos = totalConRecargoPesos - (totalConRecargoPesos * porcentajeDescuento);
-                decimal totalConRecargoYDescuentoDolares = totalConDescuentoRecargoDolares ;
+                decimal totalFinalPesos = totalConRecargoPesos - (totalConRecargoPesos * porcentajeDescuento);
+                decimal totalFinalDolares = totalConRecargoDolares;
 
                 // Mostrar los totales finales dependiendo de la forma de pago
-                
-                    txtRestaPagarDolares.Value = totalConRecargoYDescuentoDolares;
-                    txtRestaPagar.Value = totalConRecargoYDescuentoPesos;
-                    txtTotalAPagar.Value = totalConRecargoYDescuentoPesos;
-                    txtTotalAPagarDolares.Value = totalConRecargoYDescuentoDolares;
+                txtRestaPagarDolares.Value = totalFinalDolares;
+                txtRestaPagar.Value = totalFinalPesos;
+                txtTotalAPagar.Value = totalFinalPesos;
+                txtTotalAPagarDolares.Value = totalFinalDolares;
 
-
+                // Marcar que el recargo ya fue aplicado
+                _recargoAplicado = true;
             }
         }
 
 
 
-        private void cboFormaPago2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboFormaPago2.SelectedIndex != -1)
-            {
-                decimal porcentajeRecargo = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago2.Text).porcentajeRecargo;
-                decimal porcentajeDescuento = new CN_FormaPago().ObtenerFPPorDescripcion(cboFormaPago2.Text).porcentajeDescuento;
-                decimal totalRestoAPagar = txtRestaPagar.Value;
 
-                if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-                {
-
-
-
-                    decimal totalConRecargoYDescuento = (totalRestoAPagar + (totalRestoAPagar * porcentajeRecargo)) - ((totalRestoAPagar + (totalRestoAPagar * porcentajeRecargo)) * porcentajeDescuento);
-
-                    // Actualiza el TextBox con el nuevo total
-                    txtTotalAPagar.Text = totalConRecargoYDescuento.ToString("0.00");
-                    CalcularRestaAPagar();
-                }
-                if (checkDescuento.Checked)
-                {
-                    totalRestoAPagar = txtRestaPagar.Value - Convert.ToDecimal(txtMontoDescuento.Text);
-                    txtTotalAPagar.Text = totalRestoAPagar.ToString("0.00");
-                    CalcularRestaAPagar();
-
-                }
-
-                if (checkRecargo.Checked)
-                {
-                    totalRestoAPagar = txtRestaPagar.Value + Convert.ToDecimal(txtMontoDescuento.Text);
-                    txtTotalAPagar.Text = totalRestoAPagar.ToString("0.00");
-                    CalcularRestaAPagar();
-
-                }
-            }
-        }
 
         private void btnAgregarPagoParcial_Click(object sender, EventArgs e)
         {
@@ -2258,6 +2256,21 @@ namespace CapaPresentacion
 
                         txtMontoPagoParcial.Value = _pagoParcialGlobal.monto;
                         txtIdPagoParcial.Text = _pagoParcialGlobal.idPagoParcial.ToString();
+
+
+                        FormaPago formaPagoADescontarRetencion = new CN_FormaPago().ObtenerFPPorDescripcion(_pagoParcialGlobal.formaPago);
+                        decimal montoMenosRetencion = Math.Round(_pagoParcialGlobal.monto - (_pagoParcialGlobal.monto * formaPagoADescontarRetencion.porcentajeRetencion) / 100, 2);
+
+                        // Agregar el pago parcial al DataGridView de formas de pago
+                        dgvDataFormasPago.Rows.Add(
+                            9999,        // Columna ID Pago Parcial
+                            _pagoParcialGlobal.formaPago,                         // Columna Forma de Pago
+                            _pagoParcialGlobal.monto.ToString("N2"), // Columna Monto
+                            montoMenosRetencion               // Columna Moneda
+                        );
+
+                        // Opcional: recalcular el monto restante por pagar
+                        //CalcularRestaAPagar();
 
                         txtCodigoProducto.Select();
                     }
@@ -2280,6 +2293,7 @@ namespace CapaPresentacion
                 }
             }
         }
+
 
 
 
@@ -2310,5 +2324,120 @@ namespace CapaPresentacion
             txtMontoPagoParcial.Value = 0;
             txtIdPagoParcial.Text = "0";
         }
+
+        private void btnAgregarPago_Click(object sender, EventArgs e)
+        {
+            if (dgvData.Rows.Count <= 0)
+            {
+                MessageBox.Show("No hay Productos para aplicar le Pago", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (contadorFormasPago >= 4)
+            {
+                MessageBox.Show("Solo se pueden agregar hasta 4 formas de pago.", "Límite alcanzado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cboFormaPago.SelectedIndex == -1 || string.IsNullOrWhiteSpace(txtPagaCon.Text))
+            {
+                MessageBox.Show("Seleccione una forma de pago e ingrese un monto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!decimal.TryParse(txtPagaCon.Text, out decimal montoPago) || montoPago <= 0)
+            {
+                MessageBox.Show("Ingrese un monto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Obtener el elemento seleccionado como objeto OpcionCombo
+            var formaPagoSeleccionada = (OpcionCombo)cboFormaPago.SelectedItem;
+
+            if (formaPagoSeleccionada == null)
+            {
+                MessageBox.Show("Forma de pago seleccionada no válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int idFormaPago = (int)formaPagoSeleccionada.Valor;
+            string formaPago = formaPagoSeleccionada.Texto;
+
+
+
+            
+                FormaPago formaPagoADescontarRetencion = new CN_FormaPago().ObtenerFPPorDescripcion(((OpcionCombo)cboFormaPago.SelectedItem).Texto);
+                decimal montoMenosRetencion = Math.Round(montoPago- (montoPago* formaPagoADescontarRetencion.porcentajeRetencion)/100,2);
+                
+            
+
+            // Agregar al DataGridView con idFormaPago, formaPago y montoPago
+            dgvDataFormasPago.Rows.Add(idFormaPago, formaPago, montoPago, montoMenosRetencion,defaultImage);
+
+            // Incrementar el contador
+            contadorFormasPago++;
+
+            //// Actualizar los montos restantes según la forma de pago
+            //if (formaPago == "DOLAR" || formaPago == "DOLAR EFECTIVO")
+            //{
+            //    // Actualizar txtRestaPagarDolares y txtRestaPagar cuando la forma de pago es "dolar" o "dolar efectivo"
+            //    decimal montoRestanteDolares = decimal.Parse(txtRestaPagarDolares.Text) - montoPago;
+            //    txtRestaPagarDolares.Text = montoRestanteDolares.ToString("F2");
+
+            //    // Actualizar txtRestaPagar con el valor en moneda local
+            //    decimal montoRestanteLocal = decimal.Parse(txtRestaPagar.Text) - (montoPago * decimal.Parse(txtCotizacion.Text));
+            //    txtRestaPagar.Text = montoRestanteLocal.ToString("F2");
+            //}
+            //else
+            //{
+            //    // Actualizar txtRestaPagar con el valor de txtPagaCon para otras formas de pago
+            //    decimal montoRestanteLocal = decimal.Parse(txtRestaPagar.Text) - montoPago;
+            //    txtRestaPagar.Text = montoRestanteLocal.ToString("F2");
+
+            //    // Actualizar txtRestaPagarDolares con el valor convertido a dólares
+            //    decimal montoRestanteDolares = decimal.Parse(txtRestaPagarDolares.Text) - (montoPago / decimal.Parse(txtCotizacion.Text));
+            //    txtRestaPagarDolares.Text = montoRestanteDolares.ToString("F2");
+            //}
+
+            // Limpiar campos
+            cboFormaPago.SelectedIndex = -1;
+            txtPagaCon.ResetText();
+
+            // Mensaje si se alcanzó el límite
+            if (contadorFormasPago == 4)
+            {
+                MessageBox.Show("Se han agregado las 4 formas de pago permitidas.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dgvDataFormasPago_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            CalcularRestaAPagar();
+        }
+
+        private void dgvDataFormasPago_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verificar que se haga clic en la columna del botón de eliminar y que la fila sea válida
+            if (dgvDataFormasPago.Columns[e.ColumnIndex].Name == "btnEliminarPago")
+            {
+                int indice = e.RowIndex;
+
+                // Verificar que el índice de fila sea válido (es decir, no -1)
+                if (indice >= 0 && indice < dgvDataFormasPago.Rows.Count)
+                {
+                    // Eliminar la fila de dgvDataFormasPago
+                    dgvDataFormasPago.Rows.RemoveAt(indice);
+
+                    // Actualizar la resta a pagar después de eliminar la fila
+                    CalcularRestaAPagar();
+                }
+                else
+                {
+                    MessageBox.Show("Índice de fila no válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        
     }
-    }
+}

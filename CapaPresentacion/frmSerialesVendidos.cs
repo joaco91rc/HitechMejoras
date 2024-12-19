@@ -21,6 +21,11 @@ namespace CapaPresentacion
         }
         private void CargarSerialVendidos()
         {
+            if (GlobalSettings.RolUsuario != 1)
+            {
+                dgvData.Columns["idProveedor"].Visible = false; // Oculta la columna idProveedor
+                dgvData.Columns["proveedor"].Visible = false; // Oculta la columna NombreProveedor
+            }
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
             var listaProductosSerializadosVendidos = new CN_Producto().ListarProductosVendidos(GlobalSettings.SucursalId);
             foreach (ProductoDetalle item in listaProductosSerializadosVendidos)
@@ -33,6 +38,8 @@ namespace CapaPresentacion
             item.fechaEgreso,
             item.codigo,
             item.nombre,
+            item.idProveedor,
+            item.NombreProveedor,
             item.marca, // Marca
             item.modelo, // Modelo
             item.color, // Color
@@ -52,6 +59,11 @@ namespace CapaPresentacion
 
         private void CargarSerialVendidosTodosLocales()
         {
+            if (GlobalSettings.RolUsuario != 1)
+            {
+                dgvData.Columns["idProveedor"].Visible = false; // Oculta la columna idProveedor
+                dgvData.Columns["proveedor"].Visible = false; // Oculta la columna NombreProveedor
+            }
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
             var listaProductosSerializadosVendidos = new CN_Producto().ListarProductosVendidosTodosLocales();
             foreach (ProductoDetalle item in listaProductosSerializadosVendidos)
@@ -64,6 +76,8 @@ namespace CapaPresentacion
             item.fechaEgreso,
             item.codigo,
             item.nombre,
+            item.idProveedor,
+            item.NombreProveedor,
             item.marca, // Marca
             item.modelo, // Modelo
             item.color, // Color

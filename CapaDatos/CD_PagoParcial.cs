@@ -336,7 +336,8 @@ namespace CapaDatos
                                     numeroVenta = dr["NumeroVenta"].ToString(),
                                     productoReservado = dr["productoReservado"].ToString(),
                                     vendedor = dr["vendedor"].ToString(),
-                                    moneda = dr["moneda"].ToString()
+                                    moneda = dr["moneda"].ToString(),
+                                    formaPago = dr["formaPago"].ToString(),
                                 });
                             }
                         }

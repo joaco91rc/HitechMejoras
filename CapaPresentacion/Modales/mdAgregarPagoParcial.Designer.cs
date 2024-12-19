@@ -48,6 +48,7 @@ namespace CapaPresentacion.Modales
             this.moneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarModal)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +75,8 @@ namespace CapaPresentacion.Modales
             this.montoSeña,
             this.moneda,
             this.idCliente,
-            this.nombreCliente});
+            this.nombreCliente,
+            this.formaPago});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -267,6 +269,13 @@ namespace CapaPresentacion.Modales
             this.nombreCliente.Name = "nombreCliente";
             this.nombreCliente.ReadOnly = true;
             // 
+            // formaPago
+            // 
+            this.formaPago.HeaderText = "FORMA PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            this.formaPago.Visible = false;
+            // 
             // mdAgregarPagoParcial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,5 +321,6 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn moneda;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn formaPago;
     }
 }

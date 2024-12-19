@@ -1,5 +1,6 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using CapaPresentacion.Modales;
 using CapaPresentacion.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,12 @@ namespace CapaPresentacion
 
         private void CargarGrillaEnStockPorLocal(int idLocal)
         {
+            if (GlobalSettings.RolUsuario != 1)
+            {
+                dgvData.Columns["idProveedor"].Visible = false; // Oculta la columna idProveedor
+                dgvData.Columns["proveedor"].Visible = false; // Oculta la columna NombreProveedor
+            }
+
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
             var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberPorLocalDisponibles(idLocal);
             foreach (ProductoDetalle item in listaProductosSerializados)
@@ -78,6 +85,8 @@ namespace CapaPresentacion
             item.fecha,
             item.codigo,
             item.nombre,
+            item.idProveedor,
+            item.NombreProveedor,
             item.marca, // Marca
             item.modelo, // Modelo
             item.color, // Color
@@ -97,6 +106,11 @@ namespace CapaPresentacion
 
         private void CargarGrilla()
         {
+            if (GlobalSettings.RolUsuario != 1)
+            {
+                dgvData.Columns["idProveedor"].Visible = false; // Oculta la columna idProveedor
+                dgvData.Columns["proveedor"].Visible = false; // Oculta la columna NombreProveedor
+            }
             dgvData.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
             var listaProductosSerializados = new CN_Producto().ListarProductosConSerialNumberEnStockTodosLocales();
             foreach (ProductoDetalle item in listaProductosSerializados)
@@ -152,7 +166,9 @@ namespace CapaPresentacion
                 modelo = dgvData.Rows[indice].Cells["modelo"].Value.ToString(),
                 marca = dgvData.Rows[indice].Cells["marca"].Value.ToString(),
                 idNegocio = Convert.ToInt32(dgvData.Rows[indice].Cells["idNegocio"].Value),
-                fecha = Convert.ToDateTime(dgvData.Rows[indice].Cells["fecha"].Value)
+                fecha = Convert.ToDateTime(dgvData.Rows[indice].Cells["fecha"].Value),
+                idProveedor = Convert.ToInt32(dgvData.Rows[indice].Cells["idProveedor"].Value),
+                NombreProveedor = dgvData.Rows[indice].Cells["proveedor"].Value.ToString(),
             };
 
             // Acción si se hace clic en el botón "Editar"
@@ -169,6 +185,8 @@ namespace CapaPresentacion
                             dgvData.Rows[indice].Cells["color"].Value = productoDetalle.color;
                             dgvData.Rows[indice].Cells["modelo"].Value = productoDetalle.modelo;
                             dgvData.Rows[indice].Cells["marca"].Value = productoDetalle.marca;
+                            dgvData.Rows[indice].Cells["idProveedor"].Value = productoDetalle.idProveedor;
+                            dgvData.Rows[indice].Cells["proveedor"].Value = productoDetalle.NombreProveedor;
 
                             foreach (DataGridViewCell cell in dgvData.Rows[indice].Cells)
                             {
@@ -347,7 +365,36 @@ namespace CapaPresentacion
             loading = false; // Indicar que la carga ha finalizado
         }
 
+        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verificar si se hizo doble clic en la columna "proveedor"
+            if (e.RowIndex >= 0 && dgvData.Columns[e.ColumnIndex].Name == "proveedor")
+            {
+                // Finalizar el modo de edición antes de abrir el modal
+                dgvData.EndEdit();
 
+                // Abrir el modal mdProveedor
+                using (mdProveedor modalProveedor = new mdProveedor())
+                {
+                    var result = modalProveedor.ShowDialog(); // Mostrar el modal y esperar el resultado
 
+                    // Si se seleccionó un proveedor y se cerró el modal con OK
+                    if (result == DialogResult.OK && modalProveedor._Proveedor != null)
+                    {
+                        // Finalizar edición y actualizar valores
+                        dgvData.Rows[e.RowIndex].Cells["proveedor"].Value = modalProveedor._Proveedor.razonSocial;
+                        dgvData.Rows[e.RowIndex].Cells["idProveedor"].Value = modalProveedor._Proveedor.idProveedor;
+
+                        // Actualizar visualmente el DataGridView
+                        dgvData.RefreshEdit();
+                    }
+                }
+            }
+        }
+
+        private void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

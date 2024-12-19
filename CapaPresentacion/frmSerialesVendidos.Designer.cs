@@ -29,24 +29,10 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaEgreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numeroVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -65,6 +51,22 @@ namespace CapaPresentacion
             this.label5 = new System.Windows.Forms.Label();
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
+            this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaEgreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numeroVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gbRegistrarCompra.SuspendLayout();
@@ -79,15 +81,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProductoDetalle,
@@ -96,6 +98,8 @@ namespace CapaPresentacion
             this.fechaEgreso,
             this.codigo,
             this.nombre,
+            this.idProveedor,
+            this.proveedor,
             this.marca,
             this.modelo,
             this.color,
@@ -105,115 +109,24 @@ namespace CapaPresentacion
             this.numeroVenta,
             this.nombreLocal});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 148);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(1320, 549);
             this.dgvData.TabIndex = 117;
-            // 
-            // idProductoDetalle
-            // 
-            this.idProductoDetalle.HeaderText = "ID PRODUCTO DETALLE";
-            this.idProductoDetalle.Name = "idProductoDetalle";
-            this.idProductoDetalle.ReadOnly = true;
-            this.idProductoDetalle.Visible = false;
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.Visible = false;
-            // 
-            // fecha
-            // 
-            this.fecha.HeaderText = "FECHA INGRESO";
-            this.fecha.Name = "fecha";
-            this.fecha.Width = 150;
-            // 
-            // fechaEgreso
-            // 
-            this.fechaEgreso.HeaderText = "FECHA EGRESO";
-            this.fechaEgreso.Name = "fechaEgreso";
-            this.fechaEgreso.Width = 150;
-            // 
-            // codigo
-            // 
-            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.codigo.HeaderText = "CODIGO";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 80;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.nombre.HeaderText = "NOMBRE";
-            this.nombre.MinimumWidth = 250;
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            this.nombre.Width = 400;
-            // 
-            // marca
-            // 
-            this.marca.HeaderText = "MARCA";
-            this.marca.Name = "marca";
-            this.marca.Width = 200;
-            // 
-            // modelo
-            // 
-            this.modelo.HeaderText = "MODELO";
-            this.modelo.Name = "modelo";
-            this.modelo.Width = 200;
-            // 
-            // color
-            // 
-            this.color.HeaderText = "COLOR";
-            this.color.Name = "color";
-            this.color.Width = 150;
-            // 
-            // serialNumber
-            // 
-            this.serialNumber.HeaderText = "SERIAL NUMBER (S/N)";
-            this.serialNumber.Name = "serialNumber";
-            this.serialNumber.Width = 200;
-            // 
-            // idNegocio
-            // 
-            this.idNegocio.HeaderText = "ID NEGOCIO";
-            this.idNegocio.Name = "idNegocio";
-            this.idNegocio.Visible = false;
-            // 
-            // idVenta
-            // 
-            this.idVenta.HeaderText = "ID VENTA";
-            this.idVenta.Name = "idVenta";
-            this.idVenta.Visible = false;
-            // 
-            // numeroVenta
-            // 
-            this.numeroVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.numeroVenta.HeaderText = "NUMERO VENTA";
-            this.numeroVenta.MinimumWidth = 150;
-            this.numeroVenta.Name = "numeroVenta";
-            this.numeroVenta.Width = 150;
-            // 
-            // nombreLocal
-            // 
-            this.nombreLocal.HeaderText = "LOCAL";
-            this.nombreLocal.Name = "nombreLocal";
             // 
             // btnLimpiar
             // 
@@ -485,6 +398,109 @@ namespace CapaPresentacion
             this.gbBusqueda.TabStop = false;
             this.gbBusqueda.Text = "Busqueda";
             // 
+            // idProductoDetalle
+            // 
+            this.idProductoDetalle.HeaderText = "ID PRODUCTO DETALLE";
+            this.idProductoDetalle.Name = "idProductoDetalle";
+            this.idProductoDetalle.ReadOnly = true;
+            this.idProductoDetalle.Visible = false;
+            // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.Visible = false;
+            // 
+            // fecha
+            // 
+            this.fecha.HeaderText = "FECHA INGRESO";
+            this.fecha.Name = "fecha";
+            this.fecha.Width = 150;
+            // 
+            // fechaEgreso
+            // 
+            this.fechaEgreso.HeaderText = "FECHA EGRESO";
+            this.fechaEgreso.Name = "fechaEgreso";
+            this.fechaEgreso.Width = 150;
+            // 
+            // codigo
+            // 
+            this.codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.codigo.HeaderText = "CODIGO";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            this.codigo.Width = 80;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.nombre.HeaderText = "NOMBRE";
+            this.nombre.MinimumWidth = 250;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            this.nombre.Width = 400;
+            // 
+            // idProveedor
+            // 
+            this.idProveedor.HeaderText = "ID PROVEEDOR";
+            this.idProveedor.Name = "idProveedor";
+            this.idProveedor.Visible = false;
+            // 
+            // proveedor
+            // 
+            this.proveedor.HeaderText = "PROVEEDOR";
+            this.proveedor.Name = "proveedor";
+            this.proveedor.Width = 120;
+            // 
+            // marca
+            // 
+            this.marca.HeaderText = "MARCA";
+            this.marca.Name = "marca";
+            this.marca.Width = 200;
+            // 
+            // modelo
+            // 
+            this.modelo.HeaderText = "MODELO";
+            this.modelo.Name = "modelo";
+            this.modelo.Width = 200;
+            // 
+            // color
+            // 
+            this.color.HeaderText = "COLOR";
+            this.color.Name = "color";
+            this.color.Width = 150;
+            // 
+            // serialNumber
+            // 
+            this.serialNumber.HeaderText = "SERIAL NUMBER (S/N)";
+            this.serialNumber.Name = "serialNumber";
+            this.serialNumber.Width = 200;
+            // 
+            // idNegocio
+            // 
+            this.idNegocio.HeaderText = "ID NEGOCIO";
+            this.idNegocio.Name = "idNegocio";
+            this.idNegocio.Visible = false;
+            // 
+            // idVenta
+            // 
+            this.idVenta.HeaderText = "ID VENTA";
+            this.idVenta.Name = "idVenta";
+            this.idVenta.Visible = false;
+            // 
+            // numeroVenta
+            // 
+            this.numeroVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.numeroVenta.HeaderText = "NUMERO VENTA";
+            this.numeroVenta.MinimumWidth = 150;
+            this.numeroVenta.Name = "numeroVenta";
+            this.numeroVenta.Width = 150;
+            // 
+            // nombreLocal
+            // 
+            this.nombreLocal.HeaderText = "LOCAL";
+            this.nombreLocal.Name = "nombreLocal";
+            // 
             // frmSerialesVendidos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -524,20 +540,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label10;
         private FontAwesome.Sharp.IconButton btnExportarExcel;
         private System.Windows.Forms.CheckBox checkProductosTodosLocales;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaEgreso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn marca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn modelo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn color;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn numeroVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreLocal;
         private System.Windows.Forms.GroupBox gbRegistrarCompra;
         private System.Windows.Forms.DateTimePicker dtpFin;
         private FontAwesome.Sharp.IconButton btnFiltrarFechas;
@@ -546,5 +548,21 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtpInicio;
         private System.Windows.Forms.GroupBox gbBusqueda;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechaEgreso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProveedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn proveedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn marca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modelo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn color;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numeroVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreLocal;
     }
 }

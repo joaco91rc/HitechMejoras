@@ -29,9 +29,9 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
             this.btnBuscar = new FontAwesome.Sharp.IconButton();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -42,11 +42,16 @@ namespace CapaPresentacion
             this.label10 = new System.Windows.Forms.Label();
             this.btnExportarExcel = new FontAwesome.Sharp.IconButton();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.checkProductosTodosLocales = new System.Windows.Forms.CheckBox();
+            this.cboLocales = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,9 +61,6 @@ namespace CapaPresentacion
             this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEditar = new System.Windows.Forms.DataGridViewImageColumn();
             this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.checkProductosTodosLocales = new System.Windows.Forms.CheckBox();
-            this.cboLocales = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
@@ -193,6 +195,7 @@ namespace CapaPresentacion
             this.btnExportarExcel.TabIndex = 114;
             this.btnExportarExcel.Text = "Exportar";
             this.btnExportarExcel.UseVisualStyleBackColor = false;
+            this.btnExportarExcel.Click += new System.EventHandler(this.btnExportarExcel_Click);
             // 
             // dgvData
             // 
@@ -202,15 +205,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProductoDetalle,
@@ -218,6 +221,8 @@ namespace CapaPresentacion
             this.fecha,
             this.codigo,
             this.nombre,
+            this.idProveedor,
+            this.proveedor,
             this.marca,
             this.modelo,
             this.color,
@@ -228,25 +233,64 @@ namespace CapaPresentacion
             this.btnEditar,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 168);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(1320, 529);
             this.dgvData.TabIndex = 106;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
+            // 
+            // checkProductosTodosLocales
+            // 
+            this.checkProductosTodosLocales.AutoSize = true;
+            this.checkProductosTodosLocales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.checkProductosTodosLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkProductosTodosLocales.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkProductosTodosLocales.ForeColor = System.Drawing.Color.ForestGreen;
+            this.checkProductosTodosLocales.Location = new System.Drawing.Point(1043, 86);
+            this.checkProductosTodosLocales.Name = "checkProductosTodosLocales";
+            this.checkProductosTodosLocales.Size = new System.Drawing.Size(248, 21);
+            this.checkProductosTodosLocales.TabIndex = 115;
+            this.checkProductosTodosLocales.Text = "Mostrar Productos todos los Locales";
+            this.checkProductosTodosLocales.UseVisualStyleBackColor = false;
+            this.checkProductosTodosLocales.CheckedChanged += new System.EventHandler(this.checkProductosEnStock_CheckedChanged);
+            // 
+            // cboLocales
+            // 
+            this.cboLocales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboLocales.FormattingEnabled = true;
+            this.cboLocales.Location = new System.Drawing.Point(864, 87);
+            this.cboLocales.Name = "cboLocales";
+            this.cboLocales.Size = new System.Drawing.Size(157, 21);
+            this.cboLocales.TabIndex = 120;
+            this.cboLocales.SelectedIndexChanged += new System.EventHandler(this.cboLocales_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label1.Location = new System.Drawing.Point(744, 87);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 17);
+            this.label1.TabIndex = 121;
+            this.label1.Text = "Filtrar  por Local:";
             // 
             // idProductoDetalle
             // 
@@ -284,6 +328,18 @@ namespace CapaPresentacion
             this.nombre.Name = "nombre";
             this.nombre.ReadOnly = true;
             this.nombre.Width = 400;
+            // 
+            // idProveedor
+            // 
+            this.idProveedor.HeaderText = "ID PROVEEDOR";
+            this.idProveedor.Name = "idProveedor";
+            this.idProveedor.Visible = false;
+            // 
+            // proveedor
+            // 
+            this.proveedor.HeaderText = "PROVEEDOR";
+            this.proveedor.Name = "proveedor";
+            this.proveedor.Width = 120;
             // 
             // marca
             // 
@@ -340,44 +396,6 @@ namespace CapaPresentacion
             this.btnEliminar.HeaderText = "";
             this.btnEliminar.Name = "btnEliminar";
             // 
-            // checkProductosTodosLocales
-            // 
-            this.checkProductosTodosLocales.AutoSize = true;
-            this.checkProductosTodosLocales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.checkProductosTodosLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkProductosTodosLocales.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkProductosTodosLocales.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkProductosTodosLocales.Location = new System.Drawing.Point(1043, 86);
-            this.checkProductosTodosLocales.Name = "checkProductosTodosLocales";
-            this.checkProductosTodosLocales.Size = new System.Drawing.Size(248, 21);
-            this.checkProductosTodosLocales.TabIndex = 115;
-            this.checkProductosTodosLocales.Text = "Mostrar Productos todos los Locales";
-            this.checkProductosTodosLocales.UseVisualStyleBackColor = false;
-            this.checkProductosTodosLocales.CheckedChanged += new System.EventHandler(this.checkProductosEnStock_CheckedChanged);
-            // 
-            // cboLocales
-            // 
-            this.cboLocales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboLocales.FormattingEnabled = true;
-            this.cboLocales.Location = new System.Drawing.Point(864, 87);
-            this.cboLocales.Name = "cboLocales";
-            this.cboLocales.Size = new System.Drawing.Size(157, 21);
-            this.cboLocales.TabIndex = 120;
-            this.cboLocales.SelectedIndexChanged += new System.EventHandler(this.cboLocales_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label1.Location = new System.Drawing.Point(744, 87);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 17);
-            this.label1.TabIndex = 121;
-            this.label1.Text = "Filtrar  por Local:";
-            // 
             // frmProductosSerializados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -419,11 +437,15 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnExportarExcel;
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.CheckBox checkProductosTodosLocales;
+        private System.Windows.Forms.ComboBox cboLocales;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProveedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn proveedor;
         private System.Windows.Forms.DataGridViewTextBoxColumn marca;
         private System.Windows.Forms.DataGridViewTextBoxColumn modelo;
         private System.Windows.Forms.DataGridViewTextBoxColumn color;
@@ -433,7 +455,5 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn idNegocio;
         private System.Windows.Forms.DataGridViewImageColumn btnEditar;
         private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
-        private System.Windows.Forms.ComboBox cboLocales;
-        private System.Windows.Forms.Label label1;
     }
 }

@@ -87,7 +87,7 @@ namespace CapaPresentacion
                     string nombreProducto = txtProducto.Text;
                     DateTime fechaActual = DateTime.Now;
                     // Agregar la fila al DataGridView con cantidad = 1
-                    dgvData.Rows.Add(idProducto,fechaActual, nombreProducto, 1);
+                    dgvData.Rows.Add(idProducto,fechaActual, nombreProducto,"","" ,1);
                 }
                 StockProducto -=   Convert.ToInt32(txtCantidad.Value);
                 txtStock.Text = StockProducto.ToString();
@@ -130,14 +130,47 @@ namespace CapaPresentacion
                     // Asegurarse de que la fila no sea nueva (la última fila es generalmente una fila nueva)
                     if (!row.IsNewRow)
                     {
+                        // Validar campos obligatorios
+                        if (row.Cells["fecha"].Value == null || string.IsNullOrWhiteSpace(row.Cells["fecha"].Value.ToString()))
+                        {
+                            MessageBox.Show("El campo 'Fecha' es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        if (row.Cells["idProducto"].Value == null || string.IsNullOrWhiteSpace(row.Cells["idProducto"].Value.ToString()))
+                        {
+                            MessageBox.Show("El campo 'Producto' es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        if (row.Cells["idProveedor"].Value == null || string.IsNullOrWhiteSpace(row.Cells["idProveedor"].Value.ToString()))
+                        {
+                            MessageBox.Show("El campo 'Proveedor' es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        if (row.Cells["cantidad"].Value == null || string.IsNullOrWhiteSpace(row.Cells["cantidad"].Value.ToString()) ||
+                            !int.TryParse(row.Cells["cantidad"].Value.ToString(), out int cantidad) || cantidad <= 0)
+                        {
+                            MessageBox.Show("El campo 'Cantidad' es obligatorio y debe ser mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        if (row.Cells["serialNumber"].Value == null || string.IsNullOrWhiteSpace(row.Cells["serialNumber"].Value.ToString()))
+                        {
+                            MessageBox.Show("El campo 'Serial (S/N)' es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
                         // Obtener los valores de las columnas necesarias
                         int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                         string numeroSerie = row.Cells["serialNumber"].Value.ToString();
-                        string color = row.Cells["color"].Value.ToString();
-                        string modelo = row.Cells["modelo"].Value.ToString();
-                        string marca = row.Cells["marca"].Value.ToString();
+                        string color = row.Cells["color"].Value?.ToString();
+                        string modelo = row.Cells["modelo"].Value?.ToString();
+                        string marca = row.Cells["marca"].Value?.ToString();
                         DateTime fecha = Convert.ToDateTime(row.Cells["fecha"].Value);
                         int idNegocio = GlobalSettings.SucursalId; // Asegúrate de que esta columna exista
+                        int idProveedor = Convert.ToInt32(row.Cells["idProveedor"].Value);
 
                         // Crear un objeto de ProductoDetalle
                         var productoDetalle = new ProductoDetalle
@@ -149,7 +182,8 @@ namespace CapaPresentacion
                             modelo = modelo,
                             marca = marca,
                             idNegocio = idNegocio,
-                            fechaEgreso = null
+                            fechaEgreso = null,
+                            idProveedor = idProveedor
                         };
 
                         // Llamar al método de la capa de negocio para registrar el número de serie
@@ -159,17 +193,16 @@ namespace CapaPresentacion
                         if (idProductoDetalle == 0)
                         {
                             // Mostrar mensaje de error si no se pudo registrar
-                            MessageBox.Show($"Error al registrar el número de serie: {mensaje}");
-                        }
-                        else
-                        {
-                            // Si todo salió bien, puedes mostrar un mensaje de éxito
-                            MessageBox.Show("Números de serie registrados exitosamente.");
+                            MessageBox.Show($"Error al registrar el número de serie: {mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
                     }
                 }
 
-                
+                // Si todo salió bien
+                MessageBox.Show("Números de serie registrados exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar el DataGridView y los controles
                 dgvData.Rows.Clear();
                 txtIdProducto.Text = "0";
                 txtCodigoProducto.Text = string.Empty;
@@ -180,9 +213,38 @@ namespace CapaPresentacion
             }
             else
             {
-                MessageBox.Show("No hay filas para guardar.");
+                MessageBox.Show("No hay filas para guardar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
+        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verificar si se hizo doble clic en la columna "proveedor"
+            if (e.RowIndex >= 0 && dgvData.Columns[e.ColumnIndex].Name == "proveedor")
+            {
+                // Finalizar el modo de edición antes de abrir el modal
+                dgvData.EndEdit();
+
+                // Abrir el modal mdProveedor
+                using (mdProveedor modalProveedor = new mdProveedor())
+                {
+                    var result = modalProveedor.ShowDialog(); // Mostrar el modal y esperar el resultado
+
+                    // Si se seleccionó un proveedor y se cerró el modal con OK
+                    if (result == DialogResult.OK && modalProveedor._Proveedor != null)
+                    {
+                        // Finalizar edición y actualizar valores
+                        dgvData.Rows[e.RowIndex].Cells["proveedor"].Value = modalProveedor._Proveedor.razonSocial;
+                        dgvData.Rows[e.RowIndex].Cells["idProveedor"].Value = modalProveedor._Proveedor.idProveedor;
+
+                        // Actualizar visualmente el DataGridView
+                        dgvData.RefreshEdit();
+                    }
+                }
+            }
+        }
+
 
     }
 }
