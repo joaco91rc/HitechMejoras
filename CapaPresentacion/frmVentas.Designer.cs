@@ -43,14 +43,6 @@ namespace CapaPresentacion
             this.label8 = new System.Windows.Forms.Label();
             this.btnRegistrarCompra = new FontAwesome.Sharp.IconButton();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
             this.txtIdProducto = new System.Windows.Forms.TextBox();
             this.txtCambioCliente = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -106,13 +98,6 @@ namespace CapaPresentacion
             this.lblTotalAPagarDolares = new System.Windows.Forms.Label();
             this.checkMonedaDolar = new System.Windows.Forms.CheckBox();
             this.dgvSeriales = new System.Windows.Forms.DataGridView();
-            this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idProdSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtSerializable = new System.Windows.Forms.TextBox();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -131,6 +116,26 @@ namespace CapaPresentacion
             this.importeFP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.montoRecibido = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEliminarPago = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idProductoDetalle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProdSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.marca2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.modelo2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.color2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNumber2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numeroSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idProductoDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
             this.gbRegistrarCompra.SuspendLayout();
@@ -229,11 +234,16 @@ namespace CapaPresentacion
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
             this.producto,
+            this.marca,
+            this.modelo,
+            this.color,
+            this.numeroSerie,
             this.precio,
             this.precioLista,
             this.cantidad,
             this.subTotal,
             this.prodSerializable,
+            this.idProductoDetalle,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -254,64 +264,9 @@ namespace CapaPresentacion
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(717, 260);
+            this.dgvData.Size = new System.Drawing.Size(1159, 260);
             this.dgvData.TabIndex = 77;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
-            // producto
-            // 
-            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.producto.HeaderText = "PRODUCTO";
-            this.producto.Name = "producto";
-            this.producto.ReadOnly = true;
-            // 
-            // precio
-            // 
-            this.precio.HeaderText = "PRECIO";
-            this.precio.Name = "precio";
-            this.precio.ReadOnly = true;
-            // 
-            // precioLista
-            // 
-            this.precioLista.HeaderText = "PRECIO LISTA";
-            this.precioLista.Name = "precioLista";
-            this.precioLista.ReadOnly = true;
-            this.precioLista.Width = 150;
-            // 
-            // cantidad
-            // 
-            this.cantidad.HeaderText = "CANTIDAD";
-            this.cantidad.Name = "cantidad";
-            this.cantidad.ReadOnly = true;
-            // 
-            // subTotal
-            // 
-            this.subTotal.HeaderText = "SUB TOTAL";
-            this.subTotal.Name = "subTotal";
-            this.subTotal.ReadOnly = true;
-            // 
-            // prodSerializable
-            // 
-            this.prodSerializable.HeaderText = "SERIALIZABLE";
-            this.prodSerializable.Name = "prodSerializable";
-            this.prodSerializable.ReadOnly = true;
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.HeaderText = "";
-            this.btnEliminar.Image = global::CapaPresentacion.Properties.Resources.trash;
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.ReadOnly = true;
-            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.btnEliminar.Width = 25;
             // 
             // txtIdProducto
             // 
@@ -1067,13 +1022,13 @@ namespace CapaPresentacion
             this.dgvSeriales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSeriales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSeriales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idProductoDetalle,
+            this.idProductoDetalle2,
             this.idProdSerial,
             this.nombre,
-            this.marca,
-            this.modelo,
-            this.color,
-            this.serialNumber});
+            this.marca2,
+            this.modelo2,
+            this.color2,
+            this.serialNumber2});
             this.dgvSeriales.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -1084,7 +1039,7 @@ namespace CapaPresentacion
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSeriales.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvSeriales.GridColor = System.Drawing.Color.White;
-            this.dgvSeriales.Location = new System.Drawing.Point(743, 211);
+            this.dgvSeriales.Location = new System.Drawing.Point(1185, 211);
             this.dgvSeriales.MultiSelect = false;
             this.dgvSeriales.Name = "dgvSeriales";
             this.dgvSeriales.ReadOnly = true;
@@ -1093,59 +1048,8 @@ namespace CapaPresentacion
             this.dgvSeriales.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvSeriales.RowTemplate.Height = 28;
             this.dgvSeriales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSeriales.Size = new System.Drawing.Size(615, 260);
+            this.dgvSeriales.Size = new System.Drawing.Size(155, 260);
             this.dgvSeriales.TabIndex = 124;
-            // 
-            // idProductoDetalle
-            // 
-            this.idProductoDetalle.HeaderText = "ID PROD DETALLE";
-            this.idProductoDetalle.Name = "idProductoDetalle";
-            this.idProductoDetalle.ReadOnly = true;
-            this.idProductoDetalle.Visible = false;
-            // 
-            // idProdSerial
-            // 
-            this.idProdSerial.HeaderText = "ID PRODUCTO";
-            this.idProdSerial.Name = "idProdSerial";
-            this.idProdSerial.ReadOnly = true;
-            this.idProdSerial.Visible = false;
-            // 
-            // nombre
-            // 
-            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombre.HeaderText = "PRODUCTO";
-            this.nombre.MinimumWidth = 100;
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            this.nombre.Visible = false;
-            // 
-            // marca
-            // 
-            this.marca.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.marca.HeaderText = "MARCA";
-            this.marca.Name = "marca";
-            this.marca.ReadOnly = true;
-            this.marca.Width = 130;
-            // 
-            // modelo
-            // 
-            this.modelo.HeaderText = "MODELO";
-            this.modelo.Name = "modelo";
-            this.modelo.ReadOnly = true;
-            this.modelo.Width = 130;
-            // 
-            // color
-            // 
-            this.color.HeaderText = "COLOR";
-            this.color.Name = "color";
-            this.color.ReadOnly = true;
-            // 
-            // serialNumber
-            // 
-            this.serialNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.serialNumber.HeaderText = "S/N";
-            this.serialNumber.Name = "serialNumber";
-            this.serialNumber.ReadOnly = true;
             // 
             // txtSerializable
             // 
@@ -1429,6 +1333,143 @@ namespace CapaPresentacion
             this.btnEliminarPago.ReadOnly = true;
             this.btnEliminarPago.Width = 30;
             // 
+            // idProductoDetalle2
+            // 
+            this.idProductoDetalle2.HeaderText = "ID PROD DETALLE";
+            this.idProductoDetalle2.Name = "idProductoDetalle2";
+            this.idProductoDetalle2.ReadOnly = true;
+            this.idProductoDetalle2.Visible = false;
+            // 
+            // idProdSerial
+            // 
+            this.idProdSerial.HeaderText = "ID PRODUCTO";
+            this.idProdSerial.Name = "idProdSerial";
+            this.idProdSerial.ReadOnly = true;
+            this.idProdSerial.Visible = false;
+            // 
+            // nombre
+            // 
+            this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.HeaderText = "PRODUCTO";
+            this.nombre.MinimumWidth = 100;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            this.nombre.Visible = false;
+            // 
+            // marca2
+            // 
+            this.marca2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.marca2.HeaderText = "MARCA";
+            this.marca2.Name = "marca2";
+            this.marca2.ReadOnly = true;
+            this.marca2.Width = 130;
+            // 
+            // modelo2
+            // 
+            this.modelo2.HeaderText = "MODELO";
+            this.modelo2.Name = "modelo2";
+            this.modelo2.ReadOnly = true;
+            this.modelo2.Width = 130;
+            // 
+            // color2
+            // 
+            this.color2.HeaderText = "COLOR";
+            this.color2.Name = "color2";
+            this.color2.ReadOnly = true;
+            // 
+            // serialNumber2
+            // 
+            this.serialNumber2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.serialNumber2.HeaderText = "S/N";
+            this.serialNumber2.Name = "serialNumber2";
+            this.serialNumber2.ReadOnly = true;
+            // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // producto
+            // 
+            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.producto.HeaderText = "PRODUCTO";
+            this.producto.Name = "producto";
+            this.producto.ReadOnly = true;
+            // 
+            // marca
+            // 
+            this.marca.HeaderText = "MARCA";
+            this.marca.Name = "marca";
+            this.marca.ReadOnly = true;
+            // 
+            // modelo
+            // 
+            this.modelo.HeaderText = "MODELO";
+            this.modelo.Name = "modelo";
+            this.modelo.ReadOnly = true;
+            // 
+            // color
+            // 
+            this.color.HeaderText = "COLOR";
+            this.color.Name = "color";
+            this.color.ReadOnly = true;
+            // 
+            // numeroSerie
+            // 
+            this.numeroSerie.HeaderText = "S/N";
+            this.numeroSerie.Name = "numeroSerie";
+            this.numeroSerie.ReadOnly = true;
+            // 
+            // precio
+            // 
+            this.precio.HeaderText = "PRECIO";
+            this.precio.Name = "precio";
+            this.precio.ReadOnly = true;
+            // 
+            // precioLista
+            // 
+            this.precioLista.HeaderText = "PRECIO LISTA";
+            this.precioLista.Name = "precioLista";
+            this.precioLista.ReadOnly = true;
+            this.precioLista.Width = 150;
+            // 
+            // cantidad
+            // 
+            this.cantidad.HeaderText = "CANTIDAD";
+            this.cantidad.Name = "cantidad";
+            this.cantidad.ReadOnly = true;
+            // 
+            // subTotal
+            // 
+            this.subTotal.HeaderText = "SUB TOTAL";
+            this.subTotal.Name = "subTotal";
+            this.subTotal.ReadOnly = true;
+            // 
+            // prodSerializable
+            // 
+            this.prodSerializable.HeaderText = "SERIALIZABLE";
+            this.prodSerializable.Name = "prodSerializable";
+            this.prodSerializable.ReadOnly = true;
+            // 
+            // idProductoDetalle
+            // 
+            this.idProductoDetalle.HeaderText = "ID PROD DETALLE";
+            this.idProductoDetalle.Name = "idProductoDetalle";
+            this.idProductoDetalle.ReadOnly = true;
+            this.idProductoDetalle.Visible = false;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.HeaderText = "";
+            this.btnEliminar.Image = global::CapaPresentacion.Properties.Resources.trash;
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.ReadOnly = true;
+            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnEliminar.Width = 25;
+            // 
             // frmVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1543,24 +1584,9 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvSeriales;
         private System.Windows.Forms.TextBox txtSerializable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
-        private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
         private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.CheckBox checkNoRedondeo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProdSerial;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn marca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn modelo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn color;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumber;
         private System.Windows.Forms.NumericUpDown txtCotizacion;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown txtMontoPagoParcial;
@@ -1578,5 +1604,25 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn importeFP;
         private System.Windows.Forms.DataGridViewTextBoxColumn montoRecibido;
         private System.Windows.Forms.DataGridViewImageColumn btnEliminarPago;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProdSerial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn marca2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modelo2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn color2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumber2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn marca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modelo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn color;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numeroSerie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDetalle;
+        private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
     }
 }

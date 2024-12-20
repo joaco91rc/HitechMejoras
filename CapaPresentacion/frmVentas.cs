@@ -360,17 +360,16 @@ namespace CapaPresentacion
                 return;
             }
 
-
             if (!decimal.TryParse(txtPrecio.Text, out precio))
             {
-                MessageBox.Show("Precio  - Formato Moneda incorrecto", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Precio - Formato Moneda incorrecto", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtPrecio.Select();
                 return;
             }
 
             if (Convert.ToInt32(txtStock.Text) < Convert.ToInt32(txtCantidad.Value.ToString()))
             {
-                MessageBox.Show("La cantidad ingresada deber ser menor al Stock Fisico", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("La cantidad ingresada debe ser menor al Stock Físico", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -387,49 +386,40 @@ namespace CapaPresentacion
                 }
             }
 
-            // Si el producto no existe, proceder a agregarlo
             if (!producto_existe)
             {
-                // Si es un producto serializable
                 if (esSerializable)
                 {
-                    // Abrir el modal para capturar los seriales
                     using (var modal = new mdProductoSerializable(Convert.ToInt32(txtIdProducto.Text)))
                     {
                         if (modal.ShowDialog() == DialogResult.OK)
                         {
-                            // Solo si hay seriales válidos, proceder a agregar el producto a dgvData
                             if (modal.ListaProductoDetalles != null && modal.ListaProductoDetalles.Count > 0)
                             {
-                                //decimal precioLista30 = Math.Round(((Math.Round((precio * txtCotizacion.Value) / 1000) * 1000 - 100) * 1.30m) / 1000, 0) * 1000 - 100;
-
-
-
-
-
-                                // Agregar el producto a dgvData
-                                 dgvData.Rows.Add(new object[]{
-                            txtIdProducto.Text,
-                            txtProducto.Text,
-                            precio.ToString("0.00"),
-                            txtPrecioLista.Text=="0.00"? (precio * cotizacionOriginal).ToString("0.00"):txtPrecioLista.Text,
-                            txtCantidad.Value.ToString(),
-                            (txtCantidad.Value * precio).ToString("0.00"),
-                            txtSerializable.Text,
-                            defaultImage
-                        });
-
-                                // Agregar los seriales al dgvSeriales
                                 foreach (var productoDetalle in modal.ListaProductoDetalles)
                                 {
-                                    AgregarDetalleProductoADataGridView(productoDetalle);
+                                    dgvData.Rows.Add(new object[]{
+                                txtIdProducto.Text,
+                                txtProducto.Text,
+                                productoDetalle.marca,        // Marca del producto
+                                productoDetalle.modelo,       // Modelo del producto
+                                productoDetalle.color,
+                                productoDetalle.numeroSerie,
+                                precio.ToString("0.00"),
+                                txtPrecioLista.Text == "0.00" ? (precio * cotizacionOriginal).ToString("0.00") : txtPrecioLista.Text,
+                                txtCantidad.Value.ToString(),
+                                (txtCantidad.Value * precio).ToString("0.00"),
+                                txtSerializable.Text,                                      
+                               
+                                productoDetalle.idProductoDetalle,
+                                defaultImage
+                            });
                                 }
 
                                 calcularTotal();
                                 CalcularRestaAPagar();
                                 limpiarProducto();
                                 txtCodigoProducto.Select();
-                                
                             }
                             else
                             {
@@ -438,20 +428,21 @@ namespace CapaPresentacion
                         }
                     }
                 }
-                else // Si es un producto no serializable
+                else
                 {
-                    //decimal precioLista30 = Math.Round(((Math.Round((precio * txtCotizacion.Value) / 1000) * 1000 - 100) * 1.30m) / 1000, 0) * 1000 - 100;
-
-
-                    // Agregar el producto a dgvData directamente
                     dgvData.Rows.Add(new object[]{
                 txtIdProducto.Text,
                 txtProducto.Text,
+                string.Empty,  // Marca (vacío para productos no serializables)
+                string.Empty,  // Modelo
+                string.Empty,  // Color
+                string.Empty,  // Serial number
                 precio.ToString("0.00"),
-                txtPrecioLista.Text=="0.00"? (precio * cotizacionOriginal).ToString("0.00"):txtPrecioLista.Text,
+                txtPrecioLista.Text == "0.00" ? (precio * cotizacionOriginal).ToString("0.00") : txtPrecioLista.Text,
                 txtCantidad.Value.ToString(),
                 (txtCantidad.Value * precio).ToString("0.00"),
                 txtSerializable.Text,
+                string.Empty,
                 defaultImage
             });
 
@@ -459,7 +450,6 @@ namespace CapaPresentacion
                     CalcularRestaAPagar();
                     limpiarProducto();
                     txtCodigoProducto.Select();
-                    
                 }
             }
             else
@@ -467,6 +457,7 @@ namespace CapaPresentacion
                 MessageBox.Show("El producto ya existe en la lista y no es serializable.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
 
 
