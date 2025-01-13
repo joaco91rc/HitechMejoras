@@ -28,10 +28,20 @@ namespace CapaNegocio
             return objcd_reporte.GananciaPorVentas(fechaInicio, fechaFin, idNegocio);
         }
 
-        public List<ReporteCantidadVentas> CantidadVendidaPorLocal(DateTime fechaInicio, DateTime fechaFin)
+        public List<ReporteVenta> GananciaPorVentasPorVendedor(DateTime fechaInicio, DateTime fechaFin, int idNegocio, int idVendedor)
+        {
+            return objcd_reporte.GananciaPorVentasPorVendedor(fechaInicio, fechaFin, idNegocio,idVendedor);
+        }
+
+            public List<ReporteCantidadVentas> CantidadVendidaPorLocal(DateTime fechaInicio, DateTime fechaFin)
         {
             return objcd_reporte.CantidadVendidaPorLocal(fechaInicio, fechaFin);
         }
 
-    }
+        public List<ReporteVentasPorProducto> CalcularTotalFacturadoPorProducto(DateTime fechaInicio, DateTime fechaFin, List<int> idNegocios)
+        {
+            return objcd_reporte.CalcularTotalFacturadoPorProducto(fechaInicio, fechaFin, idNegocios);
+        }
+
+        }
 }

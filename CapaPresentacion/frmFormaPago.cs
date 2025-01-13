@@ -32,6 +32,7 @@ namespace CapaPresentacion
             {
                 dgvData.Rows.Add(new object[] {defaultImage,item.idFormaPago,
                     item.descripcion,
+                    item.tipo,
                     item.porcentajeRetencion,
                     item.porcentajeRecargo,
                     item.porcentajeDescuento,
@@ -51,7 +52,8 @@ namespace CapaPresentacion
                 porcentajeRetencion = txtPorcentajeRetencion.Value,
                 cajaAsociada = cboCajaAsociada.Text,
                 porcentajeRecargo = txtPorcentajeRecargo.Value,
-                porcentajeDescuento = txtPorcentajeDescuento.Value
+                porcentajeDescuento = txtPorcentajeDescuento.Value,
+                tipo =cboTipo.Text
             };
 
             if (objFormaPago.idFormaPago == 0)
@@ -66,6 +68,7 @@ namespace CapaPresentacion
                 defaultImage, // Placeholder for an auto-increment column if needed
                 idFormaPagoGenerado,
                 objFormaPago.descripcion,
+                objFormaPago.tipo.ToString(),
                 objFormaPago.porcentajeRetencion.ToString(),
                 objFormaPago.porcentajeRecargo.ToString(),
                 objFormaPago.porcentajeDescuento.ToString(),
@@ -91,6 +94,7 @@ namespace CapaPresentacion
                     row.Cells["porcentajeRecargo"].Value = objFormaPago.porcentajeRecargo.ToString();
                     row.Cells["porcentajeDescuento"].Value = objFormaPago.porcentajeDescuento.ToString();
                     row.Cells["cajaAsociada"].Value = objFormaPago.cajaAsociada.ToString();
+                    row.Cells["tipo"].Value = objFormaPago.tipo.ToString();
                     Limpiar();
                 }
                 else
@@ -132,7 +136,7 @@ namespace CapaPresentacion
                         txtPorcentajeRetencion.Text = dgvData.Rows[indice].Cells["porcentajeRetencion"].Value.ToString();
                         txtPorcentajeRecargo.Text = dgvData.Rows[indice].Cells["porcentajeRecargo"].Value.ToString();
                         txtPorcentajeDescuento.Text = dgvData.Rows[indice].Cells["porcentajeDescuento"].Value.ToString();
-
+                        cboTipo.Text = dgvData.Rows[indice].Cells["tipo"].Value.ToString();
 
 
 

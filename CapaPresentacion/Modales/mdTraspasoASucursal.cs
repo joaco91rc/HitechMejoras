@@ -82,6 +82,8 @@ namespace CapaPresentacion.Modales
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string actualizacionStock = string.Empty;
+            string mensaje = string.Empty;
+            string traspasoSerial = string.Empty;
             if (txtCantidad.Value > 0 && cboSucursal.SelectedIndex != -1)
             {
                 decimal costoProducto = new CN_Producto().ObtenerCostoProducto(Convert.ToInt32(txtIdProducto.Text));
@@ -103,7 +105,24 @@ namespace CapaPresentacion.Modales
                     if (insertar)
                     {
                         actualizacionStock= new CN_ProductoNegocio().CargarOActualizarStockProducto(orden.IdProducto, GlobalSettings.SucursalId, -orden.Cantidad);
-                        MessageBox.Show("Orden de Traspaso Generada y Stock Descontado de la Sucursal Actual");
+                        
+
+                        ProductoDetalle productoDetalle = new ProductoDetalle();
+                        productoDetalle.estado = false;
+                        productoDetalle.numeroSerie = orden.SerialNumber;
+                        if (orden.SerialNumber != null)
+                        {
+                            var traspasarSN = new CN_Producto().ActualizarSerialNumberTraspasado(productoDetalle, out mensaje);
+                            if (traspasarSN)
+                            {
+                                traspasoSerial = "Serial Number descontado del Local de Origen";
+                            }
+                            else
+                            {
+                                traspasoSerial = "";
+                            }
+                        }
+                        MessageBox.Show("Orden de Traspaso Generada " + actualizacionStock+ traspasoSerial);
                         this.Close();
                     }
                     else

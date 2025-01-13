@@ -159,7 +159,8 @@ namespace CapaDatos
                                 documentoCliente = dr["documentoCliente"]?.ToString() ?? string.Empty,
                                 nombreCliente = dr["nombreCliente"]?.ToString() ?? string.Empty,
                                 cotizacionDolar = dr["cotizacionDolar"]?.ToString() ?? string.Empty,
-                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty // Concatenación de nombres de productos
+                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty, // Concatenación de nombres de productos
+                                observaciones = dr["observaciones"]?.ToString() ?? string.Empty,
                             });
                         }
                     }
@@ -172,6 +173,55 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        public List<ReporteVenta> GananciaPorVentasPorVendedor(DateTime fechaInicio, DateTime fechaFin, int idNegocio, int idVendedor)
+        {
+            List<ReporteVenta> lista = new List<ReporteVenta>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SP_REPORTEVENTAS_MARGEN_GANANCIA_POR_VENDEDOR", oconexion);
+                    cmd.Parameters.AddWithValue("fechaInicio", fechaInicio);
+                    cmd.Parameters.AddWithValue("fechaFin", fechaFin);
+                    cmd.Parameters.AddWithValue("idNegocio", idNegocio);
+                    cmd.Parameters.AddWithValue("idVendedor", idVendedor);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new ReporteVenta()
+                            {
+                                nombreLocal = dr["NombreLocal"]?.ToString() ?? string.Empty,
+                                fechaRegistro = dr["fechaRegistro"]?.ToString() ?? string.Empty,
+                                tipoDocumento = dr["tipoDocumento"]?.ToString() ?? string.Empty,
+                                nroDocumento = dr["nroDocumento"]?.ToString() ?? string.Empty,
+                                montoTotal = dr["MontoPagoTotalEnPesos"] != DBNull.Value ? Convert.ToDecimal(dr["MontoPagoTotalEnPesos"]).ToString("0.00") : string.Empty,
+                                costoTotalProductos = dr["CostoTotalProductos"] != DBNull.Value ? Convert.ToDecimal(dr["CostoTotalProductos"]).ToString("0.00") : string.Empty,
+                                margenGananciaEnDolares = dr["MargenGananciaEnDolares"] != DBNull.Value ? Convert.ToDecimal(dr["MargenGananciaEnDolares"]).ToString("0.00") : string.Empty,
+                                porcentajeMargenGanancia = dr["PorcentajeMargenGanancia"] != DBNull.Value ? Convert.ToDecimal(dr["PorcentajeMargenGanancia"]).ToString("0.00") : string.Empty,
+                                vendedor = dr["Vendedor"]?.ToString() ?? string.Empty,
+                                documentoCliente = dr["documentoCliente"]?.ToString() ?? string.Empty,
+                                nombreCliente = dr["nombreCliente"]?.ToString() ?? string.Empty,
+                                cotizacionDolar = dr["cotizacionDolar"]?.ToString() ?? string.Empty,
+                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<ReporteVenta>();
+                    // Loggear el error si es necesario
+                }
+            }
+            return lista;
+        }
+
 
         public List<ReporteCantidadVentas> CantidadVendidaPorLocal(DateTime fechaInicio, DateTime fechaFin)
         {
@@ -210,6 +260,54 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        public List<ReporteVentasPorProducto> CalcularTotalFacturadoPorProducto(DateTime fechaInicio, DateTime fechaFin, List<int> idNegocios)
+        {
+            List<ReporteVentasPorProducto> lista = new List<ReporteVentasPorProducto>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SP_CALCULAR_TOTAL_FACTURADO_POR_PRODUCTO", oconexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Agregar parámetros de fecha
+                    cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                    cmd.Parameters.AddWithValue("@FechaFin", fechaFin);
+
+                    // Convertir la lista de IDs en una cadena separada por comas
+                    string idNegociosCsv = string.Join(",", idNegocios);
+                    cmd.Parameters.AddWithValue("@IdNegocios", idNegociosCsv);
+
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new ReporteVentasPorProducto()
+                            {
+                                NombreLocal = dr["NombreLocal"].ToString(),
+                                NombreProducto = dr["NombreProducto"]?.ToString() ?? string.Empty, // Nombre del producto
+                                CantidadVendida = dr["CantidadVendida"] != DBNull.Value ? Convert.ToInt32(dr["CantidadVendida"]) : 0, // Cantidad vendida
+                                TotalFacturadoPesos = dr["TotalFacturadoPesos"] != DBNull.Value ? Convert.ToDecimal(dr["TotalFacturadoPesos"]) : 0, // Total facturado en pesos
+                                TotalFacturadoDolares = dr["TotalFacturadoDolares"] != DBNull.Value ? Convert.ToDecimal(dr["TotalFacturadoDolares"]) : 0 // Total facturado en dólares
+                                
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lista = new List<ReporteVentasPorProducto>();
+                    // Agregar logging aquí si es necesario para registrar errores
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+            return lista;
+        }
+
+
 
 
 

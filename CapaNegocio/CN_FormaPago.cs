@@ -66,6 +66,10 @@ namespace CapaNegocio
             {
                 mensaje += "El porcentaje de retención debe ser mayor o igual a 0\n";
             }
+            if (objFormaPago.tipo == "")
+            {
+                mensaje += "Debe Establecer el tipo de la forma de pago\n";
+            }
 
             if (mensaje != string.Empty)
             {

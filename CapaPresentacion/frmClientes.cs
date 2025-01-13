@@ -159,7 +159,7 @@ namespace CapaPresentacion
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            List<int> clientesNegocio = new List<int>();
+            
             //AgregarClientesNegocio(clientesNegocio);
             string mensaje = string.Empty;
             Cliente objCliente = new Cliente()
@@ -179,7 +179,7 @@ namespace CapaPresentacion
             {
 
                 int idClienteGenerado = new CN_Cliente().Registrar(objCliente, out mensaje);
-
+                bool asignarCientesASucursal = new CN_ClienteNegocio().AsignarClienteANegocio(idClienteGenerado, GlobalSettings.SucursalId);
 
                 if (idClienteGenerado != 0)
                 {
@@ -189,10 +189,9 @@ namespace CapaPresentacion
                 ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString(),
                 ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString()
             });
-                    foreach (var item in clientesNegocio)
-                    {
-                        bool asignarCientesASucursal = new CN_ClienteNegocio().AsignarClienteANegocio(idClienteGenerado, item);
-                    }
+                    
+                       
+                    
 
                     Limpiar();
                 }
@@ -221,7 +220,7 @@ namespace CapaPresentacion
                     
                     row.Cells["estadoValor"].Value = ((OpcionCombo)cboEstado.SelectedItem).Valor.ToString();
                     row.Cells["estado"].Value = ((OpcionCombo)cboEstado.SelectedItem).Texto.ToString();
-                    bool modificarClienteASucursal = new CN_ClienteNegocio().ModificarAsignacionNegocios(Convert.ToInt32(txtIdCliente.Text), clientesNegocio);
+                    
 
                     Limpiar();
                     CargarClientes();

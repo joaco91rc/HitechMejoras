@@ -386,6 +386,7 @@ namespace CapaPresentacion
             this.cantidad.HeaderText = "CANTIDAD";
             this.cantidad.Name = "cantidad";
             this.cantidad.ReadOnly = true;
+            this.cantidad.Visible = false;
             this.cantidad.Width = 150;
             // 
             // marca

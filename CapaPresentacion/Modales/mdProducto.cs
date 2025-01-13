@@ -76,11 +76,17 @@ namespace CapaPresentacion.Modales
                 
                 
                 item.prodSerializable,
-                item.precioCompra,
-                item.precioVenta,
-                item.precioLista
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioCompra),
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioVenta),
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioLista),
+                item.productoDolar
             });
+
                 
+        //string.Format("{0 } {1}", "ARS", precioEfectivo),
+        
+        //string.Format("{0 } {1}", "ARS", item.costoPesos),
+        
             }
         }
 
@@ -102,9 +108,10 @@ namespace CapaPresentacion.Modales
                 
                 
                 item.prodSerializable,
-                item.precioCompra,
-                item.precioVenta,
-                item.precioLista
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioCompra),
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioVenta),
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioLista),
+                item.productoDolar
 
             });
 
@@ -159,6 +166,15 @@ namespace CapaPresentacion.Modales
 
         }
 
+        private string RemoverSimboloMoneda(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return "0";
+
+            // Remueve los primeros caracteres (ej. "ARS " o "$ ") y devuelve el resto
+            return valor.Trim().Substring(4); // Ajusta según el formato de tu dato
+        }
+
         private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int iRow = e.RowIndex;
@@ -170,11 +186,14 @@ namespace CapaPresentacion.Modales
                     idProducto = Convert.ToInt32(dgvData.Rows[iRow].Cells["idProducto"].Value.ToString()),
                     codigo = dgvData.Rows[iRow].Cells["codigo"].Value.ToString(),
                     nombre = dgvData.Rows[iRow].Cells["nombre"].Value.ToString(),
-                    precioCompra = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioCompra"].Value.ToString()),
-                    precioVenta = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString()),
+                    precioCompra = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["precioCompra"].Value.ToString())),
+                    precioVenta = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString())),
                     prodSerializable = Convert.ToBoolean(dgvData.Rows[iRow].Cells["prodSerializable"].Value.ToString()),
-                    precioLista = Convert.ToDecimal(dgvData.Rows[iRow].Cells["precioLista"].Value.ToString())
+                    precioLista = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["precioLista"].Value.ToString())),
+                    productoDolar = Convert.ToBoolean(dgvData.Rows[iRow].Cells["productoDolar"].Value)
                 };
+
+                
 
                 int stockProducto = new CN_ProductoNegocio().ObtenerStockProductoEnSucursal(_Producto.idProducto, GlobalSettings.SucursalId);
                 //if (stockProducto > 0 && _Producto.prodSerializable == true)

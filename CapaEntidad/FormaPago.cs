@@ -13,7 +13,10 @@ namespace CapaEntidad
         public decimal porcentajeRetencion { get; set; }
         public decimal porcentajeRecargo { get; set; }
         public decimal porcentajeDescuento { get; set; }
+        public decimal porcentajeRecargoDolar { get; set; }
+        public decimal porcentajeDescuentoDolar { get; set; }
         public string cajaAsociada { get; set; }
+        public string tipo { get; set; }
 
     }
 }

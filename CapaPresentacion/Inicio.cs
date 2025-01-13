@@ -452,7 +452,7 @@ namespace CapaPresentacion
         }
 
 
-        private void ExportarAExcel(List<ReporteCantidadVentas> lista)
+        private void ExportarAExcelCantidadVentasPorLocal(List<ReporteCantidadVentas> lista)
         {
             if (lista == null || lista.Count < 1)
             {
@@ -543,6 +543,215 @@ namespace CapaPresentacion
         }
 
 
+        private void ExportarAExcelVentasPorProducto(List<ReporteVentasPorProducto> lista, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (lista == null || lista.Count < 1)
+            {
+                MessageBox.Show("No hay registros para exportar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            using (var workbook = new XLWorkbook())
+            {
+                // Agrupar los datos por local
+                var groupedByLocal = lista.GroupBy(x => x.NombreLocal);
+
+                foreach (var group in groupedByLocal)
+                {
+                    var localName = group.Key;
+
+                    // Crear una hoja para cada local
+                    var worksheet = workbook.Worksheets.Add(localName);
+
+                    // Agregar el período seleccionado al inicio de la hoja
+                    worksheet.Cell(1, 1).Value = $"Período: {fechaInicio:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}";
+                    worksheet.Range("A1:D1").Merge();
+                    worksheet.Range("A1:D1").Style.Font.Bold = true;
+                    worksheet.Range("A1:D1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                    // Establecer encabezados de columna
+                    worksheet.Cell(2, 1).Value = "Producto Vendido";
+                    worksheet.Cell(2, 2).Value = "Cantidad Vendida";
+                    worksheet.Cell(2, 3).Value = "Total Facturado (Pesos)";
+                    worksheet.Cell(2, 4).Value = "Total Facturado (Dólares)";
+                    
+
+                    // Formato para el encabezado (solo A a E)
+                    worksheet.Range("A2:D2").Style.Fill.BackgroundColor = XLColor.FromArgb(81, 129, 191); // Color de fondo del encabezado
+                    worksheet.Range("A2:D2").Style.Font.FontColor = XLColor.White; // Color del texto en el encabezado
+                    worksheet.Range("A2:D2").Style.Font.Bold = true; // Negrita
+                    worksheet.Range("A2:D2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center; // Alinear al centro
+
+                    // Añadir bordes al encabezado
+                    worksheet.Range("A2:D2").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    worksheet.Range("A2:D2").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                    // Filtrar y llenar datos solo con productos facturados en pesos o dólares para este local
+                    int row = 3; // Comenzar en la fila 3 debido al encabezado del período y columnas
+                    foreach (var item in group)
+                    {
+                        worksheet.Cell(row, 1).Value = item.NombreProducto;
+                        worksheet.Cell(row, 2).Value = item.CantidadVendida;
+                        worksheet.Cell(row, 3).Value = item.TotalFacturadoPesos;
+                        worksheet.Cell(row, 4).Value = item.TotalFacturadoDolares;
+                         // Agregar Observaciones
+
+                        // Aplicar formato alternante solo en A, B, C, D, E
+                        if (row % 2 == 0)
+                        {
+                            worksheet.Range($"A{row}:D{row}").Style.Fill.BackgroundColor = XLColor.FromArgb(221, 230, 241); // Color para fila par
+                        }
+                        else
+                        {
+                            worksheet.Range($"A{row}:D{row}").Style.Fill.BackgroundColor = XLColor.FromArgb(253, 254, 255); // Color para fila impar
+                        }
+
+                        row++;
+                    }
+
+                    // Aplicar formato de moneda a las columnas de Total Facturado
+                    worksheet.Column(3).Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda en Pesos
+                    worksheet.Column(4).Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda en Dólares
+
+                    // Ajustar alineación de las columnas
+                    worksheet.Column(1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left; // Alinear Producto Vendido a la izquierda
+                    worksheet.Column(2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right; // Alinear Cantidad a la derecha
+                    worksheet.Column(3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right; // Alinear Total Facturado (Pesos) a la derecha
+                    worksheet.Column(4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right; // Alinear Total Facturado (Dólares) a la derecha
+                    
+
+                    // Aplicar bordes a todo el rango de datos (A2:E última fila)
+                    worksheet.Range("A2:D" + (row - 1)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    worksheet.Range("A2:D" + (row - 1)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                    // Ajustar el tamaño de las columnas
+                    worksheet.Columns("A:D").AdjustToContents(); // Ajustar solo las columnas A a E
+                }
+
+
+
+                // Obtener los nombres de los locales seleccionados
+                var localesSeleccionados = string.Join(" ", lista.Select(x => x.NombreLocal).Distinct());
+
+                // Formatear las fechas
+                string periodo = $"{fechaInicio.ToString("dd-MM-yyyy")} al {fechaFin.ToString("dd-MM-yyyy")}";
+
+
+                // Limitar la longitud del nombre para evitar problemas con rutas de archivo demasiado largas
+                if (localesSeleccionados.Length > 50)
+                {
+                    localesSeleccionados = localesSeleccionados.Substring(0, 50) + "...";
+                }
+
+                // Obtener el timestamp actual
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                // Concatenar los nombres de los locales y el timestamp al nombre del archivo
+                saveFileDialog.FileName = $"Facturacion por Producto {localesSeleccionados} Periodo {periodo}.xlsx";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Exportación completada con éxito", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+        }
+
+
+
+
+        private void ExportarAExcelVentasPorVendedor(List<ReporteVenta> lista)
+        {
+            if (lista == null || lista.Count < 1)
+            {
+                MessageBox.Show("No hay registros para exportar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            using (var workbook = new XLWorkbook())
+            {
+                // Crear una hoja para el reporte
+                var worksheet = workbook.Worksheets.Add("Ventas por Vendedor");
+
+                // Establecer encabezados de columna
+                worksheet.Cell(1, 1).Value = "Local";
+                worksheet.Cell(1, 2).Value = "Fecha Registro";
+                worksheet.Cell(1, 3).Value = "Tipo Documento";
+                worksheet.Cell(1, 4).Value = "Número Documento";
+                worksheet.Cell(1, 5).Value = "Productos";
+                worksheet.Cell(1, 6).Value = "Monto Total (Pesos)";
+                worksheet.Cell(1, 7).Value = "Costo Total Productos";
+                worksheet.Cell(1, 8).Value = "Margen Ganancia (Dólares)";
+                worksheet.Cell(1, 9).Value = "Porcentaje Ganancia (%)";
+                worksheet.Cell(1, 10).Value = "Vendedor";
+                worksheet.Cell(1, 11).Value = "Documento Cliente";
+                worksheet.Cell(1, 12).Value = "Nombre Cliente";
+
+                // Formato para el encabezado
+                worksheet.Range("A1:L1").Style.Fill.BackgroundColor = XLColor.FromArgb(81, 129, 191); // Color de fondo del encabezado
+                worksheet.Range("A1:L1").Style.Font.FontColor = XLColor.White; // Color del texto en el encabezado
+                worksheet.Range("A1:L1").Style.Font.Bold = true; // Negrita
+                worksheet.Range("A1:L1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center; // Alinear al centro
+
+                // Añadir bordes al encabezado
+                worksheet.Range("A1:L1").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range("A1:L1").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // Llenar datos
+                int row = 2;
+                foreach (var item in lista)
+                {
+                    worksheet.Cell(row, 1).Value = item.nombreLocal;
+                    worksheet.Cell(row, 2).Value = item.fechaRegistro;
+                    worksheet.Cell(row, 3).Value = item.tipoDocumento;
+                    worksheet.Cell(row, 4).Value = item.nroDocumento;
+                    worksheet.Cell(row, 5).Value = item.nombreProducto;
+                    worksheet.Cell(row, 6).Value = item.montoTotal;
+                    worksheet.Cell(row, 7).Value = item.costoTotalProductos;
+                    worksheet.Cell(row, 8).Value = item.margenGananciaEnDolares;
+                    worksheet.Cell(row, 9).Value = item.porcentajeMargenGanancia;
+                    worksheet.Cell(row, 10).Value = item.vendedor;
+                    worksheet.Cell(row, 11).Value = item.documentoCliente;
+                    worksheet.Cell(row, 12).Value = item.nombreCliente;
+
+                    // Aplicar formato alternante
+                    if (row % 2 == 0)
+                    {
+                        worksheet.Range($"A{row}:L{row}").Style.Fill.BackgroundColor = XLColor.FromArgb(221, 230, 241); // Color para fila par
+                    }
+                    else
+                    {
+                        worksheet.Range($"A{row}:L{row}").Style.Fill.BackgroundColor = XLColor.FromArgb(253, 254, 255); // Color para fila impar
+                    }
+
+                    row++;
+                }
+
+                // Ajustar ancho de columnas
+                worksheet.Columns("A:L").AdjustToContents();
+
+                // Guardar el archivo Excel
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+
+                // Generar nombre del archivo con timestamp
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                saveFileDialog.FileName = $"ReporteVentasPorVendedor_{timestamp}.xlsx";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Exportación completada con éxito", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+
+
+
 
         private void subMenuReporteCantidadVentasPorLocal_Click(object sender, EventArgs e)
         {
@@ -558,12 +767,70 @@ namespace CapaPresentacion
                     List<ReporteCantidadVentas> lista = new CN_Reporte().CantidadVendidaPorLocal(fechaDesde, fechaHasta);
 
                     // Exportar el resultado a Excel
-                    ExportarAExcel(lista);
+                    ExportarAExcelCantidadVentasPorLocal(lista);
                 }
             }
             
         }
 
-        
+        private void subMenuFacturacionXproducto_Click(object sender, EventArgs e)
+        {
+            using (mdSeleccionFechas formFechas = new mdSeleccionFechas())
+            {
+                formFechas.MostrarLocales = true;
+
+                if (formFechas.ShowDialog() == DialogResult.OK)
+                {
+                    // Obtener las fechas seleccionadas
+                    DateTime fechaDesde = formFechas.FechaDesde;
+                    DateTime fechaHasta = formFechas.FechaHasta;
+
+                    // Crear una lista para los IDs de negocios seleccionados
+                    List<int> idNegocios = new List<int>();
+
+                    // Verificar los checkboxes y agregar los IDs correspondientes
+                    if (formFechas.checkH1.Checked) idNegocios.Add(1);
+                    if (formFechas.checkH2.Checked) idNegocios.Add(2);
+                    if (formFechas.checkStore49.Checked) idNegocios.Add(3);
+                    if (formFechas.checkAppleCafe.Checked) idNegocios.Add(4);
+
+                    // Si no se selecciona ningún checkbox, agregar el ID del negocio actual
+                    if (idNegocios.Count == 0)
+                    {
+                        idNegocios.Add(GlobalSettings.SucursalId);
+                    }
+
+                    // Llamar al método de reporte con las fechas seleccionadas y los IDs de negocios
+                    List<ReporteVentasPorProducto> lista = new CN_Reporte().CalcularTotalFacturadoPorProducto(fechaDesde, fechaHasta, idNegocios);
+
+                    // Exportar el resultado a Excel
+                    ExportarAExcelVentasPorProducto(lista,fechaDesde,fechaHasta);
+                }
+            }
+        }
+
+
+        private void subMenuVentasPorVendedor_Click(object sender, EventArgs e)
+        {
+            using (mdSeleccionFechas formFechas = new mdSeleccionFechas())
+            {
+                formFechas.MostrarVendedores = true;
+                if (formFechas.ShowDialog() == DialogResult.OK)
+                {
+                    // Obtener las fechas seleccionadas
+                    DateTime fechaDesde = formFechas.FechaDesde;
+                    DateTime fechaHasta = formFechas.FechaHasta;
+                    
+                    int idVendedor = formFechas.idVendedor;
+
+                    // Llamar al método de reporte con las fechas seleccionadas
+                    List<ReporteVenta> lista = new CN_Reporte().GananciaPorVentasPorVendedor(fechaDesde, fechaHasta, GlobalSettings.SucursalId,idVendedor);
+
+                    // Exportar el resultado a Excel
+                    ExportarAExcelVentasPorVendedor(lista);
+                }
+            }
+
+        }
     }
 }

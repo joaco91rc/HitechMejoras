@@ -243,6 +243,87 @@ namespace CapaDatos
         }
 
 
+        public List<Producto> ListarProductosEnStock(int idNegocio)
+        {
+            List<Producto> lista = new List<Producto>();
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("SELECT p.idProducto AS ProductoId, p.codigo, p.nombre, p.descripcion, p.productoDolar,");
+                    query.AppendLine("c.idCategoria, c.descripcion AS DescripcionCategoria,");
+                    query.AppendLine("ISNULL(pn.stock, 0) AS stock,");
+                    query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
+                    query.AppendLine("ISNULL(ppDolar.precioVenta, 0) AS precioVenta,");
+                    query.AppendLine("ISNULL(ppPesos.precioVenta, 0) AS ventaPesos,");
+                    query.AppendLine("ISNULL(ppPesos.precioLista, 0) AS precioLista,");
+                    query.AppendLine("ISNULL(ppPesos.precioCompra, 0) AS costoPesos,");
+                    query.AppendLine("p.prodSerializable");
+                    query.AppendLine("FROM Producto p");
+                    query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
+                    query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto AND pn.idNegocio = @idNegocio");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 2");
+                    query.AppendLine(") ppDolar ON ppDolar.idProducto = p.idProducto");
+                    query.AppendLine("LEFT JOIN (");
+                    query.AppendLine("    SELECT idProducto, precioVenta, precioLista, precioCompra");
+                    query.AppendLine("    FROM PRECIO_PRODUCTO");
+                    query.AppendLine("    WHERE idMoneda = 1");
+                    query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
+                    query.AppendLine("WHERE p.estado = 1 AND ISNULL(pn.stock, 0) > 0"); // Filtro para stock > 0
+                    query.AppendLine("GROUP BY p.idProducto, p.codigo, p.nombre, p.descripcion, p.productoDolar,");
+                    query.AppendLine("c.idCategoria, c.descripcion, pn.stock,");
+                    query.AppendLine("ppDolar.precioCompra, ppDolar.precioVenta,");
+                    query.AppendLine("ppPesos.precioVenta, ppPesos.precioLista, ppPesos.precioCompra,");
+                    query.AppendLine("p.prodSerializable");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new Producto()
+                            {
+                                idProducto = Convert.ToInt32(dr["ProductoId"]),
+                                codigo = dr["codigo"].ToString(),
+                                nombre = dr["nombre"].ToString(),
+                                descripcion = dr["descripcion"].ToString(),
+                                oCategoria = new Categoria()
+                                {
+                                    idCategoria = Convert.ToInt32(dr["idCategoria"]),
+                                    descripcion = dr["DescripcionCategoria"].ToString()
+                                },
+                                costoPesos = dr["costoPesos"] != DBNull.Value ? Convert.ToDecimal(dr["costoPesos"]) : 0,
+                                precioCompra = dr["precioCompra"] != DBNull.Value ? Convert.ToDecimal(dr["precioCompra"]) : 0,
+                                precioVenta = dr["precioVenta"] != DBNull.Value ? Convert.ToDecimal(dr["precioVenta"]) : 0,
+                                estado = true, // Siempre estado 1 en la consulta
+                                stock = Convert.ToInt32(dr["stock"]),
+                                prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
+                                precioLista = dr["precioLista"] != DBNull.Value ? Convert.ToDecimal(dr["precioLista"]) : 0,
+                                ventaPesos = dr["ventaPesos"] != DBNull.Value ? Convert.ToDecimal(dr["ventaPesos"]) : 0,
+                                productoDolar = Convert.ToBoolean(dr["productoDolar"])
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    lista = new List<Producto>();
+                }
+            }
+            return lista;
+        }
+
+
+
 
 
 
@@ -1040,14 +1121,17 @@ namespace CapaDatos
                     query.AppendLine("ISNULL(ppDolar.precioCompra, 0) AS precioCompra,");
                     query.AppendLine("ISNULL(ppDolar.precioVenta, 0) AS precioVenta,");
                     query.AppendLine("ISNULL(ppPesos.precioVenta, 0) AS ventaPesos,");
-                    query.AppendLine("ISNULL(ppPesos.precioLista, 0) AS precioLista,");
+                    query.AppendLine("CASE");
+                    query.AppendLine("    WHEN p.productoDolar = 1 THEN ISNULL(ppDolar.precioLista, 0)");
+                    query.AppendLine("    ELSE ISNULL(ppPesos.precioLista, 0)");
+                    query.AppendLine("END AS precioLista,");
                     query.AppendLine("ISNULL(ppPesos.precioCompra, 0) AS costoPesos,");
-                    query.AppendLine("p.prodSerializable, p.estado");
+                    query.AppendLine("p.prodSerializable, p.estado, p.productoDolar");
                     query.AppendLine("FROM Producto p");
                     query.AppendLine("INNER JOIN CATEGORIA c ON c.idCategoria = p.idCategoria");
                     query.AppendLine("LEFT JOIN PRODUCTONEGOCIO pn ON pn.idProducto = p.idProducto AND pn.idNegocio = @idNegocio");
                     query.AppendLine("LEFT JOIN (");
-                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta");
+                    query.AppendLine("    SELECT idProducto, precioCompra, precioVenta, precioLista");
                     query.AppendLine("    FROM PRECIO_PRODUCTO");
                     query.AppendLine("    WHERE idMoneda = 2");
                     query.AppendLine(") ppDolar ON ppDolar.idProducto = p.idProducto");
@@ -1057,6 +1141,7 @@ namespace CapaDatos
                     query.AppendLine("    WHERE idMoneda = 1");
                     query.AppendLine(") ppPesos ON ppPesos.idProducto = p.idProducto");
                     query.AppendLine("WHERE p.estado = 1");
+
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), oconexion);
                     cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
@@ -1085,7 +1170,8 @@ namespace CapaDatos
                                 stock = Convert.ToInt32(dr["stock"]),
                                 precioLista = dr["precioLista"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["precioLista"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = dr["ventaPesos"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ventaPesos"])
+                                ventaPesos = dr["ventaPesos"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ventaPesos"]),
+                                productoDolar= Convert.ToBoolean(dr["productoDolar"])
                             });
                         }
                     }
@@ -1201,7 +1287,7 @@ namespace CapaDatos
                 try
                 {
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select p.idProducto, p.costoPesos, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion[DescripcionCategoria], p.stock, p.precioCompra, p.precioVenta, p.estado,p.prodSerializable,p.ventaPesos");
+                    query.AppendLine("select p.idProducto, p.costoPesos, p.codigo, p.nombre, p.descripcion, c.idCategoria, c.descripcion[DescripcionCategoria], p.stock, p.precioCompra, p.precioVenta, p.estado,p.prodSerializable,p.ventaPesos,p.productoDolar");
                     query.AppendLine("from Producto p");
                     query.AppendLine("inner join CATEGORIA c on c.idCategoria = p.idCategoria");
                     query.AppendLine("where p.idProducto = @idProducto");
@@ -1222,15 +1308,20 @@ namespace CapaDatos
                                 codigo = dr["codigo"].ToString(),
                                 nombre = dr["nombre"].ToString(),
                                 descripcion = dr["descripcion"].ToString(),
-                                oCategoria = new Categoria() { idCategoria = Convert.ToInt32(dr["idCategoria"]), descripcion = dr["DescripcionCategoria"].ToString() },
-                                costoPesos = Convert.ToDecimal(dr["costoPesos"]),
-                                precioCompra = Convert.ToDecimal(dr["precioCompra"]),
-                                precioVenta = Convert.ToDecimal(dr["precioVenta"]),
+                                oCategoria = new Categoria()
+                                {
+                                    idCategoria = Convert.ToInt32(dr["idCategoria"]),
+                                    descripcion = dr["DescripcionCategoria"].ToString()
+                                },
+                                costoPesos = dr["costoPesos"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["costoPesos"]),
+                                precioCompra = dr["precioCompra"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["precioCompra"]),
+                                precioVenta = dr["precioVenta"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["precioVenta"]),
                                 estado = Convert.ToBoolean(dr["estado"]),
-                                
+                                productoDolar = Convert.ToBoolean(dr["productoDolar"]),
                                 prodSerializable = Convert.ToBoolean(dr["prodSerializable"]),
-                                ventaPesos = Convert.ToDecimal(dr["ventaPesos"])
+                                ventaPesos = dr["ventaPesos"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["ventaPesos"])
                             };
+
                         }
                     }
                 }
@@ -1749,7 +1840,7 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
                     // Definir la consulta de actualización
-                    string query = "UPDATE PRODUCTO_DETALLE SET idNegocio = @idNegocio WHERE numeroSerie = @numeroSerie";
+                    string query = "UPDATE PRODUCTO_DETALLE SET idNegocio = @idNegocio, estado = 1 WHERE numeroSerie = @numeroSerie";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
 
@@ -1781,6 +1872,52 @@ namespace CapaDatos
 
             return respuesta;
         }
+
+
+        public bool ActualizarSerialNumberTraspasado(ProductoDetalle productoDetalle, out string mensaje)
+        {
+            bool respuesta = false;
+            mensaje = string.Empty;
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    // Definir la consulta de actualización
+                    string query = "UPDATE PRODUCTO_DETALLE SET estado = @estado WHERE numeroSerie = @numeroSerie";
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+
+                    // Agregar los parámetros necesarios
+                    cmd.Parameters.AddWithValue("@estado", productoDetalle.estado);
+                    cmd.Parameters.AddWithValue("@numeroSerie", productoDetalle.numeroSerie);
+
+                    oconexion.Open();
+
+                    // Ejecutar la consulta y verificar si alguna fila fue afectada
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        respuesta = true;
+                        mensaje = "El estado se actualizó correctamente.";
+                    }
+                    else
+                    {
+                        respuesta = false;
+                        mensaje = "No se encontró un registro con el número de serie especificado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta = false;
+                mensaje = ex.Message;
+            }
+
+            return respuesta;
+        }
+
+       
 
 
 

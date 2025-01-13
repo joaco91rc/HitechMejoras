@@ -128,7 +128,7 @@ namespace CapaPresentacion
                 idProducto = Convert.ToInt32(txtIdProducto.Text),
                 codigo = txtCodigo.Text,
                 nombre = txtNombre.Text,
-                descripcion = txtDescripcion.Text,
+                descripcion = txtNombre.Text,
                 oCategoria = new Categoria { idCategoria = Convert.ToInt32(((OpcionCombo)cboCategoria.SelectedItem).Valor) },
                 estado = Convert.ToInt32(((OpcionCombo)cboEstado.SelectedItem).Valor) == 1 ? true : false,
                 prodSerializable = checkSerializable.Checked,
@@ -191,7 +191,7 @@ namespace CapaPresentacion
                             PrecioVenta = Math.Round((txtPrecioLista.Value / cotizacionActiva), 2),
                             FechaRegistro = DateTime.Now,
                             PrecioEfectivo = Math.Round(txtPrecioLista.Value * 0.85m, 2),
-                            PrecioLista = Math.Round(txtPrecioLista.Value, 2)
+                            PrecioLista = Math.Round((txtPrecioLista.Value / cotizacionActiva)*1.40m, 2)
                         };
                         int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
                     }else if (simboloMoneda == "USD")
@@ -203,8 +203,8 @@ namespace CapaPresentacion
                             IdMoneda = 1,
                             PrecioCompra = Math.Round((txtCosto.Value * cotizacionActiva), 2),
                             PrecioVenta = Math.Round((txtPrecioVenta.Value*cotizacionActiva),2),
-                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2),
-                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.35m) * 0.85m, 2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.40m, 2),
+                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.40m) * 0.85m, 2),
                             FechaRegistro = DateTime.Now
                         };
                         int idPrecioPesos = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoPesos, out mensaje);
@@ -216,7 +216,7 @@ namespace CapaPresentacion
                             PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
                             FechaRegistro = DateTime.Now,
                             PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
-                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2)
+                            PrecioLista = Math.Round(txtPrecioVenta.Value*1.40m, 2)
                         };
                         int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
 
@@ -406,7 +406,7 @@ namespace CapaPresentacion
             txtIdProducto.Text = "0";
             txtCodigo.Text = "";
             txtNombre.Text = "";
-            txtDescripcion.Text = "";
+            
             txtCosto.Visible = true;
             
             checkCostoDolares.Checked = false;
@@ -439,7 +439,7 @@ namespace CapaPresentacion
                     txtIdProducto.Text = dgvData.Rows[indice].Cells["ProductoId"].Value.ToString();
                     txtCodigo.Text = dgvData.Rows[indice].Cells["codigo"].Value.ToString();
                     txtNombre.Text = dgvData.Rows[indice].Cells["nombre"].Value.ToString();
-                    txtDescripcion.Text = dgvData.Rows[indice].Cells["descripcion"].Value.ToString();
+                    
 
                     // Eliminar símbolo de moneda y convertir a número para el NumericUpDown
                     decimal precioLista = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["precioListaPesos"].Value.ToString()));

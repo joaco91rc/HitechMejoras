@@ -179,6 +179,7 @@ namespace CapaPresentacion.Modales
             this.txtBusqueda.Name = "txtBusqueda";
             this.txtBusqueda.Size = new System.Drawing.Size(307, 20);
             this.txtBusqueda.TabIndex = 77;
+            this.txtBusqueda.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBusqueda_KeyDown);
             // 
             // cboBusqueda
             // 
@@ -249,7 +250,6 @@ namespace CapaPresentacion.Modales
             this.stock.HeaderText = "STOCK";
             this.stock.Name = "stock";
             this.stock.ReadOnly = true;
-            this.stock.Visible = false;
             this.stock.Width = 70;
             // 
             // precioCompra

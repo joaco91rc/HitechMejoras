@@ -59,6 +59,7 @@ namespace CapaPresentacion
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string actualizacionStock = string.Empty;
+            string traspasoSerial = string.Empty;
             string mensaje = string.Empty;
             if (dgvData.Columns[e.ColumnIndex].Name == "btnConfirmarRecepcion")
             {
@@ -88,29 +89,23 @@ namespace CapaPresentacion
                         productoDetalle.idNegocio = idSucursalDestino;
                         productoDetalle.numeroSerie = serialNumber;
 
-                        var traspasarSN = new CN_Producto().TraspasarSerialNumber(productoDetalle, out mensaje);
-
-                        Deuda deuda = new Deuda();
-                        deuda.idSucursalOrigen = idSucursalOrigen;
-                        deuda.idSucursalDestino = idSucursalDestino;
-                        deuda.costo = costoProducto;
-                        deuda.fecha = DateTime.Now.Date;
-                        deuda.simboloMoneda = simboloMoneda ? "USD" : "ARS";
-                        deuda.idTraspasoMercaderia = idTraspasoMercaderia;
-                        deuda.estado = "NO PAGO";
-
-                        if (!simboloMoneda)
+                        if(serialNumber != null)
                         {
-                            deuda.costo = costoProducto * cotizacionActiva;
+                            var traspasarSN = new CN_Producto().TraspasarSerialNumber(productoDetalle, out mensaje);
+                            if (traspasarSN)
+                            {
+                                traspasoSerial = "Serial Number ingresado al Local de Destino";
+                            }
+                            else
+                            {
+                                traspasoSerial = "";
+                            }
                         }
-                        var insertarDeuda = new CN_Deuda().InsertarDeuda(deuda);
-                        string mensajeDeuda = string.Empty;
-                        if (insertarDeuda)
-                        {
-                            mensajeDeuda = "Se ha insertado la Deuda";
-                        } 
+                        
 
-                    MessageBox.Show("Producto Ingresado. " + actualizacionStock +" " + mensajeDeuda);
+                       
+
+                    MessageBox.Show( actualizacionStock + " " + traspasoSerial);
                     CargarGrilla();
                 }
                 else
@@ -140,11 +135,30 @@ namespace CapaPresentacion
 
                     int idSucursalOrigen = Convert.ToInt32(selectedRow.Cells["idSucursalOrigen"].Value);
 
+                    string serialNumber = selectedRow.Cells["SerialNumber"].Value.ToString();
+
                     var Rechazar = new CN_OrdenTraspaso().RechazarOrdenTraspaso(idOrdenTraspaso);
 
                     if (Rechazar)
                     {
                         actualizacionStock = new CN_ProductoNegocio().CargarOActualizarStockProducto(idProducto, idSucursalOrigen, cantidad);
+                        ProductoDetalle productoDetalle = new ProductoDetalle();
+                        productoDetalle.estado = true;
+                        productoDetalle.numeroSerie = serialNumber;
+
+                        if (serialNumber != null)
+                        {
+                            var traspasarSN = new CN_Producto().ActualizarSerialNumberTraspasado(productoDetalle, out mensaje);
+                            if (traspasarSN)
+                            {
+                                traspasoSerial = "Serial Number devuelto al Local de Origen";
+                            }
+                            else
+                            {
+                                traspasoSerial = "";
+                            }
+                        }
+
 
                         MessageBox.Show("Producto Devuelto a Sucursal de Origen. " + actualizacionStock);
                         CargarGrilla();

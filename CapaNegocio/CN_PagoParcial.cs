@@ -25,9 +25,9 @@ namespace CapaNegocio
             return objcd_PagoParcial.ConsultarPagosParcialesPorCliente(idCliente);
         }
 
-        public bool DarDeBajaPagoParcial(int idPagoParcial)
+        public bool DarDeBajaPagoParcial(int idPagoParcial, int idVenta)
         {
-            return objcd_PagoParcial.DarDeBajaPagoParcial(idPagoParcial);
+            return objcd_PagoParcial.DarDeBajaPagoParcial(idPagoParcial,idVenta);
         }
 
             // Método para registrar un pago parcial (seña)

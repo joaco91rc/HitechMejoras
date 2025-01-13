@@ -35,13 +35,6 @@ namespace CapaPresentacion
             this.txtPorcentajeRetencion = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtCategoriaSeleccionado = new System.Windows.Forms.TextBox();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.txtIdFormaPago = new System.Windows.Forms.TextBox();
@@ -62,6 +55,16 @@ namespace CapaPresentacion
             this.txtPorcentajeDescuento = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
+            this.cboTipo = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRetencion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -72,7 +75,7 @@ namespace CapaPresentacion
             // txtPorcentajeRetencion
             // 
             this.txtPorcentajeRetencion.DecimalPlaces = 2;
-            this.txtPorcentajeRetencion.Location = new System.Drawing.Point(172, 131);
+            this.txtPorcentajeRetencion.Location = new System.Drawing.Point(172, 160);
             this.txtPorcentajeRetencion.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -88,7 +91,7 @@ namespace CapaPresentacion
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label3.Location = new System.Drawing.Point(12, 131);
+            this.label3.Location = new System.Drawing.Point(12, 160);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(138, 17);
             this.label3.TabIndex = 108;
@@ -113,6 +116,7 @@ namespace CapaPresentacion
             this.btnSeleccionar,
             this.idFormaPago,
             this.descripcion,
+            this.tipo,
             this.porcentajeRetencion,
             this.porcentajeRecargo,
             this.porcentajeDescuento,
@@ -138,62 +142,6 @@ namespace CapaPresentacion
             this.dgvData.Size = new System.Drawing.Size(804, 370);
             this.dgvData.TabIndex = 107;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
-            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idFormaPago
-            // 
-            this.idFormaPago.HeaderText = "ID FORMA PAGO";
-            this.idFormaPago.Name = "idFormaPago";
-            this.idFormaPago.ReadOnly = true;
-            this.idFormaPago.Visible = false;
-            // 
-            // descripcion
-            // 
-            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descripcion.FillWeight = 11.97604F;
-            this.descripcion.HeaderText = "FORMA DE PAGO";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // porcentajeRetencion
-            // 
-            this.porcentajeRetencion.FillWeight = 11.97604F;
-            this.porcentajeRetencion.HeaderText = "% RETENCION";
-            this.porcentajeRetencion.MinimumWidth = 100;
-            this.porcentajeRetencion.Name = "porcentajeRetencion";
-            this.porcentajeRetencion.ReadOnly = true;
-            this.porcentajeRetencion.Width = 130;
-            // 
-            // porcentajeRecargo
-            // 
-            this.porcentajeRecargo.HeaderText = "% RECARGO";
-            this.porcentajeRecargo.Name = "porcentajeRecargo";
-            this.porcentajeRecargo.ReadOnly = true;
-            this.porcentajeRecargo.Width = 120;
-            // 
-            // porcentajeDescuento
-            // 
-            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
-            this.porcentajeDescuento.Name = "porcentajeDescuento";
-            this.porcentajeDescuento.ReadOnly = true;
-            this.porcentajeDescuento.Width = 130;
-            // 
-            // cajaAsociada
-            // 
-            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cajaAsociada.FillWeight = 11.97604F;
-            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
-            this.cajaAsociada.Name = "cajaAsociada";
-            this.cajaAsociada.ReadOnly = true;
             // 
             // txtCategoriaSeleccionado
             // 
@@ -373,7 +321,7 @@ namespace CapaPresentacion
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label4.Location = new System.Drawing.Point(12, 243);
+            this.label4.Location = new System.Drawing.Point(12, 262);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 17);
             this.label4.TabIndex = 112;
@@ -387,7 +335,7 @@ namespace CapaPresentacion
             "EFECTIVO",
             "MERCADO PAGO",
             "DOLARES"});
-            this.cboCajaAsociada.Location = new System.Drawing.Point(169, 243);
+            this.cboCajaAsociada.Location = new System.Drawing.Point(169, 262);
             this.cboCajaAsociada.Name = "cboCajaAsociada";
             this.cboCajaAsociada.Size = new System.Drawing.Size(190, 21);
             this.cboCajaAsociada.TabIndex = 113;
@@ -395,7 +343,7 @@ namespace CapaPresentacion
             // txtPorcentajeRecargo
             // 
             this.txtPorcentajeRecargo.DecimalPlaces = 2;
-            this.txtPorcentajeRecargo.Location = new System.Drawing.Point(172, 177);
+            this.txtPorcentajeRecargo.Location = new System.Drawing.Point(172, 196);
             this.txtPorcentajeRecargo.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -411,7 +359,7 @@ namespace CapaPresentacion
             this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label5.Location = new System.Drawing.Point(15, 177);
+            this.label5.Location = new System.Drawing.Point(15, 196);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 17);
             this.label5.TabIndex = 114;
@@ -420,7 +368,7 @@ namespace CapaPresentacion
             // txtPorcentajeDescuento
             // 
             this.txtPorcentajeDescuento.DecimalPlaces = 2;
-            this.txtPorcentajeDescuento.Location = new System.Drawing.Point(172, 214);
+            this.txtPorcentajeDescuento.Location = new System.Drawing.Point(172, 233);
             this.txtPorcentajeDescuento.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -436,7 +384,7 @@ namespace CapaPresentacion
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label6.Location = new System.Drawing.Point(15, 214);
+            this.label6.Location = new System.Drawing.Point(15, 233);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(142, 17);
             this.label6.TabIndex = 116;
@@ -465,11 +413,101 @@ namespace CapaPresentacion
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
+            // cboTipo
+            // 
+            this.cboTipo.FormattingEnabled = true;
+            this.cboTipo.Items.AddRange(new object[] {
+            "CREDITO",
+            "DEBITO",
+            "DOLAR",
+            "EFECTIVO",
+            "TRANSFERENCIA"});
+            this.cboTipo.Location = new System.Drawing.Point(172, 127);
+            this.cboTipo.Name = "cboTipo";
+            this.cboTipo.Size = new System.Drawing.Size(190, 21);
+            this.cboTipo.TabIndex = 120;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label7.Location = new System.Drawing.Point(15, 127);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 17);
+            this.label7.TabIndex = 119;
+            this.label7.Text = "Tipo";
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idFormaPago
+            // 
+            this.idFormaPago.HeaderText = "ID FORMA PAGO";
+            this.idFormaPago.Name = "idFormaPago";
+            this.idFormaPago.ReadOnly = true;
+            this.idFormaPago.Visible = false;
+            // 
+            // descripcion
+            // 
+            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.descripcion.FillWeight = 11.97604F;
+            this.descripcion.HeaderText = "FORMA DE PAGO";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.ReadOnly = true;
+            // 
+            // tipo
+            // 
+            this.tipo.HeaderText = "TIPO";
+            this.tipo.Name = "tipo";
+            this.tipo.ReadOnly = true;
+            // 
+            // porcentajeRetencion
+            // 
+            this.porcentajeRetencion.FillWeight = 11.97604F;
+            this.porcentajeRetencion.HeaderText = "% RETENCION";
+            this.porcentajeRetencion.MinimumWidth = 100;
+            this.porcentajeRetencion.Name = "porcentajeRetencion";
+            this.porcentajeRetencion.ReadOnly = true;
+            this.porcentajeRetencion.Width = 130;
+            // 
+            // porcentajeRecargo
+            // 
+            this.porcentajeRecargo.HeaderText = "% RECARGO";
+            this.porcentajeRecargo.Name = "porcentajeRecargo";
+            this.porcentajeRecargo.ReadOnly = true;
+            this.porcentajeRecargo.Width = 120;
+            // 
+            // porcentajeDescuento
+            // 
+            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
+            this.porcentajeDescuento.Name = "porcentajeDescuento";
+            this.porcentajeDescuento.ReadOnly = true;
+            this.porcentajeDescuento.Width = 130;
+            // 
+            // cajaAsociada
+            // 
+            this.cajaAsociada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cajaAsociada.FillWeight = 11.97604F;
+            this.cajaAsociada.HeaderText = "CAJA ASOCIADA";
+            this.cajaAsociada.Name = "cajaAsociada";
+            this.cajaAsociada.ReadOnly = true;
+            // 
             // frmFormaPago
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.cboTipo);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.txtPorcentajeDescuento);
             this.Controls.Add(this.label6);
@@ -528,15 +566,18 @@ namespace CapaPresentacion
         private System.Windows.Forms.ComboBox cboCajaAsociada;
         private System.Windows.Forms.NumericUpDown txtPorcentajeRecargo;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown txtPorcentajeDescuento;
+        private System.Windows.Forms.Label label6;
+        private FontAwesome.Sharp.IconButton btnEliminar;
+        private System.Windows.Forms.ComboBox cboTipo;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idFormaPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRetencion;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRecargo;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeDescuento;
         private System.Windows.Forms.DataGridViewTextBoxColumn cajaAsociada;
-        private System.Windows.Forms.NumericUpDown txtPorcentajeDescuento;
-        private System.Windows.Forms.Label label6;
-        private FontAwesome.Sharp.IconButton btnEliminar;
     }
 }

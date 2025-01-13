@@ -53,14 +53,12 @@ namespace CapaPresentacion
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.cboEstado = new System.Windows.Forms.ComboBox();
             this.cboCategoria = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -414,14 +412,6 @@ namespace CapaPresentacion
             this.label9.TabIndex = 48;
             this.label9.Text = "DETALLE PRODUCTO";
             // 
-            // txtDescripcion
-            // 
-            this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDescripcion.Location = new System.Drawing.Point(172, 145);
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(178, 20);
-            this.txtDescripcion.TabIndex = 45;
-            // 
             // txtNombre
             // 
             this.txtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -443,7 +433,7 @@ namespace CapaPresentacion
             this.cboEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboEstado.FormattingEnabled = true;
-            this.cboEstado.Location = new System.Drawing.Point(172, 226);
+            this.cboEstado.Location = new System.Drawing.Point(172, 188);
             this.cboEstado.Name = "cboEstado";
             this.cboEstado.Size = new System.Drawing.Size(178, 21);
             this.cboEstado.TabIndex = 47;
@@ -453,7 +443,7 @@ namespace CapaPresentacion
             this.cboCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboCategoria.FormattingEnabled = true;
-            this.cboCategoria.Location = new System.Drawing.Point(172, 182);
+            this.cboCategoria.Location = new System.Drawing.Point(172, 144);
             this.cboCategoria.Name = "cboCategoria";
             this.cboCategoria.Size = new System.Drawing.Size(178, 21);
             this.cboCategoria.TabIndex = 46;
@@ -464,7 +454,7 @@ namespace CapaPresentacion
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label8.Location = new System.Drawing.Point(12, 226);
+            this.label8.Location = new System.Drawing.Point(12, 188);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(49, 17);
             this.label8.TabIndex = 40;
@@ -476,23 +466,11 @@ namespace CapaPresentacion
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label7.Location = new System.Drawing.Point(12, 182);
+            this.label7.Location = new System.Drawing.Point(12, 144);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(67, 17);
             this.label7.TabIndex = 39;
             this.label7.Text = "Categoria";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label4.Location = new System.Drawing.Point(12, 145);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 17);
-            this.label4.TabIndex = 36;
-            this.label4.Text = "Descripcion";
             // 
             // label3
             // 
@@ -603,7 +581,7 @@ namespace CapaPresentacion
             this.checkSerializable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkSerializable.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkSerializable.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkSerializable.Location = new System.Drawing.Point(15, 265);
+            this.checkSerializable.Location = new System.Drawing.Point(15, 225);
             this.checkSerializable.Name = "checkSerializable";
             this.checkSerializable.Size = new System.Drawing.Size(94, 21);
             this.checkSerializable.TabIndex = 100;
@@ -667,7 +645,7 @@ namespace CapaPresentacion
             this.gbInfoProveedor.Controls.Add(this.txtPrecioVenta);
             this.gbInfoProveedor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbInfoProveedor.ForeColor = System.Drawing.Color.ForestGreen;
-            this.gbInfoProveedor.Location = new System.Drawing.Point(12, 292);
+            this.gbInfoProveedor.Location = new System.Drawing.Point(12, 252);
             this.gbInfoProveedor.Name = "gbInfoProveedor";
             this.gbInfoProveedor.Size = new System.Drawing.Size(412, 330);
             this.gbInfoProveedor.TabIndex = 125;
@@ -768,7 +746,7 @@ namespace CapaPresentacion
             this.checkProductoEnDolares.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkProductoEnDolares.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkProductoEnDolares.ForeColor = System.Drawing.Color.ForestGreen;
-            this.checkProductoEnDolares.Location = new System.Drawing.Point(149, 265);
+            this.checkProductoEnDolares.Location = new System.Drawing.Point(149, 225);
             this.checkProductoEnDolares.Name = "checkProductoEnDolares";
             this.checkProductoEnDolares.Size = new System.Drawing.Size(150, 21);
             this.checkProductoEnDolares.TabIndex = 126;
@@ -813,6 +791,7 @@ namespace CapaPresentacion
             this.descripcion.HeaderText = "DESCRIPCION";
             this.descripcion.Name = "descripcion";
             this.descripcion.ReadOnly = true;
+            this.descripcion.Visible = false;
             this.descripcion.Width = 170;
             // 
             // idCategoria
@@ -936,14 +915,12 @@ namespace CapaPresentacion
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.txtCodigo);
             this.Controls.Add(this.cboEstado);
             this.Controls.Add(this.cboCategoria);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label14);
@@ -983,14 +960,12 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.ComboBox cboEstado;
         private System.Windows.Forms.ComboBox cboCategoria;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label14;

@@ -154,7 +154,7 @@ namespace CapaDatos
 
 
 
-        public bool DarDeBajaPagoParcial(int idPagoParcial)
+        public bool DarDeBajaPagoParcial(int idPagoParcial,int idVenta)
         {
             bool exito = false;
 
@@ -163,11 +163,12 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
                     string query = @"UPDATE PAGOPARCIAL
-                             SET estado = 0
+                             SET estado = 0, idVenta = @idventa
                              WHERE idPagoParcial = @idPagoParcial";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@idPagoParcial", idPagoParcial);
+                    cmd.Parameters.AddWithValue("@idPagoParcial", idVenta);
 
                     oconexion.Open();
                     int filasAfectadas = cmd.ExecuteNonQuery();

@@ -127,10 +127,15 @@ namespace CapaPresentacion.Modales
             cboBusqueda.SelectedIndex = 1;
 
             CargarGrilla();
-            if(GlobalSettings.RolUsuario == 1)
+            // Ocultar columnas según el rol del usuario
+            if (GlobalSettings.RolUsuario != 1)
             {
-                btnActualizarStock.Visible = true;
+                dgvData.Columns["costoPesos"].Visible = false;
+                dgvData.Columns["precioCompra"].Visible = false;
             }
+
+            // Configurar visibilidad del botón
+            btnActualizarStock.Visible = GlobalSettings.RolUsuario == 1;
         }
 
         private void iconPictureBox1_Click(object sender, EventArgs e)

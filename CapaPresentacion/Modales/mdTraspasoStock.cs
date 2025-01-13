@@ -70,7 +70,7 @@ namespace CapaPresentacion.Modales
             cboBusqueda.SelectedIndex = 1;
 
             //Mostrar todos los Productos
-            List<Producto> listaProducto = new CN_Producto().Listar(GlobalSettings.SucursalId);
+            List<Producto> listaProducto = new CN_Producto().ListarProductosEnStock(GlobalSettings.SucursalId);
 
             foreach (Producto item in listaProducto)
             {
@@ -115,6 +115,12 @@ namespace CapaPresentacion.Modales
                         // Obtener el SerialNumber desde el modal
                         serialNumber = mdProducto.SerialNumber;
                     }
+                    else
+                    {
+                        MessageBox.Show("Debe seleccionar un Serial Number con Doble Click ","mensaje",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        // Si el modal no retorna OK, no continuar
+                        return;
+                    }
                 }
 
                 // Crear una instancia del formulario para el traspaso, pasando el SerialNumber
@@ -127,9 +133,11 @@ namespace CapaPresentacion.Modales
 
 
 
+
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {
             this.Close();
+            
         }
 
         private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -150,6 +158,28 @@ namespace CapaPresentacion.Modales
                 var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
                 e.Graphics.DrawImage(Properties.Resources.traspasar, new Rectangle(x, y, w, h));
                 e.Handled = true;
+            }
+        }
+
+        private void txtBusqueda_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string columnaFiltro = ((OpcionCombo)cboBusqueda.SelectedItem).Valor.ToString();
+
+                if (dgvData.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in dgvData.Rows)
+                    {
+                        if (row.Cells[columnaFiltro].Value.ToString().Trim().ToUpper().Contains(txtBusqueda.Text.Trim().ToUpper()))
+                            row.Visible = true;
+                        else
+                            row.Visible = false;
+                    }
+                }
+
+                // Evitar que el sonido de beep se produzca cuando se presiona Enter
+                e.SuppressKeyPress = true;
             }
         }
     }

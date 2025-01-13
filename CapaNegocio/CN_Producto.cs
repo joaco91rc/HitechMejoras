@@ -23,7 +23,12 @@ namespace CapaNegocio
         {
             return objcd_Producto.Listar(idNegocio);
         }
-        public List<Producto> ListarPorNegocio(int idNegocio)
+
+        public List<Producto> ListarProductosEnStock(int idNegocio)
+        {
+            return objcd_Producto.ListarProductosEnStock(idNegocio);
+        }
+            public List<Producto> ListarPorNegocio(int idNegocio)
         {
             return objcd_Producto.ListarPorNegocio(idNegocio);
         }
@@ -330,5 +335,11 @@ namespace CapaNegocio
         {
             return objcd_Producto.TraspasarSerialNumber(productoDetalle, out mensaje);
         }
+
+        public bool ActualizarSerialNumberTraspasado(ProductoDetalle productoDetalle, out string mensaje)
+        {
+            return objcd_Producto.ActualizarSerialNumberTraspasado(productoDetalle, out mensaje);
+        }
+
         }
 }

@@ -78,6 +78,7 @@ namespace CapaPresentacion.Modales
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productoDolar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -106,7 +107,8 @@ namespace CapaPresentacion.Modales
             this.prodSerializable,
             this.precioCompra,
             this.precioVenta,
-            this.precioLista});
+            this.precioLista,
+            this.productoDolar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -662,6 +664,12 @@ namespace CapaPresentacion.Modales
             this.precioLista.ReadOnly = true;
             this.precioLista.Width = 130;
             // 
+            // productoDolar
+            // 
+            this.productoDolar.HeaderText = "PRODUCTO DOLARIZADO";
+            this.productoDolar.Name = "productoDolar";
+            this.productoDolar.ReadOnly = true;
+            // 
             // mdProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -763,5 +771,6 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productoDolar;
     }
 }

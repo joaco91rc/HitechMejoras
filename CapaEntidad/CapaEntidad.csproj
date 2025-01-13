@@ -73,6 +73,7 @@
     <Compile Include="ReporteCantidadVentas.cs" />
     <Compile Include="ReporteCompra.cs" />
     <Compile Include="ReporteVenta.cs" />
+    <Compile Include="ReporteVentasPorProducto.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="ServicioTecnico.cs" />
     <Compile Include="SucursalSettings.cs" />

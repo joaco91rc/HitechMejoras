@@ -35,7 +35,10 @@ namespace CapaDatos
                                 porcentajeRetencion = Convert.ToDecimal(dr["porcentajeRetencion"]),
                                 porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
                                 porcentajeDescuento = Convert.ToDecimal(dr["porcentajeDescuento"]),
-                                cajaAsociada = dr["cajaAsociada"].ToString()
+                                cajaAsociada = dr["cajaAsociada"].ToString(),
+                                tipo = dr["tipo"].ToString(),
+                                porcentajeRecargoDolar = Convert.ToDecimal(dr["porcentajeRecargoDolar"]),
+                                porcentajeDescuentoDolar = Convert.ToDecimal(dr["porcentajeDescuentoDolar"]),
                             });
                         }
                     }
@@ -65,7 +68,11 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
                     cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
                     cmd.Parameters.AddWithValue("porcentajeDescuento", objFormaPago.porcentajeDescuento);
+                    cmd.Parameters.AddWithValue("porcentajeRecargoDolar", objFormaPago.porcentajeRecargoDolar);
+                    cmd.Parameters.AddWithValue("porcentajeDescuentoDolar", objFormaPago.porcentajeDescuentoDolar);
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
+                    cmd.Parameters.AddWithValue("tipo", objFormaPago.tipo);
+
                     cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -102,7 +109,11 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("cajaAsociada", objFormaPago.cajaAsociada);
                     cmd.Parameters.AddWithValue("porcentajeRetencion", objFormaPago.porcentajeRetencion);
                     cmd.Parameters.AddWithValue("porcentajeDescuento", objFormaPago.porcentajeDescuento);
+                    cmd.Parameters.AddWithValue("porcentajeRecargoDolar", objFormaPago.porcentajeRecargoDolar);
+                    cmd.Parameters.AddWithValue("porcentajeDescuentoDolar", objFormaPago.porcentajeDescuentoDolar);
                     cmd.Parameters.AddWithValue("porcentajeRecargo", objFormaPago.porcentajeRecargo);
+
+                    cmd.Parameters.AddWithValue("tipo", objFormaPago.tipo);
 
                     cmd.Parameters.Add("resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -149,6 +160,9 @@ namespace CapaDatos
                                 porcentajeRecargo = Convert.ToDecimal(dr["porcentajeRecargo"]),
                                 porcentajeDescuento = Convert.ToDecimal(dr["porcentajeDescuento"]),
                                 cajaAsociada = dr["cajaAsociada"].ToString(),
+                                tipo = dr["tipo"].ToString(),
+                                porcentajeRecargoDolar = Convert.ToDecimal(dr["porcentajeRecargoDolar"]),
+                                porcentajeDescuentoDolar = Convert.ToDecimal(dr["porcentajeDescuentoDolar"]),
                             };
                         }
                     }

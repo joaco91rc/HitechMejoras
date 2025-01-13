@@ -20,11 +20,12 @@ namespace CapaEntidad
         public string nombreProducto { get; set; }
         public string costoTotalProductos { get; set; }
 
-
+        public string observaciones { get; set; }
         public string margenGananciaEnDolares {get;set;}
         public string porcentajeMargenGanancia { get; set; }
         public string vendedor { get; set; }
         public string nombreLocal { get; set; }
+        
     }
 
 }
