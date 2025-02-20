@@ -202,16 +202,16 @@ namespace CapaPresentacion.Modales
                                     IdPrecioProducto = precioPesosActual.IdPrecioProducto,
                                     IdProducto = idProducto,
                                     PrecioCompra = costoPesos,
-                                    PrecioVenta = precioLista,
-                                    PrecioLista = precioLista,
-                                    PrecioEfectivo = precioLista * 0.85m,
+                                    PrecioVenta = precioVenta,
+                                    PrecioLista = precioVenta,
+                                    PrecioEfectivo = precioVenta * 0.85m,
                                     IdMoneda = 1
                                 };
                                 editarPrecioProductosPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
 
                                 // Calcular precios en dólares con la cotización activa
                                 decimal precioDolarCompra = Math.Round(costoPesos / cotizacionActiva, 2);
-                                decimal precioDolarVenta = Math.Round(precioLista / cotizacionActiva, 2);
+                                decimal precioDolarVenta = Math.Round(precioVenta / cotizacionActiva, 2);
 
                                 // Actualizar precios en dólares
                                 PrecioProducto objPrecioProductoDolares = new PrecioProducto
@@ -220,7 +220,7 @@ namespace CapaPresentacion.Modales
                                     IdProducto = idProducto,
                                     PrecioCompra = precioDolarCompra,
                                     PrecioVenta = precioDolarVenta,
-                                    PrecioLista = precioDolarVenta * cotizacionActiva * 1.35m,
+                                    PrecioLista = precioDolarVenta  * 1.40m,
                                     PrecioEfectivo = precioDolarVenta,
                                     IdMoneda = 2
                                 };
@@ -239,7 +239,7 @@ namespace CapaPresentacion.Modales
                                     IdProducto = idProducto,
                                     PrecioCompra = precioCompra,
                                     PrecioVenta = precioVenta,
-                                    PrecioLista = precioVenta * cotizacionActiva * 1.35m,
+                                    PrecioLista = precioVenta * 1.40m,
                                     PrecioEfectivo = precioVenta,
                                     IdMoneda = 2
                                 };
@@ -247,7 +247,7 @@ namespace CapaPresentacion.Modales
 
                                 // Calcular precios en pesos con la cotización activa
                                 decimal precioPesosCompra = Math.Round(precioCompra * cotizacionActiva, 2);
-                                decimal precioPesosVenta = Math.Round(precioVenta * cotizacionActiva, 2);
+                                decimal precioPesosVenta = Math.Round(precioVenta * cotizacionActiva*1.40m, 2);
 
                                 // Actualizar precios en pesos
                                 PrecioProducto objPrecioProductoPesos = new PrecioProducto
@@ -256,7 +256,7 @@ namespace CapaPresentacion.Modales
                                     IdProducto = idProducto,
                                     PrecioCompra = precioPesosCompra,
                                     PrecioVenta = precioPesosVenta,
-                                    PrecioLista = precioPesosVenta * 1.35m,
+                                    PrecioLista = precioPesosVenta ,
                                     PrecioEfectivo = precioPesosVenta * 0.85m,
                                     IdMoneda = 1
                                 };

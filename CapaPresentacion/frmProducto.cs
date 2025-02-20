@@ -276,8 +276,8 @@ namespace CapaPresentacion
                             IdMoneda = 1,
                             PrecioCompra = Math.Round((txtCosto.Value * cotizacionActiva), 2),
                             PrecioVenta = Math.Round((txtPrecioVenta.Value * cotizacionActiva), 2),
-                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2),
-                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.35m) * 0.85m, 2),
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.40m, 2),
+                            PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.40m) * 0.85m, 2),
                             FechaRegistro = DateTime.Now
                         };
                         bool editarPrecioPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
@@ -291,7 +291,7 @@ namespace CapaPresentacion
                             PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
                             FechaRegistro = DateTime.Now,
                             PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
-                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.35m, 2)
+                            PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.40m, 2)
                         };
                         bool editarPrecioDolar = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolar, out mensaje);
                         

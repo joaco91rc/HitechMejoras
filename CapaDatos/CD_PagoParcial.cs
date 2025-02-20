@@ -25,7 +25,8 @@ namespace CapaDatos
                             p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
                      FROM PAGOPARCIAL p
                      INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
-                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta";
+                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta
+                    where p.estado=1";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -97,7 +98,7 @@ namespace CapaDatos
                      FROM PAGOPARCIAL p
                      INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
                      LEFT JOIN VENTA v ON p.idVenta = v.idVenta
-                     WHERE p.idNegocio = @idNegocio";
+                     WHERE p.idNegocio = @idNegocio AND p.estado=1";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -152,6 +153,131 @@ namespace CapaDatos
             return lista;
         }
 
+        private PagoParcial MapearPagoParcial(SqlDataReader dr, int idNegocio)
+        {
+            string nombreLocal;
+
+            switch (idNegocio)
+            {
+                case 1:
+                    nombreLocal = "HITECH 1";
+                    break;
+                case 2:
+                    nombreLocal = "HITECH 2";
+                    break;
+                case 3:
+                    nombreLocal = "APPLE 49";
+                    break;
+                case 4:
+                    nombreLocal = "APPLE CAFE";
+                    break;
+                default:
+                    nombreLocal = "Desconocido";
+                    break;
+            }
+
+            return new PagoParcial()
+            {
+                idPagoParcial = Convert.ToInt32(dr["idPagoParcial"]),
+                idCliente = Convert.ToInt32(dr["idCliente"]),
+                nombreCliente = dr["nombreCliente"] != DBNull.Value ? dr["nombreCliente"].ToString() : "",
+                monto = Convert.ToDecimal(dr["monto"]),
+                idVenta = dr["idVenta"] != DBNull.Value ? (int?)Convert.ToInt32(dr["idVenta"]) : null,
+                numeroVenta = dr["numeroVenta"].ToString(),
+                fechaRegistro = Convert.ToDateTime(dr["fechaRegistro"]),
+                estado = Convert.ToBoolean(dr["estado"]),
+                formaPago = dr["formaPago"].ToString(),
+                productoReservado = dr["productoReservado"].ToString(),
+                vendedor = dr["vendedor"].ToString(),
+                idNegocio = idNegocio,
+                nombreLocal = nombreLocal,
+                moneda = dr["moneda"].ToString()
+            };
+        }
+
+
+
+        public List<PagoParcial> ListarPagosParcialesActivos(int idNegocio)
+        {
+            List<PagoParcial> lista = new List<PagoParcial>();
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    string query = @"SELECT p.idPagoParcial, p.moneda, p.idCliente, c.nombreCompleto AS nombreCliente, 
+                            p.monto, p.idVenta, p.vendedor, p.idNegocio,
+                            ISNULL(v.nroDocumento, '') AS numeroVenta, 
+                            p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
+                     FROM PAGOPARCIAL p
+                     INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
+                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta
+                     WHERE p.idNegocio = @idNegocio AND p.estado = 1";
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+
+                    oconexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(MapearPagoParcial(dr, idNegocio));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lista = new List<PagoParcial>();
+                // Manejo opcional del error
+            }
+
+            return lista;
+        }
+
+        public List<PagoParcial> ListarPagosParcialesInactivos(int idNegocio)
+        {
+            List<PagoParcial> lista = new List<PagoParcial>();
+
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
+                {
+                    string query = @"SELECT p.idPagoParcial, p.moneda, p.idCliente, c.nombreCompleto AS nombreCliente, 
+                            p.monto, p.idVenta, p.vendedor, p.idNegocio,
+                            ISNULL(v.nroDocumento, '') AS numeroVenta, 
+                            p.fechaRegistro, p.estado, p.formaPago, p.productoReservado
+                     FROM PAGOPARCIAL p
+                     INNER JOIN CLIENTE c ON p.idCliente = c.idCliente
+                     LEFT JOIN VENTA v ON p.idVenta = v.idVenta
+                     WHERE p.idNegocio = @idNegocio AND p.estado = 0";
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);
+
+                    oconexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(MapearPagoParcial(dr, idNegocio));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lista = new List<PagoParcial>();
+                // Manejo opcional del error
+            }
+
+            return lista;
+        }
+
+
 
 
         public bool DarDeBajaPagoParcial(int idPagoParcial,int idVenta)
@@ -168,7 +294,7 @@ namespace CapaDatos
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@idPagoParcial", idPagoParcial);
-                    cmd.Parameters.AddWithValue("@idPagoParcial", idVenta);
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
 
                     oconexion.Open();
                     int filasAfectadas = cmd.ExecuteNonQuery();

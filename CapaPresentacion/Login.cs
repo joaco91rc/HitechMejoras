@@ -116,6 +116,7 @@ namespace CapaPresentacion
             this.Show();
             txtContrasena.Text = "";
             txtUsuario.Text = "";
+            cboSucursal.SelectedIndex = -1;
         }
 
         private void txtContrasena_KeyDown(object sender, KeyEventArgs e)

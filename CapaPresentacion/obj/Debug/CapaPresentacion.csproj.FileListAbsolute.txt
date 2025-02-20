@@ -562,3 +562,4 @@ C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacio
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdAgregarPagoParcial.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.Modales.mdSeleccionFechas.resources
 C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmMoneda.resources
+C:\Users\jaalvarez\Desktop\HitechNube\CapaPresentacion\obj\Debug\CapaPresentacion.frmListadoPagosParciales.resources

@@ -29,13 +29,13 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label11 = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.gbRegistrarCompra = new System.Windows.Forms.GroupBox();
@@ -51,6 +51,10 @@ namespace CapaPresentacion
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.gbInfoProducto = new System.Windows.Forms.GroupBox();
+            this.txtPrecioLista = new System.Windows.Forms.TextBox();
+            this.txtProductoDolar = new System.Windows.Forms.TextBox();
+            this.txtPrecioVenta = new System.Windows.Forms.NumericUpDown();
+            this.txtPrecioCompra = new System.Windows.Forms.NumericUpDown();
             this.txtIdProducto = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.lblPrecioVenta = new System.Windows.Forms.Label();
@@ -70,8 +74,10 @@ namespace CapaPresentacion
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotizacionDolar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.productoDolar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewImageColumn();
             this.btnRegistrarCompra = new FontAwesome.Sharp.IconButton();
             this.btnAgregarProducto = new FontAwesome.Sharp.IconButton();
             this.checkCaja = new System.Windows.Forms.CheckBox();
@@ -109,11 +115,11 @@ namespace CapaPresentacion
             this.txtPagaCon = new System.Windows.Forms.NumericUpDown();
             this.checkRecargo = new System.Windows.Forms.CheckBox();
             this.checkDescuento = new System.Windows.Forms.CheckBox();
-            this.txtPrecioCompra = new System.Windows.Forms.NumericUpDown();
-            this.txtPrecioVenta = new System.Windows.Forms.NumericUpDown();
             this.gbRegistrarCompra.SuspendLayout();
             this.gbInfoProveedor.SuspendLayout();
             this.gbInfoProducto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioVenta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioCompra)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -126,8 +132,6 @@ namespace CapaPresentacion
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioCompra)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioVenta)).BeginInit();
             this.SuspendLayout();
             // 
             // label11
@@ -308,6 +312,8 @@ namespace CapaPresentacion
             this.gbInfoProducto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbInfoProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.gbInfoProducto.Controls.Add(this.txtPrecioLista);
+            this.gbInfoProducto.Controls.Add(this.txtProductoDolar);
             this.gbInfoProducto.Controls.Add(this.txtPrecioVenta);
             this.gbInfoProducto.Controls.Add(this.txtPrecioCompra);
             this.gbInfoProducto.Controls.Add(this.txtIdProducto);
@@ -331,6 +337,63 @@ namespace CapaPresentacion
             this.gbInfoProducto.TabIndex = 28;
             this.gbInfoProducto.TabStop = false;
             this.gbInfoProducto.Text = "Informacion Producto";
+            // 
+            // txtPrecioLista
+            // 
+            this.txtPrecioLista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPrecioLista.Location = new System.Drawing.Point(645, 18);
+            this.txtPrecioLista.Name = "txtPrecioLista";
+            this.txtPrecioLista.Size = new System.Drawing.Size(39, 29);
+            this.txtPrecioLista.TabIndex = 143;
+            this.txtPrecioLista.Visible = false;
+            // 
+            // txtProductoDolar
+            // 
+            this.txtProductoDolar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtProductoDolar.Location = new System.Drawing.Point(582, 18);
+            this.txtProductoDolar.Name = "txtProductoDolar";
+            this.txtProductoDolar.Size = new System.Drawing.Size(39, 29);
+            this.txtProductoDolar.TabIndex = 142;
+            // 
+            // txtPrecioVenta
+            // 
+            this.txtPrecioVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPrecioVenta.DecimalPlaces = 2;
+            this.txtPrecioVenta.Location = new System.Drawing.Point(1079, 72);
+            this.txtPrecioVenta.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtPrecioVenta.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.txtPrecioVenta.Name = "txtPrecioVenta";
+            this.txtPrecioVenta.Size = new System.Drawing.Size(142, 29);
+            this.txtPrecioVenta.TabIndex = 141;
+            this.txtPrecioVenta.ThousandsSeparator = true;
+            // 
+            // txtPrecioCompra
+            // 
+            this.txtPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPrecioCompra.DecimalPlaces = 2;
+            this.txtPrecioCompra.Location = new System.Drawing.Point(931, 72);
+            this.txtPrecioCompra.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.txtPrecioCompra.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.txtPrecioCompra.Name = "txtPrecioCompra";
+            this.txtPrecioCompra.Size = new System.Drawing.Size(139, 29);
+            this.txtPrecioCompra.TabIndex = 140;
+            this.txtPrecioCompra.ThousandsSeparator = true;
             // 
             // txtIdProducto
             // 
@@ -504,7 +567,6 @@ namespace CapaPresentacion
             0,
             -2147483648});
             this.txtCotizacion.Name = "txtCotizacion";
-            this.txtCotizacion.ReadOnly = true;
             this.txtCotizacion.Size = new System.Drawing.Size(90, 29);
             this.txtCotizacion.TabIndex = 126;
             this.txtCotizacion.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCotizacion_KeyDown);
@@ -517,15 +579,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idProducto,
@@ -533,39 +595,40 @@ namespace CapaPresentacion
             this.precioCompra,
             this.precioVenta,
             this.cantidad,
+            this.cotizacionDolar,
             this.subTotal,
+            this.productoDolar,
             this.btnEliminar});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(18, 290);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(1070, 139);
             this.dgvData.TabIndex = 55;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvData_CellPainting);
             // 
             // idProducto
             // 
@@ -601,15 +664,27 @@ namespace CapaPresentacion
             this.cantidad.Name = "cantidad";
             this.cantidad.ReadOnly = true;
             // 
+            // cotizacionDolar
+            // 
+            this.cotizacionDolar.HeaderText = "DOLAR";
+            this.cotizacionDolar.Name = "cotizacionDolar";
+            this.cotizacionDolar.ReadOnly = true;
+            // 
             // subTotal
             // 
             this.subTotal.HeaderText = "SUB TOTAL";
             this.subTotal.Name = "subTotal";
             this.subTotal.ReadOnly = true;
             // 
+            // productoDolar
+            // 
+            this.productoDolar.HeaderText = "PROD. DOLAR";
+            this.productoDolar.Name = "productoDolar";
+            this.productoDolar.ReadOnly = true;
+            this.productoDolar.Width = 120;
+            // 
             // btnEliminar
             // 
-            this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnEliminar.HeaderText = "";
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.ReadOnly = true;
@@ -678,15 +753,15 @@ namespace CapaPresentacion
             this.dgvDataFormasPago.AllowUserToAddRows = false;
             this.dgvDataFormasPago.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvDataFormasPago.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDataFormasPago.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDataFormasPago.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvDataFormasPago.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDataFormasPago.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idFormaPago,
@@ -695,25 +770,25 @@ namespace CapaPresentacion
             this.montoRecibido,
             this.btnEliminarPago});
             this.dgvDataFormasPago.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDataFormasPago.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDataFormasPago.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvDataFormasPago.GridColor = System.Drawing.Color.White;
-            this.dgvDataFormasPago.Location = new System.Drawing.Point(831, 441);
+            this.dgvDataFormasPago.Location = new System.Drawing.Point(870, 441);
             this.dgvDataFormasPago.MultiSelect = false;
             this.dgvDataFormasPago.Name = "dgvDataFormasPago";
             this.dgvDataFormasPago.ReadOnly = true;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvDataFormasPago.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvDataFormasPago.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvDataFormasPago.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvDataFormasPago.RowTemplate.Height = 28;
             this.dgvDataFormasPago.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDataFormasPago.Size = new System.Drawing.Size(416, 178);
+            this.dgvDataFormasPago.Size = new System.Drawing.Size(377, 178);
             this.dgvDataFormasPago.TabIndex = 156;
             this.dgvDataFormasPago.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDataFormasPago_CellContentClick);
             this.dgvDataFormasPago.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvDataFormasPago_RowsAdded);
@@ -776,7 +851,7 @@ namespace CapaPresentacion
             this.groupBox4.ForeColor = System.Drawing.Color.ForestGreen;
             this.groupBox4.Location = new System.Drawing.Point(454, 435);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(371, 184);
+            this.groupBox4.Size = new System.Drawing.Size(410, 184);
             this.groupBox4.TabIndex = 155;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Detalle Pago";
@@ -843,7 +918,7 @@ namespace CapaPresentacion
             0,
             -2147483648});
             this.txtRestaPagarDolares.Name = "txtRestaPagarDolares";
-            this.txtRestaPagarDolares.Size = new System.Drawing.Size(91, 29);
+            this.txtRestaPagarDolares.Size = new System.Drawing.Size(127, 29);
             this.txtRestaPagarDolares.TabIndex = 120;
             this.txtRestaPagarDolares.ThousandsSeparator = true;
             // 
@@ -867,7 +942,7 @@ namespace CapaPresentacion
             this.label23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label23.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label23.Location = new System.Drawing.Point(191, 103);
+            this.label23.Location = new System.Drawing.Point(203, 103);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(64, 17);
             this.label23.TabIndex = 110;
@@ -889,7 +964,7 @@ namespace CapaPresentacion
             0,
             -2147483648});
             this.txtTotalAPagar.Name = "txtTotalAPagar";
-            this.txtTotalAPagar.Size = new System.Drawing.Size(101, 29);
+            this.txtTotalAPagar.Size = new System.Drawing.Size(113, 29);
             this.txtTotalAPagar.TabIndex = 113;
             this.txtTotalAPagar.ThousandsSeparator = true;
             // 
@@ -909,7 +984,7 @@ namespace CapaPresentacion
             0,
             -2147483648});
             this.txtRestaPagar.Name = "txtRestaPagar";
-            this.txtRestaPagar.Size = new System.Drawing.Size(91, 29);
+            this.txtRestaPagar.Size = new System.Drawing.Size(127, 29);
             this.txtRestaPagar.TabIndex = 118;
             this.txtRestaPagar.ThousandsSeparator = true;
             // 
@@ -1182,46 +1257,6 @@ namespace CapaPresentacion
             this.checkDescuento.UseVisualStyleBackColor = false;
             this.checkDescuento.CheckedChanged += new System.EventHandler(this.checkDescuento_CheckedChanged);
             // 
-            // txtPrecioCompra
-            // 
-            this.txtPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPrecioCompra.DecimalPlaces = 2;
-            this.txtPrecioCompra.Location = new System.Drawing.Point(931, 72);
-            this.txtPrecioCompra.Maximum = new decimal(new int[] {
-            999999999,
-            0,
-            0,
-            0});
-            this.txtPrecioCompra.Minimum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            -2147483648});
-            this.txtPrecioCompra.Name = "txtPrecioCompra";
-            this.txtPrecioCompra.Size = new System.Drawing.Size(139, 29);
-            this.txtPrecioCompra.TabIndex = 140;
-            this.txtPrecioCompra.ThousandsSeparator = true;
-            // 
-            // txtPrecioVenta
-            // 
-            this.txtPrecioVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPrecioVenta.DecimalPlaces = 2;
-            this.txtPrecioVenta.Location = new System.Drawing.Point(1079, 72);
-            this.txtPrecioVenta.Maximum = new decimal(new int[] {
-            999999999,
-            0,
-            0,
-            0});
-            this.txtPrecioVenta.Minimum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            -2147483648});
-            this.txtPrecioVenta.Name = "txtPrecioVenta";
-            this.txtPrecioVenta.Size = new System.Drawing.Size(142, 29);
-            this.txtPrecioVenta.TabIndex = 141;
-            this.txtPrecioVenta.ThousandsSeparator = true;
-            // 
             // frmCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1250,6 +1285,8 @@ namespace CapaPresentacion
             this.gbInfoProveedor.PerformLayout();
             this.gbInfoProducto.ResumeLayout(false);
             this.gbInfoProducto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioVenta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioCompra)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCotizacion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
@@ -1265,8 +1302,6 @@ namespace CapaPresentacion
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPagaCon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioCompra)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrecioVenta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1305,13 +1340,6 @@ namespace CapaPresentacion
         private System.Windows.Forms.NumericUpDown txtCotizacion;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtTotalVentaDolares;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
-        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
         private System.Windows.Forms.CheckBox checkCaja;
         private System.Windows.Forms.DataGridView dgvDataFormasPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn idFormaPago;
@@ -1349,5 +1377,16 @@ namespace CapaPresentacion
         private System.Windows.Forms.CheckBox checkDescuento;
         private System.Windows.Forms.NumericUpDown txtPrecioVenta;
         private System.Windows.Forms.NumericUpDown txtPrecioCompra;
+        private System.Windows.Forms.TextBox txtProductoDolar;
+        private System.Windows.Forms.TextBox txtPrecioLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotizacionDolar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productoDolar;
+        private System.Windows.Forms.DataGridViewImageColumn btnEliminar;
     }
 }

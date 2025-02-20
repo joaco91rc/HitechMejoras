@@ -146,6 +146,7 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cadena))
                 {
                     SqlCommand cmd = new SqlCommand("SP_EDITARPRECIOPRODUCTO", oconexion);
+
                     cmd.Parameters.AddWithValue("idPrecioProducto", objPrecioProducto.IdPrecioProducto);
                     cmd.Parameters.AddWithValue("idProducto", objPrecioProducto.IdProducto);
                     cmd.Parameters.AddWithValue("idMoneda", objPrecioProducto.IdMoneda);

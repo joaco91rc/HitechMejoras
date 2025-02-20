@@ -122,6 +122,8 @@ namespace CapaPresentacion
             item.fecha,// Id del producto
             item.codigo,
             item.nombre,
+            item.idProveedor,
+            item.NombreProveedor,
             item.marca, // Marca
             item.modelo, // Modelo
             item.color, // Color
@@ -214,13 +216,17 @@ namespace CapaPresentacion
             // Acción si se hace clic en el botón "Eliminar"
             if (dgvData.Columns[e.ColumnIndex].Name == "btnEliminar")
             {
+                string actualizacionStock = string.Empty;
                 if (GlobalSettings.RolUsuario == 1)
                 {
                     var eliminar = new CN_Producto().EliminarSerialNumber(productoDetalle, out mensaje);
                     if (eliminar)
                     {
+                       
+                        actualizacionStock= new CN_ProductoNegocio().CargarOActualizarStockProducto(productoDetalle.idProducto, GlobalSettings.SucursalId, 1);
+
                         dgvData.Rows.RemoveAt(indice);
-                        MessageBox.Show("Producto Serializado Eliminado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Producto Serializado Eliminado con éxito. " + actualizacionStock , "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else

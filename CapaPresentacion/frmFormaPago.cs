@@ -36,6 +36,8 @@ namespace CapaPresentacion
                     item.porcentajeRetencion,
                     item.porcentajeRecargo,
                     item.porcentajeDescuento,
+                    item.porcentajeRecargoDolar,
+                    item.porcentajeDescuentoDolar,
                     item.cajaAsociada
 
                     });
@@ -53,6 +55,9 @@ namespace CapaPresentacion
                 cajaAsociada = cboCajaAsociada.Text,
                 porcentajeRecargo = txtPorcentajeRecargo.Value,
                 porcentajeDescuento = txtPorcentajeDescuento.Value,
+                porcentajeRecargoDolar = txtPorcentajeRecargoDolar.Value,
+                porcentajeDescuentoDolar = txtPorcentajeDescuentoDolar.Value,
+
                 tipo =cboTipo.Text
             };
 
@@ -72,6 +77,8 @@ namespace CapaPresentacion
                 objFormaPago.porcentajeRetencion.ToString(),
                 objFormaPago.porcentajeRecargo.ToString(),
                 objFormaPago.porcentajeDescuento.ToString(),
+                objFormaPago.porcentajeRecargoDolar.ToString(),
+                objFormaPago.porcentajeDescuentoDolar.ToString(),
                 objFormaPago.cajaAsociada.ToString()
                     });
                     Limpiar();
@@ -93,6 +100,8 @@ namespace CapaPresentacion
                     row.Cells["porcentajeRetencion"].Value = objFormaPago.porcentajeRetencion.ToString();
                     row.Cells["porcentajeRecargo"].Value = objFormaPago.porcentajeRecargo.ToString();
                     row.Cells["porcentajeDescuento"].Value = objFormaPago.porcentajeDescuento.ToString();
+                    row.Cells["porcentajeRecargoDolar"].Value = objFormaPago.porcentajeRecargoDolar.ToString();
+                    row.Cells["porcentajeDescuentoDolar"].Value = objFormaPago.porcentajeDescuentoDolar.ToString();
                     row.Cells["cajaAsociada"].Value = objFormaPago.cajaAsociada.ToString();
                     row.Cells["tipo"].Value = objFormaPago.tipo.ToString();
                     Limpiar();
@@ -112,6 +121,8 @@ namespace CapaPresentacion
             txtPorcentajeRetencion.Value = 0;
             txtPorcentajeRecargo.Value = 0;
             txtPorcentajeRecargo.Value = 0;
+            txtPorcentajeRecargoDolar.Value = 0;
+            txtPorcentajeRecargoDolar.Value = 0;
             txtIndice.Text = "-1"; // Resetear el índice
         }
 
@@ -136,6 +147,8 @@ namespace CapaPresentacion
                         txtPorcentajeRetencion.Text = dgvData.Rows[indice].Cells["porcentajeRetencion"].Value.ToString();
                         txtPorcentajeRecargo.Text = dgvData.Rows[indice].Cells["porcentajeRecargo"].Value.ToString();
                         txtPorcentajeDescuento.Text = dgvData.Rows[indice].Cells["porcentajeDescuento"].Value.ToString();
+                        txtPorcentajeRecargoDolar.Text = dgvData.Rows[indice].Cells["porcentajeRecargoDolar"].Value.ToString();
+                        txtPorcentajeDescuentoDolar.Text = dgvData.Rows[indice].Cells["porcentajeDescuentoDolar"].Value.ToString();
                         cboTipo.Text = dgvData.Rows[indice].Cells["tipo"].Value.ToString();
 
 

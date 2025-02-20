@@ -56,6 +56,7 @@ namespace CapaPresentacion
             this.menuClientes = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenuPagosParciales = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenuHistorialPagosParciales = new System.Windows.Forms.ToolStripMenuItem();
             this.menuProveedores = new FontAwesome.Sharp.IconMenuItem();
             this.menuReportes = new FontAwesome.Sharp.IconMenuItem();
             this.subMenuReporteCompras = new System.Windows.Forms.ToolStripMenuItem();
@@ -414,7 +415,8 @@ namespace CapaPresentacion
             this.menuClientes.AutoSize = false;
             this.menuClientes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.subMenuClientes,
-            this.subMenuPagosParciales});
+            this.subMenuPagosParciales,
+            this.subMenuHistorialPagosParciales});
             this.menuClientes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuClientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuClientes.IconChar = FontAwesome.Sharp.IconChar.Users;
@@ -434,7 +436,7 @@ namespace CapaPresentacion
             this.subMenuClientes.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuClientes.ForeColor = System.Drawing.Color.White;
             this.subMenuClientes.Name = "subMenuClientes";
-            this.subMenuClientes.Size = new System.Drawing.Size(198, 26);
+            this.subMenuClientes.Size = new System.Drawing.Size(267, 26);
             this.subMenuClientes.Text = "Clientes";
             this.subMenuClientes.Click += new System.EventHandler(this.subMenuClientes_Click);
             // 
@@ -443,9 +445,18 @@ namespace CapaPresentacion
             this.subMenuPagosParciales.BackColor = System.Drawing.Color.ForestGreen;
             this.subMenuPagosParciales.ForeColor = System.Drawing.Color.White;
             this.subMenuPagosParciales.Name = "subMenuPagosParciales";
-            this.subMenuPagosParciales.Size = new System.Drawing.Size(198, 26);
+            this.subMenuPagosParciales.Size = new System.Drawing.Size(267, 26);
             this.subMenuPagosParciales.Text = "Pagos Parciales";
             this.subMenuPagosParciales.Click += new System.EventHandler(this.subMenuPagosParciales_Click);
+            // 
+            // subMenuHistorialPagosParciales
+            // 
+            this.subMenuHistorialPagosParciales.BackColor = System.Drawing.Color.ForestGreen;
+            this.subMenuHistorialPagosParciales.ForeColor = System.Drawing.Color.White;
+            this.subMenuHistorialPagosParciales.Name = "subMenuHistorialPagosParciales";
+            this.subMenuHistorialPagosParciales.Size = new System.Drawing.Size(267, 26);
+            this.subMenuHistorialPagosParciales.Text = "Historial Pagos Parciales";
+            this.subMenuHistorialPagosParciales.Click += new System.EventHandler(this.subMenuHistorialPagosParciales_Click);
             // 
             // menuProveedores
             // 
@@ -1096,6 +1107,7 @@ namespace CapaPresentacion
         private System.Windows.Forms.ToolStripMenuItem subMenuMoneda;
         private System.Windows.Forms.ToolStripMenuItem subMenuFacturacionXproducto;
         private System.Windows.Forms.ToolStripMenuItem subMenuVentasPorVendedor;
+        private System.Windows.Forms.ToolStripMenuItem subMenuHistorialPagosParciales;
     }
 }
 

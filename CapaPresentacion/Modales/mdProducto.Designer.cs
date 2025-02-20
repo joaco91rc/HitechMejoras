@@ -75,6 +75,7 @@ namespace CapaPresentacion.Modales
             this.categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.costoPesos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.precioLista = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +106,7 @@ namespace CapaPresentacion.Modales
             this.categoria,
             this.stock,
             this.prodSerializable,
+            this.costoPesos,
             this.precioCompra,
             this.precioVenta,
             this.precioLista,
@@ -641,6 +643,13 @@ namespace CapaPresentacion.Modales
             this.prodSerializable.ReadOnly = true;
             this.prodSerializable.Visible = false;
             // 
+            // costoPesos
+            // 
+            this.costoPesos.HeaderText = "COSTO PESOS";
+            this.costoPesos.Name = "costoPesos";
+            this.costoPesos.ReadOnly = true;
+            this.costoPesos.Visible = false;
+            // 
             // precioCompra
             // 
             this.precioCompra.HeaderText = "PRECIO COMPRA";
@@ -768,6 +777,7 @@ namespace CapaPresentacion.Modales
         private System.Windows.Forms.DataGridViewTextBoxColumn categoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn stock;
         private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn costoPesos;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioLista;

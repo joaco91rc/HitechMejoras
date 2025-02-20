@@ -74,8 +74,9 @@ namespace CapaPresentacion.Modales
                 item.oCategoria.descripcion,
                 item.stock,
                 
-                
+
                 item.prodSerializable,
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.costoPesos),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioCompra),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioVenta),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioLista),
@@ -106,8 +107,9 @@ namespace CapaPresentacion.Modales
                 item.oCategoria.descripcion,
                 item.stock,
                 
-                
+
                 item.prodSerializable,
+                string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.costoPesos),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioCompra),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioVenta),
                 string.Format("{0 } {1}", item.productoDolar?"USD":"ARS", item.precioLista),
@@ -190,7 +192,8 @@ namespace CapaPresentacion.Modales
                     precioVenta = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["precioVenta"].Value.ToString())),
                     prodSerializable = Convert.ToBoolean(dgvData.Rows[iRow].Cells["prodSerializable"].Value.ToString()),
                     precioLista = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["precioLista"].Value.ToString())),
-                    productoDolar = Convert.ToBoolean(dgvData.Rows[iRow].Cells["productoDolar"].Value)
+                    productoDolar = Convert.ToBoolean(dgvData.Rows[iRow].Cells["productoDolar"].Value),
+                    costoPesos = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[iRow].Cells["costoPesos"].Value.ToString())),
                 };
 
                 

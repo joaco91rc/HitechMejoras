@@ -1,5 +1,6 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using CapaPresentacion.Modales;
 using CapaPresentacion.Utilidades;
 using ClosedXML.Excel;
 using System;
@@ -54,7 +55,31 @@ namespace CapaPresentacion
             
         }
 
-        
+        private void CargarVentasPorCliente(string nombreCliente)
+        {
+            dgvData.Rows.Clear(); // Limpiar las filas existentes en el DataGridView
+            List<Venta> listaVentas = new CN_Venta().ObtenerVentasConDetallePorCliente(GlobalSettings.SucursalId, nombreCliente);
+
+            foreach (Venta item in listaVentas)
+            {
+                DataGridViewRow newRow = new DataGridViewRow();
+                newRow.CreateCells(dgvData, new object[] {
+            item.idVenta,
+            item.fechaRegistro.Date,
+            item.tipoDocumento,
+            item.nroDocumento,
+            item.montoTotal,
+            item.nombreCliente,
+            item.nombreVendedor,
+            defaultImageView,   // Imagen predeterminada para ver detalles
+            defaultImageEditar  // Imagen predeterminada para editar
+        });
+
+                dgvData.Rows.Add(newRow); // Añade la fila al DataGridView
+            }
+        }
+
+
         private void CargarVentasEntreFechas(DateTime fechaDesde, DateTime fechaHasta)
         {
             
@@ -85,13 +110,8 @@ namespace CapaPresentacion
             
         }
 
-
-        private void frmListadoVentas_Load(object sender, EventArgs e)
+        private void CargarComboBusqueda()
         {
-            dtpFechaDesde.Value = DateTime.Now.Date.AddDays(-1);
-            dtpFechaHasta.Value = DateTime.Now.Date.AddDays(+1);
-
-            CargarVentasEntreFechas(dtpFechaDesde.Value.Date, dtpFechaHasta.Value.Date);
 
             foreach (DataGridViewColumn columna in dgvData.Columns)
             {
@@ -108,6 +128,19 @@ namespace CapaPresentacion
             cboBusqueda.DisplayMember = "Texto";
             cboBusqueda.ValueMember = "Valor";
             cboBusqueda.SelectedIndex = 1;
+
+
+        }
+
+
+        private void frmListadoVentas_Load(object sender, EventArgs e)
+        {
+            dtpFechaDesde.Value = DateTime.Now.Date.AddDays(-1);
+            dtpFechaHasta.Value = DateTime.Now.Date.AddDays(+1);
+
+            CargarVentasEntreFechas(dtpFechaDesde.Value.Date, dtpFechaHasta.Value.Date);
+            CargarComboBusqueda();
+            
         }
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -130,7 +163,14 @@ namespace CapaPresentacion
                         // Pasar el objeto Venta al formulario frmDetalleVenta
                         frmDetalleVenta detalleVentaForm = new frmDetalleVenta(oVenta);
                         detalleVentaForm.ShowDialog();
-                        CargarVentasEntreFechas(dtpFechaDesde.Value.Date, dtpFechaHasta.Value.Date.AddDays(+1));
+                        if(txtNombreCliente.Text != string.Empty)
+                        {
+                            CargarVentasPorCliente(txtNombreCliente.Text);
+                        } else
+                        {
+                            CargarVentasEntreFechas(dtpFechaDesde.Value.Date, dtpFechaHasta.Value.Date.AddDays(+1));
+                        }
+                        
                     }
 
                     if (dgvData.Columns[e.ColumnIndex].Name == "btnEditarVenta")
@@ -156,10 +196,17 @@ namespace CapaPresentacion
             }
         }
 
+        private void LimpiarCliente()
+        {
+            txtNombreCliente.Text = string.Empty;
+            txtIdCliente.Text = string.Empty;
+            txtDocumentoCliente.Text = string.Empty;
+        }
 
         private void btnBuscarReporte_Click(object sender, EventArgs e)
         {
             CargarVentasEntreFechas(dtpFechaDesde.Value.Date, dtpFechaHasta.Value.Date.AddDays(+1));
+            LimpiarCliente();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -263,6 +310,34 @@ namespace CapaPresentacion
             txtBusqueda.Clear();
             foreach (DataGridViewRow row in dgvData.Rows)
                 row.Visible = true;
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            using (var modal = new mdCliente())
+            {
+                var result = modal.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+
+                    txtDocumentoCliente.Text = modal._Cliente.documento;
+                    txtNombreCliente.Text = modal._Cliente.nombreCompleto;
+                    txtIdCliente.Text = modal._Cliente.idCliente.ToString();
+
+                    CargarVentasPorCliente(modal._Cliente.nombreCompleto);
+
+
+                }
+                else
+                {
+                    txtDocumentoCliente.Select();
+                }
+            }
+        }
+
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            LimpiarCliente();
         }
     }
 }

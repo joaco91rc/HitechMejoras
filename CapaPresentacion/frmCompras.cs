@@ -16,6 +16,7 @@ namespace CapaPresentacion
 {
     public partial class frmCompras : Form
     {
+        private decimal cotizacionDolarModificada;
         private decimal cotizacionOriginal;
         private bool cotizacionCambio = false;
         private Usuario _Usuario;
@@ -117,6 +118,8 @@ namespace CapaPresentacion
             cboTipoDocumento.DisplayMember = "Texto";
             cboTipoDocumento.ValueMember = "Valor";
             cboTipoDocumento.SelectedIndex = 0;
+            lblPrecioCompra.Text = "Precio Compra:";
+            lblPrecioVenta.Text = "Precio Venta:";
 
             var cotizacionDolar = new CN_Cotizacion().CotizacionActiva();
             txtCotizacion.Value = cotizacionDolar.importe;
@@ -169,6 +172,14 @@ namespace CapaPresentacion
                 }
             }
         }
+        private string RemoverSimboloMoneda(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return "0";
+
+            // Remueve los primeros caracteres (ej. "ARS " o "$ ") y devuelve el resto
+            return valor.Trim().Substring(4); // Ajusta según el formato de tu dato
+        }
 
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
@@ -179,12 +190,33 @@ namespace CapaPresentacion
                 var result = modal.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    txtIdProducto.Text = modal._Producto.idProducto.ToString();
-                    txtCodigoProducto.Text = modal._Producto.codigo;
-                    txtProducto.Text = modal._Producto.nombre;
-                    txtPrecioCompra.Text = modal._Producto.precioCompra.ToString();
-                    txtPrecioVenta.Text = modal._Producto.precioVenta.ToString();
-                    txtCantidad.Select();
+                    if (modal._Producto.productoDolar)
+                    {
+                        txtIdProducto.Text = modal._Producto.idProducto.ToString();
+                        txtCodigoProducto.Text = modal._Producto.codigo;
+                        txtProducto.Text = modal._Producto.nombre;
+                        txtPrecioCompra.Text = modal._Producto.precioCompra.ToString();
+                        txtPrecioVenta.Text = modal._Producto.precioVenta.ToString();
+                        txtProductoDolar.Text = modal._Producto.productoDolar ? "SI" : "NO";
+                        txtCantidad.Select();
+                        lblPrecioCompra.Text = "Precio Compra USD:";
+                        lblPrecioVenta.Text = "Precio Venta USD:";
+
+                    } else
+                    {
+
+                        txtIdProducto.Text = modal._Producto.idProducto.ToString();
+                        txtCodigoProducto.Text = modal._Producto.codigo;
+                        txtProducto.Text = modal._Producto.nombre;
+                        txtPrecioCompra.Text = modal._Producto.costoPesos.ToString();
+                        txtPrecioVenta.Text = modal._Producto.precioLista.ToString();
+                        txtProductoDolar.Text = modal._Producto.productoDolar ? "SI" : "NO";
+                        lblPrecioCompra.Text = "Precio Compra ARS:";
+                        lblPrecioVenta.Text = "Precio Venta ARS:";
+                        txtCantidad.Select();
+
+                    }
+                    
 
 
                 }
@@ -254,18 +286,28 @@ namespace CapaPresentacion
                 }
 
             }
+
+            if (cotizacionOriginal != txtCotizacion.Value)
+            {
+                cotizacionDolarModificada = txtCotizacion.Value;
+                cotizacionCambio = true;
+            }
             if (!producto_existe)
             {
 
                 dgvData.Rows.Add(new object[]{
                     txtIdProducto.Text,
                     txtProducto.Text,
-                    precioCompra.ToString("0.00"),
-                    precioVenta.ToString("0.00"),
+                    string.Format("{0 } {1}", txtProductoDolar.Text=="SI"?"USD":"ARS", precioCompra.ToString("0.00")),
+                    string.Format("{0 } {1}", txtProductoDolar.Text=="SI"?"USD":"ARS", precioVenta.ToString("0.00")),                    
                     txtCantidad.Value.ToString(),
-                    (txtCantidad.Value * precioCompra).ToString("0.00")
+                    string.Format("{0} {1}","ARS",txtCotizacion.Value.ToString()),
+                    string.Format("{0 } {1}",txtProductoDolar.Text=="SI"?"USD":"ARS",txtProductoDolar.Text=="SI"?(txtCantidad.Value * precioCompra).ToString("0.00"):(txtCantidad.Value * precioCompra).ToString("0.00")),
+                    txtProductoDolar.Text,
+                    defaultImage
                 });
                 calcularTotal();
+                CalcularRestaAPagar();
                 limpiarProducto();
                 txtCodigoProducto.Select();
             }
@@ -283,6 +325,10 @@ namespace CapaPresentacion
             txtPrecioCompra.Text = "";
             txtPrecioVenta.Text = "";
             txtCantidad.Value = 1;
+            txtProductoDolar.Text = "";
+            lblPrecioCompra.Text = "Precio Compra:";
+            lblPrecioVenta.Text = "Precio Venta:";
+
         }
 
         private decimal calcularTotal()
@@ -296,28 +342,54 @@ namespace CapaPresentacion
                 // Recorremos las filas y sumamos los totales
                 foreach (DataGridViewRow row in dgvData.Rows)
                 {
-                    // Validamos que las celdas no sean nulas antes de convertir
-                    if ( row.Cells["subTotal"].Value != null)
+                    // Validamos que las celdas no sean nulas antes de procesarlas
+                    if (row.Cells["subTotal"].Value != null && row.Cells["cotizacionDolar"].Value != null)
                     {
-                        totalPesos += Convert.ToDecimal(row.Cells["subTotal"].Value);
-                        totalDolares += Convert.ToDecimal(row.Cells["subTotal"].Value);
+                        string subTotal = row.Cells["subTotal"].Value.ToString();
+                        string cotizacionStr = row.Cells["cotizacionDolar"].Value.ToString();
+
+                        // Inicializamos la cotización en 1 para los casos donde no sea aplicable
+
+                        decimal cotizacionDolar = Convert.ToDecimal(RemoverSimboloMoneda(cotizacionStr));
+
+
+                        // Verificamos el prefijo y realizamos las operaciones necesarias
+                        if (subTotal.StartsWith("ARS"))
+                        {
+                            string valorLimpio = RemoverSimboloMoneda(subTotal);
+                            decimal valor = Convert.ToDecimal(valorLimpio);
+
+                            // Suma directa a pesos
+                            totalPesos += valor;
+
+                            // Conversión a dólares y suma (si la cotización es válida)
+                            if (cotizacionDolar > 0)
+                            {
+                                totalDolares += Math.Round(valor / cotizacionDolar, 2);
+                            }
+                        }
+                        else if (subTotal.StartsWith("USD"))
+                        {
+                            string valorLimpio = RemoverSimboloMoneda(subTotal);
+                            decimal valor = Convert.ToDecimal(valorLimpio);
+
+                            // Suma directa a dólares
+                            totalDolares += valor;
+
+                            // Conversión a pesos y suma
+                            totalPesos += Math.Round(valor * cotizacionDolar, 2);
+                        }
                     }
                 }
 
-                // Ajustamos el total si la cotización ha cambiado
-                if (cotizacionCambio)
-                {
-                    totalPesos = Math.Round(totalDolares * txtCotizacion.Value, 2);
-                }
-
                 // Actualizamos los TextBox correspondientes
-                txtTotalAPagar.Value = totalPesos*txtCotizacion.Value;
+                txtTotalAPagar.Value = totalPesos;
                 txtTotalAPagarDolares.Value = totalDolares;
 
                 // Solo asignamos RestaPagar si es la primera vez
                 if (txtRestaPagar.Value == 0 && txtRestaPagarDolares.Value == 0)
                 {
-                    txtRestaPagar.Value = totalPesos*txtCotizacion.Value;
+                    txtRestaPagar.Value = totalPesos;
                     txtRestaPagarDolares.Value = totalDolares;
                 }
             }
@@ -326,24 +398,24 @@ namespace CapaPresentacion
             return txtTotalAPagar.Value;
         }
 
-        private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
+        //private void dgvData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        //{
 
-            if (e.RowIndex < 0)
-                return;
-            if (e.ColumnIndex == 6)
-            {
+        //    if (e.RowIndex < 0)
+        //        return;
+        //    if (e.ColumnIndex == 6)
+        //    {
 
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+        //        e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 
-                var w = Properties.Resources.trash25.Width;
-                var h = Properties.Resources.trash25.Height;
-                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
-                var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
-                e.Graphics.DrawImage(Properties.Resources.trash25, new Rectangle(x, y, w, h));
-                e.Handled = true;
-            }
-        }
+        //        var w = Properties.Resources.trash25.Width;
+        //        var h = Properties.Resources.trash25.Height;
+        //        var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+        //        var y = e.CellBounds.Top + (e.CellBounds.Width - h) / 2;
+        //        e.Graphics.DrawImage(Properties.Resources.trash25, new Rectangle(x, y, w, h));
+        //        e.Handled = true;
+        //    }
+        //}
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -355,6 +427,14 @@ namespace CapaPresentacion
                 {
 
                     dgvData.Rows.RemoveAt(indice);
+                    txtTotalAPagar.Value = 0;
+                    txtTotalAPagarDolares.Value = 0;
+                    txtRestaPagar.Value = 0;
+                    txtRestaPagarDolares.Value = 0;
+                    cboFormaPago.SelectedIndex = -1;
+
+
+                    
                     calcularTotal();
 
 
@@ -420,11 +500,15 @@ namespace CapaPresentacion
         }
         private void CalcularRestaAPagar()
         {
-            decimal cotizacionDolar = txtCotizacion.Value;
+            decimal cotizacionDolar= cotizacionActiva;
             decimal totalAPagar = txtTotalAPagar.Value;
             decimal totalAPagarDolares = txtTotalAPagarDolares.Value;
             decimal pagoTotal = 0;
             decimal pagoTotalDolares = 0;
+
+            // Variables para acumular el recargo
+            decimal recargoPesos = 0;
+            decimal recargoDolares = 0;
 
             // Lista de formas de pago y montos extraídos del DataGridView
             foreach (DataGridViewRow fila in dgvDataFormasPago.Rows)
@@ -432,24 +516,27 @@ namespace CapaPresentacion
                 string formaPago = fila.Cells["formaPago"].Value.ToString();
                 decimal monto = Convert.ToDecimal(fila.Cells["importeFP"].Value);
 
+               
+                
+
                 if (formaPago == "DOLAR" || formaPago == "DOLAR EFECTIVO" || formaPago == "DOLAR - PAGO PARCIAL" || formaPago == "DOLAR EFECTIVO - PAGO PARCIAL")
                 {
                     pagoTotalDolares += monto;
-                    totalAPagar -= Math.Round(monto * cotizacionDolar, 2);
+                    pagoTotal += Math.Round(monto * cotizacionDolar, 2);
                 }
                 else if (formaPago == "RECARGO")
                 {
                     if (checkMonedaDolar.Checked)
                     {
                         // Recargo en dólares
-                        totalAPagarDolares += monto;
-                        totalAPagar += Math.Round(monto * cotizacionDolar, 2);
+                        recargoDolares += monto;
+                        recargoPesos += Math.Round(monto * cotizacionDolar, 2);
                     }
                     else
                     {
                         // Recargo en pesos
-                        totalAPagar += monto;
-                        totalAPagarDolares += Math.Round(monto / cotizacionDolar, 2);
+                        recargoPesos += monto;
+                        recargoDolares += Math.Round(monto / cotizacionDolar, 2);
                     }
                 }
                 else
@@ -459,7 +546,9 @@ namespace CapaPresentacion
                 }
             }
 
-
+            // Ajustar el total a pagar con los recargos
+            totalAPagar += recargoPesos;
+            totalAPagarDolares += recargoDolares;
 
             // Calcular el monto restante a pagar en cada moneda
             decimal restoAPagar = Math.Max(0, totalAPagar - pagoTotal);
@@ -480,6 +569,7 @@ namespace CapaPresentacion
             CalcularCambio();
         }
 
+
         private DataTable CrearDetalleCompra()
         {
             DataTable detalleCompra = new DataTable();
@@ -497,10 +587,10 @@ namespace CapaPresentacion
                     new object[]
                     {
                         Convert.ToInt32(row.Cells["idProducto"].Value.ToString()),
-                        row.Cells["precioCompra"].Value.ToString(),
-                        row.Cells["precioVenta"].Value.ToString(),
+                        Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["precioCompra"].Value.ToString())),
+                        Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["precioVenta"].Value.ToString())),
                         row.Cells["cantidad"].Value.ToString(),
-                        row.Cells["subTotal"].Value.ToString()
+                        Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["subTotal"].Value.ToString()))
                     });
             }
             return detalleCompra;
@@ -694,7 +784,7 @@ namespace CapaPresentacion
             }
         }
 
-        private void ActualizarStockYPrecios(int idProducto, int cantidad, decimal precioCompra, decimal precioVenta)
+        private void ActualizarStockYPrecios(int idProducto, int cantidad, decimal precioCompra, decimal precioVenta, decimal cotizacionDolar)
         {
             // Obtener el producto
             Producto producto = new CN_Producto().ObtenerProductoPorId(idProducto);
@@ -716,72 +806,75 @@ namespace CapaPresentacion
             if (producto.productoDolar)
             {
                 if (precioActualDolar == null ||
-        precioActualDolar.PrecioCompra != txtPrecioCompra.Value ||
-        precioActualDolar.PrecioVenta != txtPrecioVenta.Value)
+        precioActualDolar.PrecioCompra != precioCompra ||
+        precioActualDolar.PrecioVenta != precioVenta)
                 {
 
 
                     PrecioProducto objPrecioProductoPesos = new PrecioProducto()
-                    {
+                    {   IdPrecioProducto= precioActualPesos.IdPrecioProducto,
                         IdProducto = producto.idProducto,
                         IdMoneda = 1,
-                        PrecioCompra = Math.Round((txtPrecioCompra.Value * cotizacionActiva), 2),
-                        PrecioVenta = Math.Round((txtPrecioVenta.Value * cotizacionActiva), 2),
-                        PrecioLista = Math.Round(txtPrecioVenta.Value * cotizacionActiva * 1.40m, 2),
-                        PrecioEfectivo = Math.Round((txtPrecioVenta.Value * cotizacionActiva * 1.40m) * 0.85m, 2),
+                        PrecioCompra = Math.Round((precioCompra * cotizacionDolar), 2),
+                        PrecioVenta = Math.Round((precioVenta * cotizacionDolar), 2),
+                        PrecioLista = Math.Round(precioVenta * cotizacionDolar, 2),
+                        PrecioEfectivo = Math.Round((precioVenta * cotizacionDolar) * 0.85m, 2),
                         FechaRegistro = DateTime.Now
                     };
-                    int idPrecioPesos = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                    bool actualizarPrecioPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
                     PrecioProducto objPrecioProductoDolar = new PrecioProducto()
                     {
+                        IdPrecioProducto = precioActualDolar.IdPrecioProducto,
                         IdProducto = producto.idProducto,
                         IdMoneda = 2,
-                        PrecioCompra = Math.Round(txtPrecioCompra.Value, 2),
-                        PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
+                        PrecioCompra = Math.Round(precioCompra, 2),
+                        PrecioVenta = Math.Round(precioVenta, 2),
                         FechaRegistro = DateTime.Now,
-                        PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
-                        PrecioLista = Math.Round(txtPrecioVenta.Value * 1.40m, 2)
+                        PrecioEfectivo = Math.Round(precioVenta, 2),
+                        PrecioLista = Math.Round(precioVenta * 1.40m, 2)
                     };
-                    int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
+                    bool actualizarPrecioDolar = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolar, out mensaje);
 
                 }
             }
             else
             {
                 if (precioActualPesos == null ||
-        precioActualPesos.PrecioCompra != txtPrecioCompra.Value ||
-        precioActualPesos.PrecioVenta != txtPrecioVenta.Value)
+        precioActualPesos.PrecioCompra != precioCompra ||
+        precioActualPesos.PrecioVenta != precioVenta)
                 {
 
                     PrecioProducto objPrecioProductoPesos = new PrecioProducto()
                     {
+                        IdPrecioProducto = precioActualPesos.IdPrecioProducto,
                         IdProducto = producto.idProducto,
                         IdMoneda = 1,
-                        PrecioCompra = Math.Round(txtPrecioCompra.Value, 2),
-                        PrecioVenta = Math.Round(txtPrecioVenta.Value, 2),
-                        PrecioLista = Math.Round(txtPrecioVenta.Value * 1.40m, 2),
-                        PrecioEfectivo = Math.Round(txtPrecioVenta.Value * 1.40m * 0.85m, 2),
+                        PrecioCompra = Math.Round(precioCompra, 2),
+                        PrecioVenta = Math.Round(precioVenta, 2),
+                        PrecioLista = Math.Round(precioVenta, 2),
+                        PrecioEfectivo = Math.Round(precioVenta  * 0.85m, 2),
                         FechaRegistro = DateTime.Now
                     };
-                    int idPrecioPesos = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoPesos, out mensaje);
+                    bool actualizarPrecioPesos = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoPesos, out mensaje);
                     PrecioProducto objPrecioProductoDolar = new PrecioProducto()
                     {
+                        IdPrecioProducto = precioActualDolar.IdPrecioProducto,
                         IdProducto = producto.idProducto,
                         IdMoneda = 2,
-                        PrecioCompra = Math.Round((txtPrecioCompra.Value / cotizacionActiva), 2),
-                        PrecioVenta = Math.Round((txtPrecioVenta.Value / cotizacionActiva), 2),
+                        PrecioCompra = Math.Round((precioCompra / cotizacionDolar), 2),
+                        PrecioVenta = Math.Round((precioVenta / cotizacionDolar), 2),
                         FechaRegistro = DateTime.Now,
-                        PrecioEfectivo = Math.Round(txtPrecioVenta.Value, 2),
-                        PrecioLista = Math.Round((txtPrecioVenta.Value / cotizacionActiva) * 1.40m, 2)
+                        PrecioEfectivo = Math.Round(precioVenta / cotizacionDolar, 2),
+                        PrecioLista = Math.Round((precioVenta / cotizacionDolar) * 1.40m, 2)
                     };
-                    int idPrecioDolar = new CN_PrecioProducto().RegistrarPrecioProducto(objPrecioProductoDolar, out mensaje);
+                    bool actualizarPrecioDolar = new CN_PrecioProducto().EditarPrecioProducto(objPrecioProductoDolar, out mensaje);
 
                 }
             }
-            
+
         }
 
-        
+
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
@@ -830,15 +923,15 @@ namespace CapaPresentacion
                     {
                         int idProducto = Convert.ToInt32(row.Cells["idProducto"].Value);
                         int cantidad = Convert.ToInt32(row.Cells["cantidad"].Value);
-                        decimal precioCompra = Convert.ToDecimal(row.Cells["precioCompra"].Value);
-                        decimal precioVenta = Convert.ToDecimal(row.Cells["precioVenta"].Value);
-
+                        decimal precioCompra = Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["precioCompra"].Value.ToString()));
+                        decimal precioVenta = Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["precioVenta"].Value.ToString()));
+                        decimal cotizacionDolar = Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["cotizacionDolar"].Value.ToString()));
                         Producto producto = new CN_Producto().ObtenerProductoPorId(idProducto);
                         
                        
 
 
-                        ActualizarStockYPrecios(idProducto, cantidad, precioCompra, precioVenta);
+                        ActualizarStockYPrecios(idProducto, cantidad, precioCompra, precioVenta,cotizacionDolar);
                         
 
 
@@ -886,40 +979,50 @@ namespace CapaPresentacion
         }
         private void CalcularCambio()
         {
-            if (txtTotalAPagar.Text.Trim() == "")
+            // Obtiene el total a pagar desde el campo correspondiente
+            decimal totalAPagar = txtTotalAPagar.Value;
+
+            // Inicializa la suma total de los pagos
+            decimal sumaPagos = 0;
+
+            // Recorre las filas del DataGridView para sumar los pagos
+            foreach (DataGridViewRow fila in dgvDataFormasPago.Rows)
             {
-                MessageBox.Show("No existen productos en la venta", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                if (fila.Cells["importeFP"].Value != null)
+                {
+                    // Verifica si la forma de pago es un recargo, en ese caso no sumarlo
+                    string formaPago = fila.Cells["formaPago"].Value.ToString();
+                    if (formaPago != "RECARGO") // Solo sumamos si no es un recargo
+                    {
+                        sumaPagos += Convert.ToDecimal(fila.Cells["importeFP"].Value);
+                    }
+                    else
+                    {
+                        totalAPagar += Convert.ToDecimal(fila.Cells["importeFP"].Value);
+                    }
+
+                    if (formaPago == "DOLAR EFECTIVO")
+                    {
+                        sumaPagos = Convert.ToDecimal(fila.Cells["importeFP"].Value) * txtCotizacion.Value;
+                    }
+                }
             }
 
-            decimal pagacon;
-            if (cboFormaPago.Text == "DOLAR" || cboFormaPago.Text == "DOLAR EFECTIVO")
-            {
 
-                pagacon = 0;
+
+            // Calcula el cambio
+            decimal cambio = sumaPagos - totalAPagar;
+
+            // Si el cambio es negativo, no hay cambio, solo resta por pagar
+            if (cambio < 0)
+            {
+                txtRestaPagar.Value = Math.Abs(cambio); // Muestra cuánto falta pagar
+                txtCambioCliente.Text = "0.00";        // No hay cambio
             }
             else
             {
-                pagacon = Convert.ToDecimal(txtPagaCon.Text);
-            }
-
-
-            decimal total = Convert.ToDecimal(txtTotalAPagar.Text);
-
-            if (txtPagaCon.Text.Trim() == "")
-            {
-                txtPagaCon.Text = "0";
-            }
-
-            if (pagacon < total)
-            {
-                txtCambioCliente.Text = "0.00";
-
-            }
-            else
-            {
-                decimal cambio = pagacon - total;
-                txtCambioCliente.Text = cambio.ToString("0.00");
+                txtRestaPagar.Value = 0;               // No falta nada por pagar
+                txtCambioCliente.Text = cambio.ToString("0.00"); // Muestra el cambio
             }
 
         }

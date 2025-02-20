@@ -196,7 +196,7 @@ namespace CapaDatos
                         {
                             lista.Add(new ReporteVenta()
                             {
-                                nombreLocal = dr["NombreLocal"]?.ToString() ?? string.Empty,
+                                nombreLocal = ObtenerNombreLocal(idNegocio),
                                 fechaRegistro = dr["fechaRegistro"]?.ToString() ?? string.Empty,
                                 tipoDocumento = dr["tipoDocumento"]?.ToString() ?? string.Empty,
                                 nroDocumento = dr["nroDocumento"]?.ToString() ?? string.Empty,
@@ -208,7 +208,8 @@ namespace CapaDatos
                                 documentoCliente = dr["documentoCliente"]?.ToString() ?? string.Empty,
                                 nombreCliente = dr["nombreCliente"]?.ToString() ?? string.Empty,
                                 cotizacionDolar = dr["cotizacionDolar"]?.ToString() ?? string.Empty,
-                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty
+                                nombreProducto = dr["Productos"]?.ToString() ?? string.Empty,
+                                observaciones = dr["observaciones"]?.ToString() ?? string.Empty
                             });
                         }
                     }

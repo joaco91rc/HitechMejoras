@@ -81,7 +81,12 @@ namespace CapaNegocio
             return objcd_venta.ObtenerVentasConDetalle(idNegocio);
         }
 
-        public List<Venta> ObtenerVentasConDetalleEntreFechas(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
+        public List<Venta> ObtenerVentasConDetallePorCliente(int idNegocio, string nombreCliente)
+        {
+            return objcd_venta.ObtenerVentasConDetallePorCliente(idNegocio,nombreCliente);
+        }
+
+            public List<Venta> ObtenerVentasConDetalleEntreFechas(int idNegocio, DateTime fechaInicio, DateTime fechaFin)
         {
             // Simplemente llamamos al método del DAL que ya trae todo junto
             return objcd_venta.ObtenerVentasConDetalleEntreFechas(idNegocio,fechaInicio,fechaFin);

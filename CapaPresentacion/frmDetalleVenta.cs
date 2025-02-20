@@ -81,7 +81,7 @@ namespace CapaPresentacion
                 dgvData.Rows.Clear();
                 foreach (DetalleVenta dv in oVenta.oDetalleVenta)
                 {
-                    dgvData.Rows.Add(new object[] {dv.oProducto.idProducto, dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal, dv.oProducto.prodSerializable });
+                    dgvData.Rows.Add(new object[] {dv.oProducto.idProducto, dv.oProducto.nombre, dv.precioVenta, dv.cantidad, dv.subTotal, dv.oProducto.prodSerializable,dv.precioCompra });
                 }
 
                 txtTotalAPagar.Text = oVenta.montoTotal.ToString("0.00");

@@ -29,9 +29,9 @@ namespace CapaPresentacion
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
@@ -41,6 +41,22 @@ namespace CapaPresentacion
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
+            this.idPagoParcial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productoReservado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.moneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numeroVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vendedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtSeñaSeleccionada = new System.Windows.Forms.TextBox();
             this.txtIndice = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new FontAwesome.Sharp.IconButton();
@@ -70,22 +86,6 @@ namespace CapaPresentacion
             this.label14 = new System.Windows.Forms.Label();
             this.checkPesos = new System.Windows.Forms.CheckBox();
             this.checkDolares = new System.Windows.Forms.CheckBox();
-            this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
-            this.idPagoParcial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productoReservado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.formaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.moneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numeroVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vendedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoValor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idNegocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMonto)).BeginInit();
@@ -118,6 +118,7 @@ namespace CapaPresentacion
             this.txtCliente.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCliente.Location = new System.Drawing.Point(172, 173);
             this.txtCliente.Name = "txtCliente";
+            this.txtCliente.ReadOnly = true;
             this.txtCliente.Size = new System.Drawing.Size(178, 20);
             this.txtCliente.TabIndex = 76;
             // 
@@ -184,15 +185,15 @@ namespace CapaPresentacion
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.dgvData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.btnSeleccionar,
@@ -212,26 +213,143 @@ namespace CapaPresentacion
             this.nombreLocal,
             this.idNegocio});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvData.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.GridColor = System.Drawing.Color.White;
             this.dgvData.Location = new System.Drawing.Point(441, 152);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
-            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(83)))), ((int)(((byte)(150)))));
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dgvData.RowTemplate.Height = 28;
             this.dgvData.Size = new System.Drawing.Size(897, 497);
             this.dgvData.TabIndex = 86;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            // 
+            // btnSeleccionar
+            // 
+            this.btnSeleccionar.HeaderText = "";
+            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
+            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.btnSeleccionar.Name = "btnSeleccionar";
+            this.btnSeleccionar.ReadOnly = true;
+            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnSeleccionar.Width = 30;
+            // 
+            // idPagoParcial
+            // 
+            this.idPagoParcial.HeaderText = "ID PAGO PARCIAL";
+            this.idPagoParcial.Name = "idPagoParcial";
+            this.idPagoParcial.ReadOnly = true;
+            this.idPagoParcial.Visible = false;
+            this.idPagoParcial.Width = 160;
+            // 
+            // fecha
+            // 
+            this.fecha.HeaderText = "FECHA";
+            this.fecha.Name = "fecha";
+            this.fecha.ReadOnly = true;
+            this.fecha.Width = 120;
+            // 
+            // idCliente
+            // 
+            this.idCliente.HeaderText = "ID CLIENTE";
+            this.idCliente.Name = "idCliente";
+            this.idCliente.ReadOnly = true;
+            this.idCliente.Visible = false;
+            // 
+            // nombreCompleto
+            // 
+            this.nombreCompleto.HeaderText = "CLIENTE";
+            this.nombreCompleto.Name = "nombreCompleto";
+            this.nombreCompleto.ReadOnly = true;
+            this.nombreCompleto.Width = 180;
+            // 
+            // productoReservado
+            // 
+            this.productoReservado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.productoReservado.HeaderText = "PRODUCTO RESERVADO";
+            this.productoReservado.MinimumWidth = 250;
+            this.productoReservado.Name = "productoReservado";
+            this.productoReservado.ReadOnly = true;
+            // 
+            // formaPago
+            // 
+            this.formaPago.HeaderText = "FORMA PAGO";
+            this.formaPago.Name = "formaPago";
+            this.formaPago.ReadOnly = true;
+            this.formaPago.Width = 180;
+            // 
+            // monto
+            // 
+            this.monto.HeaderText = "MONTO SEÑA";
+            this.monto.Name = "monto";
+            this.monto.ReadOnly = true;
+            this.monto.Width = 180;
+            // 
+            // moneda
+            // 
+            this.moneda.HeaderText = "MONEDA";
+            this.moneda.Name = "moneda";
+            this.moneda.ReadOnly = true;
+            // 
+            // idVenta
+            // 
+            this.idVenta.HeaderText = "ID VENTA";
+            this.idVenta.Name = "idVenta";
+            this.idVenta.ReadOnly = true;
+            this.idVenta.Visible = false;
+            // 
+            // numeroVenta
+            // 
+            this.numeroVenta.HeaderText = "VENTA";
+            this.numeroVenta.Name = "numeroVenta";
+            this.numeroVenta.ReadOnly = true;
+            this.numeroVenta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.numeroVenta.Visible = false;
+            // 
+            // vendedor
+            // 
+            this.vendedor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.vendedor.HeaderText = "VENDEDOR";
+            this.vendedor.MinimumWidth = 100;
+            this.vendedor.Name = "vendedor";
+            this.vendedor.ReadOnly = true;
+            this.vendedor.Width = 200;
+            // 
+            // estadoValor
+            // 
+            this.estadoValor.HeaderText = "ESTADO VALOR";
+            this.estadoValor.Name = "estadoValor";
+            this.estadoValor.ReadOnly = true;
+            this.estadoValor.Visible = false;
+            // 
+            // estado
+            // 
+            this.estado.HeaderText = "ESTADO";
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
+            // 
+            // nombreLocal
+            // 
+            this.nombreLocal.HeaderText = "LOCAL";
+            this.nombreLocal.Name = "nombreLocal";
+            this.nombreLocal.ReadOnly = true;
+            // 
+            // idNegocio
+            // 
+            this.idNegocio.HeaderText = "ID NEGOCIO";
+            this.idNegocio.Name = "idNegocio";
+            this.idNegocio.ReadOnly = true;
+            this.idNegocio.Visible = false;
             // 
             // txtSeñaSeleccionada
             // 
@@ -643,123 +761,6 @@ namespace CapaPresentacion
             this.checkDolares.Text = "Dolares";
             this.checkDolares.UseVisualStyleBackColor = false;
             this.checkDolares.CheckedChanged += new System.EventHandler(this.checkDolares_CheckedChanged);
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.HeaderText = "";
-            this.btnSeleccionar.Image = global::CapaPresentacion.Properties.Resources.CHECK;
-            this.btnSeleccionar.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.ReadOnly = true;
-            this.btnSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnSeleccionar.Width = 30;
-            // 
-            // idPagoParcial
-            // 
-            this.idPagoParcial.HeaderText = "ID PAGO PARCIAL";
-            this.idPagoParcial.Name = "idPagoParcial";
-            this.idPagoParcial.ReadOnly = true;
-            this.idPagoParcial.Visible = false;
-            this.idPagoParcial.Width = 160;
-            // 
-            // fecha
-            // 
-            this.fecha.HeaderText = "FECHA";
-            this.fecha.Name = "fecha";
-            this.fecha.ReadOnly = true;
-            this.fecha.Width = 120;
-            // 
-            // idCliente
-            // 
-            this.idCliente.HeaderText = "ID CLIENTE";
-            this.idCliente.Name = "idCliente";
-            this.idCliente.ReadOnly = true;
-            this.idCliente.Visible = false;
-            // 
-            // nombreCompleto
-            // 
-            this.nombreCompleto.HeaderText = "CLIENTE";
-            this.nombreCompleto.Name = "nombreCompleto";
-            this.nombreCompleto.ReadOnly = true;
-            this.nombreCompleto.Width = 180;
-            // 
-            // productoReservado
-            // 
-            this.productoReservado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.productoReservado.HeaderText = "PRODUCTO RESERVADO";
-            this.productoReservado.MinimumWidth = 250;
-            this.productoReservado.Name = "productoReservado";
-            this.productoReservado.ReadOnly = true;
-            // 
-            // formaPago
-            // 
-            this.formaPago.HeaderText = "FORMA PAGO";
-            this.formaPago.Name = "formaPago";
-            this.formaPago.ReadOnly = true;
-            this.formaPago.Width = 180;
-            // 
-            // monto
-            // 
-            this.monto.HeaderText = "MONTO SEÑA";
-            this.monto.Name = "monto";
-            this.monto.ReadOnly = true;
-            this.monto.Width = 180;
-            // 
-            // moneda
-            // 
-            this.moneda.HeaderText = "MONEDA";
-            this.moneda.Name = "moneda";
-            this.moneda.ReadOnly = true;
-            // 
-            // idVenta
-            // 
-            this.idVenta.HeaderText = "ID VENTA";
-            this.idVenta.Name = "idVenta";
-            this.idVenta.ReadOnly = true;
-            this.idVenta.Visible = false;
-            // 
-            // numeroVenta
-            // 
-            this.numeroVenta.HeaderText = "VENTA";
-            this.numeroVenta.Name = "numeroVenta";
-            this.numeroVenta.ReadOnly = true;
-            this.numeroVenta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.numeroVenta.Visible = false;
-            // 
-            // vendedor
-            // 
-            this.vendedor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.vendedor.HeaderText = "VENDEDOR";
-            this.vendedor.MinimumWidth = 100;
-            this.vendedor.Name = "vendedor";
-            this.vendedor.ReadOnly = true;
-            this.vendedor.Width = 200;
-            // 
-            // estadoValor
-            // 
-            this.estadoValor.HeaderText = "ESTADO VALOR";
-            this.estadoValor.Name = "estadoValor";
-            this.estadoValor.ReadOnly = true;
-            this.estadoValor.Visible = false;
-            // 
-            // estado
-            // 
-            this.estado.HeaderText = "ESTADO";
-            this.estado.Name = "estado";
-            this.estado.ReadOnly = true;
-            // 
-            // nombreLocal
-            // 
-            this.nombreLocal.HeaderText = "LOCAL";
-            this.nombreLocal.Name = "nombreLocal";
-            this.nombreLocal.ReadOnly = true;
-            // 
-            // idNegocio
-            // 
-            this.idNegocio.HeaderText = "ID NEGOCIO";
-            this.idNegocio.Name = "idNegocio";
-            this.idNegocio.ReadOnly = true;
-            this.idNegocio.Visible = false;
             // 
             // frmPagoParcial
             // 

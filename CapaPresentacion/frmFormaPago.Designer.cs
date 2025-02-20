@@ -57,6 +57,10 @@ namespace CapaPresentacion
             this.btnEliminar = new FontAwesome.Sharp.IconButton();
             this.cboTipo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.txtPorcentajeDescuentoDolar = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtPorcentajeRecargoDolar = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnSeleccionar = new System.Windows.Forms.DataGridViewImageColumn();
             this.idFormaPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,18 +68,22 @@ namespace CapaPresentacion
             this.porcentajeRetencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.porcentajeRecargo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.porcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeRecargoDolar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.porcentajeDescuentoDolar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cajaAsociada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRetencion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuento)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuentoDolar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargoDolar)).BeginInit();
             this.SuspendLayout();
             // 
             // txtPorcentajeRetencion
             // 
             this.txtPorcentajeRetencion.DecimalPlaces = 2;
-            this.txtPorcentajeRetencion.Location = new System.Drawing.Point(172, 160);
+            this.txtPorcentajeRetencion.Location = new System.Drawing.Point(193, 161);
             this.txtPorcentajeRetencion.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -120,6 +128,8 @@ namespace CapaPresentacion
             this.porcentajeRetencion,
             this.porcentajeRecargo,
             this.porcentajeDescuento,
+            this.porcentajeRecargoDolar,
+            this.porcentajeDescuentoDolar,
             this.cajaAsociada});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -209,7 +219,7 @@ namespace CapaPresentacion
             this.btnLimpiarDatos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLimpiarDatos.IconSize = 28;
             this.btnLimpiarDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLimpiarDatos.Location = new System.Drawing.Point(149, 305);
+            this.btnLimpiarDatos.Location = new System.Drawing.Point(152, 383);
             this.btnLimpiarDatos.Name = "btnLimpiarDatos";
             this.btnLimpiarDatos.Size = new System.Drawing.Size(114, 31);
             this.btnLimpiarDatos.TabIndex = 99;
@@ -243,7 +253,7 @@ namespace CapaPresentacion
             this.btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnGuardar.IconSize = 28;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGuardar.Location = new System.Drawing.Point(3, 305);
+            this.btnGuardar.Location = new System.Drawing.Point(6, 383);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(140, 31);
             this.btnGuardar.TabIndex = 96;
@@ -310,7 +320,7 @@ namespace CapaPresentacion
             // 
             // txtFormaPago
             // 
-            this.txtFormaPago.Location = new System.Drawing.Point(172, 88);
+            this.txtFormaPago.Location = new System.Drawing.Point(193, 88);
             this.txtFormaPago.Name = "txtFormaPago";
             this.txtFormaPago.Size = new System.Drawing.Size(190, 20);
             this.txtFormaPago.TabIndex = 111;
@@ -321,7 +331,7 @@ namespace CapaPresentacion
             this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label4.Location = new System.Drawing.Point(12, 262);
+            this.label4.Location = new System.Drawing.Point(15, 340);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 17);
             this.label4.TabIndex = 112;
@@ -335,7 +345,7 @@ namespace CapaPresentacion
             "EFECTIVO",
             "MERCADO PAGO",
             "DOLARES"});
-            this.cboCajaAsociada.Location = new System.Drawing.Point(169, 262);
+            this.cboCajaAsociada.Location = new System.Drawing.Point(193, 336);
             this.cboCajaAsociada.Name = "cboCajaAsociada";
             this.cboCajaAsociada.Size = new System.Drawing.Size(190, 21);
             this.cboCajaAsociada.TabIndex = 113;
@@ -343,7 +353,7 @@ namespace CapaPresentacion
             // txtPorcentajeRecargo
             // 
             this.txtPorcentajeRecargo.DecimalPlaces = 2;
-            this.txtPorcentajeRecargo.Location = new System.Drawing.Point(172, 196);
+            this.txtPorcentajeRecargo.Location = new System.Drawing.Point(193, 197);
             this.txtPorcentajeRecargo.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -361,14 +371,14 @@ namespace CapaPresentacion
             this.label5.ForeColor = System.Drawing.Color.ForestGreen;
             this.label5.Location = new System.Drawing.Point(15, 196);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 17);
+            this.label5.Size = new System.Drawing.Size(154, 17);
             this.label5.TabIndex = 114;
-            this.label5.Text = "Porcentaje Recargo";
+            this.label5.Text = "Porcentaje Recargo ARS";
             // 
             // txtPorcentajeDescuento
             // 
             this.txtPorcentajeDescuento.DecimalPlaces = 2;
-            this.txtPorcentajeDescuento.Location = new System.Drawing.Point(172, 233);
+            this.txtPorcentajeDescuento.Location = new System.Drawing.Point(193, 233);
             this.txtPorcentajeDescuento.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -386,9 +396,9 @@ namespace CapaPresentacion
             this.label6.ForeColor = System.Drawing.Color.ForestGreen;
             this.label6.Location = new System.Drawing.Point(15, 233);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(142, 17);
+            this.label6.Size = new System.Drawing.Size(170, 17);
             this.label6.TabIndex = 116;
-            this.label6.Text = "Porcentaje Descuento";
+            this.label6.Text = "Porcentaje Descuento ARS";
             // 
             // btnEliminar
             // 
@@ -405,7 +415,7 @@ namespace CapaPresentacion
             this.btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminar.IconSize = 28;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(269, 305);
+            this.btnEliminar.Location = new System.Drawing.Point(272, 383);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(141, 31);
             this.btnEliminar.TabIndex = 118;
@@ -422,7 +432,7 @@ namespace CapaPresentacion
             "DOLAR",
             "EFECTIVO",
             "TRANSFERENCIA"});
-            this.cboTipo.Location = new System.Drawing.Point(172, 127);
+            this.cboTipo.Location = new System.Drawing.Point(193, 127);
             this.cboTipo.Name = "cboTipo";
             this.cboTipo.Size = new System.Drawing.Size(190, 21);
             this.cboTipo.TabIndex = 120;
@@ -438,6 +448,56 @@ namespace CapaPresentacion
             this.label7.Size = new System.Drawing.Size(36, 17);
             this.label7.TabIndex = 119;
             this.label7.Text = "Tipo";
+            // 
+            // txtPorcentajeDescuentoDolar
+            // 
+            this.txtPorcentajeDescuentoDolar.DecimalPlaces = 2;
+            this.txtPorcentajeDescuentoDolar.Location = new System.Drawing.Point(193, 302);
+            this.txtPorcentajeDescuentoDolar.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.txtPorcentajeDescuentoDolar.Name = "txtPorcentajeDescuentoDolar";
+            this.txtPorcentajeDescuentoDolar.Size = new System.Drawing.Size(100, 20);
+            this.txtPorcentajeDescuentoDolar.TabIndex = 124;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label8.Location = new System.Drawing.Point(15, 302);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(172, 17);
+            this.label8.TabIndex = 123;
+            this.label8.Text = "Porcentaje Descuento USD";
+            // 
+            // txtPorcentajeRecargoDolar
+            // 
+            this.txtPorcentajeRecargoDolar.DecimalPlaces = 2;
+            this.txtPorcentajeRecargoDolar.Location = new System.Drawing.Point(193, 265);
+            this.txtPorcentajeRecargoDolar.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.txtPorcentajeRecargoDolar.Name = "txtPorcentajeRecargoDolar";
+            this.txtPorcentajeRecargoDolar.Size = new System.Drawing.Size(100, 20);
+            this.txtPorcentajeRecargoDolar.TabIndex = 122;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label12.Location = new System.Drawing.Point(15, 265);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(156, 17);
+            this.label12.TabIndex = 121;
+            this.label12.Text = "Porcentaje Recargo USD";
             // 
             // btnSeleccionar
             // 
@@ -461,6 +521,7 @@ namespace CapaPresentacion
             this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.descripcion.FillWeight = 11.97604F;
             this.descripcion.HeaderText = "FORMA DE PAGO";
+            this.descripcion.MinimumWidth = 150;
             this.descripcion.Name = "descripcion";
             this.descripcion.ReadOnly = true;
             // 
@@ -481,17 +542,31 @@ namespace CapaPresentacion
             // 
             // porcentajeRecargo
             // 
-            this.porcentajeRecargo.HeaderText = "% RECARGO";
+            this.porcentajeRecargo.HeaderText = "% RECARGO ARS";
             this.porcentajeRecargo.Name = "porcentajeRecargo";
             this.porcentajeRecargo.ReadOnly = true;
             this.porcentajeRecargo.Width = 120;
             // 
             // porcentajeDescuento
             // 
-            this.porcentajeDescuento.HeaderText = "% DESCUENTO";
+            this.porcentajeDescuento.HeaderText = "% DESCUENTO ARS";
             this.porcentajeDescuento.Name = "porcentajeDescuento";
             this.porcentajeDescuento.ReadOnly = true;
             this.porcentajeDescuento.Width = 130;
+            // 
+            // porcentajeRecargoDolar
+            // 
+            this.porcentajeRecargoDolar.HeaderText = "% RECARGO USD";
+            this.porcentajeRecargoDolar.Name = "porcentajeRecargoDolar";
+            this.porcentajeRecargoDolar.ReadOnly = true;
+            this.porcentajeRecargoDolar.Width = 120;
+            // 
+            // porcentajeDescuentoDolar
+            // 
+            this.porcentajeDescuentoDolar.HeaderText = "% DESCUENTO USD";
+            this.porcentajeDescuentoDolar.Name = "porcentajeDescuentoDolar";
+            this.porcentajeDescuentoDolar.ReadOnly = true;
+            this.porcentajeDescuentoDolar.Width = 130;
             // 
             // cajaAsociada
             // 
@@ -506,6 +581,10 @@ namespace CapaPresentacion
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.txtPorcentajeDescuentoDolar);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtPorcentajeRecargoDolar);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.cboTipo);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnEliminar);
@@ -539,6 +618,8 @@ namespace CapaPresentacion
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuento)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeDescuentoDolar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPorcentajeRecargoDolar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -571,6 +652,10 @@ namespace CapaPresentacion
         private FontAwesome.Sharp.IconButton btnEliminar;
         private System.Windows.Forms.ComboBox cboTipo;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown txtPorcentajeDescuentoDolar;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown txtPorcentajeRecargoDolar;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridViewImageColumn btnSeleccionar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idFormaPago;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
@@ -578,6 +663,8 @@ namespace CapaPresentacion
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRetencion;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRecargo;
         private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeDescuento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeRecargoDolar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn porcentajeDescuentoDolar;
         private System.Windows.Forms.DataGridViewTextBoxColumn cajaAsociada;
     }
 }

@@ -99,7 +99,7 @@ namespace CapaPresentacion
             item.nombreCliente,
             item.productoReservado,
             item.formaPago,
-            item.monto,
+             item.moneda=="PESOS"?"ARS " + item.monto:"USD " + item.monto,
             item.moneda,
             item.idVenta,
             item.numeroVenta,
@@ -114,7 +114,14 @@ namespace CapaPresentacion
 
 
         }
+        private string RemoverSimboloMoneda(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return "0";
 
+            // Remueve los primeros caracteres (ej. "ARS " o "$ ") y devuelve el resto
+            return valor.Trim().Substring(4); // Ajusta según el formato de tu dato
+        }
         private void CargarPagosParcialesPorLocal()
         {
             dgvData.Rows.Clear();
@@ -134,7 +141,7 @@ namespace CapaPresentacion
             item.nombreCliente,
             item.productoReservado,
             item.formaPago,
-            item.monto,
+            item.moneda=="PESOS"?"ARS " + item.monto:"USD " + item.monto,
             item.moneda,
             item.idVenta,
             item.numeroVenta,
@@ -198,6 +205,11 @@ namespace CapaPresentacion
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
+            if(txtIdCliente.Text == "0")
+            {
+                MessageBox.Show("Debe seleccionar un Cliente de la lista de clientes", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             
             PagoParcial objPagoParcial = CrearPagoParcial();
 
@@ -479,7 +491,7 @@ namespace CapaPresentacion
                     dtpFecha.Text = dgvData.Rows[indice].Cells["fecha"].Value.ToString();
                     txtCliente.Text = dgvData.Rows[indice].Cells["nombreCompleto"].Value.ToString();
                     cboFormaPago.Text = dgvData.Rows[indice].Cells["formaPago"].Value.ToString();
-                    txtMonto.Value = Convert.ToDecimal(dgvData.Rows[indice].Cells["monto"].Value);
+                    txtMonto.Value = Convert.ToDecimal(RemoverSimboloMoneda(dgvData.Rows[indice].Cells["monto"].Value.ToString()));
                     txtProductoReservado.Text = dgvData.Rows[indice].Cells["productoReservado"].Value.ToString();
                     cboVendedores.Text = dgvData.Rows[indice].Cells["vendedor"].Value.ToString();
 

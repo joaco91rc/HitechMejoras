@@ -113,7 +113,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("idUsuario", objventa.oUsuario.idUsuario);
                     cmd.Parameters.AddWithValue("fecha", objventa.fechaRegistro);
                     cmd.Parameters.AddWithValue("tipoDocumento", objventa.tipoDocumento);
-                    cmd.Parameters.AddWithValue("nroDocumento", objventa.nroDocumento);
+                    
                     cmd.Parameters.AddWithValue("documentoCliente", objventa.documentoCliente);
                     cmd.Parameters.AddWithValue("nombreCliente", objventa.nombreCliente);
                     cmd.Parameters.AddWithValue("montoPago", objventa.montoPago);
@@ -461,6 +461,107 @@ namespace CapaDatos
         }
 
 
+        public List<Venta> ObtenerVentasConDetallePorCliente(int idNegocio, string nombreCliente)
+        {
+            List<Venta> listaVentas = new List<Venta>();
+
+            using (SqlConnection conexion = new SqlConnection(Conexion.cadena))
+            {
+                try
+                {
+                    conexion.Open();
+                    StringBuilder query = new StringBuilder();
+                    query.AppendLine("SELECT v.idVenta, v.idNegocio, u.nombreCompleto, v.documentoCliente, v.fechaRegistro AS FechaRegistro, v.nombreCliente, v.tipoDocumento, v.nroDocumento,");
+                    query.AppendLine("v.montoPago, v.montoCambio, v.montoTotal, v.formaPago, v.observaciones,");
+                    query.AppendLine("v.descuento, v.montoDescuento, v.montoFP1, v.montoFP2, v.montoFP3, v.montoFP4, v.formaPago2, v.formaPago3, v.formaPago4,");
+                    query.AppendLine("v.idVendedor, dv.idProducto, p.nombre AS productoNombre, dv.precioVenta, dv.cantidad, dv.subTotal,");
+                    query.AppendLine("vdr.nombre + ' ' + vdr.apellido AS nombreCompletoVendedor");  // Concatenar nombre y apellido del vendedor
+                    query.AppendLine("FROM VENTA v");
+                    query.AppendLine("INNER JOIN USUARIO u ON u.idUsuario = v.idUsuario");
+                    query.AppendLine("LEFT JOIN DETALLE_VENTA dv ON dv.idVenta = v.idVenta");
+                    query.AppendLine("LEFT JOIN PRODUCTO p ON p.idProducto = dv.idProducto");
+                    query.AppendLine("LEFT JOIN VENDEDOR vdr ON vdr.idVendedor = v.idVendedor");  // Join con la tabla VENDEDOR
+                    query.AppendLine("WHERE v.idNegocio = @idNegocio");  // Filtro por idNegocio
+                    query.AppendLine("AND v.nombreCliente LIKE @nombreCliente");  // Filtro por nombreCliente
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
+                    cmd.Parameters.AddWithValue("@idNegocio", idNegocio);  // Pasar el parámetro idNegocio
+                    cmd.Parameters.AddWithValue("@nombreCliente", $"%{nombreCliente}%");  // Pasar el parámetro nombreCliente
+                    cmd.CommandType = CommandType.Text;
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        int? lastVentaId = null;
+                        Venta currentVenta = null;
+
+                        while (dr.Read())
+                        {
+                            int idVenta = Convert.ToInt32(dr["idVenta"]);
+
+                            // Si es una nueva venta
+                            if (lastVentaId == null || lastVentaId != idVenta)
+                            {
+                                currentVenta = new Venta()
+                                {
+                                    idVenta = idVenta,
+                                    idNegocio = Convert.ToInt32(dr["idNegocio"]),
+                                    oUsuario = new Usuario() { nombreCompleto = dr["nombreCompleto"].ToString() },
+                                    documentoCliente = dr["documentoCliente"].ToString(),
+                                    tipoDocumento = dr["tipoDocumento"].ToString(),
+                                    nombreCliente = dr["nombreCliente"].ToString(),
+                                    nroDocumento = dr["nroDocumento"].ToString(),
+                                    montoPago = Convert.ToDecimal(dr["montoPago"]),
+                                    montoCambio = Convert.ToDecimal(dr["montoCambio"]),
+                                    montoTotal = Convert.ToDecimal(dr["montoTotal"]),
+                                    formaPago = dr["formaPago"].ToString(),
+                                    descuento = Convert.ToInt32(dr["descuento"]),
+                                    montoDescuento = Convert.ToDecimal(dr["montoDescuento"]),
+                                    formaPago2 = dr["formaPago2"].ToString(),
+                                    formaPago3 = dr["formaPago3"].ToString(),
+                                    formaPago4 = dr["formaPago4"].ToString(),
+                                    montoFP1 = Convert.ToDecimal(dr["montoFP1"]),
+                                    montoFP2 = Convert.ToDecimal(dr["montoFP2"]),
+                                    montoFP3 = Convert.ToDecimal(dr["montoFP3"]),
+                                    montoFP4 = Convert.ToDecimal(dr["montoFP4"]),
+                                    idVendedor = Convert.ToInt32(dr["idVendedor"]),
+                                    oDetalleVenta = new List<DetalleVenta>(),
+                                    nombreVendedor = dr["nombreCompletoVendedor"].ToString(), // Asignar el nombre completo del vendedor
+                                    observaciones = dr["observaciones"].ToString(),
+                                    fechaRegistro = Convert.ToDateTime(dr["FechaRegistro"])
+                                };
+
+                                listaVentas.Add(currentVenta);
+                                lastVentaId = idVenta;
+                            }
+
+                            // Agregar detalles si existen
+                            if (!dr.IsDBNull(dr.GetOrdinal("idProducto")))
+                            {
+                                currentVenta.oDetalleVenta.Add(new DetalleVenta()
+                                {
+                                    oProducto = new Producto()
+                                    {
+                                        idProducto = Convert.ToInt32(dr["idProducto"]),
+                                        nombre = dr["productoNombre"].ToString()
+                                    },
+                                    precioVenta = Convert.ToDecimal(dr["precioVenta"]),
+                                    cantidad = Convert.ToInt32(dr["cantidad"]),
+                                    subTotal = Convert.ToDecimal(dr["subTotal"])
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    listaVentas = new List<Venta>();
+                    // Manejo de errores (opcional)
+                }
+            }
+
+            return listaVentas;
+        }
+
 
 
         public List<DetalleVenta> ObtenerDetalleVenta(int idVenta)
@@ -473,7 +574,7 @@ namespace CapaDatos
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
 
-                    query.AppendLine("SELECT P.idProducto, P.nombre,DV.precioVenta,DV.cantidad,DV.subTotal FROM DETALLE_VENTA DV");
+                    query.AppendLine("SELECT P.idProducto, P.nombre,DV.precioVenta,DV.cantidad,DV.subTotal,DV.precioCompra FROM DETALLE_VENTA DV");
                     query.AppendLine("INNER JOIN  PRODUCTO P ON P.idProducto= DV.idProducto");
                     query.AppendLine("WHERE DV.idVenta=@idVenta");
 
@@ -493,7 +594,8 @@ namespace CapaDatos
                                 oProducto = new Producto() { idProducto= Convert.ToInt32(dr["idProducto"]), nombre = dr["nombre"].ToString() },
                                 precioVenta = Convert.ToDecimal(dr["precioVenta"].ToString()),
                                 cantidad = Convert.ToInt32(dr["cantidad"].ToString()),
-                                subTotal = Convert.ToDecimal(dr["subTotal"].ToString())
+                                subTotal = Convert.ToDecimal(dr["subTotal"].ToString()),
+                                precioCompra = Convert.ToDecimal(dr["precioCompra"].ToString())
                             });
 
 
@@ -523,7 +625,7 @@ namespace CapaDatos
                     query.AppendLine("SELECT v.idVenta, v.idNegocio, u.nombreCompleto, v.documentoCliente, v.nombreCliente, v.tipoDocumento, v.nroDocumento,v.observaciones,");
                     query.AppendLine("v.montoPago, v.montoCambio, v.montoTotal, v.fechaRegistro AS FechaRegistro, v.formaPago,");
                     query.AppendLine("v.descuento, v.montoDescuento, v.montoFP1, v.montoFP2, v.montoFP3, v.montoFP4, v.formaPago2, v.formaPago3, v.formaPago4,");
-                    query.AppendLine("v.idVendedor, dv.idProducto, p.nombre AS productoNombre, dv.precioVenta, dv.cantidad, dv.subTotal,");
+                    query.AppendLine("v.idVendedor, dv.idProducto, p.nombre AS productoNombre, dv.precioVenta, dv.cantidad, dv.subTotal, dv.precioCompra,");
                     query.AppendLine("vdr.nombre + ' ' + vdr.apellido AS nombreCompletoVendedor");  // Concatenamos nombre y apellido del vendedor
                     query.AppendLine("FROM VENTA v");
                     query.AppendLine("INNER JOIN USUARIO u ON u.idUsuario = v.idUsuario");
@@ -596,7 +698,8 @@ namespace CapaDatos
                                     },
                                     precioVenta = Convert.ToDecimal(dr["precioVenta"]),
                                     cantidad = Convert.ToInt32(dr["cantidad"]),
-                                    subTotal = Convert.ToDecimal(dr["subTotal"])
+                                    subTotal = Convert.ToDecimal(dr["subTotal"]),
+                                    precioCompra = dr.IsDBNull(dr.GetOrdinal("precioCompra")) ? 0 : Convert.ToDecimal(dr["precioCompra"])
                                 });
                             }
                         }

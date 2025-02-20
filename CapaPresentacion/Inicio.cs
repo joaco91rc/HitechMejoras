@@ -451,6 +451,11 @@ namespace CapaPresentacion
             AbrirFormulario(menuClientes, new frmPagoParcial(), this);
         }
 
+        private void subMenuHistorialPagosParciales_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(menuClientes, new frmListadoPagosParciales(), this);
+        }
+
 
         private void ExportarAExcelCantidadVentasPorLocal(List<ReporteCantidadVentas> lista)
         {
@@ -832,5 +837,7 @@ namespace CapaPresentacion
             }
 
         }
+
+        
     }
 }

@@ -19,8 +19,20 @@ namespace CapaNegocio
         public List<PagoParcial> ListarPagosParcialesPorLocal(int idNegocio)
         { return objcd_PagoParcial.ListarPagosParcialesPorLocal(idNegocio); }
 
-            // Método para listar todas las señas de pagos parciales
-            public List<PagoParcial> ConsultarPagosParcialesPorCliente(int idCliente)
+
+        public List<PagoParcial> ListarPagosParcialesActivos(int idNegocio)
+        {
+            return objcd_PagoParcial.ListarPagosParcialesActivos(idNegocio);
+        }
+
+        public List<PagoParcial> ListarPagosParcialesInactivos(int idNegocio)
+        {
+            return objcd_PagoParcial.ListarPagosParcialesInactivos(idNegocio);
+        }
+
+
+        // Método para listar todas las señas de pagos parciales
+        public List<PagoParcial> ConsultarPagosParcialesPorCliente(int idCliente)
         {
             return objcd_PagoParcial.ConsultarPagosParcialesPorCliente(idCliente);
         }

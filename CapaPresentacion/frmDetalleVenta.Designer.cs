@@ -41,12 +41,6 @@ namespace CapaPresentacion
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.gbInfoProveedor = new System.Windows.Forms.GroupBox();
@@ -92,6 +86,13 @@ namespace CapaPresentacion
             this.label14 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prodSerializable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.gbInfoProveedor.SuspendLayout();
             this.gbRegistrarCompra.SuspendLayout();
@@ -220,7 +221,8 @@ namespace CapaPresentacion
             this.precioVenta,
             this.cantidad,
             this.subTotal,
-            this.prodSerializable});
+            this.prodSerializable,
+            this.precioCompra});
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Hand;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.HighlightText;
@@ -242,46 +244,6 @@ namespace CapaPresentacion
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(1145, 108);
             this.dgvData.TabIndex = 83;
-            // 
-            // idProducto
-            // 
-            this.idProducto.HeaderText = "ID PRODUCTO";
-            this.idProducto.Name = "idProducto";
-            this.idProducto.ReadOnly = true;
-            this.idProducto.Visible = false;
-            // 
-            // producto
-            // 
-            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.producto.HeaderText = "PRODUCTO";
-            this.producto.Name = "producto";
-            this.producto.ReadOnly = true;
-            // 
-            // precioVenta
-            // 
-            this.precioVenta.HeaderText = "PRECIO";
-            this.precioVenta.Name = "precioVenta";
-            this.precioVenta.ReadOnly = true;
-            this.precioVenta.Width = 180;
-            // 
-            // cantidad
-            // 
-            this.cantidad.HeaderText = "CANTIDAD";
-            this.cantidad.Name = "cantidad";
-            this.cantidad.ReadOnly = true;
-            // 
-            // subTotal
-            // 
-            this.subTotal.HeaderText = "SUB TOTAL";
-            this.subTotal.Name = "subTotal";
-            this.subTotal.ReadOnly = true;
-            // 
-            // prodSerializable
-            // 
-            this.prodSerializable.HeaderText = "SERIALIZABLE";
-            this.prodSerializable.Name = "prodSerializable";
-            this.prodSerializable.ReadOnly = true;
-            this.prodSerializable.Visible = false;
             // 
             // label4
             // 
@@ -785,6 +747,52 @@ namespace CapaPresentacion
             this.txtObservaciones.Size = new System.Drawing.Size(226, 85);
             this.txtObservaciones.TabIndex = 154;
             // 
+            // idProducto
+            // 
+            this.idProducto.HeaderText = "ID PRODUCTO";
+            this.idProducto.Name = "idProducto";
+            this.idProducto.ReadOnly = true;
+            this.idProducto.Visible = false;
+            // 
+            // producto
+            // 
+            this.producto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.producto.HeaderText = "PRODUCTO";
+            this.producto.Name = "producto";
+            this.producto.ReadOnly = true;
+            // 
+            // precioVenta
+            // 
+            this.precioVenta.HeaderText = "PRECIO";
+            this.precioVenta.Name = "precioVenta";
+            this.precioVenta.ReadOnly = true;
+            this.precioVenta.Width = 180;
+            // 
+            // cantidad
+            // 
+            this.cantidad.HeaderText = "CANTIDAD";
+            this.cantidad.Name = "cantidad";
+            this.cantidad.ReadOnly = true;
+            // 
+            // subTotal
+            // 
+            this.subTotal.HeaderText = "SUB TOTAL";
+            this.subTotal.Name = "subTotal";
+            this.subTotal.ReadOnly = true;
+            // 
+            // prodSerializable
+            // 
+            this.prodSerializable.HeaderText = "SERIALIZABLE";
+            this.prodSerializable.Name = "prodSerializable";
+            this.prodSerializable.ReadOnly = true;
+            this.prodSerializable.Visible = false;
+            // 
+            // precioCompra
+            // 
+            this.precioCompra.HeaderText = "COSTO";
+            this.precioCompra.Name = "precioCompra";
+            this.precioCompra.ReadOnly = true;
+            // 
             // frmDetalleVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -896,13 +904,14 @@ namespace CapaPresentacion
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ComboBox cboVendedores;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn precioVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn subTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn prodSerializable;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox txtObservaciones;
+        private System.Windows.Forms.DataGridViewTextBoxColumn precioCompra;
     }
 }

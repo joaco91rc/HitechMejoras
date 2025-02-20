@@ -95,6 +95,7 @@ namespace CapaPresentacion
             txtIdCliente.Text = idCliente.ToString();
             txtObservaciones.Text = _Venta.observaciones;
             txtCotizacion.Value = _Venta.cotizacionDolar;
+            cotizacionDolarModificada = _Venta.cotizacionDolar;
             // Cargar los productos en el DataGridView
             foreach (var item in _Venta.oDetalleVenta)
             {
@@ -265,6 +266,7 @@ namespace CapaPresentacion
                     txtSerializable.Text = modal._Producto.prodSerializable.ToString();
                     txtPrecioLista.Text = modal._Producto.precioLista.ToString();
                     txtProductoDolar.Text = modal._Producto.productoDolar?"SI":"NO";
+                    txtCosto.Text = modal._Producto.precioCompra.ToString();
                     txtCantidad.Select();
                     
                 }
@@ -379,7 +381,9 @@ namespace CapaPresentacion
                                 productoDetalle.modelo,       // Modelo del producto
                                 productoDetalle.color,
                                 productoDetalle.numeroSerie,
+                                
                                 precio.ToString("0.00"),
+                                txtCosto.Text,
                                 string.Format("{0 } {1}", txtProductoDolar.Text=="SI"?"USD":"ARS", txtPrecioLista.Text),
                                 txtCantidad.Value.ToString(),
                                 txtCotizacion.Value.ToString(),
@@ -414,6 +418,7 @@ namespace CapaPresentacion
                 string.Empty,  // Color
                 string.Empty,  // Serial number
                 precio.ToString("0.00"),
+                txtCosto.Text,
                 string.Format("{0 } {1}", txtProductoDolar.Text=="SI"?"USD":"ARS", txtPrecioLista.Text),
                 txtCantidad.Value.ToString(),
                 txtCotizacion.Value.ToString(),
@@ -845,8 +850,22 @@ namespace CapaPresentacion
                     // Solo registrar transacción si el monto es mayor que 0
                     if (pago.Value > 0)
                     {
-                        // Obtener la caja asociada a la forma de pago
-                        var cajaAsociada = new CN_FormaPago().ObtenerFPPorDescripcion(pago.Key).cajaAsociada;
+                        if (pago.Key.Equals("DESCUENTO", StringComparison.OrdinalIgnoreCase) || pago.Key.Equals("RECARGO", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue; // Salta al siguiente elemento en el bucle
+                        }
+
+                        if (pago.Key.StartsWith("PAGO PARCIAL", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue; // Salta al siguiente elemento en el bucle
+                        }
+                        var formaPago = new CN_FormaPago().ObtenerFPPorDescripcion(pago.Key);
+                        if (formaPago == null || string.IsNullOrWhiteSpace(formaPago.cajaAsociada))
+                        {
+                            throw new Exception($"No se encontró una caja asociada para la forma de pago: {pago.Key}");
+                        }
+
+                        string cajaAsociada = formaPago.cajaAsociada;
 
                         // Crear el objeto de transacción
                         TransaccionCaja objTransaccion = new TransaccionCaja()
@@ -855,7 +874,7 @@ namespace CapaPresentacion
                             hora = dtpFecha.Value.Hour.ToString(),
                             tipoTransaccion = "ENTRADA", // Tipo de transacción
                             monto = pago.Value,
-                            docAsociado = $"Venta Numero: {oVenta.nroDocumento} Cliente: {oVenta.nombreCliente}",
+                            docAsociado = $"Venta Numero: {idVentaGenerado} Cliente: {oVenta.nombreCliente}",
                             usuarioTransaccion = cboVendedores.Text,
                             formaPago = pago.Key,
                             cajaAsociada = cajaAsociada,
@@ -895,13 +914,11 @@ namespace CapaPresentacion
            
             txtTotalAPagar.Text = string.Empty;
             txtPagaCon.Text = string.Empty;
-           
+            txtTotalAPagarDolares.Text = string.Empty;
+            txtRestaPagarDolares.Text = string.Empty;
             txtRestaPagar.Text = string.Empty;
             isUpdated = false;
-            lblTotalAPagarDolares.Visible = false;
-            lblRestaPagarDolares.Visible = false;
-            txtTotalAPagarDolares.Visible = false;
-            txtRestaPagarDolares.Visible = false;
+            
             checkDescuento.Checked = false;
         }
 
@@ -932,14 +949,35 @@ namespace CapaPresentacion
                 string tipo = string.Empty;
                 try
                 {
-                    if (txtIdPagoParcial.Text != "0")
+                    foreach (DataGridViewRow row in dgvDataFormasPago.Rows)
                     {
-                        bool darBajaPagoParcial = new CN_PagoParcial().DarDeBajaPagoParcial(Convert.ToInt32(txtIdPagoParcial.Text),idVentaGenerado);
-                        if (darBajaPagoParcial == false)
+                        // Obtener la forma de pago de la fila actual
+                        string formaPago = row.Cells["formaPago"].Value?.ToString();
+
+                        // Verificar si la forma de pago comienza con "PAGO PARCIAL"
+                        if (!string.IsNullOrWhiteSpace(formaPago) && formaPago.StartsWith("PAGO PARCIAL", StringComparison.OrdinalIgnoreCase))
                         {
-                            MessageBox.Show("No se pudo dar de baja el pago parcial", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // Obtener el valor de la columna "IdFormaPago"
+                            if (int.TryParse(row.Cells["idFormaPago"].Value?.ToString(), out int idFormaPago))
+                            {
+                                // Llamar al método DarDeBajaPagoParcial
+                                bool darBajaPagoParcial = new CN_PagoParcial().DarDeBajaPagoParcial(idFormaPago, idVentaGenerado);
+
+                                // Verificar el resultado del método
+                                if (!darBajaPagoParcial)
+                                {
+                                    MessageBox.Show("No se pudo dar de baja el pago parcial", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("El valor de 'IdFormaPago' no es válido o está vacío.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
                         }
                     }
+
+
+                
                     var perteneceANegocio = new CN_ClienteNegocio().ClienteAsignadoANegocio(Convert.ToInt32(txtIdCliente.Text), GlobalSettings.SucursalId);
                     if (!perteneceANegocio)
                     {
@@ -957,7 +995,7 @@ namespace CapaPresentacion
                     transaccionRegistrada = true;
 
                     // Si todo fue exitoso, mostrar el mensaje final
-                    MessageBox.Show($"Venta registrada correctamente Numero : {oVenta.nroDocumento}. Stock actualizado y transacción registrada en la caja. {mensajeSerialActualizado}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Venta registrada correctamente Numero : {idVentaGenerado}. Stock actualizado y transacción registrada en la caja. {mensajeSerialActualizado}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Limpiar los campos de la venta
                     LimpiarVenta();
@@ -1005,6 +1043,9 @@ namespace CapaPresentacion
             if (cboVendedores.SelectedIndex == -1)
                 return MostrarMensajeError("Debe seleccionar el Vendedor");
 
+
+            
+
             return true;
         }
 
@@ -1020,16 +1061,20 @@ namespace CapaPresentacion
             DataTable detalleVenta = new DataTable();
             detalleVenta.Columns.Add("idProducto", typeof(int));
             detalleVenta.Columns.Add("precioVenta", typeof(decimal));
+            
             detalleVenta.Columns.Add("cantidad", typeof(decimal));
             detalleVenta.Columns.Add("subTotal", typeof(decimal));
+            detalleVenta.Columns.Add("precioCompra", typeof(decimal));
 
             foreach (DataGridViewRow row in dgvData.Rows)
             {
                 detalleVenta.Rows.Add(
                     Convert.ToInt32(row.Cells["idProducto"].Value),
                     Convert.ToDecimal(row.Cells["precio"].Value),
+                    
                     Convert.ToDecimal(row.Cells["cantidad"].Value),
-                    Convert.ToDecimal(row.Cells["subTotal"].Value)
+                    Convert.ToDecimal(RemoverSimboloMoneda(row.Cells["subTotal"].Value.ToString())),
+                    Convert.ToDecimal(row.Cells["precioCompra"].Value)
                 );
             }
             return detalleVenta;
@@ -1093,7 +1138,7 @@ namespace CapaPresentacion
                 idNegocio = GlobalSettings.SucursalId,
                 fechaRegistro = Convert.ToDateTime(dtpFecha.Value),
                 tipoDocumento = ((OpcionCombo)cboTipoDocumento.SelectedItem).Texto,
-                nroDocumento = numeroDocumento,
+                
                 documentoCliente = txtDocumentoCliente.Text,
                 nombreCliente = txtNombreCliente.Text,
                 idVendedor = (OpcionCombo)cboVendedores.SelectedItem == null ? _Venta.idVendedor : Convert.ToInt32(((OpcionCombo)cboVendedores.SelectedItem).Valor),
@@ -1387,7 +1432,7 @@ namespace CapaPresentacion
 
         private void CalcularRestaAPagar()
         {
-            decimal cotizacionDolar;
+            decimal cotizacionDolar = txtCotizacion.Value;
             decimal totalAPagar = txtTotalAPagar.Value;
             decimal totalAPagarDolares = txtTotalAPagarDolares.Value;
             decimal pagoTotal = 0;
@@ -1589,12 +1634,52 @@ namespace CapaPresentacion
         private decimal totalVentaOriginalPesos;
         private decimal totalVentaOriginalDolares;
         private bool formaPagoAplicada = false;
+
+        private (decimal totalPesos, decimal totalDolares) CalcularTotalPagos()
+        {
+            decimal totalPesos = 0;
+            decimal totalDolares = 0;
+
+            foreach (DataGridViewRow row in dgvDataFormasPago.Rows)
+            {
+                if (row.Cells["importeFP"].Value != null && row.Cells["formaPago"].Value != null)
+                {
+                    // Obtener el valor de la columna ImporteFP
+                    if (decimal.TryParse(row.Cells["importeFP"].Value.ToString(), out decimal importe))
+                    {
+                        // Verificar la forma de pago
+                        string formaDePago = row.Cells["formaPago"].Value.ToString();
+
+                        if (formaDePago.Equals("DOLAR EFECTIVO", StringComparison.OrdinalIgnoreCase))
+                        {
+                            totalDolares += importe;
+                            totalPesos += Math.Round(importe * txtCotizacion.Value,2);
+                        }
+                        else
+                        {
+                            totalPesos += importe;
+                            totalDolares += Math.Round(importe / txtCotizacion.Value, 2);
+                        }
+                    }
+                }
+            }
+
+            // Retornar los totales como una tupla
+            return (totalPesos, totalDolares);
+        }
+
+
         private void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtCotizacion.ReadOnly = true;
+            
+
+
 
             if (cboFormaPago.SelectedIndex != -1)
             {
+                decimal acumuladoPesos = 0;
+                decimal acumuladoDolares = 0;
                 string formaPagoDescripcion = cboFormaPago.Text;
                 if (formaPagoDescripcion.Equals("EFECTIVO", StringComparison.OrdinalIgnoreCase) ||
             formaPagoDescripcion.Equals("DOLAR EFECTIVO", StringComparison.OrdinalIgnoreCase))
@@ -1662,11 +1747,12 @@ namespace CapaPresentacion
                                     totalDolares += subtotal;
                                     totalPesos += Math.Round(subtotal * cotizacionActual, 2);
 
-                                    recargoPesosProductoDolares += Math.Round((subtotal * cotizacionActual) * porcentajeRecargo, 2);
-                                    descuentoPesosProductoDolares += Math.Round((subtotal * cotizacionActual) * porcentajeDescuento, 2);
+                                    recargoPesosProductoDolares += Math.Round((subtotal * cotizacionActual) * porcentajeRecargoDolar, 2);
 
-                                    recargoDolaresProductoDolares += Math.Round(subtotal * porcentajeRecargo, 2);
-                                    descuentoDolaresProductoDolares += Math.Round(subtotal * porcentajeDescuento, 2);
+                                    descuentoPesosProductoDolares += Math.Round((subtotal * cotizacionActual) * porcentajeDescuentoDolar, 2);
+
+                                    recargoDolaresProductoDolares += Math.Round(subtotal * porcentajeRecargoDolar, 2);
+                                    descuentoDolaresProductoDolares += Math.Round(subtotal * porcentajeDescuentoDolar, 2);
 
                                 }
                                 else
@@ -1702,7 +1788,8 @@ namespace CapaPresentacion
                         txtRestaPagar.Value = Math.Round(nuevoTotalPesos, 2);
                         txtRestaPagarDolares.Value = Math.Round(nuevoTotalDolares, 2);
                         formaPagoAplicada = true;
-                    } else
+                    }
+                    else
                     {
                         var listaTiposFP = ObtenerTiposFormaPagoEnGrilla();
 
@@ -1716,10 +1803,17 @@ namespace CapaPresentacion
                         {
                             // Verificar si el tipo de forma de pago ya existe en la grilla
                             bool tipoFormaPagoExisteEnGrilla = false;
-                            decimal restoPesos = txtRestaPagar.Value;
-                            decimal restoDolares = txtRestaPagarDolares.Value;
-                            decimal nuevoRestoPesos = restoPesos + Math.Round(restoPesos * porcentajeRecargo, 2) - Math.Round(restoPesos * porcentajeDescuento, 2);
-                            decimal nuevoRestoDolares = restoDolares + Math.Round(restoDolares * porcentajeRecargo, 2) - Math.Round(restoDolares * porcentajeDescuento, 2);
+                            var (totalPesosPagos, totalDolaresPagos) = CalcularTotalPagos();
+                            decimal restoPesos = txtTotalAPagar.Value - totalPesosPagos;
+                            decimal restoDolares = txtTotalAPagarDolares.Value - totalDolaresPagos;
+
+
+                            decimal nuevoRestoPesosProductoPesos = 0;
+                            decimal nuevoRestoDolaresProductoPesos = 0;
+                            decimal nuevoRestoPesosProductoDolar = 0;
+                            decimal nuevoRestoDolaresProductoDolar = 0;
+
+
 
                             foreach (DataGridViewRow row in dgvDataFormasPago.Rows)
                             {
@@ -1732,32 +1826,142 @@ namespace CapaPresentacion
 
                             if (tipoFormaPagoExisteEnGrilla)
                             {
-                                nuevoRestoPesos = restoPesos - Math.Round(restoPesos * porcentajeDescuento, 2);
-                                nuevoRestoDolares = restoDolares  - Math.Round(restoDolares * porcentajeDescuento, 2);
+                                nuevoRestoPesosProductoPesos = Math.Round(restoPesos * porcentajeDescuento, 2);
+                                nuevoRestoDolaresProductoPesos = Math.Round(restoDolares * porcentajeDescuento, 2);
+                                nuevoRestoPesosProductoDolar = Math.Round(restoPesos * porcentajeDescuentoDolar, 2);
+                                nuevoRestoDolaresProductoDolar = Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+                                txtTotalAPagar.Value -= nuevoRestoPesosProductoPesos;
+                                txtTotalAPagarDolares.Value -= nuevoRestoDolaresProductoDolar;
                             }
+                            //    else
+                            //    {
+                            //        // Si no existe, se realiza el cálculo del resto a pagar
+                            //        if(listaTiposFP.Contains("CREDITO"))
+                            //        {
+                            //            foreach (DataGridViewRow row in dgvData.Rows)
+                            //            {
+                            //                string productoDolar = row.Cells["productoDolar"].Value.ToString();
+                            //                if (productoDolar == "SI")
+                            //                {
+
+                            //                    nuevoRestoPesosProductoDolar += Math.Round(restoPesos * porcentajeDescuentoDolar, 2);
+                            //                    nuevoRestoDolaresProductoDolar += Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+
+                            //                }
+                            //                else
+                            //                {
+                            //                    nuevoRestoPesosProductoPesos += Math.Round(restoPesos * porcentajeDescuento, 2);
+                            //                    nuevoRestoDolaresProductoPesos += Math.Round(restoDolares * porcentajeDescuento, 2);
+
+                            //                }
+
+                            //            }
+
+
+                            //        } else
+                            //        {
+
+                            //            foreach (DataGridViewRow row in dgvData.Rows)
+                            //            {
+                            //                string productoDolar = row.Cells["productoDolar"].Value.ToString();
+                            //                if (productoDolar == "SI")
+                            //                {
+
+                            //                    nuevoRestoPesosProductoDolar += Math.Round(restoPesos * porcentajeRecargoDolar, 2) - Math.Round(restoPesos * porcentajeDescuentoDolar, 2);
+                            //                    nuevoRestoDolaresProductoDolar += Math.Round(restoDolares * porcentajeRecargoDolar, 2) - Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+
+                            //                }
+                            //                else
+                            //                {
+                            //                    nuevoRestoPesosProductoPesos += Math.Round(restoPesos * porcentajeRecargo, 2) - Math.Round(restoPesos * porcentajeDescuento, 2);
+                            //                    nuevoRestoDolaresProductoPesos += Math.Round(restoDolares * porcentajeRecargo, 2) - Math.Round(restoDolares * porcentajeDescuento, 2);
+
+                            //                }
+
+                            //            }
+
+                            //        }
+
+
+
+
+
+                            //        //if (listaTiposFP.Contains("CREDITO")){
+                            //        //    nuevoRestoPesosProductoPesos +=  Math.Round(restoPesos * porcentajeDescuento, 2);
+                            //        //    nuevoRestoDolaresProductoPesos +=  Math.Round(restoDolares * porcentajeDescuento, 2);
+                            //        //    nuevoRestoPesosProductoDolar +=  Math.Round(restoPesos * porcentajeDescuentoDolar, 2);
+                            //        //    nuevoRestoDolaresProductoDolar +=  Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+                            //        //}
+
+
+
+                            //    }
+
+
+
+
+                            //    txtRestaPagar.Value = restoPesos - ( Math.Round(nuevoRestoPesosProductoPesos, 2));
+                            //    txtRestaPagarDolares.Value = restoDolares - (  Math.Round(nuevoRestoDolaresProductoDolar, 2));
+
+
+                            //}
+
                             else
                             {
-                                // Si no existe, se realiza el cálculo del resto a pagar
-                               
+                                // Variables acumuladoras para el resto actualizado
+                                
 
-                                 nuevoRestoPesos = restoPesos + Math.Round(restoDolares * porcentajeRecargo, 2) - Math.Round(restoPesos * porcentajeDescuento, 2);
-                                 nuevoRestoDolares = restoDolares + Math.Round(restoDolares * porcentajeRecargo, 2) - Math.Round(restoDolares * porcentajeDescuento, 2);
-                                if (listaTiposFP.Contains("CREDITO")){
-                                    nuevoRestoPesos = restoPesos  - Math.Round(restoPesos * porcentajeDescuento, 2);
-                                    nuevoRestoDolares = restoDolares  - Math.Round(restoDolares * porcentajeDescuento, 2);
+                                // Si existe crédito
+                                if (listaTiposFP.Contains("CREDITO"))
+                                {
+                                    foreach (DataGridViewRow row in dgvData.Rows)
+                                    {
+                                        string productoDolar = row.Cells["productoDolar"].Value.ToString();
+                                        if (productoDolar == "SI")
+                                        {
+                                            acumuladoDolares += Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+                                        }
+                                        else
+                                        {
+                                            acumuladoPesos += Math.Round(restoPesos * porcentajeDescuento, 2);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (DataGridViewRow row in dgvData.Rows)
+                                    {
+                                        string productoDolar = row.Cells["productoDolar"].Value.ToString();
+                                        if (productoDolar == "SI")
+                                        {
+                                            acumuladoDolares += Math.Round(restoDolares * porcentajeRecargoDolar, 2) - Math.Round(restoDolares * porcentajeDescuentoDolar, 2);
+                                        }
+                                        else
+                                        {
+                                            acumuladoPesos += Math.Round(restoPesos * porcentajeRecargo, 2) - Math.Round(restoPesos * porcentajeDescuento, 2);
+                                        }
+                                    }
                                 }
 
+                                // Actualizar los valores restantes
+                                restoPesos -= acumuladoPesos;
+                                restoDolares -= acumuladoDolares;
 
+                                
 
                             }
-                            txtRestaPagar.Value = Math.Round(nuevoRestoPesos, 2);
-                            txtRestaPagarDolares.Value = Math.Round(nuevoRestoDolares, 2);
+                            // Actualizar los campos en pantalla
+                            txtRestaPagar.Value = restoPesos;
+                            txtRestaPagarDolares.Value = restoDolares;
+                            txtTotalAPagar.Value -= acumuladoPesos;
+                            txtTotalAPagarDolares.Value -= acumuladoDolares;
+                        }
+                    
+
+
                         }
 
-
                     }
-                        
-                }
             }
         }
 
